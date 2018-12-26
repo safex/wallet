@@ -1,5 +1,6 @@
 import React from "react";
 import CreateNew from "./CreateNew";
+import CreateFromKeys from "./CreateFromKeys";
 
 export default class CashWallet extends React.Component {
   constructor(props) {
@@ -7,14 +8,20 @@ export default class CashWallet extends React.Component {
     this.state = {};
 
     this.openCreateNew = this.openCreateNew.bind(this);
+    this.openCreateNewFromKeys = this.openCreateNewFromKeys.bind(this);
   }
 
   openCreateNew() {
     this.context.router.push("/create-new");
   }
 
+  openCreateNewFromKeys() {
+    this.context.router.push("/create-from-keys");
+  }
+
   render() {
     <CreateNew />;
+    <CreateFromKeys />;
     return (
       <div>
         <div className="options-wrap fadeIn">
@@ -22,7 +29,7 @@ export default class CashWallet extends React.Component {
             <img src="images/create-new.png" alt="create-new" />
             <h3>Create New</h3>
           </div>
-          <div className="item">
+          <div className="item" onClick={this.openCreateNewFromKeys}>
             <img src="images/new-from-keys.png" alt="new-from-keys" />
             <h3>New From Keys</h3>
           </div>

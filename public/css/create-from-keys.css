@@ -1,0 +1,10 @@
+/* Create From Keys */
+.create-from-keys-wrap .login-wrap form input {
+  margin: 0 0 10px;
+}
+.create-from-keys-wrap .login-wrap form input:last-of-type {
+  margin-bottom: 0;
+}
+.create-from-keys-wrap .login-wrap .form-group {
+  padding: 40px 20px 50px;
+}
