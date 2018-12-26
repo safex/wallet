@@ -98,3 +98,10 @@
   border-bottom: 5px solid #8ffdfd;
   border-radius: 0px;
 }
+
+@media (min-width: 1024px) {
+  .create-new-wrap {
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+}

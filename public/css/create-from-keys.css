@@ -8,3 +8,10 @@
 .create-from-keys-wrap .login-wrap .form-group {
   padding: 40px 20px 50px;
 }
+
+@media (min-width: 1024px) {
+  .create-from-keys-wrap {
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+}

@@ -42,3 +42,10 @@
   margin-top: 25px;
   margin-bottom: 20px;
 }
+
+@media (min-width: 1024px) {
+  .options-wrap {
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+}
