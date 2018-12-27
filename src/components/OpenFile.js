@@ -275,7 +275,7 @@ export default class OpenFile extends React.Component {
       if (wallet.daemonBlockchainHeight() - wallet.blockchainHeight() > 10) {
         this.setOpenAlert(
           "Please wait while blockchain is being updated...",
-          "balance_alert",
+          "open_file_alert",
           true
         );
       }
@@ -380,7 +380,7 @@ export default class OpenFile extends React.Component {
                 <input type="text" name="pass" placeholder="password" />
               </div>
             </div>
-            <button type="submit" className="submit button-shine">
+            <button type="submit" className="submit btn button-shine">
               Open
             </button>
           </form>
@@ -399,11 +399,6 @@ export default class OpenFile extends React.Component {
               <button
                 className={
                   this.state.wallet_connected ? "signal connected" : "signal"
-                }
-                title={
-                  this.state.wallet_connected
-                    ? "Connected"
-                    : "Connection to server failure"
                 }
               >
                 <img src="images/connected-white.png" alt="connected" />

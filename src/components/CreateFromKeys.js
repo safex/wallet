@@ -199,7 +199,7 @@ export default class CreateFromKeys extends React.Component {
                 <input type="text" name="pass2" placeholder="repeat password" />
               </div>
             </div>
-            <button type="submit" className="submit button-shine">
+            <button type="submit" className="submit btn button-shine">
               Create
             </button>
           </form>

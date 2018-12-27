@@ -88,7 +88,7 @@
   color: #fff;
   font-size: 30px;
 }
-.create-new-wrap .login-wrap form .submit {
+.create-new-wrap .login-wrap .btn {
   width: 100%;
   font-size: 30px;
   background: rgba(143, 253, 253, 0.62);
@@ -97,6 +97,10 @@
   border: 0px;
   border-bottom: 5px solid #8ffdfd;
   border-radius: 0px;
+}
+.create-new-wrap .login-wrap .btn:focus,
+.create-new-wrap .login-wrap .btn:active {
+  outline: none;
 }
 
 @media (min-width: 1024px) {
