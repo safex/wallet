@@ -20,7 +20,6 @@ export default class CreateNew extends React.Component {
       view_key: "",
       net: "mainnet",
       daemonHostPort: "rpc.safex.io:17402",
-
       create_new_wallet_alert: false
     };
 
@@ -161,7 +160,7 @@ export default class CreateNew extends React.Component {
         <button onClick={this.goBack} className="go-back-btn button-shine">
           Back
         </button>
-        <h2>Create New</h2>
+        <h2>Create New Wallet File</h2>
         <div className="col-xs-6 col-xs-push-3 login-wrap">
           <form onSubmit={this.createNew}>
             <div className="group-wrap">

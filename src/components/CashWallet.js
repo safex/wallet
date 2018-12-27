@@ -1,14 +1,23 @@
 import React from "react";
 import CreateNew from "./CreateNew";
 import CreateFromKeys from "./CreateFromKeys";
+import OpenFile from "./OpenFile";
+import ExitModal from "./partials/ExitModal";
+
+const remote = window.require("electron").remote;
 
 export default class CashWallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { closing: false, exit_modal: false };
 
     this.openCreateNew = this.openCreateNew.bind(this);
     this.openCreateNewFromKeys = this.openCreateNewFromKeys.bind(this);
+    this.openFile = this.openFile.bind(this);
+
+    this.openExitModal = this.openExitModal.bind(this);
+    this.closeExitModal = this.closeExitModal.bind(this);
+    this.closeApp = this.closeApp.bind(this);
   }
 
   openCreateNew() {
@@ -19,12 +28,48 @@ export default class CashWallet extends React.Component {
     this.context.router.push("/create-from-keys");
   }
 
+  openFile() {
+    this.context.router.push("/open-file");
+  }
+
+  openExitModal() {
+    this.setState({ exit_modal: true });
+  }
+
+  closeExitModal() {
+    this.setState({ exit_modal: false });
+  }
+
+  closeApp() {
+    let window = remote.getCurrentWindow();
+
+    this.setState({ closing: true });
+    this.closeExitModal();
+
+    setTimeout(() => {
+      window.close();
+    }, 1000);
+  }
+
   render() {
     <CreateNew />;
     <CreateFromKeys />;
+    <OpenFile />;
     return (
       <div>
-        <div className="options-wrap fadeIn">
+        <div
+          className={
+            this.state.closing
+              ? "options-wrap animated fadeOut"
+              : "options-wrap"
+          }
+        >
+          <button
+            onClick={this.openExitModal}
+            className="close-app-btn button-shine"
+          >
+            X
+          </button>
           <div className="item" onClick={this.openCreateNew}>
             <img src="images/create-new.png" alt="create-new" />
             <h3>Create New</h3>
@@ -33,7 +78,7 @@ export default class CashWallet extends React.Component {
             <img src="images/new-from-keys.png" alt="new-from-keys" />
             <h3>New From Keys</h3>
           </div>
-          <div className="item">
+          <div className="item" onClick={this.openFile}>
             <img src="images/open-wallet-file.png" alt="open-wallet-file" />
             <h3>Open Wallet File</h3>
           </div>
@@ -43,13 +88,11 @@ export default class CashWallet extends React.Component {
           </div>
         </div>
 
-        <div
-          className={
-            this.state.create_new ? "create-new-wrap active" : "create-new-wrap"
-          }
-        >
-          <h2>Create New</h2>
-        </div>
+        <ExitModal
+          exitModal={this.state.exit_modal}
+          closeExitModal={this.closeExitModal}
+          closeApp={this.closeApp}
+        />
       </div>
     );
   }

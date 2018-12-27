@@ -5,6 +5,16 @@
   display: flex;
   justify-content: space-between;
 }
+.options-wrap .close-app-btn {
+  background: transparent;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #fff;
+  font-size: 18px;
+  padding: 2px 10px;
+  border: 1px solid #8ffdfd;
+}
 .options-wrap .item {
   background: url(../images/option-item-bg.png) repeat-x top left;
   background-size: 100% 100%;
