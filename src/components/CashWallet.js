@@ -2,6 +2,7 @@ import React from "react";
 import CreateNew from "./CreateNew";
 import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
+import NewFromMnemonic from "./NewFromMnemonic";
 import ExitModal from "./partials/ExitModal";
 
 const remote = window.require("electron").remote;
@@ -14,6 +15,7 @@ export default class CashWallet extends React.Component {
     this.openCreateNew = this.openCreateNew.bind(this);
     this.openCreateNewFromKeys = this.openCreateNewFromKeys.bind(this);
     this.openFile = this.openFile.bind(this);
+    this.openNewFromMnemonic = this.openNewFromMnemonic.bind(this);
 
     this.openExitModal = this.openExitModal.bind(this);
     this.closeExitModal = this.closeExitModal.bind(this);
@@ -30,6 +32,10 @@ export default class CashWallet extends React.Component {
 
   openFile() {
     this.context.router.push("/open-file");
+  }
+
+  openNewFromMnemonic() {
+    this.context.router.push("/new-from-mnemonic");
   }
 
   openExitModal() {
@@ -55,6 +61,7 @@ export default class CashWallet extends React.Component {
     <CreateNew />;
     <CreateFromKeys />;
     <OpenFile />;
+    <NewFromMnemonic />;
     return (
       <div>
         <div
@@ -67,6 +74,7 @@ export default class CashWallet extends React.Component {
           <button
             onClick={this.openExitModal}
             className="close-app-btn button-shine"
+            title="Exit"
           >
             X
           </button>
@@ -82,7 +90,7 @@ export default class CashWallet extends React.Component {
             <img src="images/open-wallet-file.png" alt="open-wallet-file" />
             <h3>Open Wallet File</h3>
           </div>
-          <div className="item">
+          <div className="item" onClick={this.openNewFromMnemonic}>
             <img src="images/mnemonic.png" alt="mnemonic" />
             <h3>New from Mnemonic</h3>
           </div>

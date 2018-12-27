@@ -12,8 +12,9 @@
   top: 10px;
   color: #fff;
   font-size: 18px;
-  padding: 2px 10px;
+  padding: 2px 9px 1px;
   border: 1px solid #8ffdfd;
+  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
 }
 .options-wrap .item {
   background: url(../images/option-item-bg.png) repeat-x top left;

@@ -43,7 +43,6 @@
     "axios": "^0.16.2",
     "electron-context-menu": "^0.9.1",
     "js-file-download": "^0.4.4",
-    "node-xmrig-cpu": "git+https://github.com/atanmarko/node-xmrig.git",
     "react": "^15.6.2",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^15.6.2",

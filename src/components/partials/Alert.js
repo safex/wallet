@@ -21,7 +21,7 @@ export default class Alert extends React.Component {
           className={
             this.props.openAlert ? "alertBackdrop active" : "alertBackdrop"
           }
-          onClick={this.props.closeAlert}
+          onClick={this.props.alertCloseDisabled ? "" : this.props.closeAlert}
         />
       </div>
     );

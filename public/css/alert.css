@@ -7,7 +7,7 @@
   text-transform: uppercase;
   font-size: 17px;
   padding: 12px 15px 15px;
-  width: 90%;
+  width: calc(100% - 40px);
   visibility: hidden;
   opacity: 0;
   transition: all ease 0.3s;
@@ -36,11 +36,11 @@
   width: auto;
   position: absolute;
   right: 15px;
-  top: 14px;
+  top: 15px;
   color: #fff;
   opacity: 1;
   font-size: 20px;
-  font-family: "Atrament", Helvetica, Arial, sans-serif;
+  font-family: "Brandon Grotesque", Helvetica, Arial, sans-serif;
 }
 .alert p {
   background: transparent;

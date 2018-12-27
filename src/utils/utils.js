@@ -63,7 +63,7 @@ function closeAlert(target) {
     open_file_alert: false,
     create_new_wallet_alert: false,
     create_from_keys_alert: false,
-    balance_alert_close_disabled: false
+    alert_close_disabled: false
   });
 }
 
