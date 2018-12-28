@@ -11,16 +11,19 @@ export default class OpenFile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wallet_path: "",
-      wallet_exists: false,
+      //wallet state settings
       wallet: {},
+      wallet_connected: false,
+      blockchain_height: 0,
+      wallet_sync: false,
       wallet_loaded: false,
-      wallet_address: "",
+      wallet_exists: false,
+      wallet_path: "",
       spend_key: "",
       view_key: "",
+      open_file_alert: false,
       net: "mainnet",
       daemonHostPort: "rpc.safex.io:17402",
-      open_file_alert: false,
 
       //balance settings
       balance: 0,
@@ -400,13 +403,15 @@ export default class OpenFile extends React.Component {
                 className={
                   this.state.wallet_connected ? "signal connected" : "signal"
                 }
+                disabled
+                title="Status"
               >
                 <img src="images/connected-white.png" alt="connected" />
                 <p>
                   {this.state.wallet_connected ? (
                     <span>Connected</span>
                   ) : (
-                    <span>Connection to server failure</span>
+                    <span>Connection error</span>
                   )}
                 </p>
               </button>
