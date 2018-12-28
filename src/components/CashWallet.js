@@ -71,6 +71,24 @@ export default class CashWallet extends React.Component {
               : "options-wrap"
           }
         >
+          <div className="options-inner">
+            <div className="item" onClick={this.openCreateNew}>
+              <img src="images/create-new.png" alt="create-new" />
+              <h3>Create New</h3>
+            </div>
+            <div className="item" onClick={this.openCreateNewFromKeys}>
+              <img src="images/new-from-keys.png" alt="new-from-keys" />
+              <h3>New From Keys</h3>
+            </div>
+            <div className="item" onClick={this.openFile}>
+              <img src="images/open-wallet-file.png" alt="open-wallet-file" />
+              <h3>Open Wallet File</h3>
+            </div>
+            <div className="item" onClick={this.openNewFromMnemonic}>
+              <img src="images/mnemonic.png" alt="mnemonic" />
+              <h3>New from Mnemonic</h3>
+            </div>
+          </div>
           <button
             onClick={this.openExitModal}
             className="close-app-btn button-shine"
@@ -78,22 +96,6 @@ export default class CashWallet extends React.Component {
           >
             X
           </button>
-          <div className="item" onClick={this.openCreateNew}>
-            <img src="images/create-new.png" alt="create-new" />
-            <h3>Create New</h3>
-          </div>
-          <div className="item" onClick={this.openCreateNewFromKeys}>
-            <img src="images/new-from-keys.png" alt="new-from-keys" />
-            <h3>New From Keys</h3>
-          </div>
-          <div className="item" onClick={this.openFile}>
-            <img src="images/open-wallet-file.png" alt="open-wallet-file" />
-            <h3>Open Wallet File</h3>
-          </div>
-          <div className="item" onClick={this.openNewFromMnemonic}>
-            <img src="images/mnemonic.png" alt="mnemonic" />
-            <h3>New from Mnemonic</h3>
-          </div>
         </div>
 
         <ExitModal

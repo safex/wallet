@@ -1,10 +1,8 @@
 /* Options Screen */
 .options-wrap {
   position: relative;
-  height: 100%;
   padding: 10px;
-  display: flex;
-  justify-content: space-between;
+  transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
@@ -21,14 +19,18 @@
   font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
   z-index: 2;
 }
-.options-wrap .item {
+.options-wrap .options-inner {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.options-wrap .options-inner .item {
   background: url(../images/option-item-bg.png) repeat-x top left;
   background-size: 100% 100%;
   width: calc(25% - 10px);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 100%;
   padding: 10px;
   border-bottom: 5px solid transparent;
   transition: all ease 0.3s;
@@ -36,12 +38,11 @@
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
 }
-.options-wrap:hover .item {
+.options-wrap .options-inner:hover .item {
   opacity: 0.65;
 }
-.options-wrap:hover .item:hover {
+.options-wrap .options-inner:hover .item:hover {
   opacity: 1;
-  /* box-shadow: 0 0 4px 0 rgba(0, 199, 236, 0.5); */
 }
 .options-wrap .item:hover {
   cursor: pointer;
