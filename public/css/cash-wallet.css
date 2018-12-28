@@ -5,6 +5,9 @@
   padding: 10px;
   display: flex;
   justify-content: space-between;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
 }
 .options-wrap .close-app-btn {
   background: transparent;
@@ -16,6 +19,7 @@
   padding: 2px 9px 1px;
   border: 1px solid #8ffdfd;
   font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
+  z-index: 2;
 }
 .options-wrap .item {
   background: url(../images/option-item-bg.png) repeat-x top left;
@@ -31,6 +35,13 @@
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
+}
+.options-wrap:hover .item {
+  opacity: 0.65;
+}
+.options-wrap:hover .item:hover {
+  opacity: 1;
+  /* box-shadow: 0 0 4px 0 rgba(0, 199, 236, 0.5); */
 }
 .options-wrap .item:hover {
   cursor: pointer;
