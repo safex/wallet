@@ -45,6 +45,9 @@
   -moz-transition: all ease 0.2s;
   transition: all ease 0.2s;
 }
+.alert .close:hover {
+  transform: translate(0, -2px);
+}
 .alert p {
   background: transparent;
   border: 0px none;
