@@ -3,9 +3,15 @@ import React from "react";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
-import { openAlert, closeAlert } from "../utils/utils.js";
+import {
+  openAlert, closeAlert, 
+  openSendCashPopup,
+  openSendTokenPopup,
+  closeSendPopup 
+} from "../utils/utils.js";
 
 import Alert from "./partials/Alert";
+import SendModal from "./partials/SendModal";
 
 export default class OpenFile extends React.Component {
   constructor(props) {
@@ -52,6 +58,11 @@ export default class OpenFile extends React.Component {
     this.newBlockCallback = this.newBlockCallback.bind(this);
     this.startBalanceCheck = this.startBalanceCheck.bind(this);
     this.rescanBalance = this.rescanBalance.bind(this);
+    this.setOpenSendCash = this.setOpenSendCash.bind(this);
+    this.setOpenSendTokens = this.setOpenSendTokens.bind(this);
+    this.setCloseSendPopup = this.setCloseSendPopup.bind(this);
+    this.sendCash = this.sendCash.bind(this);
+    this.sendToken = this.sendToken.bind(this);
   }
 
   goBack() {
@@ -347,6 +358,98 @@ export default class OpenFile extends React.Component {
     return Math.floor(parseFloat(balance) / 100000000) / 100;
   }
 
+  sendCash(e) {
+    e.preventDefault();
+    let sendingAddress = e.target.send_to.value;
+    let amount = e.target.amount.value * 10000000000;
+    let wallet = this.state.wallet;
+
+    if (sendingAddress !== '') {
+      if (amount !== '') {
+        console.log("amount " + amount);
+        wallet.createTransaction({
+          'address': sendingAddress,
+          'amount': amount,
+          'tx_type': 0 // cash transaction
+        }).then((tx) => {
+          let txId = tx.transactionsIds();
+          console.log("Cash transaction created: " + txId);
+
+          tx.commit().then(() => {
+            console.log("Transaction commited successfully");
+            this.setCloseSendPopup();
+            this.setOpenAlert('Transaction commited successfully, Your cash transaction ID is: '
+              + txId, 'open_file_alert', false);
+            this.state.balance = this.roundBalanceAmount(wallet.unlockedBalance() - wallet.balance());
+            this.state.unlocked_balance = this.roundBalanceAmount(wallet.unlockedBalance());
+          }).catch((e) => {
+            console.log("Error on commiting transaction: " + e);
+            this.setOpenAlert("Error on commiting transaction: " + e, 'open_file_alert', false);
+          });
+        }).catch((e) => {
+          console.log("Couldn't create transaction: " + e);
+          this.setOpenAlert("Couldn't create transaction: " + e, 'open_file_alert', false);
+        });
+      } else {
+        this.setOpenAlert('Enter Amount', 'open_file_alert', false);
+      }
+    } else {
+      this.setOpenAlert('Fill out all the fields', 'open_file_alert', false);
+    }
+  }
+
+  sendToken(e) {
+    e.preventDefault();
+    let sendingAddress = e.target.send_to.value;
+    let amount = Math.floor(e.target.amount.value) * 10000000000;
+    let wallet = this.state.wallet;
+
+    if (sendingAddress !== '') {
+      if (amount !== '') {
+        console.log("amount " + amount)
+        wallet.createTransaction({
+          'address': sendingAddress,
+          'amount': amount,
+          'tx_type': 1 // token transaction
+        }).then((tx) => {
+          let txId = tx.transactionsIds();
+          console.log("Token transaction created: " + txId);
+
+          tx.commit().then(() => {
+            console.log("Transaction commited successfully");
+            this.setCloseSendPopup();
+            this.setOpenAlert('Transaction commited successfully, Your token transaction ID is: '
+              + txId, 'open_file_alert', false);
+            this.state.tokens = this.roundBalanceAmount(wallet.unlockedTokenBalance() - wallet.tokenBalance());
+            this.state.unlocked_tokens = this.roundBalanceAmount(wallet.unlockedTokenBalance());
+          }).catch((e) => {
+            console.log("Error on commiting transaction: " + e);
+            this.setOpenAlert("Error on commiting transaction: " + e, 'open_file_alert', false);
+          });
+        }).catch((e) => {
+          console.log("Couldn't create transaction: " + e);
+          this.setOpenAlert("Couldn't create transaction: " + e, 'open_file_alert', false);
+        });
+      } else {
+        this.setOpenAlert('Enter Amount', 'open_file_alert', false);
+      }
+    } else {
+      this.setOpenAlert('Fill out all the fields', 'open_file_alert', false);
+    }
+  }
+
+  setOpenSendCash() {
+    openSendCashPopup(this);
+  }
+
+  setOpenSendTokens() {
+    openSendTokenPopup(this);
+  }
+
+  setCloseSendPopup() {
+    closeSendPopup(this);
+  }
+
   render() {
     return (
       <div className="create-new-wrap open-file-wrap">
@@ -477,6 +580,7 @@ export default class OpenFile extends React.Component {
                   value={this.state.unlocked_balance}
                   readOnly
                 />
+                <button className="btn button-shine" onClick={this.setOpenSendCash}>Send Cash</button>
               </div>
 
               <div className="group">
@@ -497,9 +601,19 @@ export default class OpenFile extends React.Component {
                   value={this.state.unlocked_tokens}
                   readOnly
                 />
+                <button className="btn button-shine" onClick={this.setOpenSendTokens}>Send Tokens</button>
               </div>
             </div>
           </div>
+
+          <SendModal
+            send_cash={this.state.send_cash}
+            send_token={this.state.send_token}
+            fromAddress={this.state.balance_wallet}
+            closeSendPopup={this.setCloseSendPopup}
+            sendCash={this.sendCash}
+            sendToken={this.sendToken}
+          />
 
           <Alert
             openAlert={this.state.open_file_alert}

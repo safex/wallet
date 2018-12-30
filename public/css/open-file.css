@@ -121,9 +121,10 @@
   width: 100%;
   text-align: center;
   font-size: 20px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 1);
   margin-bottom: 0;
   font-weight: 600;
+  line-height: 1.2;
 }
 .open-file-wrap .wallet-file-wrap .open-file-btn {
   width: auto;
@@ -172,4 +173,9 @@
   opacity: 1;
   color: #fff;
   font-size: 30px;
+}
+.open-file-wrap .login-wrap .btn {
+  font-size: 25px;
+  padding: 6px 12px 4px;
+  margin-top: 5px;
 }

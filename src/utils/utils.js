@@ -67,9 +67,42 @@ function closeAlert(target) {
   });
 }
 
+/**
+ * Open Send Cash Popup
+ */
+function openSendCashPopup(target) {
+  target.setState({
+    send_cash: true,
+    send_token: false
+  });
+}
+
+/**
+ * Open Send Token Popup
+ */
+function openSendTokenPopup(target) {
+  target.setState({
+    send_token: true,
+    send_cash: false
+  });
+}
+
+/**
+ * Close Send Popup
+ */
+function closeSendPopup(target) {
+  target.setState({
+    send_cash: false,
+    send_token: false,
+  });
+}
+
 module.exports = {
   verify_safex_address,
   structureSafexKeys,
   openAlert,
-  closeAlert
+  closeAlert,
+  openSendCashPopup,
+  openSendTokenPopup,
+  closeSendPopup
 };
