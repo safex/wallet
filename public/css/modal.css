@@ -298,6 +298,10 @@
   text-align: center;
 }
 
+.exitModal {
+  width: 600px;
+}
+
 .sendModal textarea,
 .sendModal input {
   padding: 4px 10px 5px !important;
