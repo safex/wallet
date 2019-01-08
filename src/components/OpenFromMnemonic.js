@@ -111,52 +111,73 @@ export default class OpenFile extends React.Component {
   openFile(e) {
     e.preventDefault();
     const pass = e.target.pass.value;
+    const mnemonic = e.target.mnemonic.value;
     let filename = e.target.filepath.value;
 
     if (filename !== "") {
       if (pass !== "") {
-        if (this.state.wallet_path) {
-          this.setState({
-            modal_close_disabled: true
-          });
-          var args = {
-            path: this.state.wallet_path,
-            password: pass,
-            network: this.state.net,
-            daemonAddress: this.state.daemonHostPort
-          };
-          this.setOpenAlert(
-            "Please wait while your wallet file is loaded",
-            "open_file_alert",
-            true
-          );
-          safex
-            .openWallet(args)
-            .then(wallet => {
-              this.setState({
-                wallet_loaded: true,
-                wallet: wallet,
-                balance_wallet: wallet.address(),
-                spend_key: wallet.secretSpendKey(),
-                view_key: wallet.secretViewKey(),
-                mnemonic: wallet.seed(),
-                alert_close_disabled: false
-              });
-              this.setCloseAlert();
-              this.startBalanceCheck();
-              console.log("wallet loaded " + this.state.wallet_loaded);
-              console.log("Wallet seed: " + this.state.mnemonic);
-            })
-            .catch(err => {
-              this.setState(() => ({
-                alert_close_disabled: false
-              }));
-              this.setOpenAlert(
-                "Error opening the wallet: " + err,
-                "open_file_alert",
-                false
-              );
+        if (mnemonic !== "") {
+          if (this.state.wallet_path) {
+            this.setState({
+              modal_close_disabled: true
             });
+            var args = {
+              path: this.state.wallet_path,
+              password: pass,
+              network: this.state.net,
+              daemonAddress: this.state.daemonHostPort,
+              mnemonic: this.state.mnemonic
+            };
+            this.setOpenAlert(
+              "Please wait while your wallet file is loaded",
+              "open_file_alert",
+              true
+            );
+            safex
+              .openWallet(args)
+              .then(wallet => {
+                this.setState(() => ({
+                  mnemonic: wallet.seed()
+                }));
+                if (mnemonic === this.state.mnemonic) {
+                  this.setState(() => ({
+                    wallet_loaded: true,
+                    wallet: wallet,
+                    balance_wallet: wallet.address(),
+                    spend_key: wallet.secretSpendKey(),
+                    view_key: wallet.secretViewKey(),
+                    alert_close_disabled: false
+                  }));
+                  this.setCloseAlert();
+                  this.startBalanceCheck();
+                  console.log("wallet loaded " + this.state.wallet_loaded);
+                  console.log("Wallet seed: " + this.state.mnemonic);
+                } else {
+                  this.setOpenAlert(
+                    "Mnemonic seed is incorrect, please try again",
+                    "open_file_alert",
+                    false
+                  );
+                  console.log("Wallet seed: " + this.state.mnemonic);
+                }
+              })
+              .catch(err => {
+                this.setState(() => ({
+                  alert_close_disabled: false
+                }));
+                this.setOpenAlert(
+                  "Error opening the wallet: " + err,
+                  "open_file_alert",
+                  false
+                );
+              });
+          }
+        } else {
+          this.setOpenAlert(
+            "Enter mnemonic seed for your wallet file",
+            "open_file_alert",
+            false
+          );
         }
       } else {
         this.setOpenAlert(
@@ -514,12 +535,12 @@ export default class OpenFile extends React.Component {
       <div
         className={
           this.state.closing
-            ? "create-new-wrap open-file-wrap animated fadeOut"
-            : "create-new-wrap open-file-wrap"
+            ? "create-new-wrap open-from-mnemonic-wrap animated fadeOut"
+            : "create-new-wrap open-from-mnemonic-wrap"
         }
       >
         <img
-          src="images/open-wallet-file.png"
+          src="images/mnemonic.png"
           className="create-new-pic"
           alt="open-wallet-file"
         />
@@ -533,7 +554,7 @@ export default class OpenFile extends React.Component {
         >
           X
         </button>
-        <h2>Open Wallet File</h2>
+        <h2>Open From Mnemonic</h2>
         <div className="col-xs-6 col-xs-push-3 login-wrap">
           <button
             className={
@@ -552,10 +573,15 @@ export default class OpenFile extends React.Component {
                 <input
                   name="filepath"
                   value={this.state.wallet_path}
-                  placeholder="Wallet File Path"
+                  placeholder="wallet file path"
                   readOnly
                 />
                 <input type="password" name="pass" placeholder="password" />
+                <textarea
+                  name="mnemonic"
+                  placeholder="mnemonic seed"
+                  rows="3"
+                />
               </div>
             </div>
             <button type="submit" className="submit btn button-shine">

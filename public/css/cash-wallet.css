@@ -66,6 +66,11 @@
   margin-top: 35px;
   margin-bottom: 20px;
 }
+.options-wrap .options-inner .item.disabled img {
+  filter: grayscale(70%);
+  -webkit-filter: grayscale(70%);
+  opacity: 0.9;
+}
 
 @media (min-width: 1024px) {
   .options-wrap {

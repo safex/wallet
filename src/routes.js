@@ -5,7 +5,7 @@ import CashWallet from "./components/CashWallet";
 import CreateNew from "./components/CreateNew";
 import CreateFromKeys from "./components/CreateFromKeys";
 import OpenFile from "./components/OpenFile";
-import NewFromMnemonic from "./components/NewFromMnemonic";
+import OpenFromMnemonic from "./components/OpenFromMnemonic";
 
 const routes = (
   <Router history={hashHistory}>
@@ -13,7 +13,7 @@ const routes = (
     <Route path="/create-new" component={CreateNew} />
     <Route path="/create-from-keys" component={CreateFromKeys} />
     <Route path="/open-file" component={OpenFile} />
-    <Route path="/new-from-mnemonic" component={NewFromMnemonic} />
+    <Route path="/open-from-mnemonic" component={OpenFromMnemonic} />
   </Router>
 );
 

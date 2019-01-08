@@ -1,4 +1,5 @@
 var swg = window.require("safex-addressjs");
+const remote = window.require("electron").remote;
 
 /**
  * Verify Safex Address
@@ -93,8 +94,21 @@ function openSendTokenPopup(target) {
 function closeSendPopup(target) {
   target.setState({
     send_cash: false,
-    send_token: false,
+    send_token: false
   });
+}
+
+/**
+ * Close App
+ */
+function closeApp(target) {
+  let window = remote.getCurrentWindow();
+
+  target.setState({ closing: true, exit_modal: false });
+
+  setTimeout(() => {
+    window.close();
+  }, 1000);
 }
 
 module.exports = {
@@ -104,5 +118,6 @@ module.exports = {
   closeAlert,
   openSendCashPopup,
   openSendTokenPopup,
-  closeSendPopup
+  closeSendPopup,
+  closeApp
 };

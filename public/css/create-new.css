@@ -23,6 +23,18 @@
   font-size: 18px;
   border-radius: 0px;
 }
+.create-new-wrap .close-app-btn {
+  background: transparent;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #fff;
+  font-size: 18px;
+  padding: 2px 9px 1px;
+  border: 1px solid #8ffdfd;
+  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
+  z-index: 2;
+}
 .create-new-wrap h2 {
   color: #fff;
   font-size: 44px;
@@ -46,7 +58,30 @@
   margin-bottom: 0;
   padding: 30px 20px 50px;
 }
-.create-new-wrap .login-wrap form input,
+.create-new-wrap .login-wrap .input-group {
+  width: 100%;
+}
+.create-new-wrap .login-wrap label {
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 1);
+  margin-bottom: 0;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+.create-new-wrap .login-wrap form input {
+  width: 100%;
+  background: transparent;
+  text-align: center;
+  border: 0px none;
+  color: #fff;
+  font-size: 20px;
+  padding: 4px 0px 5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #8ffdfd;
+}
 .create-new-wrap .login-wrap form textarea {
   width: 100%;
   background: transparent;
@@ -56,9 +91,6 @@
   font-size: 20px;
   padding: 4px 0px 5px;
   border-bottom: 1px solid #8ffdfd;
-}
-.create-new-wrap .login-wrap form input:first-of-type {
-  margin-bottom: 15px;
 }
 .create-new-wrap .login-wrap form input::-webkit-input-placeholder,
 .create-new-wrap .login-wrap form textarea::-webkit-input-placeholder {

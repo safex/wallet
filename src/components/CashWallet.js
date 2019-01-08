@@ -2,24 +2,22 @@ import React from "react";
 import CreateNew from "./CreateNew";
 import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
-import NewFromMnemonic from "./NewFromMnemonic";
+import OpenFromMnemonic from "./OpenFromMnemonic";
 import ExitModal from "./partials/ExitModal";
-
-const remote = window.require("electron").remote;
+import { closeApp } from "../utils/utils.js";
 
 export default class CashWallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { closing: false, exit_modal: false };
+    this.state = {};
 
     this.openCreateNew = this.openCreateNew.bind(this);
     this.openCreateNewFromKeys = this.openCreateNewFromKeys.bind(this);
     this.openFile = this.openFile.bind(this);
     this.openNewFromMnemonic = this.openNewFromMnemonic.bind(this);
 
-    this.openExitModal = this.openExitModal.bind(this);
-    this.closeExitModal = this.closeExitModal.bind(this);
-    this.closeApp = this.closeApp.bind(this);
+    this.toggleExitModal = this.toggleExitModal.bind(this);
+    this.setCloseApp = this.setCloseApp.bind(this);
   }
 
   openCreateNew() {
@@ -35,33 +33,22 @@ export default class CashWallet extends React.Component {
   }
 
   openNewFromMnemonic() {
-    this.context.router.push("/new-from-mnemonic");
+    this.context.router.push("/open-from-mnemonic");
   }
 
-  openExitModal() {
-    this.setState({ exit_modal: true });
+  toggleExitModal() {
+    this.setState({ exit_modal: !this.state.exit_modal });
   }
 
-  closeExitModal() {
-    this.setState({ exit_modal: false });
-  }
-
-  closeApp() {
-    let window = remote.getCurrentWindow();
-
-    this.setState({ closing: true });
-    this.closeExitModal();
-
-    setTimeout(() => {
-      window.close();
-    }, 1000);
+  setCloseApp() {
+    closeApp(this);
   }
 
   render() {
     <CreateNew />;
     <CreateFromKeys />;
     <OpenFile />;
-    <NewFromMnemonic />;
+    <OpenFromMnemonic />;
     return (
       <div>
         <div
@@ -86,11 +73,11 @@ export default class CashWallet extends React.Component {
             </div>
             <div className="item" onClick={this.openNewFromMnemonic}>
               <img src="images/mnemonic.png" alt="mnemonic" />
-              <h3>New from Mnemonic</h3>
+              <h3>Open from Mnemonic</h3>
             </div>
           </div>
           <button
-            onClick={this.openExitModal}
+            onClick={this.toggleExitModal}
             className="close-app-btn button-shine"
             title="Exit"
           >
@@ -100,8 +87,8 @@ export default class CashWallet extends React.Component {
 
         <ExitModal
           exitModal={this.state.exit_modal}
-          closeExitModal={this.closeExitModal}
-          closeApp={this.closeApp}
+          closeExitModal={this.toggleExitModal}
+          closeApp={this.setCloseApp}
         />
       </div>
     );
