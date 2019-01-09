@@ -104,11 +104,11 @@
 }
 .open-file-wrap .wallet-file-wrap .group-wrap {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 10px 0 0;
 }
 .open-file-wrap .wallet-file-wrap .group {
-  width: calc(50% - 10px);
+  width: calc(50% - 5px);
 }
 .open-file-wrap .wallet-file-wrap .group input:last-of-type {
   margin-bottom: 5px;

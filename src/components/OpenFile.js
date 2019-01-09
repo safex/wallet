@@ -45,8 +45,7 @@ export default class OpenFile extends React.Component {
       balance_view_key: "",
       balance_spend_key: "",
       send_cash: false,
-      send_token: false,
-      tick_handle: null
+      send_token: false
     };
 
     this.goBack = this.goBack.bind(this);
@@ -133,7 +132,7 @@ export default class OpenFile extends React.Component {
           safex
             .openWallet(args)
             .then(wallet => {
-              this.setState({
+              this.setState(() => ({
                 wallet_loaded: true,
                 wallet: wallet,
                 balance_wallet: wallet.address(),
@@ -141,11 +140,12 @@ export default class OpenFile extends React.Component {
                 view_key: wallet.secretViewKey(),
                 mnemonic: wallet.seed(),
                 alert_close_disabled: false
-              });
+              }));
               this.setCloseAlert();
               this.startBalanceCheck();
+
+              console.log("wallet object " + this.state.wallet);
               console.log("wallet loaded " + this.state.wallet_loaded);
-              console.log("Wallet seed: " + this.state.mnemonic);
             })
             .catch(err => {
               this.setState(() => ({

@@ -31,7 +31,7 @@ export default class CreateFromKeys extends React.Component {
     this.goBack = this.goBack.bind(this);
     this.setOpenAlert = this.setOpenAlert.bind(this);
     this.setCloseAlert = this.setCloseAlert.bind(this);
-    this.createNewWalletFromKeys = this.createNewWalletFromKeys.bind(this);
+    this.createWalletFromKeys = this.createWalletFromKeys.bind(this);
     this.toggleExitModal = this.toggleExitModal.bind(this);
     this.setCloseApp = this.setCloseApp.bind(this);
   }
@@ -58,7 +58,7 @@ export default class CreateFromKeys extends React.Component {
     closeApp(this);
   }
 
-  createNewWalletFromKeys(e) {
+  createWalletFromKeys(e) {
     e.preventDefault();
 
     //here we need the key set
@@ -217,7 +217,7 @@ export default class CreateFromKeys extends React.Component {
 
         <h2>Create New Wallet From Keys</h2>
         <div className="col-xs-6 col-xs-push-3 login-wrap">
-          <form onSubmit={this.createNewWalletFromKeys}>
+          <form onSubmit={this.createWalletFromKeys}>
             <div className="group-wrap">
               <div className="form-group">
                 <input

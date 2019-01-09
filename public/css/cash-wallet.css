@@ -39,7 +39,7 @@
   -webkit-transition: all ease 0.3s;
 }
 .options-wrap .options-inner:hover .item {
-  opacity: 0.65;
+  opacity: 0.55;
 }
 .options-wrap .options-inner:hover .item:hover {
   opacity: 1;
