@@ -17,7 +17,7 @@ import {
 import Alert from "./partials/Alert";
 import SendModal from "./partials/SendModal";
 
-export default class OpenFile extends React.Component {
+export default class OpenFromMnemonic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +35,6 @@ export default class OpenFile extends React.Component {
       net: "mainnet",
       daemonHostPort: "rpc.safex.io:17402",
       mnemonic: "",
-
       //balance settings
       balance: 0,
       unlocked_balance: 0,
@@ -741,6 +740,6 @@ export default class OpenFile extends React.Component {
   }
 }
 
-OpenFile.contextTypes = {
+OpenFromMnemonic.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
