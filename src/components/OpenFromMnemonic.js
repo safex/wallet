@@ -31,11 +31,10 @@ export default class OpenFromMnemonic extends React.Component {
       wallet_path: "",
       spend_key: "",
       view_key: "",
-      open_file_alert: false,
+      open_from_mnemonic_alert: false,
       net: "mainnet",
       daemonHostPort: "rpc.safex.io:17402",
-      mnemonic: "",
-      //balance settings
+      mnemonic: "", //balance settings
       balance: 0,
       unlocked_balance: 0,
       tokens: 0,
@@ -52,7 +51,7 @@ export default class OpenFromMnemonic extends React.Component {
     this.setOpenAlert = this.setOpenAlert.bind(this);
     this.setCloseAlert = this.setCloseAlert.bind(this);
     this.browseFile = this.browseFile.bind(this);
-    this.openFile = this.openFile.bind(this);
+    this.openFileFromMnemonic = this.openFileFromMnemonic.bind(this);
     this.openAnotherFile = this.openAnotherFile.bind(this);
     this.toggleExitModal = this.toggleExitModal.bind(this);
     this.setCloseApp = this.setCloseApp.bind(this);
@@ -107,7 +106,7 @@ export default class OpenFromMnemonic extends React.Component {
     }));
   }
 
-  openFile(e) {
+  openFileFromMnemonic(e) {
     e.preventDefault();
     const pass = e.target.pass.value;
     const mnemonic = e.target.mnemonic.value;
@@ -129,7 +128,7 @@ export default class OpenFromMnemonic extends React.Component {
             };
             this.setOpenAlert(
               "Please wait while your wallet file is loaded",
-              "open_file_alert",
+              "open_from_mnemonic_alert",
               true
             );
             safex
@@ -149,12 +148,13 @@ export default class OpenFromMnemonic extends React.Component {
                   }));
                   this.setCloseAlert();
                   this.startBalanceCheck();
+
                   console.log("wallet loaded " + this.state.wallet_loaded);
                   console.log("Wallet seed: " + this.state.mnemonic);
                 } else {
                   this.setOpenAlert(
                     "Mnemonic seed is incorrect, please try again",
-                    "open_file_alert",
+                    "open_from_mnemonic_alert",
                     false
                   );
                   console.log("Wallet seed: " + this.state.mnemonic);
@@ -166,7 +166,7 @@ export default class OpenFromMnemonic extends React.Component {
                 }));
                 this.setOpenAlert(
                   "Error opening the wallet: " + err,
-                  "open_file_alert",
+                  "open_from_mnemonic_alert",
                   false
                 );
               });
@@ -174,19 +174,23 @@ export default class OpenFromMnemonic extends React.Component {
         } else {
           this.setOpenAlert(
             "Enter mnemonic seed for your wallet file",
-            "open_file_alert",
+            "open_from_mnemonic_alert",
             false
           );
         }
       } else {
         this.setOpenAlert(
           "Enter password for your wallet file",
-          "open_file_alert",
+          "open_from_mnemonic_alert",
           false
         );
       }
     } else {
-      this.setOpenAlert("Choose the wallet file", "open_file_alert", false);
+      this.setOpenAlert(
+        "Choose the wallet file",
+        "open_from_mnemonic_alert",
+        false
+      );
     }
   }
 
@@ -230,7 +234,7 @@ export default class OpenFromMnemonic extends React.Component {
         console.log("Unable to store wallet: " + e);
         this.setOpenAlert(
           "Unable to store wallet: " + e,
-          "open_file_alert",
+          "open_from_mnemonic_alert",
           false
         );
       });
@@ -326,7 +330,7 @@ export default class OpenFromMnemonic extends React.Component {
       if (wallet.daemonBlockchainHeight() - wallet.blockchainHeight() > 10) {
         this.setOpenAlert(
           "Please wait while blockchain is being updated...",
-          "open_file_alert",
+          "open_from_mnemonic_alert",
           true
         );
       }
@@ -338,7 +342,7 @@ export default class OpenFromMnemonic extends React.Component {
     var wallet = this.state.wallet;
     this.setOpenAlert(
       "Rescanning, this may take some time, please wait ",
-      "open_file_alert",
+      "open_from_mnemonic_alert",
       true
     );
     wallet.off("updated");
@@ -381,7 +385,7 @@ export default class OpenFromMnemonic extends React.Component {
             console.log("Unable to store wallet: " + e);
             this.setOpenAlert(
               "Unable to store wallet: " + e,
-              "open_file_alert",
+              "open_from_mnemonic_alert",
               false
             );
           });
@@ -421,7 +425,7 @@ export default class OpenFromMnemonic extends React.Component {
                 this.setOpenAlert(
                   "Transaction commited successfully, Your cash transaction ID is: " +
                     txId,
-                  "open_file_alert",
+                  "open_from_mnemonic_alert",
                   false
                 );
                 this.state.balance = this.roundBalanceAmount(
@@ -435,7 +439,7 @@ export default class OpenFromMnemonic extends React.Component {
                 console.log("Error on commiting transaction: " + e);
                 this.setOpenAlert(
                   "Error on commiting transaction: " + e,
-                  "open_file_alert",
+                  "open_from_mnemonic_alert",
                   false
                 );
               });
@@ -444,15 +448,19 @@ export default class OpenFromMnemonic extends React.Component {
             console.log("Couldn't create transaction: " + e);
             this.setOpenAlert(
               "Couldn't create transaction: " + e,
-              "open_file_alert",
+              "open_from_mnemonic_alert",
               false
             );
           });
       } else {
-        this.setOpenAlert("Enter Amount", "open_file_alert", false);
+        this.setOpenAlert("Enter Amount", "open_from_mnemonic_alert", false);
       }
     } else {
-      this.setOpenAlert("Fill out all the fields", "open_file_alert", false);
+      this.setOpenAlert(
+        "Fill out all the fields",
+        "open_from_mnemonic_alert",
+        false
+      );
     }
   }
 
@@ -482,7 +490,7 @@ export default class OpenFromMnemonic extends React.Component {
                 this.setOpenAlert(
                   "Transaction commited successfully, Your token transaction ID is: " +
                     txId,
-                  "open_file_alert",
+                  "open_from_mnemonic_alert",
                   false
                 );
                 this.state.tokens = this.roundBalanceAmount(
@@ -496,7 +504,7 @@ export default class OpenFromMnemonic extends React.Component {
                 console.log("Error on commiting transaction: " + e);
                 this.setOpenAlert(
                   "Error on commiting transaction: " + e,
-                  "open_file_alert",
+                  "open_from_mnemonic_alert",
                   false
                 );
               });
@@ -505,15 +513,19 @@ export default class OpenFromMnemonic extends React.Component {
             console.log("Couldn't create transaction: " + e);
             this.setOpenAlert(
               "Couldn't create transaction: " + e,
-              "open_file_alert",
+              "open_from_mnemonic_alert",
               false
             );
           });
       } else {
-        this.setOpenAlert("Enter Amount", "open_file_alert", false);
+        this.setOpenAlert("Enter Amount", "open_from_mnemonic_alert", false);
       }
     } else {
-      this.setOpenAlert("Fill out all the fields", "open_file_alert", false);
+      this.setOpenAlert(
+        "Fill out all the fields",
+        "open_from_mnemonic_alert",
+        false
+      );
     }
   }
 
@@ -564,7 +576,7 @@ export default class OpenFromMnemonic extends React.Component {
             Browse
           </button>
           <form
-            onSubmit={this.openFile}
+            onSubmit={this.openFileFromMnemonic}
             className={this.state.wallet_loaded ? "hidden" : ""}
           >
             <div className="group-wrap">
@@ -723,7 +735,7 @@ export default class OpenFromMnemonic extends React.Component {
           />
 
           <Alert
-            openAlert={this.state.open_file_alert}
+            openAlert={this.state.open_from_mnemonic_alert}
             alertText={this.state.alert_text}
             alertCloseDisabled={this.state.alert_close_disabled}
             closeAlert={this.setCloseAlert}

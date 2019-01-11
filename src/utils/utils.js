@@ -64,6 +64,7 @@ function closeAlert(target) {
     open_file_alert: false,
     create_new_wallet_alert: false,
     create_from_keys_alert: false,
+    open_from_mnemonic_alert: false,
     alert_close_disabled: false
   });
 }

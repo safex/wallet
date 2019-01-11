@@ -35,7 +35,6 @@ export default class OpenFile extends React.Component {
       net: "mainnet",
       daemonHostPort: "rpc.safex.io:17402",
       mnemonic: "",
-
       //balance settings
       balance: 0,
       unlocked_balance: 0,
@@ -310,6 +309,7 @@ export default class OpenFile extends React.Component {
           true
         );
       }
+
       wallet.on("refreshed", this.refreshCallback);
     }
   }
@@ -519,7 +519,7 @@ export default class OpenFile extends React.Component {
         }
       >
         <img
-          src="images/open-wallet-file.png"
+          src="images/mnemonic.png"
           className="create-new-pic"
           alt="open-wallet-file"
         />
@@ -534,6 +534,7 @@ export default class OpenFile extends React.Component {
           X
         </button>
         <h2>Open Wallet File</h2>
+
         <div className="col-xs-6 col-xs-push-3 login-wrap">
           <button
             className={

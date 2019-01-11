@@ -92,7 +92,7 @@ export default class CreateNew extends React.Component {
                   modal_close_disabled: true
                 }));
                 this.setOpenAlert(
-                  "Please wait while your wallet file is being created",
+                  "Please wait while your wallet file is being created.",
                   "create_new_wallet_alert",
                   true
                 );
@@ -120,14 +120,24 @@ export default class CreateNew extends React.Component {
                       "wallet view private key  " + this.state.view_key
                     );
                     console.log("Wallet seed: " + wallet.seed());
-                    this.setOpenAlert(
-                      "Wallet File successfully created!",
-                      "create_new_wallet_alert",
-                      false
-                    );
-                    setTimeout(() => {
-                      this.setCloseAlert();
-                    }, 5000);
+                    wallet.on("refreshed", () => {
+                      console.log("Wallet File successfully created!");
+                      this.refs.pass1.value = "";
+                      this.refs.pass2.value = "";
+                      this.setOpenAlert(
+                        "Wallet File successfully created!",
+                        "create_new_wallet_alert",
+                        false
+                      );
+                      wallet
+                        .store()
+                        .then(() => {
+                          console.log("Wallet stored");
+                        })
+                        .catch(e => {
+                          console.log("Unable to store wallet: " + e);
+                        });
+                    });
                   })
                   .catch(err => {
                     this.setOpenAlert(

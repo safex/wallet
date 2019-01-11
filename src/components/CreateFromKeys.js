@@ -103,7 +103,7 @@ export default class CreateFromKeys extends React.Component {
                   modal_close_disabled: true
                 }));
                 this.setOpenAlert(
-                  "Please wait while your wallet file is being created",
+                  "Please wait while your wallet file is being created. This can take a while, please be patient",
                   "create_from_keys_alert",
                   true
                 );
@@ -132,19 +132,28 @@ export default class CreateFromKeys extends React.Component {
                       "wallet view private key  " + this.state.view_key
                     );
                     console.log("create_new_wallet_from_keys checkpoint 1");
-                    this.refs.address.value = "";
-                    this.refs.spendkey.value = "";
-                    this.refs.viewkey.value = "";
-                    this.refs.pass1.value = "";
-                    this.refs.pass2.value = "";
-                    this.setOpenAlert(
-                      "Wallet File successfully created!",
-                      "create_new_wallet_alert",
-                      false
-                    );
-                    setTimeout(() => {
-                      this.setCloseAlert();
-                    }, 5000);
+
+                    wallet.on("refreshed", () => {
+                      console.log("Wallet File successfully created!");
+                      this.refs.address.value = "";
+                      this.refs.spendkey.value = "";
+                      this.refs.viewkey.value = "";
+                      this.refs.pass1.value = "";
+                      this.refs.pass2.value = "";
+                      this.setOpenAlert(
+                        "Wallet File successfully created!",
+                        "create_new_wallet_alert",
+                        false
+                      );
+                      wallet
+                        .store()
+                        .then(() => {
+                          console.log("Wallet stored");
+                        })
+                        .catch(e => {
+                          console.log("Unable to store wallet: " + e);
+                        });
+                    });
                   })
                   .catch(err => {
                     console.log("Create wallet form keys failed!");
@@ -204,12 +213,17 @@ export default class CreateFromKeys extends React.Component {
           className="create-new-pic"
           alt="new-from-keys"
         />
-        <button onClick={this.goBack} className="go-back-btn button-shine">
+        <button
+          onClick={this.goBack}
+          className="go-back-btn button-shine"
+          disabled={this.state.alert_close_disabled ? "disabled" : ""}
+        >
           Back
         </button>
         <button
           onClick={this.toggleExitModal}
           className="close-app-btn button-shine"
+          disabled={this.state.alert_close_disabled ? "disabled" : ""}
           title="Exit"
         >
           X
