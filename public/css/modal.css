@@ -299,6 +299,10 @@
 
 .exitModal {
   width: 500px;
+  z-index: 100007;
+}
+.exitBackdrop {
+  z-index: 100006;
 }
 
 .sendModal {

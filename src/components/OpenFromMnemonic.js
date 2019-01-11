@@ -85,7 +85,6 @@ export default class OpenFromMnemonic extends React.Component {
   }
 
   toggleExitModal() {
-    this.setCloseAlert();
     this.setState({
       exit_modal: !this.state.exit_modal
     });

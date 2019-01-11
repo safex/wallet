@@ -24,7 +24,7 @@ export default class ExitModal extends React.Component {
         </div>
 
         <div
-          className={this.props.exitModal ? "backdrop active" : "backdrop"}
+          className={this.props.exitModal ? "backdrop exitBackdrop active" : "backdrop exitBackdrop"}
           onClick={this.props.closeExitModal}
         />
       </div>
