@@ -34,7 +34,9 @@ export default class OpenFromMnemonic extends React.Component {
       open_from_mnemonic_alert: false,
       net: "mainnet",
       daemonHostPort: "rpc.safex.io:17402",
-      mnemonic: "", //balance settings
+      mnemonic: "",
+
+      //balance settings
       balance: 0,
       unlocked_balance: 0,
       tokens: 0,
@@ -83,6 +85,7 @@ export default class OpenFromMnemonic extends React.Component {
   }
 
   toggleExitModal() {
+    this.setCloseAlert();
     this.setState({
       exit_modal: !this.state.exit_modal
     });
