@@ -103,7 +103,7 @@ export default class CreateFromKeys extends React.Component {
                   modal_close_disabled: true
                 }));
                 this.setOpenAlert(
-                  "Please wait while your wallet file is being created. This can take a while, please be patient",
+                  "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
                   "create_from_keys_alert",
                   true
                 );

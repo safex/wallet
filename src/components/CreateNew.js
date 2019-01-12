@@ -92,7 +92,7 @@ export default class CreateNew extends React.Component {
                   modal_close_disabled: true
                 }));
                 this.setOpenAlert(
-                  "Please wait while your wallet file is being created.",
+                  "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
                   "create_new_wallet_alert",
                   true
                 );
