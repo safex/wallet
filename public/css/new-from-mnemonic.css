@@ -1,17 +1,17 @@
 /* New From Mnemonic */
-.open-from-mnemonic-wrap .create-new-pic {
+.new-from-mnemonic-wrap .create-new-pic {
   bottom: 10px;
 }
-.open-from-mnemonic-wrap .login-wrap form input {
+.new-from-mnemonic-wrap .login-wrap form input {
   margin-bottom: 15px;
 }
-.open-from-mnemonic-wrap .login-wrap form input:last-of-type {
+.new-from-mnemonic-wrap .login-wrap form input:last-of-type {
   margin-bottom: 0;
 }
-.open-from-mnemonic-wrap .login-wrap .form-group {
+.new-from-mnemonic-wrap .login-wrap .form-group {
   padding: 50px 20px;
 }
-.open-from-mnemonic-wrap .login-wrap .browse-btn {
+.new-from-mnemonic-wrap .login-wrap .browse-btn {
   width: 100%;
   font-size: 30px;
   background: rgba(143, 253, 253, 0.62);
@@ -24,18 +24,18 @@
 }
 
 /* Wallet File Wrap */
-.open-from-mnemonic-wrap .wallet-file-wrap {
+.new-from-mnemonic-wrap .wallet-file-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   padding: 40px 20px 20px;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .btn-wrap {
+.new-from-mnemonic-wrap .wallet-file-wrap .btn-wrap {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 2;
   width: 100%;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .refresh {
+.new-from-mnemonic-wrap .wallet-file-wrap .refresh {
   text-align: center;
   background: rgba(143, 253, 253, 0.62);
   border: 0px none;
@@ -43,20 +43,20 @@
   border-radius: 0px;
   float: right;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .refresh img {
+.new-from-mnemonic-wrap .wallet-file-wrap .refresh img {
   max-height: 18px;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .signal {
+.new-from-mnemonic-wrap .wallet-file-wrap .signal {
   border: 0px none;
   padding: 0;
   background: transparent;
   margin-left: 10px;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .signal:hover {
+.new-from-mnemonic-wrap .wallet-file-wrap .signal:hover {
   box-shadow: none !important;
   cursor: initial;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .signal img {
+.new-from-mnemonic-wrap .wallet-file-wrap .signal img {
   -webkit-filter: invert(0.2);
   filter: invert(0.2);
   max-height: 23px;
@@ -64,11 +64,11 @@
   -moz-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .signal.connected img {
+.new-from-mnemonic-wrap .wallet-file-wrap .signal.connected img {
   -webkit-filter: none;
   filter: none;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .signal p {
+.new-from-mnemonic-wrap .wallet-file-wrap .signal p {
   display: inline-block;
   margin: 0 0 0 10px;
   font-size: 19px;
@@ -76,7 +76,7 @@
   top: 4px;
   color: #fff;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .blockheight {
+.new-from-mnemonic-wrap .wallet-file-wrap .blockheight {
   border: 0px none;
   padding: 0;
   margin-left: 10px;
@@ -84,11 +84,11 @@
   text-align: left;
   background: transparent;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .blockheight:hover {
+.new-from-mnemonic-wrap .wallet-file-wrap .blockheight:hover {
   box-shadow: none !important;
   cursor: initial;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .blockheight img {
+.new-from-mnemonic-wrap .wallet-file-wrap .blockheight img {
   -webkit-filter: grayscale(0);
   filter: grayscale(0);
   margin-right: 8px;
@@ -101,25 +101,25 @@
   position: relative;
   top: 4px;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .blockheight:hover span {
+.new-from-mnemonic-wrap .wallet-file-wrap .blockheight:hover span {
   color: #fff;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .group-wrap {
+.new-from-mnemonic-wrap .wallet-file-wrap .group-wrap {
   display: flex;
   justify-content: space-around;
   margin: 10px 0 0;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .group {
+.new-from-mnemonic-wrap .wallet-file-wrap .group {
   width: calc(50% - 10px);
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .group input:last-of-type {
+.new-from-mnemonic-wrap .wallet-file-wrap .group input:last-of-type {
   margin-bottom: 5px;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .group label,
-.open-from-mnemonic-wrap .wallet-file-wrap .group input {
+.new-from-mnemonic-wrap .wallet-file-wrap .group label,
+.new-from-mnemonic-wrap .wallet-file-wrap .group input {
   color: rgba(255, 255, 255, 1);
 }
-.open-from-mnemonic-wrap .wallet-file-wrap label {
+.new-from-mnemonic-wrap .wallet-file-wrap label {
   width: 100%;
   text-align: center;
   font-size: 20px;
@@ -128,7 +128,7 @@
   font-weight: 600;
   line-height: 1.2;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap .open-file-btn {
+.new-from-mnemonic-wrap .wallet-file-wrap .open-file-btn {
   width: auto;
   background: rgba(143, 253, 253, 0.62);
   color: #fff;
@@ -141,7 +141,7 @@
   top: 0;
   left: 0;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap input {
+.new-from-mnemonic-wrap .wallet-file-wrap input {
   width: 100%;
   background: transparent;
   text-align: center;
@@ -152,31 +152,31 @@
   border-bottom: 1px solid #8ffdfd;
   margin-bottom: 10px;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap input::-webkit-input-placeholder {
+.new-from-mnemonic-wrap .wallet-file-wrap input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   opacity: 1;
   color: #fff;
   font-size: 30px;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap input::-moz-placeholder {
+.new-from-mnemonic-wrap .wallet-file-wrap input::-moz-placeholder {
   /* Firefox 19+ */
   opacity: 1;
   color: #fff;
   font-size: 30px;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap input:-moz-placeholder {
+.new-from-mnemonic-wrap .wallet-file-wrap input:-moz-placeholder {
   /* Firefox 18- */
   opacity: 1;
   color: #fff;
   font-size: 30px;
 }
-.open-from-mnemonic-wrap .wallet-file-wrap input:-ms-input-placeholder {
+.new-from-mnemonic-wrap .wallet-file-wrap input:-ms-input-placeholder {
   /* IE 10+ */
   opacity: 1;
   color: #fff;
   font-size: 30px;
 }
-.open-from-mnemonic-wrap .login-wrap .btn {
+.new-from-mnemonic-wrap .login-wrap .btn {
   font-size: 25px;
   padding: 6px 12px 4px;
   margin-top: 5px;

@@ -2,7 +2,7 @@ import React from "react";
 import CreateNew from "./CreateNew";
 import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
-import OpenFromMnemonic from "./OpenFromMnemonic";
+import NewFromMnemonic from "./NewFromMnemonic";
 import ExitModal from "./partials/ExitModal";
 import { closeApp } from "../utils/utils.js";
 
@@ -33,7 +33,7 @@ export default class CashWallet extends React.Component {
   }
 
   openNewFromMnemonic() {
-    this.context.router.push("/open-from-mnemonic");
+    this.context.router.push("/new-from-mnemonic");
   }
 
   toggleExitModal() {
@@ -48,7 +48,7 @@ export default class CashWallet extends React.Component {
     <CreateNew />;
     <CreateFromKeys />;
     <OpenFile />;
-    <OpenFromMnemonic />;
+    <NewFromMnemonic />;
     return (
       <div>
         <div
@@ -73,7 +73,7 @@ export default class CashWallet extends React.Component {
             </div>
             <div className="item" onClick={this.openNewFromMnemonic}>
               <img src="images/mnemonic.png" alt="mnemonic" />
-              <h3>Open from Mnemonic</h3>
+              <h3>New from Mnemonic</h3>
             </div>
           </div>
           <button

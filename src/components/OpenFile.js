@@ -519,7 +519,7 @@ export default class OpenFile extends React.Component {
         }
       >
         <img
-          src="images/mnemonic.png"
+          src="images/open-wallet-file.png"
           className="create-new-pic"
           alt="open-wallet-file"
         />
