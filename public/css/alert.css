@@ -63,6 +63,9 @@
   text-align: left;
   word-break: break-word;
 }
+.alert p.disabled {
+  padding-right: 0;
+}
 .alertBackdrop {
   position: absolute;
   top: 0;

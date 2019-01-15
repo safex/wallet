@@ -96,7 +96,7 @@ export default class NewFromMnemonic extends React.Component {
                     password: pass1,
                     network: this.state.net,
                     daemonAddress: this.state.daemonHostPort,
-                    mnemonic: this.state.mnemonic
+                    mnemonic: mnemonic
                   };
                   if (!safex.walletExists(filepath)) {
                     this.setState(() => ({
@@ -104,7 +104,7 @@ export default class NewFromMnemonic extends React.Component {
                       modal_close_disabled: true
                     }));
                     this.setOpenAlert(
-                      "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
+                      "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
                       "new_from_mnemonic_alert",
                       true
                     );
@@ -122,7 +122,7 @@ export default class NewFromMnemonic extends React.Component {
                           wallet_address: wallet.address(),
                           spend_key: wallet.secretSpendKey(),
                           view_key: wallet.secretViewKey(),
-                          mnemonic: this.state.mnemonic
+                          mnemonic: mnemonic
                         });
                         console.log(
                           "wallet address  " + this.state.wallet_address
@@ -135,11 +135,12 @@ export default class NewFromMnemonic extends React.Component {
                         );
                         console.log("Wallet seed: " + wallet.seed());
                         wallet.on("refreshed", () => {
-                          console.log("Wallet File successfully created!");
+                          console.log("Wallet file successfully created!");
                           this.refs.pass1.value = "";
                           this.refs.pass2.value = "";
+                          this.refs.mnemonic.value = "";
                           this.setOpenAlert(
-                            "Wallet File successfully created!",
+                            "Wallet file successfully created!",
                             "new_from_mnemonic_alert",
                             false
                           );
@@ -170,14 +171,14 @@ export default class NewFromMnemonic extends React.Component {
                     this.setOpenAlert(
                       "Wallet already exists. Please choose a different file name  " +
                         "this application does not enable overwriting an existing wallet file " +
-                        "OR you can open it using the Load Existing Wallet",
+                        "OR you can open it using the Open Wallet File",
                       "new_from_mnemonic_alert",
                       false
                     );
                     console.log(
                       "Wallet already exists. Please choose a different file name  " +
                         "this application does not enable overwriting an existing wallet file " +
-                        "OR you can open it using the Load Existing Wallet"
+                        "OR you can open it using the Open Wallet File"
                     );
                   }
                 }
@@ -275,6 +276,7 @@ export default class NewFromMnemonic extends React.Component {
                 <label>Mnemonic Seed for your Wallet</label>
                 <textarea
                   name="mnemonic"
+                  ref="mnemonic"
                   placeholder="mnemonic seed"
                   rows="3"
                 />
