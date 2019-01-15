@@ -5,9 +5,6 @@
 .new-from-mnemonic-wrap .login-wrap form input {
   margin-bottom: 15px;
 }
-.new-from-mnemonic-wrap .login-wrap form input:last-of-type {
-  margin-bottom: 0;
-}
 .new-from-mnemonic-wrap .login-wrap .form-group {
   padding: 50px 20px;
 }

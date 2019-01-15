@@ -236,6 +236,7 @@ export default class NewFromMnemonic extends React.Component {
                   ref="pass2"
                   placeholder="repeat password"
                 />
+                <label>Mnemonic Seed for your Wallet</label>
                 <textarea
                   name="mnemonic"
                   placeholder="mnemonic seed"
