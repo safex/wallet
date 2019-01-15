@@ -553,7 +553,7 @@ export default class OpenFile extends React.Component {
                 <input
                   name="filepath"
                   value={this.state.wallet_path}
-                  placeholder="Wallet File Path"
+                  placeholder="wallet file path"
                   readOnly
                 />
                 <input type="password" name="pass" placeholder="password" />

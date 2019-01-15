@@ -76,7 +76,6 @@ export default class NewFromMnemonic extends React.Component {
     const pass1 = e.target.pass1.value;
     const pass2 = e.target.pass2.value;
     const mnemonic = e.target.mnemonic.value;
-    let word_count = mnemonic.split(" ").length;
 
     if (pass1 !== "" || pass2 !== "") {
       if (pass1 === pass2) {
@@ -86,7 +85,7 @@ export default class NewFromMnemonic extends React.Component {
             this.countWords(mnemonic) == 25
           ) {
             if (this.hasNumber(mnemonic) === false) {
-              console.log("word count " + word_count);
+              console.log("word count " + this.countWords(mnemonic));
               dialog.showSaveDialog(filepath => {
                 if (filepath !== undefined) {
                   this.setState({ wallet_path: filepath });
@@ -198,6 +197,7 @@ export default class NewFromMnemonic extends React.Component {
               false
             );
             console.log("Mnemonic seed must contain 24 or 25 words");
+            console.log("word count " + this.countWords(mnemonic));
           }
         } else {
           this.setOpenAlert(

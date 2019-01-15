@@ -244,13 +244,13 @@ export default class CreateFromKeys extends React.Component {
                   type="text"
                   name="spendkey"
                   ref="spendkey"
-                  placeholder="Secret Spendkey"
+                  placeholder="secret spendkey"
                 />
                 <input
                   type="text"
                   name="viewkey"
                   ref="viewkey"
-                  placeholder="Secret Viewkey"
+                  placeholder="secret viewkey"
                 />
                 <input
                   type="password"
