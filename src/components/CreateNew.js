@@ -201,13 +201,18 @@ export default class CreateNew extends React.Component {
           className="create-new-pic"
           alt="create-new"
         />
-        <button onClick={this.goBack} className="go-back-btn button-shine">
+        <button
+          onClick={this.goBack}
+          className="go-back-btn button-shine"
+          disabled={this.state.alert_close_disabled ? "disabled" : ""}
+        >
           Back
         </button>
         <button
           onClick={this.toggleExitModal}
           className="close-app-btn button-shine"
           title="Exit"
+          disabled={this.state.alert_close_disabled ? "disabled" : ""}
         >
           X
         </button>
