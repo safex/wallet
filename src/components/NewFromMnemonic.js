@@ -33,6 +33,7 @@ export default class NewFromMnemonic extends React.Component {
     this.toggleExitModal = this.toggleExitModal.bind(this);
     this.setCloseApp = this.setCloseApp.bind(this);
     this.hasNumber = this.hasNumber.bind(this);
+    this.countWords = this.countWords.bind(this);
   }
 
   goBack() {
@@ -65,6 +66,10 @@ export default class NewFromMnemonic extends React.Component {
     return /\d/.test(myString);
   }
 
+  countWords(str) {
+    return str.trim().split(/\s+/).length;
+  }
+
   createNewFromMnemonic(e) {
     e.preventDefault();
 
@@ -76,7 +81,10 @@ export default class NewFromMnemonic extends React.Component {
     if (pass1 !== "" || pass2 !== "") {
       if (pass1 === pass2) {
         if (mnemonic !== "") {
-          if (word_count == 25 || word_count == 24) {
+          if (
+            this.countWords(mnemonic) == 24 ||
+            this.countWords(mnemonic) == 25
+          ) {
             if (this.hasNumber(mnemonic) === false) {
               console.log("word count " + word_count);
               dialog.showSaveDialog(filepath => {
