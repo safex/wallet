@@ -21,8 +21,7 @@ export default class NewFromMnemonic extends React.Component {
       view_key: "",
       net: "mainnet",
       daemonHostPort: "rpc.safex.io:17402",
-      mnemonic:
-        "nifty inflamed against focus gasp ethics spying gulp tiger cogs evicted cohesive woken nylon erosion tell saved fatal alkaline acquire lemon maps hull imitate saved",
+      mnemonic: "",
       create_new_wallet_alert: false,
       mnemonic_active: false
     };
@@ -33,6 +32,7 @@ export default class NewFromMnemonic extends React.Component {
     this.createNewFromMnemonic = this.createNewFromMnemonic.bind(this);
     this.toggleExitModal = this.toggleExitModal.bind(this);
     this.setCloseApp = this.setCloseApp.bind(this);
+    this.hasNumber = this.hasNumber.bind(this);
   }
 
   goBack() {
@@ -61,126 +61,154 @@ export default class NewFromMnemonic extends React.Component {
     closeAlert(this);
   }
 
+  hasNumber(myString) {
+    return /\d/.test(myString);
+  }
+
   createNewFromMnemonic(e) {
     e.preventDefault();
 
     const pass1 = e.target.pass1.value;
     const pass2 = e.target.pass2.value;
     const mnemonic = e.target.mnemonic.value;
+    let word_count = mnemonic.split(" ").length;
 
     if (pass1 !== "" || pass2 !== "") {
       if (pass1 === pass2) {
         if (mnemonic !== "") {
-          dialog.showSaveDialog(filepath => {
-            if (filepath !== undefined) {
-              this.setState({ wallet_path: filepath });
-              //TODO needs additional sanitation on the passwords, length and type of data
+          if (word_count == 25 || word_count == 24) {
+            if (this.hasNumber(mnemonic) === false) {
+              console.log("word count " + word_count);
+              dialog.showSaveDialog(filepath => {
+                if (filepath !== undefined) {
+                  this.setState({ wallet_path: filepath });
+                  //TODO needs additional sanitation on the passwords, length and type of data
 
-              var args = {
-                path: filepath,
-                password: pass1,
-                network: this.state.net,
-                daemonAddress: this.state.daemonHostPort,
-                mnemonic: this.state.mnemonic
-              };
-              if (!safex.walletExists(filepath)) {
-                this.setState(() => ({
-                  wallet_exists: false,
-                  modal_close_disabled: true
-                }));
-                this.setOpenAlert(
-                  "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
-                  "new_from_mnemonic_alert",
-                  true
-                );
-                console.log(
-                  "wallet doesn't exist. creating new one: " +
-                    this.state.wallet_path
-                );
-
-                safex
-                  .recoveryWallet(args)
-                  .then(wallet => {
-                    this.setState({
-                      wallet_created: true,
-                      wallet: wallet,
-                      wallet_address: wallet.address(),
-                      spend_key: wallet.secretSpendKey(),
-                      view_key: wallet.secretViewKey(),
-                      mnemonic: this.state.mnemonic
-                    });
-                    console.log("wallet address  " + this.state.wallet_address);
-                    console.log(
-                      "wallet spend private key  " + this.state.spend_key
-                    );
-                    console.log(
-                      "wallet view private key  " + this.state.view_key
-                    );
-                    console.log("Wallet seed: " + wallet.seed());
-                    wallet.on("refreshed", () => {
-                      console.log("Wallet File successfully created!");
-                      this.refs.pass1.value = "";
-                      this.refs.pass2.value = "";
-                      this.setOpenAlert(
-                        "Wallet File successfully created!",
-                        "new_from_mnemonic_alert",
-                        false
-                      );
-                      wallet
-                        .store()
-                        .then(() => {
-                          console.log("Wallet stored");
-                        })
-                        .catch(e => {
-                          console.log("Unable to store wallet: " + e);
-                        });
-                    });
-                  })
-                  .catch(err => {
+                  var args = {
+                    path: filepath,
+                    password: pass1,
+                    network: this.state.net,
+                    daemonAddress: this.state.daemonHostPort,
+                    mnemonic: this.state.mnemonic
+                  };
+                  if (!safex.walletExists(filepath)) {
+                    this.setState(() => ({
+                      wallet_exists: false,
+                      modal_close_disabled: true
+                    }));
                     this.setOpenAlert(
-                      "error with the creation of the wallet " + err,
+                      "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
+                      "new_from_mnemonic_alert",
+                      true
+                    );
+                    console.log(
+                      "wallet doesn't exist. creating new one: " +
+                        this.state.wallet_path
+                    );
+
+                    safex
+                      .recoveryWallet(args)
+                      .then(wallet => {
+                        this.setState({
+                          wallet_created: true,
+                          wallet: wallet,
+                          wallet_address: wallet.address(),
+                          spend_key: wallet.secretSpendKey(),
+                          view_key: wallet.secretViewKey(),
+                          mnemonic: this.state.mnemonic
+                        });
+                        console.log(
+                          "wallet address  " + this.state.wallet_address
+                        );
+                        console.log(
+                          "wallet spend private key  " + this.state.spend_key
+                        );
+                        console.log(
+                          "wallet view private key  " + this.state.view_key
+                        );
+                        console.log("Wallet seed: " + wallet.seed());
+                        wallet.on("refreshed", () => {
+                          console.log("Wallet File successfully created!");
+                          this.refs.pass1.value = "";
+                          this.refs.pass2.value = "";
+                          this.setOpenAlert(
+                            "Wallet File successfully created!",
+                            "new_from_mnemonic_alert",
+                            false
+                          );
+                          wallet
+                            .store()
+                            .then(() => {
+                              console.log("Wallet stored");
+                            })
+                            .catch(e => {
+                              console.log("Unable to store wallet: " + e);
+                            });
+                        });
+                      })
+                      .catch(err => {
+                        this.setOpenAlert(
+                          "error with the creation of the wallet " + err,
+                          "new_from_mnemonic_alert",
+                          false
+                        );
+                        console.log(
+                          "error with the creation of the wallet " + err
+                        );
+                      });
+                  } else {
+                    this.setState(() => ({
+                      modal_close_disabled: false
+                    }));
+                    this.setOpenAlert(
+                      "Wallet already exists. Please choose a different file name  " +
+                        "this application does not enable overwriting an existing wallet file " +
+                        "OR you can open it using the Load Existing Wallet",
                       "new_from_mnemonic_alert",
                       false
                     );
-                    console.log("error with the creation of the wallet " + err);
-                  });
-              } else {
-                this.setState(() => ({
-                  modal_close_disabled: false
-                }));
-                this.setOpenAlert(
-                  "Wallet already exists. Please choose a different file name  " +
-                    "this application does not enable overwriting an existing wallet file " +
-                    "OR you can open it using the Load Existing Wallet",
-                  "new_from_mnemonic_alert",
-                  false
-                );
-                console.log(
-                  "Wallet already exists. Please choose a different file name  " +
-                    "this application does not enable overwriting an existing wallet file " +
-                    "OR you can open it using the Load Existing Wallet"
-                );
-              }
+                    console.log(
+                      "Wallet already exists. Please choose a different file name  " +
+                        "this application does not enable overwriting an existing wallet file " +
+                        "OR you can open it using the Load Existing Wallet"
+                    );
+                  }
+                }
+              });
+            } else {
+              this.setOpenAlert(
+                "Mnemonic seed must not contain a number",
+                "new_from_mnemonic_alert",
+                false
+              );
+              console.log("mnemonic seed contains a number");
             }
-          });
+          } else {
+            this.setOpenAlert(
+              "Mnemonic seed must contain 24 or 25 words",
+              "new_from_mnemonic_alert",
+              false
+            );
+            console.log("Mnemonic seed must contain 24 or 25 words");
+          }
         } else {
           this.setOpenAlert(
-            "Repeated password does not match",
+            "Enter mnemonic seed for your wallet",
             "new_from_mnemonic_alert",
             false
           );
-          console.log("Repeated password does not match");
+          console.log("Mnemonic field is empty");
         }
         //pass dialog box
         //pass password
         //confirm password
       } else {
         this.setOpenAlert(
-          "Enter Mnemonic seed for your wallet",
+          "Repeated password does not match",
           "new_from_mnemonic_alert",
           false
         );
-        console.log("Mnemonic field is empty");
+        console.log("Repeated password does not match");
       }
     } else {
       this.setOpenAlert(
@@ -240,7 +268,6 @@ export default class NewFromMnemonic extends React.Component {
                 <textarea
                   name="mnemonic"
                   placeholder="mnemonic seed"
-                  value={this.state.mnemonic}
                   rows="3"
                 />
               </div>
