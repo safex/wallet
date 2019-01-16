@@ -4,9 +4,8 @@ const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
 import Alert from "./partials/Alert";
-import ExitModal from "./partials/ExitModal";
 
-import { openAlert, closeAlert, closeApp } from "../utils/utils.js";
+import { openAlert, closeAlert } from "../utils/utils.js";
 
 export default class CreateNew extends React.Component {
   constructor(props) {
@@ -30,30 +29,20 @@ export default class CreateNew extends React.Component {
     this.setOpenAlert = this.setOpenAlert.bind(this);
     this.setCloseAlert = this.setCloseAlert.bind(this);
     this.createNew = this.createNew.bind(this);
-    this.toggleExitModal = this.toggleExitModal.bind(this);
-    this.setCloseApp = this.setCloseApp.bind(this);
   }
 
   goBack() {
-    this.context.router.push("/");
+    this.props.goBack();
   }
 
   setOpenAlert(alert, alert_state, disabled) {
     openAlert(this, alert, alert_state, disabled);
   }
 
-  toggleExitModal() {
-    this.setState({
-      exit_modal: !this.state.exit_modal
-    });
-  }
-
   toggleMnemonic() {
-    this.setState({ mnemonic_active: !this.state.mnemonic_active });
-  }
-
-  setCloseApp() {
-    closeApp(this);
+    this.setState({
+      mnemonic_active: !this.state.mnemonic_active
+    });
   }
 
   setCloseAlert() {
@@ -68,7 +57,9 @@ export default class CreateNew extends React.Component {
     console.log("new wallet password: " + e.target.pass1.value);
 
     if (this.state.wallet_created) {
-      this.setState(() => ({ wallet_created: false }));
+      this.setState(() => ({
+        wallet_created: false
+      }));
       this.refs.pass1.value = "";
       this.refs.pass2.value = "";
     } else {
@@ -76,7 +67,9 @@ export default class CreateNew extends React.Component {
         if (pass1 === pass2) {
           dialog.showSaveDialog(filepath => {
             if (filepath !== undefined) {
-              this.setState({ wallet_path: filepath });
+              this.setState({
+                wallet_path: filepath
+              });
               //TODO needs additional sanitation on the passwords, length and type of data
 
               var args = {
@@ -208,14 +201,6 @@ export default class CreateNew extends React.Component {
         >
           Back
         </button>
-        <button
-          onClick={this.toggleExitModal}
-          className="close-app-btn button-shine"
-          title="Exit"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          X
-        </button>
 
         <h2>Create New Wallet File</h2>
         <div className="col-xs-6 col-xs-push-3 login-wrap">
@@ -270,17 +255,7 @@ export default class CreateNew extends React.Component {
             closeAlert={this.setCloseAlert}
           />
         </div>
-
-        <ExitModal
-          exitModal={this.state.exit_modal}
-          closeExitModal={this.toggleExitModal}
-          closeApp={this.setCloseApp}
-        />
       </div>
     );
   }
 }
-
-CreateNew.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};

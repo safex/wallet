@@ -3,15 +3,12 @@ import React from "react";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
-import ExitModal from "./partials/ExitModal";
-
 import {
   openAlert,
   closeAlert,
   openSendCashPopup,
   openSendTokenPopup,
-  closeSendPopup,
-  closeApp
+  closeSendPopup
 } from "../utils/utils.js";
 
 import Alert from "./partials/Alert";
@@ -34,8 +31,7 @@ export default class OpenFile extends React.Component {
       open_file_alert: false,
       net: "mainnet",
       daemonHostPort: "rpc.safex.io:17402",
-      mnemonic: "",
-      //balance settings
+      mnemonic: "", //balance settings
       balance: 0,
       unlocked_balance: 0,
       tokens: 0,
@@ -53,8 +49,6 @@ export default class OpenFile extends React.Component {
     this.browseFile = this.browseFile.bind(this);
     this.openFile = this.openFile.bind(this);
     this.openAnotherFile = this.openAnotherFile.bind(this);
-    this.toggleExitModal = this.toggleExitModal.bind(this);
-    this.setCloseApp = this.setCloseApp.bind(this);
 
     //Balance functions
     this.roundBalanceAmount = this.roundBalanceAmount.bind(this);
@@ -71,7 +65,7 @@ export default class OpenFile extends React.Component {
   }
 
   goBack() {
-    this.context.router.push("/");
+    this.props.goBack();
   }
 
   setOpenAlert(alert, alert_state, disabled) {
@@ -80,16 +74,6 @@ export default class OpenFile extends React.Component {
 
   setCloseAlert() {
     closeAlert(this);
-  }
-
-  toggleExitModal() {
-    this.setState({
-      exit_modal: !this.state.exit_modal
-    });
-  }
-
-  setCloseApp() {
-    closeApp(this);
   }
 
   openAnotherFile() {
@@ -526,13 +510,6 @@ export default class OpenFile extends React.Component {
         <button onClick={this.goBack} className="go-back-btn button-shine">
           Back
         </button>
-        <button
-          onClick={this.toggleExitModal}
-          className="close-app-btn button-shine"
-          title="Exit"
-        >
-          X
-        </button>
         <h2>Open Wallet File</h2>
 
         <div className="col-xs-6 col-xs-push-3 login-wrap">
@@ -705,17 +682,7 @@ export default class OpenFile extends React.Component {
             closeAlert={this.setCloseAlert}
           />
         </div>
-
-        <ExitModal
-          exitModal={this.state.exit_modal}
-          closeExitModal={this.toggleExitModal}
-          closeApp={this.setCloseApp}
-        />
       </div>
     );
   }
 }
-
-OpenFile.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};

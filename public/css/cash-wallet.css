@@ -2,10 +2,9 @@
 .options-wrap {
   position: relative;
   padding: 10px;
-  transition: all ease 0.3s;
-  -o-transition: all ease 0.3s;
-  -moz-transition: all ease 0.3s;
-  -webkit-transition: all ease 0.3s;
+}
+.options-wrap.option-wrap-hidden {
+  padding: 0;
 }
 .options-wrap .close-app-btn {
   background: transparent;
@@ -70,6 +69,11 @@
   filter: grayscale(70%);
   -webkit-filter: grayscale(70%);
   opacity: 0.9;
+}
+
+.page-wrap {
+  width: 100%;
+  height: 100%;
 }
 
 @media (min-width: 1024px) {

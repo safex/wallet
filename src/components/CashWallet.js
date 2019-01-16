@@ -2,15 +2,19 @@ import React from "react";
 import CreateNew from "./CreateNew";
 import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
-import NewFromMnemonic from "./NewFromMnemonic";
+import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import ExitModal from "./partials/ExitModal";
 import { closeApp } from "../utils/utils.js";
 
 export default class CashWallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      page: null,
+      show_page: false
+    };
 
+    this.goBack = this.goBack.bind(this);
     this.openCreateNew = this.openCreateNew.bind(this);
     this.openCreateNewFromKeys = this.openCreateNewFromKeys.bind(this);
     this.openFile = this.openFile.bind(this);
@@ -21,19 +25,19 @@ export default class CashWallet extends React.Component {
   }
 
   openCreateNew() {
-    this.context.router.push("/create-new");
+    this.setState({ page: "create-new", show_page: true });
   }
 
   openCreateNewFromKeys() {
-    this.context.router.push("/create-from-keys");
+    this.setState({ page: "create-from-keys", show_page: true });
   }
 
   openFile() {
-    this.context.router.push("/open-file");
+    this.setState({ page: "open-file", show_page: true });
   }
 
   openNewFromMnemonic() {
-    this.context.router.push("/new-from-mnemonic");
+    this.setState({ page: "recover-from-mnemonic", show_page: true });
   }
 
   toggleExitModal() {
@@ -44,21 +48,41 @@ export default class CashWallet extends React.Component {
     closeApp(this);
   }
 
+  goBack() {
+    this.setState({ page: null, show_page: false });
+  }
+
   render() {
-    <CreateNew />;
-    <CreateFromKeys />;
-    <OpenFile />;
-    <NewFromMnemonic />;
+    let page;
+
+    switch (this.state.page) {
+      case "create-new":
+        page = <CreateNew goBack={this.goBack} />;
+        break;
+      case "create-from-keys":
+        page = <CreateFromKeys goBack={this.goBack} />;
+        break;
+      case "open-file":
+        page = <OpenFile goBack={this.goBack} />;
+        break;
+      case "recover-from-mnemonic":
+        page = <RecoverFromMnemonic goBack={this.goBack} />;
+        break;
+    }
     return (
       <div>
         <div
           className={
-            this.state.closing
-              ? "options-wrap animated fadeOut"
+            this.state.show_page
+              ? "options-wrap option-wrap-hidden"
               : "options-wrap"
           }
         >
-          <div className="options-inner">
+          <div
+            className={
+              this.state.show_page ? "options-inner hidden" : "options-inner"
+            }
+          >
             <div className="item" onClick={this.openCreateNew}>
               <img src="images/create-new.png" alt="create-new" />
               <h3>Create New</h3>
@@ -90,11 +114,13 @@ export default class CashWallet extends React.Component {
           closeExitModal={this.toggleExitModal}
           closeApp={this.setCloseApp}
         />
+
+        <div
+          className={this.state.show_page ? "page-wrap" : "page-wrap hidden"}
+        >
+          {page}
+        </div>
       </div>
     );
   }
 }
-
-CashWallet.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};

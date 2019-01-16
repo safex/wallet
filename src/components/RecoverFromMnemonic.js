@@ -4,9 +4,8 @@ const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
 import Alert from "./partials/Alert";
-import ExitModal from "./partials/ExitModal";
 
-import { openAlert, closeAlert, closeApp } from "../utils/utils.js";
+import { openAlert, closeAlert } from "../utils/utils.js";
 
 export default class NewFromMnemonic extends React.Component {
   constructor(props) {
@@ -30,32 +29,22 @@ export default class NewFromMnemonic extends React.Component {
     this.setOpenAlert = this.setOpenAlert.bind(this);
     this.setCloseAlert = this.setCloseAlert.bind(this);
     this.createNewFromMnemonic = this.createNewFromMnemonic.bind(this);
-    this.toggleExitModal = this.toggleExitModal.bind(this);
-    this.setCloseApp = this.setCloseApp.bind(this);
     this.hasNumber = this.hasNumber.bind(this);
     this.countWords = this.countWords.bind(this);
   }
 
   goBack() {
-    this.context.router.push("/");
+    this.props.goBack();
   }
 
   setOpenAlert(alert, alert_state, disabled) {
     openAlert(this, alert, alert_state, disabled);
   }
 
-  toggleExitModal() {
-    this.setState({
-      exit_modal: !this.state.exit_modal
-    });
-  }
-
   toggleMnemonic() {
-    this.setState({ mnemonic_active: !this.state.mnemonic_active });
-  }
-
-  setCloseApp() {
-    closeApp(this);
+    this.setState({
+      mnemonic_active: !this.state.mnemonic_active
+    });
   }
 
   setCloseAlert() {
@@ -88,7 +77,9 @@ export default class NewFromMnemonic extends React.Component {
               console.log("word count " + this.countWords(mnemonic));
               dialog.showSaveDialog(filepath => {
                 if (filepath !== undefined) {
-                  this.setState({ wallet_path: filepath });
+                  this.setState({
+                    wallet_path: filepath
+                  });
                   //TODO needs additional sanitation on the passwords, length and type of data
 
                   var args = {
@@ -249,14 +240,6 @@ export default class NewFromMnemonic extends React.Component {
         >
           Back
         </button>
-        <button
-          onClick={this.toggleExitModal}
-          className="close-app-btn button-shine"
-          title="Exit"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          X
-        </button>
 
         <h2>Create New Wallet From Mnemonic</h2>
         <div className="col-xs-6 col-xs-push-3 login-wrap">
@@ -299,17 +282,7 @@ export default class NewFromMnemonic extends React.Component {
             closeAlert={this.setCloseAlert}
           />
         </div>
-
-        <ExitModal
-          exitModal={this.state.exit_modal}
-          closeExitModal={this.toggleExitModal}
-          closeApp={this.setCloseApp}
-        />
       </div>
     );
   }
 }
-
-NewFromMnemonic.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};

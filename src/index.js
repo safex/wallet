@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom';
-import routes from './routes';
+import React from "react";
+import ReactDOM from "react-dom";
+import CashWallet from "./components/CashWallet";
 
+import "./index.css";
 
-import './index.css';
-
-ReactDOM.render(routes, document.getElementById('root'));
+ReactDOM.render(<CashWallet />, document.getElementById("root"));
