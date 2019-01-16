@@ -25,7 +25,7 @@ export default class NewFromMnemonic extends React.Component {
       mnemonic_active: false
     };
 
-    this.goBack = this.goBack.bind(this);
+    this.goToPage = this.goToPage.bind(this);
     this.setOpenAlert = this.setOpenAlert.bind(this);
     this.setCloseAlert = this.setCloseAlert.bind(this);
     this.createNewFromMnemonic = this.createNewFromMnemonic.bind(this);
@@ -33,22 +33,14 @@ export default class NewFromMnemonic extends React.Component {
     this.countWords = this.countWords.bind(this);
   }
 
-  goBack() {
-    this.props.goBack();
-  }
-
-  setOpenAlert(alert, alert_state, disabled) {
-    openAlert(this, alert, alert_state, disabled);
+  goToPage() {
+    this.props.goToPage();
   }
 
   toggleMnemonic() {
     this.setState({
       mnemonic_active: !this.state.mnemonic_active
     });
-  }
-
-  setCloseAlert() {
-    closeAlert(this);
   }
 
   hasNumber(myString) {
@@ -125,6 +117,7 @@ export default class NewFromMnemonic extends React.Component {
                           "wallet view private key  " + this.state.view_key
                         );
                         console.log("Wallet seed: " + wallet.seed());
+
                         wallet.on("refreshed", () => {
                           console.log("Wallet file successfully created!");
                           this.refs.pass1.value = "";
@@ -234,7 +227,7 @@ export default class NewFromMnemonic extends React.Component {
           alt="create-new"
         />
         <button
-          onClick={this.goBack}
+          onClick={this.goToPage}
           className="go-back-btn button-shine"
           disabled={this.state.alert_close_disabled ? "disabled" : ""}
         >

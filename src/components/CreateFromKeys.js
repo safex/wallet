@@ -22,22 +22,14 @@ export default class CreateFromKeys extends React.Component {
       create_from_keys_alert: false
     };
 
-    this.goBack = this.goBack.bind(this);
+    this.goToPage = this.goToPage.bind(this);
     this.setOpenAlert = this.setOpenAlert.bind(this);
     this.setCloseAlert = this.setCloseAlert.bind(this);
     this.createWalletFromKeys = this.createWalletFromKeys.bind(this);
   }
 
-  goBack() {
-    this.props.goBack();
-  }
-
-  setOpenAlert(alert, alert_state, disabled) {
-    openAlert(this, alert, alert_state, disabled);
-  }
-
-  setCloseAlert() {
-    closeAlert(this);
+  goToPage() {
+    this.props.goToPage();
   }
 
   createWalletFromKeys(e) {
@@ -196,7 +188,7 @@ export default class CreateFromKeys extends React.Component {
           alt="new-from-keys"
         />
         <button
-          onClick={this.goBack}
+          onClick={this.goToPage}
           className="go-back-btn button-shine"
           disabled={this.state.alert_close_disabled ? "disabled" : ""}
         >

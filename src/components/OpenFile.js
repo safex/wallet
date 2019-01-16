@@ -13,6 +13,7 @@ import {
 
 import Alert from "./partials/Alert";
 import SendModal from "./partials/SendModal";
+import Wallet from "./Wallet";
 
 export default class OpenFile extends React.Component {
   constructor(props) {
@@ -31,7 +32,8 @@ export default class OpenFile extends React.Component {
       open_file_alert: false,
       net: "mainnet",
       daemonHostPort: "rpc.safex.io:17402",
-      mnemonic: "", //balance settings
+      mnemonic: "",
+      //balance settings
       balance: 0,
       unlocked_balance: 0,
       tokens: 0,
@@ -43,7 +45,7 @@ export default class OpenFile extends React.Component {
       send_token: false
     };
 
-    this.goBack = this.goBack.bind(this);
+    this.goToPage = this.goToPage.bind(this);
     this.setOpenAlert = this.setOpenAlert.bind(this);
     this.setCloseAlert = this.setCloseAlert.bind(this);
     this.browseFile = this.browseFile.bind(this);
@@ -64,16 +66,8 @@ export default class OpenFile extends React.Component {
     this.sendToken = this.sendToken.bind(this);
   }
 
-  goBack() {
-    this.props.goBack();
-  }
-
-  setOpenAlert(alert, alert_state, disabled) {
-    openAlert(this, alert, alert_state, disabled);
-  }
-
-  setCloseAlert() {
-    closeAlert(this);
+  goToPage() {
+    this.props.goToPage();
   }
 
   openAnotherFile() {
@@ -494,6 +488,23 @@ export default class OpenFile extends React.Component {
   }
 
   render() {
+    let wallet;
+
+    if (this.state.wallet_loaded) {
+      wallet = (
+        <Wallet
+          balanceWallet={this.state.balance_wallet}
+          walletConnected={this.state.wallet_connected}
+          blockchainHeight={this.state.blockchain_height}
+          spendKey={this.state.spend_key}
+          viewKey={this.state.view_key}
+          balance={this.state.balance}
+          unlockedBalance={this.state.unlocked_balance}
+          tokens={this.state.tokens}
+          unlockedTokens={this.state.unlocked_tokens}
+        />
+      );
+    }
     return (
       <div
         className={
@@ -507,12 +518,20 @@ export default class OpenFile extends React.Component {
           className="create-new-pic"
           alt="open-wallet-file"
         />
-        <button onClick={this.goBack} className="go-back-btn button-shine">
+        <button onClick={this.goToPage} className="go-back-btn button-shine">
           Back
         </button>
-        <h2>Open Wallet File</h2>
+        <h2 className={this.state.wallet_loaded ? "hidden" : ""}>
+          Open Wallet File
+        </h2>
 
-        <div className="col-xs-6 col-xs-push-3 login-wrap">
+        <div
+          className={
+            this.state.wallet_loaded
+              ? "hidden"
+              : "col-xs-6 col-xs-push-3 login-wrap"
+          }
+        >
           <button
             className={
               this.state.wallet_loaded ? "hidden" : "browse-btn button-shine"
@@ -541,131 +560,6 @@ export default class OpenFile extends React.Component {
             </button>
           </form>
 
-          <div
-            className={this.state.wallet_loaded ? "wallet-file-wrap" : "hidden"}
-          >
-            <div className="btn-wrap">
-              <button
-                type="submit"
-                className="open-file-btn button-shine"
-                onClick={this.openAnotherFile}
-              >
-                Back
-              </button>
-              <button
-                className={
-                  this.state.wallet_connected ? "signal connected" : "signal"
-                }
-                disabled
-                title="Status"
-              >
-                <img src="images/connected-white.png" alt="connected" />
-                <p>
-                  {this.state.wallet_connected ? (
-                    <span>Connected</span>
-                  ) : (
-                    <span>Connection error</span>
-                  )}
-                </p>
-              </button>
-              <button
-                className="blockheight"
-                title="Blockchain Height"
-                disabled
-              >
-                <img src="images/blocks.png" alt="blocks" />
-                <span>{this.state.blockchain_height}</span>
-              </button>
-              <button
-                className="button-shine refresh"
-                onClick={this.rescanBalance}
-                title="Refresh"
-              >
-                <img src="images/refresh.png" alt="rescan" />
-              </button>
-            </div>
-
-            <label htmlFor="address">Wallet Address</label>
-            <input
-              type="text"
-              name="address"
-              value={this.state.balance_wallet}
-              placeholder="address"
-            />
-
-            <label htmlFor="spend_key">Secret Spend Key</label>
-            <input
-              type="text"
-              name="spend_key"
-              value={this.state.spend_key}
-              placeholder="secret spend key"
-            />
-
-            <label htmlFor="view_key">Secret View Key</label>
-            <input
-              type="text"
-              name="view_key"
-              value={this.state.view_key}
-              placeholder="secret view key"
-            />
-
-            <div className="group-wrap">
-              <div className="group">
-                <label htmlFor="balance">Pending Safex Cash</label>
-                <input
-                  type="text"
-                  placeholder="Balance"
-                  name="balance"
-                  className="yellow-field"
-                  value={this.state.balance}
-                  readOnly
-                />
-
-                <label htmlFor="unlocked_balance">Available Safex Cash</label>
-                <input
-                  type="text"
-                  placeholder="Unlocked balance"
-                  name="unlocked_balance"
-                  className="green-field"
-                  value={this.state.unlocked_balance}
-                  readOnly
-                />
-                <button
-                  className="btn button-shine"
-                  onClick={this.setOpenSendCash}
-                >
-                  Send Cash
-                </button>
-              </div>
-
-              <div className="group">
-                <label htmlFor="tokens">Pending Safex Tokens</label>
-                <input
-                  type="text"
-                  className="yellow-field"
-                  placeholder="Tokens"
-                  value={this.state.tokens}
-                  readOnly
-                />
-                <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
-                <input
-                  type="text"
-                  className="green-field"
-                  placeholder="Unlocked Tokens"
-                  name="unlocked_tokens"
-                  value={this.state.unlocked_tokens}
-                  readOnly
-                />
-                <button
-                  className="btn button-shine"
-                  onClick={this.setOpenSendTokens}
-                >
-                  Send Tokens
-                </button>
-              </div>
-            </div>
-          </div>
-
           <SendModal
             send_cash={this.state.send_cash}
             send_token={this.state.send_token}
@@ -681,6 +575,10 @@ export default class OpenFile extends React.Component {
             alertCloseDisabled={this.state.alert_close_disabled}
             closeAlert={this.setCloseAlert}
           />
+        </div>
+
+        <div className={this.state.wallet_loaded ? "wallet-wrap" : "hidden"}>
+          {wallet}
         </div>
       </div>
     );
