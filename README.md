@@ -29,7 +29,12 @@ $ npm run dev
 #### Linux
 
 ```
+$ sudo apt update && sudo apt install build-essential cmake pkg-config \
+    libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libminiupnpc-dev \
+    libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev \
+    libgtest-dev doxygen graphviz libpcsclite-dev
 $ npm install
+$ ./node_modules/.bin/electron-rebuild
 $ npm run dev
 ```
 
