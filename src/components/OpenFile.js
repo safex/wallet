@@ -1,17 +1,13 @@
 import React from "react";
 
-const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
 import {
-  openSendCashPopup,
-  openSendTokenPopup,
-  closeSendPopup
+  openAlert, 
+  closeAlert
 } from "../utils/utils.js";
 
 import Alert from "./partials/Alert";
-import SendModal from "./partials/SendModal";
-import Wallet from "./Wallet";
 import ExitModal from "./partials/ExitModal";
 import { closeApp } from "../utils/utils.js";
 
@@ -20,29 +16,9 @@ export default class OpenFile extends React.Component {
     super(props);
     this.state = {
       //wallet state settings
-      wallet: {},
-      wallet_connected: false,
-      blockchain_height: 0,
-      wallet_sync: false,
       wallet_loaded: false,
-      wallet_exists: false,
       wallet_path: "",
-      spend_key: "",
-      view_key: "",
-      open_file_alert: false,
-      net: "mainnet",
-      daemonHostPort: "rpc.safex.io:17402",
-      mnemonic: "",
-      //balance settings
-      balance: 0,
-      unlocked_balance: 0,
-      tokens: 0,
-      unlocked_tokens: 0,
-      balance_wallet: "",
-      balance_view_key: "",
-      balance_spend_key: "",
-      send_cash: false,
-      send_token: false
+      
     };
 
     this.goToPage = this.goToPage.bind(this);
@@ -51,19 +27,8 @@ export default class OpenFile extends React.Component {
     this.openAnotherFile = this.openAnotherFile.bind(this);
     this.toggleExitModal = this.toggleExitModal.bind(this);
     this.setCloseApp = this.setCloseApp.bind(this);
-
-    //Balance functions
-    this.roundBalanceAmount = this.roundBalanceAmount.bind(this);
-    this.updatedCallback = this.updatedCallback.bind(this);
-    this.refreshCallback = this.refreshCallback.bind(this);
-    this.newBlockCallback = this.newBlockCallback.bind(this);
-    this.startBalanceCheck = this.startBalanceCheck.bind(this);
-    this.rescanBalance = this.rescanBalance.bind(this);
-    this.setOpenSendCash = this.setOpenSendCash.bind(this);
-    this.setOpenSendTokens = this.setOpenSendTokens.bind(this);
-    this.setCloseSendPopup = this.setCloseSendPopup.bind(this);
-    this.sendCash = this.sendCash.bind(this);
-    this.sendToken = this.sendToken.bind(this);
+    this.setOpenAlert = this.setOpenAlert.bind(this);
+    this.setCloseAlert = this.setCloseAlert.bind(this);
   }
 
   goToPage() {
@@ -78,6 +43,14 @@ export default class OpenFile extends React.Component {
 
   setCloseApp() {
     closeApp(this);
+  }
+
+  setOpenAlert(alert, alert_state, disabled) {
+    openAlert(this, alert, alert_state, disabled);
+  }
+
+  setCloseAlert() {
+    closeAlert(this);
   }
 
   openAnotherFile() {
@@ -99,418 +72,35 @@ export default class OpenFile extends React.Component {
     const pass = e.target.pass.value;
     let filename = e.target.filepath.value;
 
-    if (filename !== "") {
-      if (pass !== "") {
-        if (this.state.wallet_path) {
-          this.setState({
-            modal_close_disabled: true
-          });
-          var args = {
-            path: this.state.wallet_path,
-            password: pass,
-            network: this.state.net,
-            daemonAddress: this.state.daemonHostPort
-          };
-          this.setOpenAlert(
-            "Please wait while your wallet file is loaded",
-            "open_file_alert",
-            true
-          );
-          safex
-            .openWallet(args)
-            .then(wallet => {
-              this.setState(() => ({
-                wallet_loaded: true,
-                wallet: wallet,
-                balance_wallet: wallet.address(),
-                spend_key: wallet.secretSpendKey(),
-                view_key: wallet.secretViewKey(),
-                mnemonic: wallet.seed(),
-                alert_close_disabled: false
-              }));
-              this.setCloseAlert();
-              this.startBalanceCheck();
-
-              console.log("wallet object " + this.state.wallet);
-              console.log("wallet loaded " + this.state.wallet_loaded);
-            })
-            .catch(err => {
-              this.setState(() => ({
-                alert_close_disabled: false
-              }));
-              this.setOpenAlert(
-                "Error opening the wallet: " + err,
-                "open_file_alert",
-                false
-              );
-            });
-        }
-      } else {
-        this.setOpenAlert(
-          "Enter password for your wallet file",
-          "open_file_alert",
-          false
-        );
-      }
-    } else {
-      this.setOpenAlert("Choose the wallet file", "open_file_alert", false);
+    if (filename === "") {
+      this.setOpenAlert("Choose the wallet file", "alert", false);
+      return false;
     }
-  }
-
-  updatedCallback() {
-    console.log("UPDATED");
-    this.state.wallet
-      .store()
-      .then(() => {
-        console.log("Wallet stored");
-        this.setCloseAlert();
-      })
-      .catch(e => {
-        console.log("Unable to store wallet: " + e);
-      });
-  }
-
-  refreshCallback() {
-    console.log("wallet refreshed");
-    let wallet = this.state.wallet;
-    this.setState(() => ({
-      alert_close_disabled: false,
-      balance: this.roundBalanceAmount(
-        wallet.balance() - wallet.unlockedBalance()
-      ),
-      unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
-      tokens: this.roundBalanceAmount(
-        wallet.tokenBalance() - wallet.unlockedTokenBalance()
-      ),
-      unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance()),
-      blockchain_height: wallet.blockchainHeight(),
-      wallet_connected: wallet.connected() === "connected"
-    }));
-
-    wallet
-      .store()
-      .then(() => {
-        console.log("Wallet stored");
-        this.setCloseAlert();
-      })
-      .catch(e => {
-        console.log("Unable to store wallet: " + e);
-        this.setOpenAlert(
-          "Unable to store wallet: " + e,
-          "open_file_alert",
-          false
-        );
-      });
-
-    wallet.off("refreshed");
-
-    setTimeout(() => {
-      wallet.on("newBlock", this.newBlockCallback);
-      wallet.on("updated", this.updatedCallback);
-    }, 300);
-  }
-
-  newBlockCallback(height) {
-    let wallet = this.state.wallet;
-    let syncedHeight = wallet.daemonBlockchainHeight() - height < 10;
-    if (syncedHeight) {
-      console.log("syncedHeight up to date...");
-      if (wallet.synchronized()) {
-        console.log("newBlock wallet synchronized, setting state...");
-        this.setState(() => ({
-          wallet_sync: true,
-          alert_close_disabled: false,
-          balance: this.roundBalanceAmount(
-            wallet.balance() - wallet.unlockedBalance()
-          ),
-          unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
-          tokens: this.roundBalanceAmount(
-            wallet.tokenBalance() - wallet.unlockedTokenBalance()
-          ),
-          unlocked_tokens: this.roundBalanceAmount(
-            wallet.unlockedTokenBalance()
-          ),
-          blockchain_height: wallet.blockchainHeight()
-        }));
-      }
-    }
-  }
-
-  startBalanceCheck() {
-    if (this.state.wallet_loaded) {
-      let wallet = this.state.wallet;
-      console.log(
-        "daemon blockchain height: " + wallet.daemonBlockchainHeight()
+    if (pass === "") {
+      this.setOpenAlert(
+        "Enter password for your wallet file",
+        "alert",
+        false
       );
-      console.log("blockchain height: " + wallet.blockchainHeight());
-
-      this.setState(() => ({
-        balance_wallet: wallet.address()
-      }));
-
-      if (this.state.wallet_loaded) {
-        let myBlockchainHeight = wallet.blockchainHeight();
-        this.setState(() => ({
-          wallet_connected: wallet.connected() === "connected",
-          blockchain_height: myBlockchainHeight,
-          balance: this.roundBalanceAmount(
-            wallet.balance() - wallet.unlockedBalance()
-          ),
-          unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
-          tokens: this.roundBalanceAmount(
-            wallet.tokenBalance() - wallet.unlockedTokenBalance()
-          ),
-          unlocked_tokens: this.roundBalanceAmount(
-            wallet.unlockedTokenBalance()
-          )
-        }));
-
-        console.log("balance: " + this.roundBalanceAmount(wallet.balance()));
-        console.log(
-          "unlocked balance: " +
-            this.roundBalanceAmount(wallet.unlockedBalance())
-        );
-        console.log(
-          "token balance: " +
-            this.roundBalanceAmount(
-              wallet.tokenBalance() - wallet.unlockedTokenBalance()
-            )
-        );
-        console.log(
-          "unlocked token balance: " +
-            this.roundBalanceAmount(wallet.unlockedTokenBalance())
-        );
-        console.log("blockchain height " + wallet.blockchainHeight());
-        console.log("connected: " + wallet.connected());
-      }
-
-      console.log("balance address: " + wallet.address());
-
-      this.setState(() => ({
-        wallet_sync: false
-      }));
-
-      if (wallet.daemonBlockchainHeight() - wallet.blockchainHeight() > 10) {
-        this.setOpenAlert(
-          "Please wait while blockchain is being updated...",
-          "open_file_alert",
-          true
-        );
-      }
-
-      wallet.on("refreshed", this.refreshCallback);
+      return false;
     }
-  }
-
-  rescanBalance() {
-    var wallet = this.state.wallet;
+    this.setState({
+      alert_close_disabled: true
+    });
     this.setOpenAlert(
-      "Rescanning, this may take some time, please wait ",
-      "open_file_alert",
+      "Please wait while your wallet file is loaded",
+      "alert",
       true
     );
-    wallet.off("updated");
-    wallet.off("newBlock");
-    wallet.off("refreshed");
-
-    setTimeout(() => {
-      this.setState(() => ({
-        blockchain_height: wallet.blockchainHeight()
-      }));
-      console.log("Starting blockchain rescan sync...");
-      wallet.rescanBlockchain();
-      console.log("Blockchain rescan executed...");
-
-      setTimeout(() => {
-        console.log("Rescan setting callbacks");
-        this.setState(() => ({
-          alert_close_disabled: false,
-          balance: this.roundBalanceAmount(
-            wallet.balance() - wallet.unlockedBalance()
-          ),
-          unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
-          tokens: this.roundBalanceAmount(
-            wallet.tokenBalance() - wallet.unlockedTokenBalance()
-          ),
-          unlocked_tokens: this.roundBalanceAmount(
-            wallet.unlockedTokenBalance()
-          ),
-          blockchain_height: wallet.blockchainHeight(),
-          wallet_connected: wallet.connected() === "connected"
-        }));
-        this.setCloseAlert();
-
-        wallet
-          .store()
-          .then(() => {
-            console.log("Wallet stored");
-          })
-          .catch(e => {
-            console.log("Unable to store wallet: " + e);
-            this.setOpenAlert(
-              "Unable to store wallet: " + e,
-              "open_file_alert",
-              false
-            );
-          });
-        wallet.on("newBlock", this.newBlockCallback);
-        wallet.on("updated", this.updatedCallback);
-      }, 1000);
-    }, 1000);
-  }
-
-  roundBalanceAmount(balance) {
-    return Math.floor(parseFloat(balance) / 100000000) / 100;
-  }
-
-  sendCash(e) {
-    e.preventDefault();
-    let sendingAddress = e.target.send_to.value;
-    let amount = e.target.amount.value * 10000000000;
-    let wallet = this.state.wallet;
-
-    if (sendingAddress !== "") {
-      if (amount !== "") {
-        console.log("amount " + amount);
-        wallet
-          .createTransaction({
-            address: sendingAddress,
-            amount: amount,
-            tx_type: 0 // cash transaction
-          })
-          .then(tx => {
-            let txId = tx.transactionsIds();
-            console.log("Cash transaction created: " + txId);
-
-            tx.commit()
-              .then(() => {
-                console.log("Transaction commited successfully");
-                this.setCloseSendPopup();
-                this.setOpenAlert(
-                  "Transaction commited successfully, Your cash transaction ID is: " +
-                    txId,
-                  "open_file_alert",
-                  false
-                );
-                this.state.balance = this.roundBalanceAmount(
-                  wallet.unlockedBalance() - wallet.balance()
-                );
-                this.state.unlocked_balance = this.roundBalanceAmount(
-                  wallet.unlockedBalance()
-                );
-              })
-              .catch(e => {
-                console.log("Error on commiting transaction: " + e);
-                this.setOpenAlert(
-                  "Error on commiting transaction: " + e,
-                  "open_file_alert",
-                  false
-                );
-              });
-          })
-          .catch(e => {
-            console.log("Couldn't create transaction: " + e);
-            this.setOpenAlert(
-              "Couldn't create transaction: " + e,
-              "open_file_alert",
-              false
-            );
-          });
-      } else {
-        this.setOpenAlert("Enter Amount", "open_file_alert", false);
-      }
-    } else {
-      this.setOpenAlert("Fill out all the fields", "open_file_alert", false);
-    }
-  }
-
-  sendToken(e) {
-    e.preventDefault();
-    let sendingAddress = e.target.send_to.value;
-    let amount = Math.floor(e.target.amount.value) * 10000000000;
-    let wallet = this.state.wallet;
-
-    if (sendingAddress !== "") {
-      if (amount !== "") {
-        console.log("amount " + amount);
-        wallet
-          .createTransaction({
-            address: sendingAddress,
-            amount: amount,
-            tx_type: 1 // token transaction
-          })
-          .then(tx => {
-            let txId = tx.transactionsIds();
-            console.log("Token transaction created: " + txId);
-
-            tx.commit()
-              .then(() => {
-                console.log("Transaction commited successfully");
-                this.setCloseSendPopup();
-                this.setOpenAlert(
-                  "Transaction commited successfully, Your token transaction ID is: " +
-                    txId,
-                  "open_file_alert",
-                  false
-                );
-                this.state.tokens = this.roundBalanceAmount(
-                  wallet.unlockedTokenBalance() - wallet.tokenBalance()
-                );
-                this.state.unlocked_tokens = this.roundBalanceAmount(
-                  wallet.unlockedTokenBalance()
-                );
-              })
-              .catch(e => {
-                console.log("Error on commiting transaction: " + e);
-                this.setOpenAlert(
-                  "Error on commiting transaction: " + e,
-                  "open_file_alert",
-                  false
-                );
-              });
-          })
-          .catch(e => {
-            console.log("Couldn't create transaction: " + e);
-            this.setOpenAlert(
-              "Couldn't create transaction: " + e,
-              "open_file_alert",
-              false
-            );
-          });
-      } else {
-        this.setOpenAlert("Enter Amount", "open_file_alert", false);
-      }
-    } else {
-      this.setOpenAlert("Fill out all the fields", "open_file_alert", false);
-    }
-  }
-
-  setOpenSendCash() {
-    openSendCashPopup(this);
-  }
-
-  setOpenSendTokens() {
-    openSendTokenPopup(this);
-  }
-
-  setCloseSendPopup() {
-    closeSendPopup(this);
+    this.props.createWallet("openWallet", {
+      path: this.state.wallet_path,
+      password: pass,
+      network: "mainnet",
+      daemonAddress: "rpc.safex.io:17402",
+    });
   }
 
   render() {
-    if (this.state.wallet_loaded) {
-      return <Wallet
-          balanceWallet={this.state.balance_wallet}
-          walletConnected={this.state.wallet_connected}
-          blockchainHeight={this.state.blockchain_height}
-          spendKey={this.state.spend_key}
-          viewKey={this.state.view_key}
-          balance={this.state.balance}
-          unlockedBalance={this.state.unlocked_balance}
-          tokens={this.state.tokens}
-          unlockedTokens={this.state.unlocked_tokens}
-        />;
-    }
     return (
       <div
         className={
@@ -531,6 +121,7 @@ export default class OpenFile extends React.Component {
           onClick={this.toggleExitModal}
           className="close-app-btn button-shine"
           title="Exit"
+          disabled={this.state.alert_close_disabled ? "disabled" : ""}
         >
           X
         </button>
@@ -573,17 +164,8 @@ export default class OpenFile extends React.Component {
             </button>
           </form>
 
-          <SendModal
-            send_cash={this.state.send_cash}
-            send_token={this.state.send_token}
-            fromAddress={this.state.balance_wallet}
-            closeSendPopup={this.setCloseSendPopup}
-            sendCash={this.sendCash}
-            sendToken={this.sendToken}
-          />
-
           <Alert
-            openAlert={this.state.open_file_alert}
+            openAlert={this.state.alert}
             alertText={this.state.alert_text}
             alertCloseDisabled={this.state.alert_close_disabled}
             closeAlert={this.setCloseAlert}

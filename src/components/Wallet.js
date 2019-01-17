@@ -1,15 +1,22 @@
 import React from "react";
 import { closeApp } from "../utils/utils.js";
 import ExitModal from "./partials/ExitModal";
-import { openAlert, closeAlert } from "../utils/utils.js";
+import SendModal from "./partials/SendModal";
 import Alert from "./partials/Alert";
+import {
+  openSendPopup,
+  closeSendPopup,
+  openAlert, 
+  closeAlert 
+} from "../utils/utils.js";
 
 export default class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       wallet: null,
-      alert: this.props.alert
+      alert: this.props.alert,
+      balance_wallet: this.props.wallet.wallet_address
     };
 
     this.goToPage = this.goToPage.bind(this);
@@ -23,6 +30,9 @@ export default class Wallet extends React.Component {
     this.updatedCallback = this.updatedCallback.bind(this);
     this.refreshCallback = this.refreshCallback.bind(this);
     this.newBlockCallback = this.newBlockCallback.bind(this);
+    this.setCloseSendPopup = this.setCloseSendPopup.bind(this);
+    this.sendCash = this.sendCash.bind(this);
+    this.sendToken = this.sendToken.bind(this);
   }
 
   componentDidMount() {
@@ -205,6 +215,136 @@ export default class Wallet extends React.Component {
     }, 1000);
   }
 
+  sendCash(e) {
+    e.preventDefault();
+    let sendingAddress = e.target.send_to.value;
+    let amount = e.target.amount.value * 10000000000;
+    let wallet = this.props.walletMeta;
+
+    if (sendingAddress !== "") {
+      if (amount !== "") {
+        console.log("amount " + amount);
+        wallet
+          .createTransaction({
+            address: sendingAddress,
+            amount: amount,
+            tx_type: 0 // cash transaction
+          })
+          .then(tx => {
+            let txId = tx.transactionsIds();
+            console.log("Cash transaction created: " + txId);
+
+            tx.commit()
+              .then(() => {
+                console.log("Transaction commited successfully");
+                this.setCloseSendPopup();
+                this.setOpenAlert(
+                  "Transaction commited successfully, Your cash transaction ID is: " +
+                  txId,
+                  "alert",
+                  false
+                );
+                this.state.balance = this.roundBalanceAmount(
+                  wallet.unlockedBalance() - wallet.balance()
+                );
+                this.state.unlocked_balance = this.roundBalanceAmount(
+                  wallet.unlockedBalance()
+                );
+              })
+              .catch(e => {
+                console.log("Error on commiting transaction: " + e);
+                this.setOpenAlert(
+                  "Error on commiting transaction: " + e,
+                  "alert",
+                  false
+                );
+              });
+          })
+          .catch(e => {
+            console.log("Couldn't create transaction: " + e);
+            this.setOpenAlert(
+              "Couldn't create transaction: " + e,
+              "alert",
+              false
+            );
+          });
+      } else {
+        this.setOpenAlert("Enter Amount", "alert", false);
+      }
+    } else {
+      this.setOpenAlert("Fill out all the fields", "alert", false);
+    }
+  }
+
+  sendToken(e) {
+    e.preventDefault();
+    let sendingAddress = e.target.send_to.value;
+    let amount = Math.floor(e.target.amount.value) * 10000000000;
+    let wallet = this.props.walletMeta;
+
+    if (sendingAddress === "") {
+      this.setOpenAlert("Fill out all the fields", "alert", false);
+      return false;
+    }
+    if (amount === "") {
+      this.setOpenAlert("Enter Amount", "alert", false);
+      return false;
+    }
+    console.log("amount " + amount);
+    wallet
+      .createTransaction({
+        address: sendingAddress,
+        amount: amount,
+        tx_type: 1 // token transaction
+      })
+      .then(tx => {
+        let txId = tx.transactionsIds();
+        console.log("Token transaction created: " + txId);
+
+        tx.commit()
+          .then(() => {
+            console.log("Transaction commited successfully");
+            this.setCloseSendPopup();
+            this.setOpenAlert(
+              "Transaction commited successfully, Your token transaction ID is: " +
+              txId,
+              "alert",
+              false
+            );
+            this.state.tokens = this.roundBalanceAmount(
+              wallet.unlockedTokenBalance() - wallet.tokenBalance()
+            );
+            this.state.unlocked_tokens = this.roundBalanceAmount(
+              wallet.unlockedTokenBalance()
+            );
+          })
+          .catch(e => {
+            console.log("Error on commiting transaction: " + e);
+            this.setOpenAlert(
+              "Error on commiting transaction: " + e,
+              "alert",
+              false
+            );
+          });
+      })
+      .catch(e => {
+        console.log("Couldn't create transaction: " + e);
+        this.setOpenAlert(
+          "Couldn't create transaction: " + e,
+          "alert",
+          false
+        );
+      });
+  }
+
+  setOpenSendPopup(currency) {
+    openSendPopup(this, currency);
+  }
+
+  setCloseSendPopup() {
+    closeSendPopup(this);
+  }
+
   render() {
     return (
       <div className="wallet-wrap">
@@ -291,11 +431,12 @@ export default class Wallet extends React.Component {
             placeholder="secret view key"
           />
 
-          <label>Mnemonic Seed for your Wallet</label>
+          <label className={this.props.wallet.mnemonic ? "" : "hidden"}>Wallet Mnemonic Seed</label>
           <textarea
             name="mnemonic"
             value={this.props.wallet.mnemonic}
             placeholder="mnemonic seed for your wallet"
+            className={this.props.wallet.mnemonic ? "" : "hidden"}
             rows="2"
           />
 
@@ -322,6 +463,7 @@ export default class Wallet extends React.Component {
               />
               <button
                 className="btn button-shine"
+                onClick={this.setOpenSendPopup.bind(this, 'send_cash')}
               >
                 Send Cash
               </button>
@@ -347,11 +489,21 @@ export default class Wallet extends React.Component {
               />
               <button
                 className="btn button-shine"
+                onClick={this.setOpenSendPopup.bind(this, 'send_token')}
               >
                 Send Tokens
               </button>
             </div>
           </div>
+
+          <SendModal
+            send_cash={this.state.send_cash}
+            send_token={this.state.send_token}
+            fromAddress={this.state.balance_wallet}
+            closeSendPopup={this.setCloseSendPopup}
+            sendCash={this.sendCash}
+            sendToken={this.sendToken}
+          />
 
           <Alert
             openAlert={this.state.alert}

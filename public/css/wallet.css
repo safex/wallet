@@ -6,6 +6,12 @@
   text-transform: uppercase;
   margin: 20px 0 30px;
 }
+.wallet-wrap .create-new-pic {
+  position: absolute;
+  bottom: 0px;
+  right: 22px;
+  width: 210px;
+}
 .wallet-inner-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   padding: 20px;
@@ -182,4 +188,8 @@
   border-bottom: 5px solid #8ffdfd;
   border-radius: 0px;
   margin-top: 5px;
+}
+.wallet-inner-wrap .btn:focus,
+.wallet-inner-wrap .btn:active {
+  outline: none;
 }

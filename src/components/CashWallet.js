@@ -77,7 +77,7 @@ export default class CashWallet extends React.Component {
         );
       
         wallet.on("refreshed", () => {
-          console.log("Wallet File successfully created!");
+          console.log("Wallet File refreshed");
           wallet
             .store()
             .then(() => {

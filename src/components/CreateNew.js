@@ -92,7 +92,6 @@ export default class CreateNew extends React.Component {
       );
       return false;
     }
-
     if (pass1 !== pass2) {
       this.setOpenAlert(
         "Repeated password does not match",
@@ -101,12 +100,10 @@ export default class CreateNew extends React.Component {
       );
       return false;
     }
-
     dialog.showSaveDialog(filepath => {
       if (!filepath) {
         return false;
       }
-
       if (safex.walletExists(filepath)) {
         this.setOpenAlert(
           `Wallet already exists. Please choose a different file name  
@@ -117,7 +114,6 @@ export default class CreateNew extends React.Component {
         );
         return false;
       }
-
       //TODO needs additional sanitation on the passwords, length and type of data
       this.props.createWallet("createWallet", {
         path: filepath,
@@ -126,7 +122,6 @@ export default class CreateNew extends React.Component {
         daemonAddress: this.state.daemonHostPort,
         mnemonic: ""
       });
-
       this.setOpenAlert(
         "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
         "alert",
