@@ -71,6 +71,15 @@
   font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
   z-index: 2;
 }
+#version {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  color: #fff;
+  letter-spacing: 1px;
+  font-size: 18px;
+  margin: 0px;
+}
 
 .page-wrap {
   width: 100%;

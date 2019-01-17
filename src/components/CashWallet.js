@@ -8,6 +8,7 @@ import { closeApp } from "../utils/utils.js";
 import Wallet from "./Wallet";
 
 const safex = window.require("safex-nodejs-libwallet");
+import packageJson from "../../package";
 
 export default class CashWallet extends React.Component {
   constructor(props) {
@@ -231,8 +232,9 @@ export default class CashWallet extends React.Component {
               >
                 X
               </button>
-            </div>
 
+              <p id="version">{packageJson.version}</p>
+            </div>
             <ExitModal
               exitModal={this.state.exit_modal}
               closeExitModal={this.toggleExitModal}
