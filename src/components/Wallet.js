@@ -244,10 +244,10 @@ export default class Wallet extends React.Component {
                   "alert",
                   false
                 );
-                this.state.balance = this.roundBalanceAmount(
+                this.props.wallet.balance = this.roundBalanceAmount(
                   wallet.unlockedBalance() - wallet.balance()
                 );
-                this.state.unlocked_balance = this.roundBalanceAmount(
+                this.props.wallet.unlocked_balance = this.roundBalanceAmount(
                   wallet.unlockedBalance()
                 );
               })
@@ -311,10 +311,10 @@ export default class Wallet extends React.Component {
               "alert",
               false
             );
-            this.state.tokens = this.roundBalanceAmount(
+            this.props.wallet.tokens = this.roundBalanceAmount(
               wallet.unlockedTokenBalance() - wallet.tokenBalance()
             );
-            this.state.unlocked_tokens = this.roundBalanceAmount(
+            this.props.wallet.unlocked_tokens = this.roundBalanceAmount(
               wallet.unlockedTokenBalance()
             );
           })
@@ -419,7 +419,7 @@ export default class Wallet extends React.Component {
           <input
             type="text"
             name="spend_key"
-            defaultValue={this.props.wallet.spend_key}
+            value={this.props.wallet.spend_key}
             placeholder="secret spend key"
           />
 
@@ -427,14 +427,14 @@ export default class Wallet extends React.Component {
           <input
             type="text"
             name="view_key"
-            defaultValue={this.props.wallet.view_key}
+            value={this.props.wallet.view_key}
             placeholder="secret view key"
           />
 
           <label className={this.props.wallet.mnemonic ? "" : "hidden"}>Wallet Mnemonic Seed</label>
           <textarea
             name="mnemonic"
-            defaultValue={this.props.wallet.mnemonic}
+            value={this.props.wallet.mnemonic}
             placeholder="mnemonic seed for your wallet"
             className={this.props.wallet.mnemonic ? "" : "hidden"}
             rows="2"
@@ -448,7 +448,7 @@ export default class Wallet extends React.Component {
                 placeholder="Balance"
                 name="balance"
                 className="yellow-field"
-                defaultValue={this.props.wallet.balance}
+                value={this.props.wallet.balance}
                 readOnly
               />
 
@@ -458,7 +458,7 @@ export default class Wallet extends React.Component {
                 placeholder="Unlocked balance"
                 name="unlocked_balance"
                 className="green-field"
-                defaultValue={this.props.wallet.unlocked_balance}
+                value={this.props.wallet.unlocked_balance}
                 readOnly
               />
               <button
@@ -475,7 +475,7 @@ export default class Wallet extends React.Component {
                 type="text"
                 className="yellow-field"
                 placeholder="Tokens"
-                defaultValue={this.props.wallet.tokens}
+                value={this.props.wallet.tokens}
                 readOnly
               />
               <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
@@ -484,7 +484,7 @@ export default class Wallet extends React.Component {
                 className="green-field"
                 placeholder="Unlocked Tokens"
                 name="unlocked_tokens"
-                defaultValue={this.props.wallet.unlocked_tokens}
+                value={this.props.wallet.unlocked_tokens}
                 readOnly
               />
               <button
