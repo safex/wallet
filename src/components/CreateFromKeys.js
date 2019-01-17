@@ -82,10 +82,18 @@ export default class CreateFromKeys extends React.Component {
       );
       return false;
     }
+    if (spend_key.length != 64) {
+      this.setOpenAlert("Incorrect spend key", "alert", false);
+      return false;
+    }
+    if (view_key.length != 64) {
+      this.setOpenAlert("Incorrect view key", "alert", false);
+      return false;
+    }
     if (verify_safex_address(spend_key, view_key, safex_address) === false) {
-      console.log("Incorrect keys");
       this.setOpenAlert("Incorrect keys", "alert", false);
-    } 
+      return false;
+    }
     dialog.showSaveDialog(filepath => {
       if (!filepath) {
         return false;
@@ -111,6 +119,8 @@ export default class CreateFromKeys extends React.Component {
       console.log(
         "Wallet doesn't exist. creating new one: " + filepath
       );
+      console.log(spend_key.length);
+      console.log(view_key.length);
       this.props.createWallet("createWalletFromKeys", {
         path: filepath,
         password: pass1,

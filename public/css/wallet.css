@@ -14,7 +14,7 @@
 }
 .wallet-inner-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  padding: 20px;
+  padding: 35px 20px 20px;
 }
 .wallet-inner-wrap .btn-wrap {
   position: absolute;
