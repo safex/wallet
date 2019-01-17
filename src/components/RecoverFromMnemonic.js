@@ -4,8 +4,8 @@ const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
 import Alert from "./partials/Alert";
-
-import { openAlert, closeAlert } from "../utils/utils.js";
+import ExitModal from "./partials/ExitModal";
+import { closeApp } from "../utils/utils.js";
 
 export default class NewFromMnemonic extends React.Component {
   constructor(props) {
@@ -26,15 +26,25 @@ export default class NewFromMnemonic extends React.Component {
     };
 
     this.goToPage = this.goToPage.bind(this);
-    this.setOpenAlert = this.setOpenAlert.bind(this);
-    this.setCloseAlert = this.setCloseAlert.bind(this);
     this.createNewFromMnemonic = this.createNewFromMnemonic.bind(this);
     this.hasNumber = this.hasNumber.bind(this);
     this.countWords = this.countWords.bind(this);
+    this.toggleExitModal = this.toggleExitModal.bind(this);
+    this.setCloseApp = this.setCloseApp.bind(this);
   }
 
   goToPage() {
     this.props.goToPage();
+  }
+
+  toggleExitModal() {
+    this.setState({
+      exit_modal: !this.state.exit_modal
+    });
+  }
+
+  setCloseApp() {
+    closeApp(this);
   }
 
   toggleMnemonic() {
@@ -233,6 +243,13 @@ export default class NewFromMnemonic extends React.Component {
         >
           Back
         </button>
+        <button
+          onClick={this.toggleExitModal}
+          className="close-app-btn button-shine"
+          title="Exit"
+        >
+          X
+        </button>
 
         <h2>Create New Wallet From Mnemonic</h2>
         <div className="col-xs-6 col-xs-push-3 login-wrap">
@@ -275,6 +292,11 @@ export default class NewFromMnemonic extends React.Component {
             closeAlert={this.setCloseAlert}
           />
         </div>
+        <ExitModal
+          exitModal={this.state.exit_modal}
+          closeExitModal={this.toggleExitModal}
+          closeApp={this.setCloseApp}
+        />
       </div>
     );
   }

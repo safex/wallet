@@ -4,7 +4,9 @@ import Alert from "./partials/Alert";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
-import { verify_safex_address, openAlert, closeAlert } from "../utils/utils.js";
+import { verify_safex_address } from "../utils/utils.js";
+import ExitModal from "./partials/ExitModal";
+import { closeApp } from "../utils/utils.js";
 
 export default class CreateFromKeys extends React.Component {
   constructor(props) {
@@ -23,13 +25,23 @@ export default class CreateFromKeys extends React.Component {
     };
 
     this.goToPage = this.goToPage.bind(this);
-    this.setOpenAlert = this.setOpenAlert.bind(this);
-    this.setCloseAlert = this.setCloseAlert.bind(this);
     this.createWalletFromKeys = this.createWalletFromKeys.bind(this);
+    this.toggleExitModal = this.toggleExitModal.bind(this);
+    this.setCloseApp = this.setCloseApp.bind(this);
   }
 
   goToPage() {
     this.props.goToPage();
+  }
+
+  toggleExitModal() {
+    this.setState({
+      exit_modal: !this.state.exit_modal
+    });
+  }
+
+  setCloseApp() {
+    closeApp(this);
   }
 
   createWalletFromKeys(e) {
@@ -194,6 +206,13 @@ export default class CreateFromKeys extends React.Component {
         >
           Back
         </button>
+        <button
+          onClick={this.toggleExitModal}
+          className="close-app-btn button-shine"
+          title="Exit"
+        >
+          X
+        </button>
 
         <h2>Create New Wallet From Keys</h2>
         <div className="col-xs-6 col-xs-push-3 login-wrap">
@@ -244,6 +263,12 @@ export default class CreateFromKeys extends React.Component {
             closeAlert={this.setCloseAlert}
           />
         </div>
+
+        <ExitModal
+          exitModal={this.state.exit_modal}
+          closeExitModal={this.toggleExitModal}
+          closeApp={this.setCloseApp}
+        />
       </div>
     );
   }

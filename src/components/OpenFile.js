@@ -4,8 +4,6 @@ const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
 import {
-  openAlert,
-  closeAlert,
   openSendCashPopup,
   openSendTokenPopup,
   closeSendPopup
@@ -14,6 +12,8 @@ import {
 import Alert from "./partials/Alert";
 import SendModal from "./partials/SendModal";
 import Wallet from "./Wallet";
+import ExitModal from "./partials/ExitModal";
+import { closeApp } from "../utils/utils.js";
 
 export default class OpenFile extends React.Component {
   constructor(props) {
@@ -46,11 +46,11 @@ export default class OpenFile extends React.Component {
     };
 
     this.goToPage = this.goToPage.bind(this);
-    this.setOpenAlert = this.setOpenAlert.bind(this);
-    this.setCloseAlert = this.setCloseAlert.bind(this);
     this.browseFile = this.browseFile.bind(this);
     this.openFile = this.openFile.bind(this);
     this.openAnotherFile = this.openAnotherFile.bind(this);
+    this.toggleExitModal = this.toggleExitModal.bind(this);
+    this.setCloseApp = this.setCloseApp.bind(this);
 
     //Balance functions
     this.roundBalanceAmount = this.roundBalanceAmount.bind(this);
@@ -68,6 +68,16 @@ export default class OpenFile extends React.Component {
 
   goToPage() {
     this.props.goToPage();
+  }
+
+  toggleExitModal() {
+    this.setState({
+      exit_modal: !this.state.exit_modal
+    });
+  }
+
+  setCloseApp() {
+    closeApp(this);
   }
 
   openAnotherFile() {
@@ -488,11 +498,8 @@ export default class OpenFile extends React.Component {
   }
 
   render() {
-    let wallet;
-
     if (this.state.wallet_loaded) {
-      wallet = (
-        <Wallet
+      return <Wallet
           balanceWallet={this.state.balance_wallet}
           walletConnected={this.state.wallet_connected}
           blockchainHeight={this.state.blockchain_height}
@@ -502,8 +509,7 @@ export default class OpenFile extends React.Component {
           unlockedBalance={this.state.unlocked_balance}
           tokens={this.state.tokens}
           unlockedTokens={this.state.unlocked_tokens}
-        />
-      );
+        />;
     }
     return (
       <div
@@ -520,6 +526,13 @@ export default class OpenFile extends React.Component {
         />
         <button onClick={this.goToPage} className="go-back-btn button-shine">
           Back
+        </button>
+        <button
+          onClick={this.toggleExitModal}
+          className="close-app-btn button-shine"
+          title="Exit"
+        >
+          X
         </button>
         <h2 className={this.state.wallet_loaded ? "hidden" : ""}>
           Open Wallet File
@@ -577,9 +590,11 @@ export default class OpenFile extends React.Component {
           />
         </div>
 
-        <div className={this.state.wallet_loaded ? "wallet-wrap" : "hidden"}>
-          {wallet}
-        </div>
+        <ExitModal
+          exitModal={this.state.exit_modal}
+          closeExitModal={this.toggleExitModal}
+          closeApp={this.setCloseApp}
+        />
       </div>
     );
   }
