@@ -221,7 +221,7 @@ export default class CashWallet extends React.Component {
                   onClick={() => this.goToPage("recover-from-mnemonic")}
                 >
                   <img src="images/mnemonic.png" alt="mnemonic" />
-                  <h3>New from Mnemonic</h3>
+                  <h3>Recover from Mnemonic</h3>
                 </div>
               </div>
               <button

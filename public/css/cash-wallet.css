@@ -52,6 +52,7 @@
   font-size: 30px;
   margin-top: 35px;
   margin-bottom: 20px;
+  white-space: nowrap;
 }
 .options-wrap .options-inner .item.disabled img {
   filter: grayscale(70%);
