@@ -109,7 +109,7 @@ export default class CreateFromKeys extends React.Component {
         true
       );
       console.log(
-        "wallet doesn't exist. creating new one: " + filepath
+        "Wallet doesn't exist. creating new one: " + filepath
       );
       this.props.createWallet("createWalletFromKeys", {
         path: filepath,
@@ -122,9 +122,9 @@ export default class CreateFromKeys extends React.Component {
         spendKeyString: spend_key
       });
       console.log("Create wallet from keys performed!");
-      console.log("create_new_wallet_from_keys checkpoint 1");
+      console.log("Create new wallet from keys checkpoint 1");
     });
-    console.log("create_new_wallet_from_keys checkpoint 2");
+    console.log("Create new wallet from keys checkpoint 2");
   }
 
   render() {
