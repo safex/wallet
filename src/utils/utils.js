@@ -1,14 +1,14 @@
-var swg = window.require("safex-addressjs");
+var safex = window.require("safex-addressjs");
 const remote = window.require("electron").remote;
 
 /**
  * Verify Safex Address
  */
 function verify_safex_address(spend, view, address) {
-  var spend_pub = swg.sec_key_to_pub(spend);
-  var view_pub = swg.sec_key_to_pub(view);
+  var spend_pub = safex.sec_key_to_pub(spend);
+  var view_pub = safex.sec_key_to_pub(view);
 
-  var _address = swg.pubkeys_to_string(spend_pub, view_pub);
+  var _address = safex.pubkeys_to_string(spend_pub, view_pub);
 
   if (_address == address) {
     return true;
@@ -34,8 +34,8 @@ function verify_safex_address(spend, view, address) {
  * }
  */
 function structureSafexKeys(spend, view) {
-  const keys = swg.structure_keys(spend, view);
-  const checksum = swg.address_checksum(keys.spend.pub, keys.view.pub);
+  const keys = safex.structure_keys(spend, view);
+  const checksum = safex.address_checksum(keys.spend.pub, keys.view.pub);
   keys["checksum"] = checksum;
 
   return keys;
@@ -70,22 +70,11 @@ function closeAlert(target) {
 }
 
 /**
- * Open Send Cash Popup
+ * Open Send Popup
  */
-function openSendCashPopup(target) {
+function openSendPopup(target, currency) {
   target.setState({
-    send_cash: true,
-    send_token: false
-  });
-}
-
-/**
- * Open Send Token Popup
- */
-function openSendTokenPopup(target) {
-  target.setState({
-    send_token: true,
-    send_cash: false
+    [currency]: true,
   });
 }
 
@@ -104,12 +93,7 @@ function closeSendPopup(target) {
  */
 function closeApp(target) {
   let window = remote.getCurrentWindow();
-
-  target.setState({ closing: true, exit_modal: false });
-
-  setTimeout(() => {
-    window.close();
-  }, 1000);
+  window.close();
 }
 
 module.exports = {
@@ -117,8 +101,7 @@ module.exports = {
   structureSafexKeys,
   openAlert,
   closeAlert,
-  openSendCashPopup,
-  openSendTokenPopup,
+  openSendPopup,
   closeSendPopup,
   closeApp
 };

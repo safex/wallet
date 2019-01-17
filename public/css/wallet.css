@@ -1,7 +1,14 @@
 /* Wallet File Wrap */
+.wallet-wrap  h2 {
+  color: #fff;
+  font-size: 44px;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 20px 0 30px;
+}
 .wallet-inner-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  padding: 40px 20px 20px;
+  padding: 20px;
 }
 .wallet-inner-wrap .btn-wrap {
   position: absolute;
@@ -82,7 +89,7 @@
 .wallet-inner-wrap .group-wrap {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0 0;
+  margin: 0;
 }
 .wallet-inner-wrap .group {
   width: calc(50% - 5px);
@@ -123,9 +130,21 @@
   border: 0px none;
   color: rgba(255, 255, 255, 0.8);
   font-size: 20px;
-  padding: 2px 0px 3px;
+  padding: 0px;
   border-bottom: 1px solid #8ffdfd;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
+}
+.wallet-inner-wrap textarea {
+  width: 100%;
+  background: transparent;
+  text-align: center;
+  border: 0px none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 17px;
+  padding: 0px;
+  border-bottom: 1px solid #8ffdfd;
+  margin-bottom: 7px;
+  resize: none;
 }
 .wallet-inner-wrap input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */

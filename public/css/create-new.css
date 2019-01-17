@@ -5,23 +5,11 @@
   padding: 10px;
   position: relative;
 }
-.create-new-wrap .create-new-pic {
+.create-new-pic {
   position: absolute;
   bottom: 0px;
   right: 30px;
   width: 210px;
-}
-.create-new-wrap .go-back-btn {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgba(255, 255, 255, 0.3);
-  padding: 0px 25px 1px;
-  border: 0px none;
-  text-transform: uppercase;
-  color: #fff;
-  font-size: 18px;
-  border-radius: 0px;
 }
 .create-new-wrap .close-app-btn {
   background: transparent;
@@ -40,7 +28,7 @@
   font-size: 44px;
   text-align: center;
   text-transform: uppercase;
-  margin: 25px 0 35px;
+  margin: 20px 0 30px;
 }
 .create-new-wrap .login-wrap {
   padding: 0;
@@ -133,6 +121,18 @@
 .create-new-wrap .login-wrap .btn:focus,
 .create-new-wrap .login-wrap .btn:active {
   outline: none;
+}
+.go-back-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 0px 25px 1px;
+  border: 0px none;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 0px;
 }
 
 @media (min-width: 1024px) {

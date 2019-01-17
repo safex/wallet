@@ -5,19 +5,7 @@
 }
 .options-wrap.option-wrap-hidden {
   padding: 0;
-}
-.options-wrap .close-app-btn {
-  background: transparent;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  color: #fff;
-  font-size: 18px;
-  padding: 2px 9px 1px;
-  border: 1px solid #8ffdfd;
-  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
-  z-index: 2;
-}
+} 
 .options-wrap .options-inner {
   height: 100%;
   display: flex;
@@ -69,6 +57,18 @@
   filter: grayscale(70%);
   -webkit-filter: grayscale(70%);
   opacity: 0.9;
+}
+.close-app-btn {
+  background: transparent;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #fff;
+  font-size: 18px;
+  padding: 2px 9px 1px;
+  border: 1px solid #8ffdfd;
+  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
+  z-index: 2;
 }
 
 .page-wrap {
