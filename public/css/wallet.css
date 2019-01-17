@@ -23,7 +23,7 @@
   z-index: 2;
   width: 100%;
 }
-.wallet-inner-wrap .refresh {
+.wallet-inner-wrap .rescan {
   text-align: center;
   background: rgba(143, 253, 253, 0.62);
   border: 0px none;
@@ -31,7 +31,7 @@
   border-radius: 0px;
   float: right;
 }
-.wallet-inner-wrap .refresh img {
+.wallet-inner-wrap .rescan img {
   max-height: 18px;
 }
 .wallet-inner-wrap .signal {

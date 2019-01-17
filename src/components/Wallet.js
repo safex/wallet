@@ -399,11 +399,11 @@ export default class Wallet extends React.Component {
               <span>{this.props.wallet.blockchain_height}</span>
             </button>
             <button
-              className="button-shine refresh"
+              className="button-shine rescan"
               onClick={this.rescanBalance}
-              title="Refresh"
+              title="Rescan"
             >
-              <img src="images/refresh.png" alt="rescan" />
+              <img src="images/rescan.png" alt="rescan" />
             </button>
           </div>
 

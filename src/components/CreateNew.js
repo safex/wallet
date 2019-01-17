@@ -163,6 +163,7 @@ export default class CreateNew extends React.Component {
           onClick={this.toggleExitModal}
           className="close-app-btn button-shine"
           title="Exit"
+          disabled={this.state.alert_close_disabled ? "disabled" : ""}
         >
           X
         </button>
