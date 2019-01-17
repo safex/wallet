@@ -411,7 +411,7 @@ export default class Wallet extends React.Component {
           <input
             type="text"
             name="address"
-            value={this.props.wallet.wallet_address}
+            defaultValue={this.props.wallet.wallet_address}
             placeholder="address"
           />
 
@@ -419,7 +419,7 @@ export default class Wallet extends React.Component {
           <input
             type="text"
             name="spend_key"
-            value={this.props.wallet.spend_key}
+            defaultValue={this.props.wallet.spend_key}
             placeholder="secret spend key"
           />
 
@@ -427,14 +427,14 @@ export default class Wallet extends React.Component {
           <input
             type="text"
             name="view_key"
-            value={this.props.wallet.view_key}
+            defaultValue={this.props.wallet.view_key}
             placeholder="secret view key"
           />
 
           <label className={this.props.wallet.mnemonic ? "" : "hidden"}>Wallet Mnemonic Seed</label>
           <textarea
             name="mnemonic"
-            value={this.props.wallet.mnemonic}
+            defaultValue={this.props.wallet.mnemonic}
             placeholder="mnemonic seed for your wallet"
             className={this.props.wallet.mnemonic ? "" : "hidden"}
             rows="2"
@@ -448,7 +448,7 @@ export default class Wallet extends React.Component {
                 placeholder="Balance"
                 name="balance"
                 className="yellow-field"
-                value={this.props.wallet.balance}
+                defaultValue={this.props.wallet.balance}
                 readOnly
               />
 
@@ -458,7 +458,7 @@ export default class Wallet extends React.Component {
                 placeholder="Unlocked balance"
                 name="unlocked_balance"
                 className="green-field"
-                value={this.props.wallet.unlocked_balance}
+                defaultValue={this.props.wallet.unlocked_balance}
                 readOnly
               />
               <button
@@ -475,7 +475,7 @@ export default class Wallet extends React.Component {
                 type="text"
                 className="yellow-field"
                 placeholder="Tokens"
-                value={this.props.wallet.tokens}
+                defaultValue={this.props.wallet.tokens}
                 readOnly
               />
               <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
@@ -484,7 +484,7 @@ export default class Wallet extends React.Component {
                 className="green-field"
                 placeholder="Unlocked Tokens"
                 name="unlocked_tokens"
-                value={this.props.wallet.unlocked_tokens}
+                defaultValue={this.props.wallet.unlocked_tokens}
                 readOnly
               />
               <button
