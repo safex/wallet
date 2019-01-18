@@ -11,6 +11,9 @@
   right: 30px;
   width: 210px;
 }
+.create-new-wrap .create-new-pic {
+  right: 22px;
+}
 .create-new-wrap .close-app-btn {
   background: transparent;
   position: absolute;
