@@ -2,10 +2,10 @@ import React from "react";
 import ExitModal from "./partials/ExitModal";
 import { closeApp } from "../utils/utils.js";
 import Alert from "./partials/Alert";
+import { openAlert, closeAlert } from "../utils/utils.js";
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
-import { openAlert, closeAlert } from "../utils/utils.js";
 
 export default class CreateNew extends React.Component {
   constructor(props) {
@@ -37,7 +37,7 @@ export default class CreateNew extends React.Component {
       balance_spend_key: "",
       send_cash: false,
       send_token: false
-    }; 
+    };
 
     this.goToPage = this.goToPage.bind(this);
     this.createNew = this.createNew.bind(this);
@@ -85,19 +85,11 @@ export default class CreateNew extends React.Component {
     console.log("new wallet password: " + e.target.pass1.value);
 
     if (pass1 === "" || pass2 === "") {
-      this.setOpenAlert(
-        "Fill out all the fields",
-        "alert",
-        false
-      );
+      this.setOpenAlert("Fill out all the fields", "alert", false);
       return false;
     }
     if (pass1 !== pass2) {
-      this.setOpenAlert(
-        "Repeated password does not match",
-        "alert",
-        false
-      );
+      this.setOpenAlert("Repeated password does not match", "alert", false);
       return false;
     }
     dialog.showSaveDialog(filepath => {

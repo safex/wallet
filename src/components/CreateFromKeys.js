@@ -1,11 +1,15 @@
 import React from "react";
 import Alert from "./partials/Alert";
 import ExitModal from "./partials/ExitModal";
+import {
+  verify_safex_address,
+  closeApp,
+  openAlert,
+  closeAlert
+} from "../utils/utils.js";
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
-
-import { verify_safex_address, closeApp, openAlert, closeAlert } from "../utils/utils.js";
 
 export default class CreateFromKeys extends React.Component {
   constructor(props) {
@@ -18,6 +22,8 @@ export default class CreateFromKeys extends React.Component {
       wallet_address: "",
       spend_key: "",
       view_key: "",
+      network: "mainnet",
+      daemonAddress: "rpc.safex.io:17402"
     };
 
     this.goToPage = this.goToPage.bind(this);
@@ -62,24 +68,18 @@ export default class CreateFromKeys extends React.Component {
     var pass1 = e.target.pass1.value;
     var pass2 = e.target.pass2.value;
 
-    if (safex_address === "" ||
+    if (
+      safex_address === "" ||
       view_key === "" ||
       spend_key === "" ||
       pass1 === "" ||
-      pass2 === "") {
-      this.setOpenAlert(
-        "Fill out all the fields",
-        "alert",
-        false
-      );
+      pass2 === ""
+    ) {
+      this.setOpenAlert("Fill out all the fields", "alert", false);
       return false;
     }
     if (pass1 !== pass2) {
-      this.setOpenAlert(
-        "Passwords do not match",
-        "alert",
-        false
-      );
+      this.setOpenAlert("Passwords do not match", "alert", false);
       return false;
     }
     if (spend_key.length !== 64) {
@@ -90,7 +90,10 @@ export default class CreateFromKeys extends React.Component {
       this.setOpenAlert("Incorrect view key", "alert", false);
       return false;
     }
-    if (verify_safex_address(spend_key, view_key, safex_address) === false) {
+    if (
+      this.state.network === "mainnet" &&
+      verify_safex_address(spend_key, view_key, safex_address) === false
+    ) {
       this.setOpenAlert("Incorrect keys", "alert", false);
       return false;
     }
@@ -116,14 +119,12 @@ export default class CreateFromKeys extends React.Component {
         "alert",
         true
       );
-      console.log(
-        "Wallet doesn't exist. creating new one: " + filepath
-      );
+      console.log("Wallet doesn't exist. creating new one: " + filepath);
       this.props.createWallet("createWalletFromKeys", {
         path: filepath,
         password: pass1,
-        network: "mainnet",
-        daemonAddress: "rpc.safex.io:17402",
+        network: this.state.network,
+        daemonAddress: this.state.daemonAddress,
         restoreHeight: 0,
         addressString: safex_address,
         viewKeyString: view_key,

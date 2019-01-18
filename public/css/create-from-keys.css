@@ -2,6 +2,12 @@
 .create-from-keys-wrap .login-wrap form input {
   margin: 0 0 10px;
 }
+.create-from-keys-wrap .create-new-pic {
+  position: absolute;
+  bottom: 0px;
+  right: 22px;
+  width: 210px;
+}
 .create-from-keys-wrap .login-wrap form input:last-of-type {
   margin-bottom: 0;
 }

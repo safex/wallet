@@ -6,9 +6,9 @@ import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import ExitModal from "./partials/ExitModal";
 import { closeApp } from "../utils/utils.js";
 import Wallet from "./Wallet";
+import packageJson from "../../package";
 
 const safex = window.require("safex-nodejs-libwallet");
-import packageJson from "../../package";
 
 export default class CashWallet extends React.Component {
   constructor(props) {
@@ -63,7 +63,9 @@ export default class CashWallet extends React.Component {
               balance: this.roundBalanceAmount(
                 wallet.balance() - wallet.unlockedBalance()
               ),
-              unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
+              unlocked_balance: this.roundBalanceAmount(
+                wallet.unlockedBalance()
+              ),
               tokens: this.roundBalanceAmount(
                 wallet.tokenBalance() - wallet.unlockedTokenBalance()
               ),
@@ -76,7 +78,6 @@ export default class CashWallet extends React.Component {
             console.log(this.state.wallet_meta);
           }
         );
-      
         wallet.on("refreshed", () => {
           console.log("Wallet File refreshed");
           wallet
@@ -87,21 +88,21 @@ export default class CashWallet extends React.Component {
             })
             .catch(e => {
               console.log("Unable to store wallet: " + e);
+              return false;
             });
         });
-        })
-        .catch (err => {
-          console.log("error with the creation of the wallet " + err);
-        });
+      })
+      .catch(err => {
+        console.log(this.state.create_wallet_error);
+        console.log("error with the creation of the wallet " + err);
+        return false;
+      });
   }
 
   startBalanceCheck() {
     let wallet = this.state.wallet_meta;
-    console.log(
-      "daemon blockchain height: " + wallet.daemonBlockchainHeight()
-    );
+    console.log("daemon blockchain height: " + wallet.daemonBlockchainHeight());
     console.log("blockchain height: " + wallet.blockchainHeight());
-
     if (this.state.wallet_loaded) {
       this.setState(() => ({
         wallet: {
@@ -123,46 +124,43 @@ export default class CashWallet extends React.Component {
           )
         }
       }));
-
       console.log("balance: " + this.roundBalanceAmount(wallet.balance()));
       console.log(
-        "unlocked balance: " +
-        this.roundBalanceAmount(wallet.unlockedBalance())
+        "unlocked balance: " + this.roundBalanceAmount(wallet.unlockedBalance())
       );
       console.log(
         "token balance: " +
-        this.roundBalanceAmount(
-          wallet.tokenBalance() - wallet.unlockedTokenBalance()
-        )
+          this.roundBalanceAmount(
+            wallet.tokenBalance() - wallet.unlockedTokenBalance()
+          )
       );
       console.log(
         "unlocked token balance: " +
-        this.roundBalanceAmount(wallet.unlockedTokenBalance())
+          this.roundBalanceAmount(wallet.unlockedTokenBalance())
       );
       console.log("blockchain height " + wallet.blockchainHeight());
       console.log("connected: " + wallet.connected());
     }
-
     console.log("balance address: " + wallet.address());
-
     if (wallet.daemonBlockchainHeight() - wallet.blockchainHeight() > 10) {
-      console.log("Please wait while blockchain is being updated...")
+      console.log("Please wait while blockchain is being updated...");
     }
-
     this.setState({
-      page: 'wallet'
+      page: "wallet"
     });
   }
 
   render() {
     switch (this.state.page) {
       case "wallet":
-        return <Wallet 
-          goToPage={this.goToPage} 
-          wallet={this.state.wallet}
-          walletMeta={this.state.wallet_meta}
-          alert={this.state.alert}
-        />;
+        return (
+          <Wallet
+            goToPage={this.goToPage}
+            wallet={this.state.wallet}
+            walletMeta={this.state.wallet_meta}
+            alert={this.state.alert}
+          />
+        );
       case "create-new":
         return (
           <CreateNew

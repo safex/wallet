@@ -1,17 +1,16 @@
 import React from "react";
+import Alert from "./partials/Alert";
+import ExitModal from "./partials/ExitModal";
+import { closeApp, openAlert, closeAlert } from "../utils/utils.js";
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
-
-import Alert from "./partials/Alert";
-import ExitModal from "./partials/ExitModal";
-import { closeApp, openAlert, closeAlert  } from "../utils/utils.js";
 
 export default class NewFromMnemonic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wallet_path: '',
+      wallet_path: ""
     };
 
     this.goToPage = this.goToPage.bind(this);
@@ -68,33 +67,18 @@ export default class NewFromMnemonic extends React.Component {
     const mnemonic = e.target.mnemonic.value;
 
     if (pass1 === "" || pass2 === "") {
-      this.setOpenAlert(
-        "Fill out all the fields",
-        "alert",
-        false
-      );
+      this.setOpenAlert("Fill out all the fields", "alert", false);
       return false;
     }
     if (pass1 !== pass2) {
-      this.setOpenAlert(
-        "Repeated password does not match",
-        "alert",
-        false
-      );
+      this.setOpenAlert("Repeated password does not match", "alert", false);
       return false;
     }
     if (mnemonic === "") {
-      this.setOpenAlert(
-        "Enter mnemonic seed for your wallet",
-        "alert",
-        false
-      );
+      this.setOpenAlert("Enter mnemonic seed for your wallet", "alert", false);
       return false;
     }
-    if (
-      this.countWords(mnemonic) < 24 || 
-      this.countWords(mnemonic) > 25
-    ) {
+    if (this.countWords(mnemonic) < 24 || this.countWords(mnemonic) > 25) {
       this.setOpenAlert(
         "Mnemonic seed must contain 24 or 25 words",
         "alert",
@@ -129,22 +113,24 @@ export default class NewFromMnemonic extends React.Component {
       this.setState(() => ({
         alert_close_disabled: true
       }));
-        this.setOpenAlert(
-          "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
-          "alert",
-          true
-        );
-        console.log("wallet doesn't exist. creating new one: " + this.state.wallet_path);
-        console.log("mnemonic seed: " + mnemonic);
-          
-        this.props.createWallet("recoveryWallet", {
-          path: filepath,
-          password: pass1,
-          network: "mainnet",
-          daemonAddress: "rpc.safex.io:17402",
-          mnemonic: mnemonic,
-        });
-        console.log("Recover wallet from mnemonic performed!");
+      this.setOpenAlert(
+        "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
+        "alert",
+        true
+      );
+      console.log(
+        "wallet doesn't exist. creating new one: " + this.state.wallet_path
+      );
+      console.log("mnemonic seed: " + mnemonic);
+
+      this.props.createWallet("recoveryWallet", {
+        path: filepath,
+        password: pass1,
+        network: "mainnet",
+        daemonAddress: "rpc.safex.io:17402",
+        mnemonic: mnemonic
+      });
+      console.log("Recover wallet from mnemonic performed!");
     });
   }
 
@@ -180,9 +166,7 @@ export default class NewFromMnemonic extends React.Component {
 
         <h2>Recover Wallet From Mnemonic Seed</h2>
         <div className="col-xs-6 col-xs-push-3 login-wrap">
-          <form
-            onSubmit={this.createNewFromMnemonic}
-          >
+          <form onSubmit={this.createNewFromMnemonic}>
             <div className="group-wrap">
               <div className="form-group">
                 <input

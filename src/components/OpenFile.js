@@ -1,24 +1,17 @@
 import React from "react";
-
-const { dialog } = window.require("electron").remote;
-
-import {
-  openAlert, 
-  closeAlert
-} from "../utils/utils.js";
-
+import { openAlert, closeAlert } from "../utils/utils.js";
 import Alert from "./partials/Alert";
 import ExitModal from "./partials/ExitModal";
 import { closeApp } from "../utils/utils.js";
+
+const { dialog } = window.require("electron").remote;
 
 export default class OpenFile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //wallet state settings
       wallet_loaded: false,
-      wallet_path: "",
-      
+      wallet_path: ""
     };
 
     this.goToPage = this.goToPage.bind(this);
@@ -69,26 +62,22 @@ export default class OpenFile extends React.Component {
 
   openFile(e) {
     e.preventDefault();
-    const pass = e.target.pass.value;
     let filename = e.target.filepath.value;
+    const pass = e.target.pass.value;
 
     if (filename === "") {
       this.setOpenAlert("Choose the wallet file", "alert", false);
       return false;
     }
     if (pass === "") {
-      this.setOpenAlert(
-        "Enter password for your wallet file",
-        "alert",
-        false
-      );
+      this.setOpenAlert("Enter password for your wallet file", "alert", false);
       return false;
     }
     this.setState({
       alert_close_disabled: true
     });
     this.setOpenAlert(
-      "Please wait while your wallet file is loaded",
+      "Please wait while your wallet file is loaded. Don't close the application. This can take a while, please be patient.",
       "alert",
       true
     );
@@ -96,7 +85,7 @@ export default class OpenFile extends React.Component {
       path: this.state.wallet_path,
       password: pass,
       network: "mainnet",
-      daemonAddress: "rpc.safex.io:17402",
+      daemonAddress: "rpc.safex.io:17402"
     });
   }
 
@@ -114,7 +103,11 @@ export default class OpenFile extends React.Component {
           className="create-new-pic"
           alt="open-wallet-file"
         />
-        <button onClick={this.goToPage} className="go-back-btn button-shine">
+        <button
+          onClick={this.goToPage}
+          className="go-back-btn button-shine"
+          disabled={this.state.alert_close_disabled ? "disabled" : ""}
+        >
           Back
         </button>
         <button
@@ -125,17 +118,9 @@ export default class OpenFile extends React.Component {
         >
           X
         </button>
-        <h2 className={this.state.wallet_loaded ? "hidden" : ""}>
-          Open Wallet File
-        </h2>
+        <h2>Open Wallet File</h2>
 
-        <div
-          className={
-            this.state.wallet_loaded
-              ? "hidden"
-              : "col-xs-6 col-xs-push-3 login-wrap"
-          }
-        >
+        <div className="col-xs-6 col-xs-push-3 login-wrap">
           <button
             className={
               this.state.wallet_loaded ? "hidden" : "browse-btn button-shine"
@@ -144,10 +129,7 @@ export default class OpenFile extends React.Component {
           >
             Browse
           </button>
-          <form
-            onSubmit={this.openFile}
-            className={this.state.wallet_loaded ? "hidden" : ""}
-          >
+          <form onSubmit={this.openFile}>
             <div className="group-wrap">
               <div className="form-group">
                 <input
