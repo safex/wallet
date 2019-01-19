@@ -1,7 +1,7 @@
 /* Open File */
-.open-file-wrap .create-new-pic {
-  bottom: 10px;
-  right: 37px;
+.open-file-wrap .item-pic {
+  bottom: 0px;
+  right: 27px;
 }
 .open-file-wrap .login-wrap form input {
   margin: 0 0 10px;

@@ -1,5 +1,5 @@
 /* Wallet File Wrap */
-.wallet-wrap  h2 {
+.wallet-wrap h2 {
   color: #fff;
   font-size: 44px;
   text-align: center;
@@ -9,6 +9,9 @@
 .wallet-inner-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   padding: 35px 20px 20px;
+}
+.wallet-wrap .item-pic {
+  right: 17px;
 }
 .wallet-inner-wrap .btn-wrap {
   position: absolute;

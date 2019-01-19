@@ -151,15 +151,15 @@ export default class CreateFromKeys extends React.Component {
             disabled={this.state.alert_close_disabled ? "disabled" : ""}
           >
             Back
-        </button>
-          <button
-            onClick={this.toggleExitModal}
-            className="close-app-btn button-shine"
-            title="Exit"
-            disabled={this.state.alert_close_disabled ? "disabled" : ""}
-          >
-            X
-        </button>
+          </button>
+            <button
+              onClick={this.toggleExitModal}
+              className="close-app-btn button-shine"
+              title="Exit"
+              disabled={this.state.alert_close_disabled ? "disabled" : ""}
+            >
+              X
+          </button>
 
           <h2>Create New Wallet From Keys</h2>
           <div className="col-xs-6 col-xs-push-3 login-wrap">

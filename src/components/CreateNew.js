@@ -138,7 +138,7 @@ export default class CreateNew extends React.Component {
 
   render() {
     return (
-      <div className="item-wrap">
+      <div className="item-wrap create-new-wrap">
         <div className="item-inner">
           <img
             src="images/create-new.png"
