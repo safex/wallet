@@ -82,11 +82,6 @@ export default class Wallet extends React.Component {
   refreshCallback() {
     console.log("wallet refreshed");
     let wallet = this.props.walletMeta;
-    this.setOpenAlert(
-      "Please wait while blockchain is being updated...",
-      "alert",
-      true
-    );
     this.setState(() => ({
       alert_close_disabled: false,
       wallet: {
@@ -106,6 +101,11 @@ export default class Wallet extends React.Component {
         unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance())
       }
     }));
+    this.setOpenAlert(
+      "Please wait while blockchain is being updated...",
+      "alert",
+      true
+    );
     wallet
       .store()
       .then(() => {
