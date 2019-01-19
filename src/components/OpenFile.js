@@ -98,67 +98,63 @@ export default class OpenFile extends React.Component {
 
   render() {
     return (
-      <div
-        className={
-          this.state.closing
-            ? "create-new-wrap open-file-wrap animated fadeOut"
-            : "create-new-wrap open-file-wrap"
-        }
-      >
-        <img
-          src="images/open-wallet-file.png"
-          className="create-new-pic"
-          alt="open-wallet-file"
-        />
-        <button
-          onClick={this.goToPage}
-          className="go-back-btn button-shine"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          Back
-        </button>
-        <button
-          onClick={this.toggleExitModal}
-          className="close-app-btn button-shine"
-          title="Exit"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          X
-        </button>
-        <h2>Open Wallet File</h2>
-
-        <div className="col-xs-6 col-xs-push-3 login-wrap">
-          <button
-            className={
-              this.state.wallet_loaded ? "hidden" : "browse-btn button-shine"
-            }
-            onClick={this.browseFile}
-          >
-            Browse
-          </button>
-          <form onSubmit={this.openFile}>
-            <div className="group-wrap">
-              <div className="form-group">
-                <input
-                  name="filepath"
-                  value={this.state.wallet_path}
-                  placeholder="wallet file path"
-                  readOnly
-                />
-                <input type="password" name="pass" placeholder="password" />
-              </div>
-            </div>
-            <button type="submit" className="submit btn button-shine">
-              Open
-            </button>
-          </form>
-
-          <Alert
-            openAlert={this.state.alert}
-            alertText={this.state.alert_text}
-            alertCloseDisabled={this.state.alert_close_disabled}
-            closeAlert={this.setCloseAlert}
+      <div className="item-wrap open-file-wrap">
+        <div className="item-inner">
+          <img
+            src="images/open-wallet-file.png"
+            className="item-pic"
+            alt="open-wallet-file"
           />
+          <button
+            onClick={this.goToPage}
+            className="go-back-btn button-shine"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            Back
+        </button>
+          <button
+            onClick={this.toggleExitModal}
+            className="close-app-btn button-shine"
+            title="Exit"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            X
+        </button>
+          <h2>Open Wallet File</h2>
+
+          <div className="col-xs-6 col-xs-push-3 login-wrap">
+            <button
+              className={
+                this.state.wallet_loaded ? "hidden" : "browse-btn button-shine"
+              }
+              onClick={this.browseFile}
+            >
+              Browse
+          </button>
+            <form onSubmit={this.openFile}>
+              <div className="group-wrap">
+                <div className="form-group">
+                  <input
+                    name="filepath"
+                    value={this.state.wallet_path}
+                    placeholder="wallet file path"
+                    readOnly
+                  />
+                  <input type="password" name="pass" placeholder="password" />
+                </div>
+              </div>
+              <button type="submit" className="submit btn button-shine">
+                Open
+            </button>
+            </form>
+
+            <Alert
+              openAlert={this.state.alert}
+              alertText={this.state.alert_text}
+              alertCloseDisabled={this.state.alert_close_disabled}
+              closeAlert={this.setCloseAlert}
+            />
+          </div>
         </div>
 
         <ExitModal

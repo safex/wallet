@@ -138,34 +138,29 @@ export default class CreateNew extends React.Component {
 
   render() {
     return (
-      <div className="create-new-wrap">
-        <img
-          src="images/create-new.png"
-          className="create-new-pic"
-          alt="create-new"
-        />
-        <button
-          onClick={this.goToPage}
-          className="go-back-btn button-shine"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          Back
-        </button>
-        <button
-          onClick={this.toggleExitModal}
-          className="close-app-btn button-shine"
-          title="Exit"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          X
-        </button>
-        <div
-          className={
-            this.state.wallet_created
-              ? "create-new-inner hidden"
-              : "create-new-inner"
-          }
-        >
+      <div className="item-wrap">
+        <div className="item-inner">
+          <img
+            src="images/create-new.png"
+            className="item-pic"
+            alt="create-new"
+          />
+          <button
+            onClick={this.goToPage}
+            className="go-back-btn button-shine"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            Back
+          </button>
+            <button
+              onClick={this.toggleExitModal}
+              className="close-app-btn button-shine"
+              title="Exit"
+              disabled={this.state.alert_close_disabled ? "disabled" : ""}
+            >
+              X
+          </button>
+
           <h2>Create New Wallet File</h2>
           <div className="col-xs-6 col-xs-push-3 login-wrap">
             <form
@@ -192,8 +187,8 @@ export default class CreateNew extends React.Component {
                 {this.state.wallet_created ? (
                   <span>Create New</span>
                 ) : (
-                  <span>Create</span>
-                )}
+                    <span>Create</span>
+                  )}
               </button>
             </form>
 
@@ -205,7 +200,7 @@ export default class CreateNew extends React.Component {
             />
           </div>
         </div>
-
+      
         <ExitModal
           exitModal={this.state.exit_modal}
           closeExitModal={this.toggleExitModal}

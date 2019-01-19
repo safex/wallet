@@ -360,179 +360,175 @@ export default class Wallet extends React.Component {
 
   render() {
     return (
-      <div className="wallet-wrap">
-        <button
-          onClick={this.goToPage}
-          className="go-back-btn button-shine"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          Back
-        </button>
-        <img
-          src="images/create-new.png"
-          className="create-new-pic"
-          alt="create-new"
-        />
-        <button
-          onClick={this.toggleExitModal}
-          className="close-app-btn button-shine"
-          title="Exit"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          X
-        </button>
-        <h2>Wallet File</h2>
-
-        <div className="col-xs-6 col-xs-push-3 wallet-inner-wrap">
-          <div className="btn-wrap">
-            {/* <button
-              className="open-file-btn button-shine"
-              onClick={this.props.createAnotherFile}
-            >
-              Back
-            </button> */}
-            <button
-              className={
-                this.props.wallet.wallet_connected
-                  ? "signal connected"
-                  : "signal"
-              }
-              disabled
-              title="Status"
-            >
-              <img src="images/connected-white.png" alt="connected" />
-              <p>
-                {this.props.wallet.wallet_connected ? (
-                  <span>Connected</span>
-                ) : (
-                  <span>Connection error</span>
-                )}
-              </p>
-            </button>
-            <button className="blockheight" title="Blockchain Height" disabled>
-              <img src="images/blocks.png" alt="blocks" />
-              <span>{this.props.wallet.blockchain_height}</span>
-            </button>
-            <button
-              className="button-shine rescan"
-              onClick={this.rescanBalance}
-              title="Rescan"
-            >
-              <img src="images/rescan.png" alt="rescan" />
-            </button>
-          </div>
-
-          <label htmlFor="address">Wallet Address</label>
-          <input
-            type="text"
-            name="address"
-            defaultValue={this.props.wallet.wallet_address}
-            placeholder="address"
+      <div className="item-wrap wallet-wrap">
+        <div className="item-inner">
+          <button
+            onClick={this.goToPage}
+            className="go-back-btn button-shine"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            Back
+          </button>
+          <img
+            src="images/create-new.png"
+            className="item-pic"
+            alt="create-new"
           />
+          <button
+            onClick={this.toggleExitModal}
+            className="close-app-btn button-shine"
+            title="Exit"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            X
+          </button>
+          <h2>Wallet File</h2>
 
-          <label htmlFor="spend_key">Secret Spend Key</label>
-          <input
-            type="text"
-            name="spend_key"
-            defaultValue={this.props.wallet.spend_key}
-            placeholder="secret spend key"
-          />
+          <div className="col-xs-6 col-xs-push-3 wallet-inner-wrap">
+            <div className="btn-wrap">
+              <button
+                className={
+                  this.props.wallet.wallet_connected
+                    ? "signal connected"
+                    : "signal"
+                }
+                disabled
+                title="Status"
+              >
+                <img src="images/connected-white.png" alt="connected" />
+                <p>
+                  {this.props.wallet.wallet_connected ? (
+                    <span>Connected</span>
+                  ) : (
+                      <span>Connection error</span>
+                    )}
+                </p>
+              </button>
+              <button className="blockheight" title="Blockchain Height" disabled>
+                <img src="images/blocks.png" alt="blocks" />
+                <span>{this.props.wallet.blockchain_height}</span>
+              </button>
+              <button
+                className="button-shine rescan"
+                onClick={this.rescanBalance}
+                title="Rescan"
+              >
+                <img src="images/rescan.png" alt="rescan" />
+              </button>
+            </div>
 
-          <label htmlFor="view_key">Secret View Key</label>
-          <input
-            type="text"
-            name="view_key"
-            defaultValue={this.props.wallet.view_key}
-            placeholder="secret view key"
-          />
+            <label htmlFor="address">Wallet Address</label>
+            <input
+              type="text"
+              name="address"
+              defaultValue={this.props.wallet.wallet_address}
+              placeholder="address"
+            />
 
-          <label className={this.props.wallet.mnemonic ? "" : "hidden"}>
-            Wallet Mnemonic Seed
+            <label htmlFor="spend_key">Secret Spend Key</label>
+            <input
+              type="text"
+              name="spend_key"
+              defaultValue={this.props.wallet.spend_key}
+              placeholder="secret spend key"
+            />
+
+            <label htmlFor="view_key">Secret View Key</label>
+            <input
+              type="text"
+              name="view_key"
+              defaultValue={this.props.wallet.view_key}
+              placeholder="secret view key"
+            />
+
+            <label className={this.props.wallet.mnemonic ? "" : "hidden"}>
+              Wallet Mnemonic Seed
           </label>
-          <textarea
-            name="mnemonic"
-            defaultValue={this.props.wallet.mnemonic}
-            placeholder="mnemonic seed for your wallet"
-            className={this.props.wallet.mnemonic ? "" : "hidden"}
-            rows="2"
-          />
+            <textarea
+              name="mnemonic"
+              defaultValue={this.props.wallet.mnemonic}
+              placeholder="mnemonic seed for your wallet"
+              className={this.props.wallet.mnemonic ? "" : "hidden"}
+              rows="2"
+            />
 
-          <div className="group-wrap">
-            <div className="group">
-              <label htmlFor="balance">Pending Safex Cash</label>
-              <input
-                type="text"
-                placeholder="Balance"
-                name="balance"
-                className="yellow-field"
-                value={this.props.wallet.balance}
-                onChange={this.sendAmountOnChange}
-                readOnly
-              />
+            <div className="group-wrap">
+              <div className="group">
+                <label htmlFor="balance">Pending Safex Cash</label>
+                <input
+                  type="text"
+                  placeholder="Balance"
+                  name="balance"
+                  className="yellow-field"
+                  value={this.props.wallet.balance}
+                  onChange={this.sendAmountOnChange}
+                  readOnly
+                />
 
-              <label htmlFor="unlocked_balance">Available Safex Cash</label>
-              <input
-                type="text"
-                placeholder="Unlocked balance"
-                name="unlocked_balance"
-                className="green-field"
-                value={this.props.wallet.unlocked_balance}
-                onChange={this.sendAmountOnChange}
-                readOnly
-              />
-              <button
-                className="btn button-shine"
-                onClick={this.setOpenSendPopup.bind(this, "send_cash")}
-              >
-                Send Cash
+                <label htmlFor="unlocked_balance">Available Safex Cash</label>
+                <input
+                  type="text"
+                  placeholder="Unlocked balance"
+                  name="unlocked_balance"
+                  className="green-field"
+                  value={this.props.wallet.unlocked_balance}
+                  onChange={this.sendAmountOnChange}
+                  readOnly
+                />
+                <button
+                  className="btn button-shine"
+                  onClick={this.setOpenSendPopup.bind(this, "send_cash")}
+                >
+                  Send Cash
               </button>
+              </div>
+
+              <div className="group">
+                <label htmlFor="tokens">Pending Safex Tokens</label>
+                <input
+                  type="text"
+                  className="yellow-field"
+                  placeholder="Tokens"
+                  value={this.props.wallet.tokens}
+                  readOnly
+                />
+                <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
+                <input
+                  type="text"
+                  className="green-field"
+                  placeholder="Unlocked Tokens"
+                  name="unlocked_tokens"
+                  value={this.props.wallet.unlocked_tokens}
+                  readOnly
+                />
+                <button
+                  className="btn button-shine"
+                  onClick={this.setOpenSendPopup.bind(this, "send_token")}
+                >
+                  Send Tokens
+              </button>
+              </div>
             </div>
 
-            <div className="group">
-              <label htmlFor="tokens">Pending Safex Tokens</label>
-              <input
-                type="text"
-                className="yellow-field"
-                placeholder="Tokens"
-                value={this.props.wallet.tokens}
-                readOnly
-              />
-              <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
-              <input
-                type="text"
-                className="green-field"
-                placeholder="Unlocked Tokens"
-                name="unlocked_tokens"
-                value={this.props.wallet.unlocked_tokens}
-                readOnly
-              />
-              <button
-                className="btn button-shine"
-                onClick={this.setOpenSendPopup.bind(this, "send_token")}
-              >
-                Send Tokens
-              </button>
-            </div>
+            <SendModal
+              send_cash={this.state.send_cash}
+              send_token={this.state.send_token}
+              fromAddress={this.state.balance_wallet}
+              closeSendPopup={this.setCloseSendPopup}
+              sendCash={this.sendCash}
+              sendToken={this.sendToken}
+              txBeingSent={this.state.tx_being_sent}
+            />
+
+            <Alert
+              openAlert={this.state.alert}
+              alertText={this.state.alert_text}
+              alertCloseDisabled={this.state.alert_close_disabled}
+              closeAlert={this.setCloseAlert}
+            />
           </div>
-
-          <SendModal
-            send_cash={this.state.send_cash}
-            send_token={this.state.send_token}
-            fromAddress={this.state.balance_wallet}
-            closeSendPopup={this.setCloseSendPopup}
-            sendCash={this.sendCash}
-            sendToken={this.sendToken}
-            txBeingSent={this.state.tx_being_sent}
-          />
-
-          <Alert
-            openAlert={this.state.alert}
-            alertText={this.state.alert_text}
-            alertCloseDisabled={this.state.alert_close_disabled}
-            closeAlert={this.setCloseAlert}
-          />
         </div>
-
+        
         <ExitModal
           exitModal={this.state.exit_modal}
           closeExitModal={this.toggleExitModal}

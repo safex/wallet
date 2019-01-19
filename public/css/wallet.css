@@ -6,12 +6,6 @@
   text-transform: uppercase;
   margin: 20px 0 30px;
 }
-.wallet-wrap .create-new-pic {
-  position: absolute;
-  bottom: 0px;
-  right: 22px;
-  width: 210px;
-}
 .wallet-inner-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   padding: 35px 20px 20px;

@@ -138,82 +138,78 @@ export default class CreateFromKeys extends React.Component {
 
   render() {
     return (
-      <div
-        className={
-          this.state.closing
-            ? "create-new-wrap create-from-keys-wrap animated fadeOut"
-            : "create-new-wrap create-from-keys-wrap"
-        }
-      >
-        <img
-          src="images/new-from-keys.png"
-          className="create-new-pic"
-          alt="new-from-keys"
-        />
-        <button
-          onClick={this.goToPage}
-          className="go-back-btn button-shine"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          Back
-        </button>
-        <button
-          onClick={this.toggleExitModal}
-          className="close-app-btn button-shine"
-          title="Exit"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          X
-        </button>
-
-        <h2>Create New Wallet From Keys</h2>
-        <div className="col-xs-6 col-xs-push-3 login-wrap">
-          <form onSubmit={this.createWalletFromKeys}>
-            <div className="group-wrap">
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="address"
-                  ref="address"
-                  placeholder="address"
-                />
-                <input
-                  type="text"
-                  name="spendkey"
-                  ref="spendkey"
-                  placeholder="secret spendkey"
-                />
-                <input
-                  type="text"
-                  name="viewkey"
-                  ref="viewkey"
-                  placeholder="secret viewkey"
-                />
-                <input
-                  type="password"
-                  name="pass1"
-                  ref="pass1"
-                  placeholder="password"
-                />
-                <input
-                  type="password"
-                  name="pass2"
-                  ref="pass2"
-                  placeholder="repeat password"
-                />
-              </div>
-            </div>
-            <button type="submit" className="submit btn button-shine">
-              Create
-            </button>
-          </form>
-
-          <Alert
-            openAlert={this.state.alert}
-            alertText={this.state.alert_text}
-            alertCloseDisabled={this.state.alert_close_disabled}
-            closeAlert={this.setCloseAlert}
+      <div className="item-wrap create-from-keys-wrap">
+        <div className="item-inner">
+          <img
+            src="images/new-from-keys.png"
+            className="item-pic"
+            alt="new-from-keys"
           />
+          <button
+            onClick={this.goToPage}
+            className="go-back-btn button-shine"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            Back
+        </button>
+          <button
+            onClick={this.toggleExitModal}
+            className="close-app-btn button-shine"
+            title="Exit"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            X
+        </button>
+
+          <h2>Create New Wallet From Keys</h2>
+          <div className="col-xs-6 col-xs-push-3 login-wrap">
+            <form onSubmit={this.createWalletFromKeys}>
+              <div className="group-wrap">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    name="address"
+                    ref="address"
+                    placeholder="address"
+                  />
+                  <input
+                    type="text"
+                    name="spendkey"
+                    ref="spendkey"
+                    placeholder="secret spendkey"
+                  />
+                  <input
+                    type="text"
+                    name="viewkey"
+                    ref="viewkey"
+                    placeholder="secret viewkey"
+                  />
+                  <input
+                    type="password"
+                    name="pass1"
+                    ref="pass1"
+                    placeholder="password"
+                  />
+                  <input
+                    type="password"
+                    name="pass2"
+                    ref="pass2"
+                    placeholder="repeat password"
+                  />
+                </div>
+              </div>
+              <button type="submit" className="submit btn button-shine">
+                Create
+            </button>
+            </form>
+
+            <Alert
+              openAlert={this.state.alert}
+              alertText={this.state.alert_text}
+              alertCloseDisabled={this.state.alert_close_disabled}
+              closeAlert={this.setCloseAlert}
+            />
+          </div>
         </div>
 
         <ExitModal

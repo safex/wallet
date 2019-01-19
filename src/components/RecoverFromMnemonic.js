@@ -136,71 +136,67 @@ export default class NewFromMnemonic extends React.Component {
 
   render() {
     return (
-      <div
-        className={
-          this.state.closing
-            ? "create-new-wrap new-from-mnemonic-wrap animated fadeOut"
-            : "create-new-wrap new-from-mnemonic-wrap"
-        }
-      >
-        <img
-          src="images/mnemonic.png"
-          className="create-new-pic"
-          alt="create-new"
-        />
-        <button
-          onClick={this.goToPage}
-          className="go-back-btn button-shine"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          Back
-        </button>
-        <button
-          onClick={this.toggleExitModal}
-          className="close-app-btn button-shine"
-          title="Exit"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          X
-        </button>
-
-        <h2>Recover Wallet From Mnemonic Seed</h2>
-        <div className="col-xs-6 col-xs-push-3 login-wrap">
-          <form onSubmit={this.createNewFromMnemonic}>
-            <div className="group-wrap">
-              <div className="form-group">
-                <input
-                  type="password"
-                  name="pass1"
-                  ref="pass1"
-                  placeholder="password"
-                />
-                <input
-                  type="password"
-                  name="pass2"
-                  ref="pass2"
-                  placeholder="repeat password"
-                />
-                <label>Mnemonic Seed for your Wallet</label>
-                <textarea
-                  name="mnemonic"
-                  ref="mnemonic"
-                  placeholder="mnemonic seed"
-                  rows="3"
-                />
-              </div>
-            </div>
-            <button type="submit" className="submit btn button-shine">
-              Create
-            </button>
-          </form>
-
-          <Alert
-            openAlert={this.state.alert}
-            alertText={this.state.alert_text}
-            alertCloseDisabled={this.state.alert_close_disabled}
-            closeAlert={this.setCloseAlert}
+      <div className="item-wrap new-from-mnemonic-wrap">
+        <div className="item-inner">
+          <img
+            src="images/mnemonic.png"
+            className="item-pic"
+            alt="create-new"
           />
+          <button
+            onClick={this.goToPage}
+            className="go-back-btn button-shine"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            Back
+          </button>
+            <button
+              onClick={this.toggleExitModal}
+              className="close-app-btn button-shine"
+              title="Exit"
+              disabled={this.state.alert_close_disabled ? "disabled" : ""}
+            >
+              X
+          </button>
+
+          <h2>Recover Wallet From Mnemonic Seed</h2>
+          <div className="col-xs-6 col-xs-push-3 login-wrap">
+            <form onSubmit={this.createNewFromMnemonic}>
+              <div className="group-wrap">
+                <div className="form-group">
+                  <input
+                    type="password"
+                    name="pass1"
+                    ref="pass1"
+                    placeholder="password"
+                  />
+                  <input
+                    type="password"
+                    name="pass2"
+                    ref="pass2"
+                    placeholder="repeat password"
+                  />
+                  <label>Mnemonic Seed for your Wallet</label>
+                  <textarea
+                    name="mnemonic"
+                    ref="mnemonic"
+                    placeholder="mnemonic seed"
+                    rows="3"
+                  />
+                </div>
+              </div>
+              <button type="submit" className="submit btn button-shine">
+                Create
+            </button>
+            </form>
+
+            <Alert
+              openAlert={this.state.alert}
+              alertText={this.state.alert_text}
+              alertCloseDisabled={this.state.alert_close_disabled}
+              closeAlert={this.setCloseAlert}
+            />
+          </div>
         </div>
 
         <ExitModal
