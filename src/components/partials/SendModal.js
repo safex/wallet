@@ -36,7 +36,7 @@ export default class SendModal extends React.Component {
                 :
                   <h3>Send Tokens</h3>
               }
-              <form onSubmit={this.props.send_cash ? this.props.sendCash : this.props.sendTokens}>
+              <form onSubmit={this.props.send_cash ? this.props.sendCash : this.props.sendToken}>
                 <label htmlFor="send_to">Destination</label>
                 <textarea
                   name="send_to"
