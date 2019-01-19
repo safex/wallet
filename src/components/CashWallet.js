@@ -44,7 +44,7 @@ export default class CashWallet extends React.Component {
     return Math.floor(parseFloat(balance) / 100000000) / 100;
   }
 
-  createWallet(createWalletFunctionType, args) {
+  createWallet(createWalletFunctionType, args, callback) {
     console.log(createWalletFunctionType, args);
 
     safex[createWalletFunctionType](args)
@@ -93,9 +93,8 @@ export default class CashWallet extends React.Component {
         });
       })
       .catch(err => {
-        console.log(this.state.create_wallet_error);
         console.log("error with the creation of the wallet " + err);
-        return false;
+        return callback(err);
       });
   }
 
@@ -177,7 +176,10 @@ export default class CashWallet extends React.Component {
         );
       case "open-file":
         return (
-          <OpenFile goToPage={this.goToPage} createWallet={this.createWallet} />
+          <OpenFile 
+            goToPage={this.goToPage} 
+            createWallet={this.createWallet}
+          />
         );
       case "recover-from-mnemonic":
         return (

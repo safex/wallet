@@ -76,17 +76,24 @@ export default class OpenFile extends React.Component {
     this.setState({
       alert_close_disabled: true
     });
-    this.setOpenAlert(
-      "Please wait while your wallet file is loaded. Don't close the application. This can take a while, please be patient.",
-      "alert",
-      true
-    );
     this.props.createWallet("openWallet", {
       path: this.state.wallet_path,
       password: pass,
       network: "mainnet",
       daemonAddress: "rpc.safex.io:17402"
+    }, err => {
+      this.setOpenAlert(
+        "Error opening wallet: " + err,
+        "alert",
+        false
+      );
+      return false;
     });
+    this.setOpenAlert(
+      "Please wait while your wallet file is loaded. Don't close the application. This can take a while, please be patient.",
+      "alert",
+      true
+    );
   }
 
   render() {
