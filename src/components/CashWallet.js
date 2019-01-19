@@ -224,16 +224,17 @@ export default class CashWallet extends React.Component {
                   <img src="images/mnemonic.png" alt="mnemonic" />
                   <h3>Recover from Mnemonic</h3>
                 </div>
-              </div>
-              <button
-                onClick={this.toggleExitModal}
-                className="close-app-btn button-shine"
-                title="Exit"
-              >
-                X
+
+                <button
+                  onClick={this.toggleExitModal}
+                  className="close-app-btn button-shine"
+                  title="Exit"
+                >
+                  X
               </button>
 
-              <p id="version">{packageJson.version}</p>
+                <p id="version">{packageJson.version}</p>
+              </div>
             </div>
             <ExitModal
               exitModal={this.state.exit_modal}
