@@ -511,13 +511,15 @@ export default class Wallet extends React.Component {
             </div>
 
             <SendModal
+              sendModal={this.state.send_modal}
               send_cash={this.state.send_cash}
               send_token={this.state.send_token}
-              fromAddress={this.state.balance_wallet}
               closeSendPopup={this.setCloseSendPopup}
               sendCash={this.sendCash}
               sendToken={this.sendToken}
               txBeingSent={this.state.tx_being_sent}
+              availableCash={this.props.wallet.unlocked_balance}
+              availableTokens={this.props.wallet.unlocked_tokens}
             />
 
             <Alert

@@ -74,7 +74,8 @@ function closeAlert(target) {
  */
 function openSendPopup(target, currency) {
   target.setState({
-    [currency]: true,
+    send_modal: true,
+    [currency]: true
   });
 }
 
@@ -83,9 +84,14 @@ function openSendPopup(target, currency) {
  */
 function closeSendPopup(target) {
   target.setState({
-    send_cash: false,
-    send_token: false
+    send_modal: false
   });
+  setTimeout(() => {
+    target.setState({
+      send_cash: false,
+      send_token: false
+    });
+  }, 300);
 }
 
 /**

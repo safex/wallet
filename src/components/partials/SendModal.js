@@ -6,72 +6,60 @@ export default class SendModal extends React.Component {
       <div>
         <div
           className={
-            this.props.send_cash || this.props.send_token
+            this.props.sendModal
               ? "modal sendModal active"
               : "modal sendModal"
           }
-        >
+        > 
           <div className="sendModalInner">
             <span className="close" onClick={this.props.closeSendPopup}>
               X
             </span>
-            {this.props.send_cash ? (
-              <div>
-                <h3>Send Cash</h3>
-                <form onSubmit={this.props.sendCash}>
-                  <label htmlFor="send_to">Destination</label>
-                  <textarea
-                    name="send_to"
-                    placeholder="Enter Destination Address"
-                    rows="2"
-                  />
-
-                  <label htmlFor="amount">Amount</label>
-                  <input name="amount" placeholder="Enter Amount" />
-                  <button
-                    className="btn button-shine"
-                    type="submit"
-                    disabled={this.props.txBeingSent ? "disabled" : ""}
-                  >
-                    Send
-                  </button>
-                </form>
-              </div>
-            ) : (
-              <div>
-                {this.props.send_token ? (
-                  <div>
-                    <h3>Send Tokens</h3>
-                    <form onSubmit={this.props.sendToken}>
-                      <label htmlFor="send_to">Destination</label>
-                      <textarea
-                        name="send_to"
-                        placeholder="Enter Destination Address"
-                        rows="2"
-                      />
-
-                      <label htmlFor="amount">Amount</label>
-                      <input name="amount" placeholder="Enter Amount" />
-                      <button
-                        className="btn button-shine"
-                        type="submit"
-                        disabled={this.props.txBeingSent ? "disabled" : ""}
-                      >
-                        Send
-                      </button>
-                    </form>
+            <div>
+              {
+                this.props.send_cash 
+                  ? 
+                  <div className="available-wrap">
+                    <span>Available Safex Cash </span>
+                    <span>{this.props.availableCash}</span>
                   </div>
-                ) : (
-                  <div className="hidden" />
-                )}
-              </div>
-            )}
+                  : 
+                  <div className="available-wrap">
+                    <span>Available Safex Tokens </span>
+                    <span>{this.props.availableTokens}</span>
+                  </div>
+              }
+              {
+                this.props.send_cash
+                ? 
+                  <h3>Send Cash</h3>
+                :
+                  <h3>Send Tokens</h3>
+              }
+              <form onSubmit={this.props.send_cash ? this.props.sendCash : this.props.sendTokens}>
+                <label htmlFor="send_to">Destination</label>
+                <textarea
+                  name="send_to"
+                  placeholder="Enter Destination Address"
+                  rows="2"
+                />
+                <label htmlFor="amount">Amount</label>
+                <input name="amount" placeholder="Enter Amount" />
+                <button
+                  className="btn button-shine"
+                  type="submit"
+                  disabled={this.props.txBeingSent ? "disabled" : ""}
+                >
+                  Send
+                  </button>
+              </form>
+            </div>
           </div>
         </div>
 
         <div
           className={
-            this.props.send_cash || this.props.send_token
+            this.props.sendModal
               ? "backdrop active"
               : "backdrop"
           }
