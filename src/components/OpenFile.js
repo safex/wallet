@@ -81,8 +81,8 @@ export default class OpenFile extends React.Component {
       {
         path: this.state.wallet_path,
         password: pass,
-        network: "mainnet",
-        daemonAddress: "rpc.safex.io:17402"
+        network: this.props.config.network,
+        daemonAddress: this.props.config.daemonAddress
       },
       err => {
         this.setOpenAlert("Error opening wallet: " + err, false);

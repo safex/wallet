@@ -55,10 +55,10 @@ function closeAlert(target) {
 /**
  * Open Send Popup
  */
-function openSendPopup(target, currency) {
+function openSendPopup(target, send_cash_or_token) {
   target.setState({
     send_modal: true,
-    [currency]: true
+    send_cash_or_token: send_cash_or_token
   });
 }
 
@@ -71,8 +71,7 @@ function closeSendPopup(target) {
   });
   setTimeout(() => {
     target.setState({
-      send_cash: false,
-      send_token: false
+      send_cash_or_token: false
     });
   }, 300);
 }

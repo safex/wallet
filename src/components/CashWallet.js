@@ -15,7 +15,11 @@ export default class CashWallet extends React.Component {
     super(props);
     this.state = {
       wallet: null,
-      page: null
+      page: null,
+      config: {
+        network: "mainnet",
+        daemonAddress: "rpc.safex.io:17402"
+      }
     };
 
     this.goToPage = this.goToPage.bind(this);
@@ -164,6 +168,7 @@ export default class CashWallet extends React.Component {
           <CreateNew
             goToPage={this.goToPage}
             createWallet={this.createWallet}
+            config={this.state.config}
           />
         );
       case "create-from-keys":
@@ -171,17 +176,23 @@ export default class CashWallet extends React.Component {
           <CreateFromKeys
             goToPage={this.goToPage}
             createWallet={this.createWallet}
+            config={this.state.config}
           />
         );
       case "open-file":
         return (
-          <OpenFile goToPage={this.goToPage} createWallet={this.createWallet} />
+          <OpenFile
+            goToPage={this.goToPage}
+            createWallet={this.createWallet}
+            config={this.state.config}
+          />
         );
       case "recover-from-mnemonic":
         return (
           <RecoverFromMnemonic
             goToPage={this.goToPage}
             createWallet={this.createWallet}
+            config={this.state.config}
           />
         );
       default:

@@ -94,9 +94,9 @@ export default class NewFromMnemonic extends React.Component {
       }
       if (safex.walletExists(filepath)) {
         this.setOpenAlert(
-          `Wallet already exists. Please choose a different file name  
-          "this application does not enable overwriting an existing wallet file 
-          "OR you can open it using the Load Existing Wallet`,
+          `Wallet already exists. Please choose a different file name. 
+          This application does not enable overwriting an existing wallet file 
+          OR you can open it using the Load Existing Wallet`,
 
           false
         );
@@ -117,8 +117,8 @@ export default class NewFromMnemonic extends React.Component {
       this.props.createWallet("recoveryWallet", {
         path: filepath,
         password: pass1,
-        network: "mainnet",
-        daemonAddress: "rpc.safex.io:17402",
+        network: this.props.config.network,
+        daemonAddress: this.props.config.daemonAddress,
         mnemonic: mnemonic
       });
       console.log("Recover wallet from mnemonic performed!");

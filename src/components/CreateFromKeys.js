@@ -15,8 +15,7 @@ export default class CreateFromKeys extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      network: "mainnet",
-      daemonAddress: "rpc.safex.io:17402"
+      wallet: {}
     };
 
     this.goToPage = this.goToPage.bind(this);
@@ -53,7 +52,7 @@ export default class CreateFromKeys extends React.Component {
     e.preventDefault();
 
     //here we need the key set
-    //the desired wallet path
+    //the wallet path desired
     //the password
     var safex_address = e.target.address.value;
     var view_key = e.target.viewkey.value;
@@ -96,9 +95,9 @@ export default class CreateFromKeys extends React.Component {
       }
       if (safex.walletExists(filepath)) {
         this.setOpenAlert(
-          `Wallet already exists. Please choose a different file name  
-          "this application does not enable overwriting an existing wallet file 
-          "OR you can open it using the Load Existing Wallet`,
+          `Wallet already exists. Please choose a different file name. 
+          This application does not enable overwriting an existing wallet file 
+          OR you can open it using the Load Existing Wallet`,
           false
         );
         return false;
@@ -114,8 +113,8 @@ export default class CreateFromKeys extends React.Component {
       this.props.createWallet("createWalletFromKeys", {
         path: filepath,
         password: pass1,
-        network: this.state.network,
-        daemonAddress: this.state.daemonAddress,
+        network: this.props.config.network,
+        daemonAddress: this.props.config.daemonAddress,
         restoreHeight: 0,
         addressString: safex_address,
         viewKeyString: view_key,

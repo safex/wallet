@@ -13,11 +13,7 @@ import {
 export default class Wallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      wallet: null,
-      alert: this.props.alert,
-      balance_wallet: this.props.wallet.wallet_address
-    };
+    this.state = { wallet: null };
 
     this.goToPage = this.goToPage.bind(this);
     this.toggleExitModal = this.toggleExitModal.bind(this);
@@ -31,8 +27,7 @@ export default class Wallet extends React.Component {
     this.refreshCallback = this.refreshCallback.bind(this);
     this.newBlockCallback = this.newBlockCallback.bind(this);
     this.setCloseSendPopup = this.setCloseSendPopup.bind(this);
-    this.sendCash = this.sendCash.bind(this);
-    this.sendToken = this.sendToken.bind(this);
+    // this.sendToken = this.sendToken.bind(this);
     this.sendAmountOnChange = this.sendAmountOnChange.bind(this);
   }
 
@@ -58,8 +53,8 @@ export default class Wallet extends React.Component {
     return Math.floor(parseFloat(balance) / 100000000) / 100;
   }
 
-  setOpenAlert(alert, alert_state, disabled) {
-    openAlert(this, alert, alert_state, disabled);
+  setOpenAlert(alert, disabled) {
+    openAlert(this, alert, disabled);
   }
 
   setCloseAlert() {
@@ -101,11 +96,7 @@ export default class Wallet extends React.Component {
         unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance())
       }
     }));
-    this.setOpenAlert(
-      "Please wait while blockchain is being updated...",
-      "alert",
-      true
-    );
+    this.setOpenAlert("Please wait while blockchain is being updated...", true);
     wallet
       .store()
       .then(() => {
@@ -113,11 +104,7 @@ export default class Wallet extends React.Component {
         console.log("Wallet stored");
       })
       .catch(e => {
-        this.setOpenAlert(
-          "Unable to store wallet: " + e,
-          "open_file_alert",
-          false
-        );
+        this.setOpenAlert("Unable to store wallet: " + e, false);
         console.log("Unable to store wallet: " + e);
       });
     wallet.off("refreshed");
@@ -158,7 +145,6 @@ export default class Wallet extends React.Component {
     console.log(wallet);
     this.setOpenAlert(
       "Rescanning, this may take some time, please wait ",
-      "alert",
       true
     );
     wallet.off("updated");
@@ -206,43 +192,56 @@ export default class Wallet extends React.Component {
     }, 1000);
   }
 
-  sendCash(e) {
+  sendCashOrToken = (e, token_or_cash) => {
     e.preventDefault();
     let sendingAddress = e.target.send_to.value;
     let amount = e.target.amount.value * 10000000000;
     let wallet = this.props.walletMeta;
 
     if (sendingAddress === "") {
-      this.setOpenAlert("Fill out all the fields", "alert", false);
+      this.setOpenAlert("Fill out all the fields", false);
       return false;
     }
     if (amount === "") {
-      this.setOpenAlert("Enter Amount", "alert", false);
+      this.setOpenAlert("Enter Amount", false);
       return false;
     }
     console.log("amount " + amount);
     this.setState(() => ({
-      tx_being_sent: true
+      tx_being_sent: true,
+      send_cash_or_token: token_or_cash
     }));
     wallet
       .createTransaction({
         address: sendingAddress,
         amount: amount,
-        tx_type: 0 // cash transaction
+        tx_type: token_or_cash // cash transaction
       })
       .then(tx => {
         let txId = tx.transactionsIds();
-        console.log("Cash transaction created: " + txId);
+        if (token_or_cash === 0) {
+          console.log("Cash transaction created: " + txId);
+        } else {
+          console.log("Token transaction created: " + txId);
+        }
+
         tx.commit()
           .then(() => {
             console.log("Transaction commited successfully");
             this.setCloseSendPopup();
-            this.setOpenAlert(
-              "Transaction commited successfully, Your cash transaction ID is: " +
-                txId,
-              "alert",
-              false
-            );
+            if (token_or_cash === 0) {
+              this.setOpenAlert(
+                "Transaction commited successfully, Your cash transaction ID is: " +
+                  txId,
+                false
+              );
+            } else {
+              this.setOpenAlert(
+                "Transaction commited successfully, Your token transaction ID is: " +
+                  txId,
+                false
+              );
+            }
             this.setState(() => ({
               tx_being_sent: false
             }));
@@ -254,86 +253,19 @@ export default class Wallet extends React.Component {
             this.setState(() => ({
               tx_being_sent: false
             }));
-            this.setOpenAlert(
-              "Error on commiting transaction: " + e,
-              "alert",
-              false
-            );
+            this.setOpenAlert("Error on commiting transaction: " + e, false);
           });
       })
       .catch(e => {
         this.setState(() => ({
           tx_being_sent: false
         }));
-        this.setOpenAlert("Couldn't create transaction: " + e, "alert", false);
+        this.setOpenAlert("Couldn't create transaction: " + e, false);
       });
-  }
+  };
 
-  sendToken(e) {
-    e.preventDefault();
-    let sendingAddress = e.target.send_to.value;
-    let amount = Math.floor(e.target.amount.value) * 10000000000;
-    let wallet = this.props.walletMeta;
-
-    if (sendingAddress === "") {
-      this.setOpenAlert("Fill out all the fields", "alert", false);
-      return false;
-    }
-    if (amount === "") {
-      this.setOpenAlert("Enter Amount", "alert", false);
-      return false;
-    }
-    console.log("amount " + amount);
-    this.setState(() => ({
-      tx_being_sent: true
-    }));
-    wallet
-      .createTransaction({
-        address: sendingAddress,
-        amount: amount,
-        tx_type: 1 // token transaction
-      })
-      .then(tx => {
-        let txId = tx.transactionsIds();
-        console.log("Token transaction created: " + txId);
-        tx.commit()
-          .then(() => {
-            console.log("Transaction commited successfully");
-            this.setCloseSendPopup();
-            this.setOpenAlert(
-              "Transaction commited successfully, Your token transaction ID is: " +
-                txId,
-              "alert",
-              false
-            );
-            this.setState(() => ({
-              tx_being_sent: false
-            }));
-            setTimeout(() => {
-              this.sendAmountOnChange();
-            }, 1000);
-          })
-          .catch(e => {
-            this.setState(() => ({
-              tx_being_sent: false
-            }));
-            this.setOpenAlert(
-              "Error on commiting transaction: " + e,
-              "alert",
-              false
-            );
-          });
-      })
-      .catch(e => {
-        this.setState(() => ({
-          tx_being_sent: false
-        }));
-        this.setOpenAlert("Couldn't create transaction: " + e, "alert", false);
-      });
-  }
-
-  setOpenSendPopup(currency) {
-    openSendPopup(this, currency);
+  setOpenSendPopup(send_cash_or_token) {
+    openSendPopup(this, send_cash_or_token);
   }
 
   setCloseSendPopup() {
@@ -400,11 +332,15 @@ export default class Wallet extends React.Component {
                   {this.props.wallet.wallet_connected ? (
                     <span>Connected</span>
                   ) : (
-                      <span>Connection error</span>
-                    )}
+                    <span>Connection error</span>
+                  )}
                 </p>
               </button>
-              <button className="blockheight" title="Blockchain Height" disabled>
+              <button
+                className="blockheight"
+                title="Blockchain Height"
+                disabled
+              >
                 <img src="images/blocks.png" alt="blocks" />
                 <span>{this.props.wallet.blockchain_height}</span>
               </button>
@@ -443,7 +379,7 @@ export default class Wallet extends React.Component {
 
             <label className={this.props.wallet.mnemonic ? "" : "hidden"}>
               Wallet Mnemonic Seed
-          </label>
+            </label>
             <textarea
               name="mnemonic"
               defaultValue={this.props.wallet.mnemonic}
@@ -477,10 +413,10 @@ export default class Wallet extends React.Component {
                 />
                 <button
                   className="btn button-shine"
-                  onClick={this.setOpenSendPopup.bind(this, "send_cash")}
+                  onClick={this.setOpenSendPopup.bind(this, 0)}
                 >
                   Send Cash
-              </button>
+                </button>
               </div>
 
               <div className="group">
@@ -503,20 +439,18 @@ export default class Wallet extends React.Component {
                 />
                 <button
                   className="btn button-shine"
-                  onClick={this.setOpenSendPopup.bind(this, "send_token")}
+                  onClick={this.setOpenSendPopup.bind(this, 1)}
                 >
                   Send Tokens
-              </button>
+                </button>
               </div>
             </div>
 
             <SendModal
               sendModal={this.state.send_modal}
-              send_cash={this.state.send_cash}
-              send_token={this.state.send_token}
+              send_cash_or_token={this.state.send_cash_or_token}
               closeSendPopup={this.setCloseSendPopup}
-              sendCash={this.sendCash}
-              sendToken={this.sendToken}
+              sendCashOrToken={this.sendCashOrToken}
               txBeingSent={this.state.tx_being_sent}
               availableCash={this.props.wallet.unlocked_balance}
               availableTokens={this.props.wallet.unlocked_tokens}
@@ -530,7 +464,7 @@ export default class Wallet extends React.Component {
             />
           </div>
         </div>
-        
+
         <ExitModal
           exitModal={this.state.exit_modal}
           closeExitModal={this.toggleExitModal}

@@ -10,11 +10,7 @@ const { dialog } = window.require("electron").remote;
 export default class CreateNew extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      wallet: {},
-      net: "mainnet",
-      daemonHostPort: "rpc.safex.io:17402"
-    };
+    this.state = {};
 
     this.goToPage = this.goToPage.bind(this);
     this.createNew = this.createNew.bind(this);
@@ -73,9 +69,9 @@ export default class CreateNew extends React.Component {
       }
       if (safex.walletExists(filepath)) {
         this.setOpenAlert(
-          `Wallet already exists. Please choose a different file name  
-          "this application does not enable overwriting an existing wallet file 
-          "OR you can open it using the Load Existing Wallet`,
+          `Wallet already exists. Please choose a different file name. 
+          This application does not enable overwriting an existing wallet file 
+          OR you can open it using the Load Existing Wallet`,
           false
         );
         return false;
@@ -84,8 +80,8 @@ export default class CreateNew extends React.Component {
       this.props.createWallet("createWallet", {
         path: filepath,
         password: pass1,
-        network: this.state.net,
-        daemonAddress: this.state.daemonHostPort,
+        network: this.props.config.network,
+        daemonAddress: this.props.config.daemonAddress,
         mnemonic: ""
       });
       this.setOpenAlert(
