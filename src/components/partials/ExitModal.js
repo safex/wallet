@@ -14,10 +14,10 @@ export default class ExitModal extends React.Component {
           </span>
           <h3>Are you sure you want to exit?</h3>
           <div className="btns-wrap">
-            <button className="cancel-btn" onClick={this.props.closeExitModal}>
+            <button className="cancel-btn button-shine" onClick={this.props.closeExitModal}>
               Cancel
             </button>
-            <button className="confirm-btn" onClick={this.props.closeApp}>
+            <button className="confirm-btn button-shine" onClick={this.props.closeApp}>
               Exit
             </button>
           </div>
