@@ -16,13 +16,11 @@ export default class SendModal extends React.Component {
             <div>
               {this.props.send_cash_or_token === 0 ? (
                 <div className="available-wrap">
-                  <span>Available Safex Cash </span>
-                  <span>{this.props.availableCash}</span>
+                  <span>Available Safex Cash: {this.props.availableCash} </span>
                 </div>
               ) : (
                 <div className="available-wrap">
-                  <span>Available Safex Tokens </span>
-                  <span>{this.props.availableTokens}</span>
+                  <span>Available Safex Tokens: {this.props.availableTokens} </span>
                 </div>
               )}
               {this.props.send_cash_or_token === 0 ? (
@@ -31,10 +29,7 @@ export default class SendModal extends React.Component {
                 <h3>Send Tokens</h3>
               )}
               <form
-                onSubmit={e => {
-                  this.props.sendCashOrToken(e, this.props.send_cash_or_token);
-                  console.log(this.props.send_cash_or_token);
-                }}
+                onSubmit={e => {this.props.sendCashOrToken(e, this.props.send_cash_or_token)}}
               >
                 <label htmlFor="send_to">Destination</label>
                 <textarea

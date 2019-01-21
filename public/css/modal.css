@@ -84,7 +84,7 @@
   letter-spacing: 0.8px;
   margin-bottom: 0;
   text-transform: initial;
-  line-height: 1.2;
+  line-height: 1;
   text-align: center;
 }
 .modal button:hover {
@@ -314,9 +314,9 @@
 .sendModal .available-wrap {
   position: absolute;
   left: 15px;
-  top: 12px;
+  top: 15px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: baseline;
 }
 .sendModal .available-wrap span {

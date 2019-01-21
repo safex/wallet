@@ -44,35 +44,39 @@ export default class CashWallet extends React.Component {
   createWallet = (createWalletFunctionType, args, callback) => {
     console.log(createWalletFunctionType, args);
 
-    safex[createWalletFunctionType](args)
-      .then(wallet => {
-        this.setState({
+    try {
+      safex[createWalletFunctionType](args)
+        .then(wallet => {
+          this.setState({
             wallet_loaded: true,
             wallet_meta: wallet,
           },
-          () => {
-            console.log(this.state.wallet_meta);
-          }
-        );
-        this.setWalletData(wallet);
-        wallet.on("refreshed", () => {
-          console.log("Wallet File refreshed");
-          wallet
-            .store()
-            .then(() => {
-              console.log("Wallet stored");
-              this.startBalanceCheck();
-            })
-            .catch(e => {
-              console.log("Unable to store wallet: " + e);
-              return false;
-            });
+            () => {
+              console.log(this.state.wallet_meta);
+            }
+          );
+          this.setWalletData(wallet);
+          wallet.on("refreshed", () => {
+            console.log("Wallet File refreshed");
+            wallet
+              .store()
+              .then(() => {
+                console.log("Wallet stored");
+                this.startBalanceCheck();
+              })
+              .catch(e => {
+                console.log("Unable to store wallet: " + e);
+                return false;
+              });
+          });
+        })
+        .catch(err => {
+          console.log("error with the creation of the wallet " + err);
+          return callback(err);
         });
-      })
-      .catch(err => {
-        console.log("error with the creation of the wallet " + err);
-        return callback(err);
-      });
+    } catch (e) {
+      return callback(e);
+    }
   }
 
   startBalanceCheck = () => {

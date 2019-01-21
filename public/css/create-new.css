@@ -88,6 +88,7 @@
   font-size: 20px;
   padding: 4px 0px 5px;
   border-bottom: 1px solid #8ffdfd;
+  resize: none;
 }
 .item-wrap .login-wrap form input::-webkit-input-placeholder,
 .item-wrap .login-wrap form textarea::-webkit-input-placeholder {

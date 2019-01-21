@@ -46,8 +46,7 @@ export default class CreateNew extends React.Component {
 
     const pass1 = e.target.pass1.value;
     const pass2 = e.target.pass2.value;
-    console.log("new wallet password: " + e.target.pass1.value);
-
+    
     if (pass1 === "" || pass2 === "") {
       this.setOpenAlert("Fill out all the fields", false);
       return false;

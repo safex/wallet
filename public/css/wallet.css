@@ -8,7 +8,10 @@
 }
 .wallet-inner-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  padding: 35px 20px 20px;
+  padding: 20px;
+}
+.wallet-inner-wrap.no-mnemonic {
+  padding: 40px 20px 20px;
 }
 .wallet-wrap .item-pic {
   right: 17px;
@@ -104,6 +107,9 @@
 .wallet-inner-wrap .group input {
   color: rgba(255, 255, 255, 1);
 }
+.wallet-inner-wrap .group input:last-of-type {
+  margin-bottom: 5px;
+}
 .wallet-inner-wrap label {
   width: 100%;
   text-align: center;
@@ -143,7 +149,7 @@
   text-align: center;
   border: 0px none;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 17px;
+  font-size: 20px;
   padding: 0px;
   border-bottom: 1px solid #8ffdfd;
   margin-bottom: 7px;
