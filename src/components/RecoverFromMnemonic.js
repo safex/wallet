@@ -9,57 +9,46 @@ const { dialog } = window.require("electron").remote;
 export default class NewFromMnemonic extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      wallet_path: ""
-    };
-
-    this.goToPage = this.goToPage.bind(this);
-    this.createNewFromMnemonic = this.createNewFromMnemonic.bind(this);
-    this.hasNumber = this.hasNumber.bind(this);
-    this.countWords = this.countWords.bind(this);
-    this.toggleExitModal = this.toggleExitModal.bind(this);
-    this.setCloseApp = this.setCloseApp.bind(this);
-    this.setOpenAlert = this.setOpenAlert.bind(this);
-    this.setCloseAlert = this.setCloseAlert.bind(this);
+    this.state = {};
   }
 
-  goToPage() {
+  goToPage = () =>  {
     this.props.goToPage();
   }
 
-  toggleExitModal() {
+  toggleExitModal = () =>  {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
   }
 
-  setCloseApp() {
+  setCloseApp = () =>  {
     closeApp(this);
   }
 
-  toggleMnemonic() {
+  toggleMnemonic = () =>  {
     this.setState({
       mnemonic_active: !this.state.mnemonic_active
     });
   }
 
-  setOpenAlert(alert, disabled) {
+  setOpenAlert = (alert, disabled) => {
     openAlert(this, alert, disabled);
   }
 
-  setCloseAlert() {
+  setCloseAlert = () =>  {
     closeAlert(this);
   }
 
-  hasNumber(myString) {
+  hasNumber = (myString) => {
     return /\d/.test(myString);
   }
 
-  countWords(str) {
+  countWords = (str) => {
     return str.trim().split(/\s+/).length;
   }
 
-  createNewFromMnemonic(e) {
+  createNewFromMnemonic = (e) => {
     e.preventDefault();
 
     const pass1 = e.target.pass1.value;

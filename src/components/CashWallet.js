@@ -21,34 +21,27 @@ export default class CashWallet extends React.Component {
         daemonAddress: "rpc.safex.io:17402"
       }
     };
-
-    this.goToPage = this.goToPage.bind(this);
-    this.toggleExitModal = this.toggleExitModal.bind(this);
-    this.setCloseApp = this.setCloseApp.bind(this);
-    this.createWallet = this.createWallet.bind(this);
-    this.roundBalanceAmount = this.roundBalanceAmount.bind(this);
-    this.startBalanceCheck = this.startBalanceCheck.bind(this);
   }
 
-  toggleExitModal() {
+  toggleExitModal = () =>  {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
   }
 
-  setCloseApp() {
+  setCloseApp = () =>  {
     closeApp(this);
   }
 
-  goToPage(page) {
+  goToPage = (page) => {
     this.setState({ page });
   }
 
-  roundBalanceAmount(balance) {
+  roundBalanceAmount = (balance) => {
     return Math.floor(parseFloat(balance) / 100000000) / 100;
   }
 
-  createWallet(createWalletFunctionType, args, callback) {
+  createWallet = (createWalletFunctionType, args, callback) => {
     console.log(createWalletFunctionType, args);
 
     safex[createWalletFunctionType](args)
@@ -102,52 +95,28 @@ export default class CashWallet extends React.Component {
       });
   }
 
-  startBalanceCheck() {
+  startBalanceCheck = () => {
     let wallet = this.state.wallet_meta;
-    console.log("daemon blockchain height: " + wallet.daemonBlockchainHeight());
-    console.log("blockchain height: " + wallet.blockchainHeight());
-    if (this.state.wallet_loaded) {
-      this.setState(() => ({
-        wallet: {
-          wallet_address: wallet.address(),
-          spend_key: wallet.secretSpendKey(),
-          view_key: wallet.secretViewKey(),
-          mnemonic: wallet.seed(),
-          wallet_connected: wallet.connected() === "connected",
-          blockchain_height: wallet.blockchainHeight(),
-          balance: this.roundBalanceAmount(
-            wallet.balance() - wallet.unlockedBalance()
-          ),
-          unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
-          tokens: this.roundBalanceAmount(
-            wallet.tokenBalance() - wallet.unlockedTokenBalance()
-          ),
-          unlocked_tokens: this.roundBalanceAmount(
-            wallet.unlockedTokenBalance()
-          )
-        }
-      }));
-      console.log("balance: " + this.roundBalanceAmount(wallet.balance()));
-      console.log(
-        "unlocked balance: " + this.roundBalanceAmount(wallet.unlockedBalance())
-      );
-      console.log(
-        "token balance: " +
-          this.roundBalanceAmount(
-            wallet.tokenBalance() - wallet.unlockedTokenBalance()
-          )
-      );
-      console.log(
-        "unlocked token balance: " +
-          this.roundBalanceAmount(wallet.unlockedTokenBalance())
-      );
-      console.log("blockchain height " + wallet.blockchainHeight());
-      console.log("connected: " + wallet.connected());
-    }
-    console.log("balance address: " + wallet.address());
-    if (wallet.daemonBlockchainHeight() - wallet.blockchainHeight() > 10) {
-      console.log("Please wait while blockchain is being updated...");
-    }
+    this.setState(() => ({
+      wallet: {
+        wallet_address: wallet.address(),
+        spend_key: wallet.secretSpendKey(),
+        view_key: wallet.secretViewKey(),
+        mnemonic: wallet.seed(),
+        wallet_connected: wallet.connected() === "connected",
+        blockchain_height: wallet.blockchainHeight(),
+        balance: this.roundBalanceAmount(
+          wallet.balance() - wallet.unlockedBalance()
+        ),
+        unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
+        tokens: this.roundBalanceAmount(
+          wallet.tokenBalance() - wallet.unlockedTokenBalance()
+        ),
+        unlocked_tokens: this.roundBalanceAmount(
+          wallet.unlockedTokenBalance()
+        )
+      }
+    }));
     this.setState({
       page: "wallet"
     });

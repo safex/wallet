@@ -13,55 +13,40 @@ import {
 export default class Wallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { wallet: null };
-
-    this.goToPage = this.goToPage.bind(this);
-    this.toggleExitModal = this.toggleExitModal.bind(this);
-    this.setCloseApp = this.setCloseApp.bind(this);
-    this.setOpenAlert = this.setOpenAlert.bind(this);
-    this.setCloseAlert = this.setCloseAlert.bind(this);
-    //balance functions
-    this.rescanBalance = this.rescanBalance.bind(this);
-    this.roundBalanceAmount = this.roundBalanceAmount.bind(this);
-    this.updatedCallback = this.updatedCallback.bind(this);
-    this.refreshCallback = this.refreshCallback.bind(this);
-    this.newBlockCallback = this.newBlockCallback.bind(this);
-    this.setCloseSendPopup = this.setCloseSendPopup.bind(this);
-    // this.sendToken = this.sendToken.bind(this);
-    this.sendAmountOnChange = this.sendAmountOnChange.bind(this);
+    this.state = {};
   }
 
-  componentDidMount() {
+  componentDidMount = () =>  {
     this.refreshCallback();
   }
 
-  goToPage() {
+  goToPage = () =>  {
     this.props.goToPage();
   }
 
-  toggleExitModal() {
+  toggleExitModal = () =>  {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
   }
 
-  setCloseApp() {
+  setCloseApp = () =>  {
     closeApp(this);
   }
 
-  roundBalanceAmount(balance) {
+  roundBalanceAmount = (balance) => {
     return Math.floor(parseFloat(balance) / 100000000) / 100;
   }
 
-  setOpenAlert(alert, disabled) {
+  setOpenAlert = (alert, disabled) => {
     openAlert(this, alert, disabled);
   }
 
-  setCloseAlert() {
+  setCloseAlert = () =>  {
     closeAlert(this);
   }
 
-  updatedCallback() {
+  updatedCallback = () =>  {
     console.log("UPDATED");
     this.props.walletMeta
       .store()
@@ -74,7 +59,7 @@ export default class Wallet extends React.Component {
       });
   }
 
-  refreshCallback() {
+  refreshCallback = () =>  {
     console.log("wallet refreshed");
     let wallet = this.props.walletMeta;
     this.setState(() => ({
@@ -114,7 +99,7 @@ export default class Wallet extends React.Component {
     }, 300);
   }
 
-  newBlockCallback(height) {
+  newBlockCallback = (height) => {
     let wallet = this.props.walletMeta;
     let syncedHeight = wallet.daemonBlockchainHeight() - height < 10;
     if (syncedHeight) {
@@ -140,7 +125,7 @@ export default class Wallet extends React.Component {
     }
   }
 
-  rescanBalance() {
+  rescanBalance = () =>  {
     var wallet = this.props.walletMeta;
     console.log(wallet);
     this.setOpenAlert(
@@ -264,16 +249,16 @@ export default class Wallet extends React.Component {
       });
   };
 
-  setOpenSendPopup(send_cash_or_token) {
+  setOpenSendPopup = (send_cash_or_token) => {
     openSendPopup(this, send_cash_or_token);
   }
 
-  setCloseSendPopup() {
+  setCloseSendPopup = () =>  {
     closeSendPopup(this);
   }
 
   //This is fired when amount is changed
-  sendAmountOnChange() {
+  sendAmountOnChange = () =>  {
     let wallet = this.props.walletMeta;
 
     this.props.wallet.balance = this.roundBalanceAmount(

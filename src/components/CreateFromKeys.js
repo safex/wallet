@@ -14,41 +14,32 @@ const { dialog } = window.require("electron").remote;
 export default class CreateFromKeys extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      wallet: {}
-    };
-
-    this.goToPage = this.goToPage.bind(this);
-    this.createWalletFromKeys = this.createWalletFromKeys.bind(this);
-    this.toggleExitModal = this.toggleExitModal.bind(this);
-    this.setCloseApp = this.setCloseApp.bind(this);
-    this.setOpenAlert = this.setOpenAlert.bind(this);
-    this.setCloseAlert = this.setCloseAlert.bind(this);
+    this.state = {};
   }
 
-  goToPage() {
+  goToPage = () =>  {
     this.props.goToPage();
   }
 
-  toggleExitModal() {
+  toggleExitModal = () =>  {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
   }
 
-  setCloseApp() {
+  setCloseApp = () =>  {
     closeApp(this);
   }
 
-  setOpenAlert(alert, disabled) {
+  setOpenAlert = (alert, disabled) => {
     openAlert(this, alert, disabled);
   }
 
-  setCloseAlert() {
+  setCloseAlert = () =>  {
     closeAlert(this);
   }
 
-  createWalletFromKeys(e) {
+  createWalletFromKeys = (e) => {
     e.preventDefault();
 
     //here we need the key set

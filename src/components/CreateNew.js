@@ -11,44 +11,37 @@ export default class CreateNew extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-
-    this.goToPage = this.goToPage.bind(this);
-    this.createNew = this.createNew.bind(this);
-    this.toggleExitModal = this.toggleExitModal.bind(this);
-    this.setCloseApp = this.setCloseApp.bind(this);
-    this.setOpenAlert = this.setOpenAlert.bind(this);
-    this.setCloseAlert = this.setCloseAlert.bind(this);
   }
 
-  goToPage() {
+  goToPage = () => {
     this.props.goToPage();
   }
 
-  toggleMnemonic() {
+  toggleMnemonic = () => {
     this.setState({
       mnemonic_active: !this.state.mnemonic_active
     });
   }
 
-  toggleExitModal() {
+  toggleExitModal = () =>  {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
   }
 
-  setCloseApp() {
+  setCloseApp = () =>  {
     closeApp(this);
   }
 
-  setOpenAlert(alert, disabled) {
+  setOpenAlert = (alert, disabled) => {
     openAlert(this, alert, disabled);
   }
 
-  setCloseAlert() {
+  setCloseAlert = () => {
     closeAlert(this);
   }
 
-  createNew(e) {
+  createNew = (e) =>  {
     e.preventDefault();
 
     const pass1 = e.target.pass1.value;

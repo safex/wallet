@@ -9,48 +9,32 @@ const { dialog } = window.require("electron").remote;
 export default class OpenFile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      wallet_loaded: false,
-      wallet_path: ""
-    };
-
-    this.goToPage = this.goToPage.bind(this);
-    this.browseFile = this.browseFile.bind(this);
-    this.openFile = this.openFile.bind(this);
-    this.openAnotherFile = this.openAnotherFile.bind(this);
-    this.toggleExitModal = this.toggleExitModal.bind(this);
-    this.setCloseApp = this.setCloseApp.bind(this);
-    this.setOpenAlert = this.setOpenAlert.bind(this);
-    this.setCloseAlert = this.setCloseAlert.bind(this);
+    this.state = { wallet_path: '' };
   }
 
-  goToPage() {
+  goToPage = () =>  {
     this.props.goToPage();
   }
 
-  toggleExitModal() {
+  toggleExitModal = () =>  {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
   }
 
-  setCloseApp() {
+  setCloseApp = () =>  {
     closeApp(this);
   }
 
-  setOpenAlert(alert, disabled) {
+  setOpenAlert = (alert, disabled) => {
     openAlert(this, alert, disabled);
   }
 
-  setCloseAlert() {
+  setCloseAlert = () =>  {
     closeAlert(this);
   }
 
-  openAnotherFile() {
-    this.setState({ wallet_loaded: false });
-  }
-
-  browseFile() {
+  browseFile = () =>  {
     var filename = "";
     filename = dialog.showOpenDialog({});
     console.log("filename " + filename);
@@ -60,7 +44,7 @@ export default class OpenFile extends React.Component {
     }));
   }
 
-  openFile(e) {
+  openFile = (e) => {
     e.preventDefault();
     let filename = e.target.filepath.value;
     const pass = e.target.pass.value;
@@ -74,7 +58,7 @@ export default class OpenFile extends React.Component {
       return false;
     }
     this.setState({
-      alert_close_disabled: true
+      alert_close_disabled: true,
     });
     this.props.createWallet(
       "openWallet",
@@ -93,6 +77,11 @@ export default class OpenFile extends React.Component {
       "Please wait while your wallet file is loaded. Don't close the application. This can take a while, please be patient.",
       true
     );
+  }
+
+  setWalletPath = (e) => {
+    let filename = e.target.value;
+    this.setState({ wallet_path: filename })
   }
 
   render() {
@@ -136,6 +125,7 @@ export default class OpenFile extends React.Component {
                   <input
                     name="filepath"
                     value={this.state.wallet_path}
+                    onChange={this.setWalletPath}
                     placeholder="wallet file path"
                     readOnly
                   />
