@@ -46,35 +46,15 @@ export default class CashWallet extends React.Component {
 
     safex[createWalletFunctionType](args)
       .then(wallet => {
-        this.setState(
-          {
+        this.setState({
             wallet_loaded: true,
             wallet_meta: wallet,
-            wallet: {
-              wallet_address: wallet.address(),
-              spend_key: wallet.secretSpendKey(),
-              view_key: wallet.secretViewKey(),
-              mnemonic: wallet.seed(),
-              wallet_connected: wallet.connected() === "connected",
-              blockchain_height: wallet.blockchainHeight(),
-              balance: this.roundBalanceAmount(
-                wallet.balance() - wallet.unlockedBalance()
-              ),
-              unlocked_balance: this.roundBalanceAmount(
-                wallet.unlockedBalance()
-              ),
-              tokens: this.roundBalanceAmount(
-                wallet.tokenBalance() - wallet.unlockedTokenBalance()
-              ),
-              unlocked_tokens: this.roundBalanceAmount(
-                wallet.unlockedTokenBalance()
-              )
-            }
           },
           () => {
             console.log(this.state.wallet_meta);
           }
         );
+        this.setWalletData(wallet);
         wallet.on("refreshed", () => {
           console.log("Wallet File refreshed");
           wallet
@@ -97,7 +77,14 @@ export default class CashWallet extends React.Component {
 
   startBalanceCheck = () => {
     let wallet = this.state.wallet_meta;
-    this.setState(() => ({
+    this.setWalletData(wallet);
+    this.setState({
+      page: "wallet"
+    });
+  }
+
+  setWalletData = (wallet) => {
+    this.setState({
       wallet: {
         wallet_address: wallet.address(),
         spend_key: wallet.secretSpendKey(),
@@ -116,9 +103,6 @@ export default class CashWallet extends React.Component {
           wallet.unlockedTokenBalance()
         )
       }
-    }));
-    this.setState({
-      page: "wallet"
     });
   }
 

@@ -124,14 +124,6 @@ img {
   animation-duration: 1s;
   animation-fill-mode: both;
 }
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 @-webkit-keyframes shine {
   from {
     opacity: 0;
