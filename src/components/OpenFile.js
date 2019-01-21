@@ -38,8 +38,8 @@ export default class OpenFile extends React.Component {
     closeApp(this);
   }
 
-  setOpenAlert(alert, alert_state, disabled) {
-    openAlert(this, alert, alert_state, disabled);
+  setOpenAlert(alert, disabled) {
+    openAlert(this, alert, disabled);
   }
 
   setCloseAlert() {
@@ -66,32 +66,31 @@ export default class OpenFile extends React.Component {
     const pass = e.target.pass.value;
 
     if (filename === "") {
-      this.setOpenAlert("Choose the wallet file", "alert", false);
+      this.setOpenAlert("Choose the wallet file", false);
       return false;
     }
     if (pass === "") {
-      this.setOpenAlert("Enter password for your wallet file", "alert", false);
+      this.setOpenAlert("Enter password for your wallet file", false);
       return false;
     }
     this.setState({
       alert_close_disabled: true
     });
-    this.props.createWallet("openWallet", {
-      path: this.state.wallet_path,
-      password: pass,
-      network: "mainnet",
-      daemonAddress: "rpc.safex.io:17402"
-    }, err => {
-      this.setOpenAlert(
-        "Error opening wallet: " + err,
-        "alert",
-        false
-      );
-      return false;
-    });
+    this.props.createWallet(
+      "openWallet",
+      {
+        path: this.state.wallet_path,
+        password: pass,
+        network: "mainnet",
+        daemonAddress: "rpc.safex.io:17402"
+      },
+      err => {
+        this.setOpenAlert("Error opening wallet: " + err, false);
+        return false;
+      }
+    );
     this.setOpenAlert(
       "Please wait while your wallet file is loaded. Don't close the application. This can take a while, please be patient.",
-      "alert",
       true
     );
   }
@@ -111,7 +110,7 @@ export default class OpenFile extends React.Component {
             disabled={this.state.alert_close_disabled ? "disabled" : ""}
           >
             Back
-        </button>
+          </button>
           <button
             onClick={this.toggleExitModal}
             className="close-app-btn button-shine"
@@ -119,7 +118,7 @@ export default class OpenFile extends React.Component {
             disabled={this.state.alert_close_disabled ? "disabled" : ""}
           >
             X
-        </button>
+          </button>
           <h2>Open Wallet File</h2>
 
           <div className="col-xs-6 col-xs-push-3 login-wrap">
@@ -130,7 +129,7 @@ export default class OpenFile extends React.Component {
               onClick={this.browseFile}
             >
               Browse
-          </button>
+            </button>
             <form onSubmit={this.openFile}>
               <div className="group-wrap">
                 <div className="form-group">
@@ -145,7 +144,7 @@ export default class OpenFile extends React.Component {
               </div>
               <button type="submit" className="submit btn button-shine">
                 Open
-            </button>
+              </button>
             </form>
 
             <Alert

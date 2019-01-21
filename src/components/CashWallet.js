@@ -157,7 +157,6 @@ export default class CashWallet extends React.Component {
             goToPage={this.goToPage}
             wallet={this.state.wallet}
             walletMeta={this.state.wallet_meta}
-            alert={this.state.alert}
           />
         );
       case "create-new":
@@ -176,10 +175,7 @@ export default class CashWallet extends React.Component {
         );
       case "open-file":
         return (
-          <OpenFile 
-            goToPage={this.goToPage} 
-            createWallet={this.createWallet}
-          />
+          <OpenFile goToPage={this.goToPage} createWallet={this.createWallet} />
         );
       case "recover-from-mnemonic":
         return (
@@ -231,7 +227,7 @@ export default class CashWallet extends React.Component {
                   title="Exit"
                 >
                   X
-              </button>
+                </button>
 
                 <p id="version">{packageJson.version}</p>
               </div>

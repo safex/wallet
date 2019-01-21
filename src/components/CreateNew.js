@@ -11,38 +11,13 @@ export default class CreateNew extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //wallet state settings
       wallet: {},
-      wallet_connected: false,
-      blockchain_height: 0,
-      wallet_sync: false,
-      wallet_loaded: false,
-      wallet_exists: false,
-      wallet_path: "",
-      spend_key: "",
-      view_key: "",
-      open_file_alert: false,
       net: "mainnet",
-      daemonHostPort: "rpc.safex.io:17402",
-      mnemonic: "",
-      mnemonic_active: false,
-
-      //balance settings
-      balance: 0,
-      unlocked_balance: 0,
-      tokens: 0,
-      unlocked_tokens: 0,
-      balance_wallet: "",
-      balance_view_key: "",
-      balance_spend_key: "",
-      send_cash: false,
-      send_token: false
+      daemonHostPort: "rpc.safex.io:17402"
     };
 
     this.goToPage = this.goToPage.bind(this);
     this.createNew = this.createNew.bind(this);
-    this.createAnotherFile = this.createAnotherFile.bind(this);
-    this.closeWallet = this.closeWallet.bind(this);
     this.toggleExitModal = this.toggleExitModal.bind(this);
     this.setCloseApp = this.setCloseApp.bind(this);
     this.setOpenAlert = this.setOpenAlert.bind(this);
@@ -69,8 +44,8 @@ export default class CreateNew extends React.Component {
     closeApp(this);
   }
 
-  setOpenAlert(alert, alert_state, disabled) {
-    openAlert(this, alert, alert_state, disabled);
+  setOpenAlert(alert, disabled) {
+    openAlert(this, alert, disabled);
   }
 
   setCloseAlert() {
@@ -85,11 +60,11 @@ export default class CreateNew extends React.Component {
     console.log("new wallet password: " + e.target.pass1.value);
 
     if (pass1 === "" || pass2 === "") {
-      this.setOpenAlert("Fill out all the fields", "alert", false);
+      this.setOpenAlert("Fill out all the fields", false);
       return false;
     }
     if (pass1 !== pass2) {
-      this.setOpenAlert("Repeated password does not match", "alert", false);
+      this.setOpenAlert("Repeated password does not match", false);
       return false;
     }
     dialog.showSaveDialog(filepath => {
@@ -101,7 +76,6 @@ export default class CreateNew extends React.Component {
           `Wallet already exists. Please choose a different file name  
           "this application does not enable overwriting an existing wallet file 
           "OR you can open it using the Load Existing Wallet`,
-          "alert",
           false
         );
         return false;
@@ -116,24 +90,9 @@ export default class CreateNew extends React.Component {
       });
       this.setOpenAlert(
         "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
-        "alert",
         true
       );
     });
-  }
-
-  createAnotherFile() {
-    this.setState({
-      wallet_exists: false,
-      wallet_created: false
-    });
-    this.closeWallet();
-  }
-
-  closeWallet() {
-    this.state.wallet.pauseRefresh();
-    this.state.wallet.off();
-    this.state.wallet.close(true);
   }
 
   render() {
@@ -152,13 +111,13 @@ export default class CreateNew extends React.Component {
           >
             Back
           </button>
-            <button
-              onClick={this.toggleExitModal}
-              className="close-app-btn button-shine"
-              title="Exit"
-              disabled={this.state.alert_close_disabled ? "disabled" : ""}
-            >
-              X
+          <button
+            onClick={this.toggleExitModal}
+            className="close-app-btn button-shine"
+            title="Exit"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            X
           </button>
 
           <h2>Create New Wallet File</h2>
@@ -187,8 +146,8 @@ export default class CreateNew extends React.Component {
                 {this.state.wallet_created ? (
                   <span>Create New</span>
                 ) : (
-                    <span>Create</span>
-                  )}
+                  <span>Create</span>
+                )}
               </button>
             </form>
 
@@ -200,7 +159,7 @@ export default class CreateNew extends React.Component {
             />
           </div>
         </div>
-      
+
         <ExitModal
           exitModal={this.state.exit_modal}
           closeExitModal={this.toggleExitModal}

@@ -43,8 +43,8 @@ export default class NewFromMnemonic extends React.Component {
     });
   }
 
-  setOpenAlert(alert, alert_state, disabled) {
-    openAlert(this, alert, alert_state, disabled);
+  setOpenAlert(alert, disabled) {
+    openAlert(this, alert, disabled);
   }
 
   setCloseAlert() {
@@ -67,32 +67,24 @@ export default class NewFromMnemonic extends React.Component {
     const mnemonic = e.target.mnemonic.value;
 
     if (pass1 === "" || pass2 === "") {
-      this.setOpenAlert("Fill out all the fields", "alert", false);
+      this.setOpenAlert("Fill out all the fields", false);
       return false;
     }
     if (pass1 !== pass2) {
-      this.setOpenAlert("Repeated password does not match", "alert", false);
+      this.setOpenAlert("Repeated password does not match", false);
       return false;
     }
     if (mnemonic === "") {
-      this.setOpenAlert("Enter mnemonic seed for your wallet", "alert", false);
+      this.setOpenAlert("Enter mnemonic seed for your wallet", false);
       return false;
     }
     if (this.countWords(mnemonic) < 24 || this.countWords(mnemonic) > 25) {
-      this.setOpenAlert(
-        "Mnemonic seed must contain 24 or 25 words",
-        "alert",
-        false
-      );
+      this.setOpenAlert("Mnemonic seed must contain 24 or 25 words", false);
       console.log("word count " + this.countWords(mnemonic));
       return false;
     }
     if (this.hasNumber(mnemonic)) {
-      this.setOpenAlert(
-        "Mnemonic seed must not contain a number",
-        "alert",
-        false
-      );
+      this.setOpenAlert("Mnemonic seed must not contain a number", false);
       return false;
     }
     console.log("word count " + this.countWords(mnemonic));
@@ -105,7 +97,7 @@ export default class NewFromMnemonic extends React.Component {
           `Wallet already exists. Please choose a different file name  
           "this application does not enable overwriting an existing wallet file 
           "OR you can open it using the Load Existing Wallet`,
-          "alert",
+
           false
         );
         return false;
@@ -115,7 +107,6 @@ export default class NewFromMnemonic extends React.Component {
       }));
       this.setOpenAlert(
         "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
-        "alert",
         true
       );
       console.log(
@@ -150,13 +141,13 @@ export default class NewFromMnemonic extends React.Component {
           >
             Back
           </button>
-            <button
-              onClick={this.toggleExitModal}
-              className="close-app-btn button-shine"
-              title="Exit"
-              disabled={this.state.alert_close_disabled ? "disabled" : ""}
-            >
-              X
+          <button
+            onClick={this.toggleExitModal}
+            className="close-app-btn button-shine"
+            title="Exit"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            X
           </button>
 
           <h2>Recover Wallet From Mnemonic Seed</h2>
@@ -187,7 +178,7 @@ export default class NewFromMnemonic extends React.Component {
               </div>
               <button type="submit" className="submit btn button-shine">
                 Create
-            </button>
+              </button>
             </form>
 
             <Alert

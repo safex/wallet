@@ -15,13 +15,6 @@ export default class CreateFromKeys extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wallet_path: "",
-      wallet_exists: false,
-      wallet: {},
-      wallet_loaded: false,
-      wallet_address: "",
-      spend_key: "",
-      view_key: "",
       network: "mainnet",
       daemonAddress: "rpc.safex.io:17402"
     };
@@ -48,8 +41,8 @@ export default class CreateFromKeys extends React.Component {
     closeApp(this);
   }
 
-  setOpenAlert(alert, alert_state, disabled) {
-    openAlert(this, alert, alert_state, disabled);
+  setOpenAlert(alert, disabled) {
+    openAlert(this, alert, disabled);
   }
 
   setCloseAlert() {
@@ -60,7 +53,7 @@ export default class CreateFromKeys extends React.Component {
     e.preventDefault();
 
     //here we need the key set
-    //the wallet path desired
+    //the desired wallet path
     //the password
     var safex_address = e.target.address.value;
     var view_key = e.target.viewkey.value;
@@ -75,26 +68,26 @@ export default class CreateFromKeys extends React.Component {
       pass1 === "" ||
       pass2 === ""
     ) {
-      this.setOpenAlert("Fill out all the fields", "alert", false);
+      this.setOpenAlert("Fill out all the fields", false);
       return false;
     }
     if (pass1 !== pass2) {
-      this.setOpenAlert("Passwords do not match", "alert", false);
+      this.setOpenAlert("Passwords do not match", false);
       return false;
     }
     if (spend_key.length !== 64) {
-      this.setOpenAlert("Incorrect spend key", "alert", false);
+      this.setOpenAlert("Incorrect spend key", false);
       return false;
     }
     if (view_key.length !== 64) {
-      this.setOpenAlert("Incorrect view key", "alert", false);
+      this.setOpenAlert("Incorrect view key", false);
       return false;
     }
     if (
       this.state.network === "mainnet" &&
       verify_safex_address(spend_key, view_key, safex_address) === false
     ) {
-      this.setOpenAlert("Incorrect keys", "alert", false);
+      this.setOpenAlert("Incorrect keys", false);
       return false;
     }
     dialog.showSaveDialog(filepath => {
@@ -106,7 +99,6 @@ export default class CreateFromKeys extends React.Component {
           `Wallet already exists. Please choose a different file name  
           "this application does not enable overwriting an existing wallet file 
           "OR you can open it using the Load Existing Wallet`,
-          "alert",
           false
         );
         return false;
@@ -116,7 +108,6 @@ export default class CreateFromKeys extends React.Component {
       }));
       this.setOpenAlert(
         "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
-        "alert",
         true
       );
       console.log("Wallet doesn't exist. creating new one: " + filepath);
@@ -152,13 +143,13 @@ export default class CreateFromKeys extends React.Component {
           >
             Back
           </button>
-            <button
-              onClick={this.toggleExitModal}
-              className="close-app-btn button-shine"
-              title="Exit"
-              disabled={this.state.alert_close_disabled ? "disabled" : ""}
-            >
-              X
+          <button
+            onClick={this.toggleExitModal}
+            className="close-app-btn button-shine"
+            title="Exit"
+            disabled={this.state.alert_close_disabled ? "disabled" : ""}
+          >
+            X
           </button>
 
           <h2>Create New Wallet From Keys</h2>
@@ -200,7 +191,7 @@ export default class CreateFromKeys extends React.Component {
               </div>
               <button type="submit" className="submit btn button-shine">
                 Create
-            </button>
+              </button>
             </form>
 
             <Alert

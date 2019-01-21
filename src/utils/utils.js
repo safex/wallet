@@ -19,19 +19,6 @@ function verify_safex_address(spend, view, address) {
 
 /**
  * Structure Safex Address
- *
- * key object
- * {
- *     spend : {
- *         sec : secret_key
- *         pub: : public_key
- *     },
- *     view : {
- *         sec : secret_key
- *         pub: : public_key
- *     },
- *     checksum : checksum of address
- * }
  */
 function structureSafexKeys(spend, view) {
   const keys = safex.structure_keys(spend, view);
@@ -47,9 +34,9 @@ function structureSafexKeys(spend, view) {
  * @param alert_state
  * @param disabled
  */
-function openAlert(target, alert, alert_state, disabled) {
+function openAlert(target, alert, disabled) {
   target.setState({
-    [alert_state]: true,
+    alert: true,
     alert_text: alert,
     alert_close_disabled: disabled
   });
@@ -61,10 +48,6 @@ function openAlert(target, alert, alert_state, disabled) {
 function closeAlert(target) {
   target.setState({
     alert: false,
-    open_file_alert: false,
-    create_new_wallet_alert: false,
-    create_from_keys_alert: false,
-    new_from_mnemonic_alert: false,
     alert_close_disabled: false
   });
 }
@@ -97,7 +80,7 @@ function closeSendPopup(target) {
 /**
  * Close App
  */
-function closeApp(target) {
+function closeApp() {
   let window = remote.getCurrentWindow();
   window.close();
 }
