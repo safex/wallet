@@ -13,40 +13,44 @@ import {
 export default class Wallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      wallet: null,
+      alert_close_disabled: false,
+      tx_being_sent: false
+    };
   }
 
-  componentDidMount = () =>  {
+  componentDidMount = () => {
     this.refreshCallback();
-  }
+  };
 
-  goToPage = () =>  {
+  goToPage = () => {
     this.props.goToPage();
-  }
+  };
 
-  toggleExitModal = () =>  {
+  toggleExitModal = () => {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
-  }
+  };
 
-  setCloseApp = () =>  {
+  setCloseApp = () => {
     closeApp(this);
-  }
+  };
 
-  roundBalanceAmount = (balance) => {
+  roundBalanceAmount = balance => {
     return Math.floor(parseFloat(balance) / 100000000) / 100;
-  }
+  };
 
   setOpenAlert = (alert, disabled) => {
     openAlert(this, alert, disabled);
-  }
+  };
 
-  setCloseAlert = () =>  {
+  setCloseAlert = () => {
     closeAlert(this);
-  }
+  };
 
-  updatedCallback = () =>  {
+  updatedCallback = () => {
     console.log("UPDATED");
     this.props.walletMeta
       .store()
@@ -57,9 +61,9 @@ export default class Wallet extends React.Component {
       .catch(e => {
         console.log("Unable to store wallet: " + e);
       });
-  }
+  };
 
-  refreshCallback = () =>  {
+  refreshCallback = () => {
     console.log("wallet refreshed");
     let wallet = this.props.walletMeta;
     this.setWalletData(wallet);
@@ -79,9 +83,9 @@ export default class Wallet extends React.Component {
       wallet.on("newBlock", this.newBlockCallback);
       wallet.on("updated", this.updatedCallback);
     }, 300);
-  }
+  };
 
-  newBlockCallback = (height) => {
+  newBlockCallback = height => {
     let wallet = this.props.walletMeta;
     let syncedHeight = wallet.daemonBlockchainHeight() - height < 10;
     if (syncedHeight) {
@@ -91,9 +95,9 @@ export default class Wallet extends React.Component {
         this.setWalletData(wallet);
       }
     }
-  }
+  };
 
-  rescanBalance = () =>  {
+  rescanBalance = () => {
     var wallet = this.props.walletMeta;
     console.log(wallet);
     this.setOpenAlert(
@@ -105,7 +109,9 @@ export default class Wallet extends React.Component {
     wallet.off("refreshed");
     setTimeout(() => {
       this.setState(() => ({
-        blockchain_height: wallet.blockchainHeight()
+        wallet: {
+          blockchain_height: wallet.blockchainHeight()
+        }
       }));
       console.log("Starting blockchain rescan sync...");
       wallet.rescanBlockchain();
@@ -127,9 +133,9 @@ export default class Wallet extends React.Component {
         wallet.on("updated", this.updatedCallback);
       }, 1000);
     }, 1000);
-  }
+  };
 
-  setWalletData = (wallet) => {
+  setWalletData = wallet => {
     this.setState({
       alert_close_disabled: false,
       wallet: {
@@ -149,7 +155,7 @@ export default class Wallet extends React.Component {
         unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance())
       }
     });
-  }
+  };
 
   sendCashOrToken = (e, cash_or_token) => {
     e.preventDefault();
@@ -223,16 +229,16 @@ export default class Wallet extends React.Component {
       });
   };
 
-  setOpenSendPopup = (send_cash_or_token) => {
+  setOpenSendPopup = send_cash_or_token => {
     openSendPopup(this, send_cash_or_token);
-  }
+  };
 
-  setCloseSendPopup = () =>  {
+  setCloseSendPopup = () => {
     closeSendPopup(this);
-  }
+  };
 
   //This is fired when amount is changed
-  sendAmountOnChange = () =>  {
+  sendAmountOnChange = () => {
     let wallet = this.props.walletMeta;
 
     this.props.wallet.balance = this.roundBalanceAmount(
@@ -247,7 +253,7 @@ export default class Wallet extends React.Component {
     this.props.wallet.unlocked_tokens = this.roundBalanceAmount(
       wallet.unlockedTokenBalance()
     );
-  }
+  };
 
   render() {
     return (
@@ -275,7 +281,13 @@ export default class Wallet extends React.Component {
           </button>
           <h2>Wallet File</h2>
 
-          <div className={this.props.wallet.mnemonic ? "col-xs-6 col-xs-push-3 wallet-inner-wrap" : "col-xs-6 col-xs-push-3 wallet-inner-wrap no-mnemonic"}>
+          <div
+            className={
+              this.props.wallet.mnemonic
+                ? "col-xs-6 col-xs-push-3 wallet-inner-wrap"
+                : "col-xs-6 col-xs-push-3 wallet-inner-wrap no-mnemonic"
+            }
+          >
             <div className="btn-wrap">
               <button
                 className={

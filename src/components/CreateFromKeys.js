@@ -17,29 +17,29 @@ export default class CreateFromKeys extends React.Component {
     this.state = {};
   }
 
-  goToPage = () =>  {
+  goToPage = () => {
     this.props.goToPage();
-  }
+  };
 
-  toggleExitModal = () =>  {
+  toggleExitModal = () => {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
-  }
+  };
 
-  setCloseApp = () =>  {
+  setCloseApp = () => {
     closeApp(this);
-  }
+  };
 
   setOpenAlert = (alert, disabled) => {
     openAlert(this, alert, disabled);
-  }
+  };
 
-  setCloseAlert = () =>  {
+  setCloseAlert = () => {
     closeAlert(this);
-  }
+  };
 
-  createWalletFromKeys = (e) => {
+  createWalletFromKeys = e => {
     e.preventDefault();
 
     //here we need the key set
@@ -109,13 +109,14 @@ export default class CreateFromKeys extends React.Component {
         restoreHeight: 0,
         addressString: safex_address,
         viewKeyString: view_key,
-        spendKeyString: spend_key
+        spendKeyString: spend_key,
+        language: "English"
       });
       console.log("Create wallet from keys performed!");
       console.log("Create new wallet from keys checkpoint 1");
     });
     console.log("Create new wallet from keys checkpoint 2");
-  }
+  };
 
   render() {
     return (
@@ -147,34 +148,21 @@ export default class CreateFromKeys extends React.Component {
             <form onSubmit={this.createWalletFromKeys}>
               <div className="group-wrap">
                 <div className="form-group">
-                  <input
-                    type="text"
-                    name="address"
-                    ref="address"
-                    placeholder="address"
-                  />
+                  <input type="text" name="address" placeholder="address" />
                   <input
                     type="text"
                     name="spendkey"
-                    ref="spendkey"
                     placeholder="secret spendkey"
                   />
                   <input
                     type="text"
                     name="viewkey"
-                    ref="viewkey"
                     placeholder="secret viewkey"
                   />
-                  <input
-                    type="password"
-                    name="pass1"
-                    ref="pass1"
-                    placeholder="password"
-                  />
+                  <input type="password" name="pass1" placeholder="password" />
                   <input
                     type="password"
                     name="pass2"
-                    ref="pass2"
                     placeholder="repeat password"
                   />
                 </div>

@@ -23,23 +23,23 @@ export default class CashWallet extends React.Component {
     };
   }
 
-  toggleExitModal = () =>  {
+  toggleExitModal = () => {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
-  }
+  };
 
-  setCloseApp = () =>  {
+  setCloseApp = () => {
     closeApp(this);
-  }
+  };
 
-  goToPage = (page) => {
+  goToPage = page => {
     this.setState({ page });
-  }
+  };
 
-  roundBalanceAmount = (balance) => {
+  roundBalanceAmount = balance => {
     return Math.floor(parseFloat(balance) / 100000000) / 100;
-  }
+  };
 
   createWallet = (createWalletFunctionType, args, callback) => {
     console.log(createWalletFunctionType, args);
@@ -47,10 +47,11 @@ export default class CashWallet extends React.Component {
     try {
       safex[createWalletFunctionType](args)
         .then(wallet => {
-          this.setState({
-            wallet_loaded: true,
-            wallet_meta: wallet,
-          },
+          this.setState(
+            {
+              wallet_loaded: true,
+              wallet_meta: wallet
+            },
             () => {
               console.log(this.state.wallet_meta);
             }
@@ -77,7 +78,7 @@ export default class CashWallet extends React.Component {
     } catch (e) {
       return callback(e);
     }
-  }
+  };
 
   startBalanceCheck = () => {
     let wallet = this.state.wallet_meta;
@@ -85,9 +86,9 @@ export default class CashWallet extends React.Component {
     this.setState({
       page: "wallet"
     });
-  }
+  };
 
-  setWalletData = (wallet) => {
+  setWalletData = wallet => {
     this.setState({
       wallet: {
         wallet_address: wallet.address(),
@@ -103,12 +104,10 @@ export default class CashWallet extends React.Component {
         tokens: this.roundBalanceAmount(
           wallet.tokenBalance() - wallet.unlockedTokenBalance()
         ),
-        unlocked_tokens: this.roundBalanceAmount(
-          wallet.unlockedTokenBalance()
-        )
+        unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance())
       }
     });
-  }
+  };
 
   render() {
     switch (this.state.page) {

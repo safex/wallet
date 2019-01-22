@@ -15,38 +15,38 @@ export default class CreateNew extends React.Component {
 
   goToPage = () => {
     this.props.goToPage();
-  }
+  };
 
   toggleMnemonic = () => {
     this.setState({
       mnemonic_active: !this.state.mnemonic_active
     });
-  }
+  };
 
-  toggleExitModal = () =>  {
+  toggleExitModal = () => {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
-  }
+  };
 
-  setCloseApp = () =>  {
+  setCloseApp = () => {
     closeApp(this);
-  }
+  };
 
   setOpenAlert = (alert, disabled) => {
     openAlert(this, alert, disabled);
-  }
+  };
 
   setCloseAlert = () => {
     closeAlert(this);
-  }
+  };
 
-  createNew = (e) =>  {
+  createNew = e => {
     e.preventDefault();
 
     const pass1 = e.target.pass1.value;
     const pass2 = e.target.pass2.value;
-    
+
     if (pass1 === "" || pass2 === "") {
       this.setOpenAlert("Fill out all the fields", false);
       return false;
@@ -74,14 +74,14 @@ export default class CreateNew extends React.Component {
         password: pass1,
         network: this.props.config.network,
         daemonAddress: this.props.config.daemonAddress,
-        mnemonic: ""
+        language: "English"
       });
       this.setOpenAlert(
         "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
         true
       );
     });
-  }
+  };
 
   render() {
     return (
@@ -116,16 +116,10 @@ export default class CreateNew extends React.Component {
             >
               <div className="group-wrap">
                 <div className="form-group">
-                  <input
-                    type="password"
-                    name="pass1"
-                    ref="pass1"
-                    placeholder="password"
-                  />
+                  <input type="password" name="pass1" placeholder="password" />
                   <input
                     type="password"
                     name="pass2"
-                    ref="pass2"
                     placeholder="repeat password"
                   />
                 </div>

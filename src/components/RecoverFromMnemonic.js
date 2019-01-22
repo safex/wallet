@@ -12,48 +12,49 @@ export default class NewFromMnemonic extends React.Component {
     this.state = {};
   }
 
-  goToPage = () =>  {
+  goToPage = () => {
     this.props.goToPage();
-  }
+  };
 
-  toggleExitModal = () =>  {
+  toggleExitModal = () => {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
-  }
+  };
 
-  setCloseApp = () =>  {
+  setCloseApp = () => {
     closeApp(this);
-  }
+  };
 
-  toggleMnemonic = () =>  {
+  toggleMnemonic = () => {
     this.setState({
       mnemonic_active: !this.state.mnemonic_active
     });
-  }
+  };
 
   setOpenAlert = (alert, disabled) => {
     openAlert(this, alert, disabled);
-  }
+  };
 
-  setCloseAlert = () =>  {
+  setCloseAlert = () => {
     closeAlert(this);
-  }
+  };
 
-  hasNumber = (myString) => {
+  hasNumber = myString => {
     return /\d/.test(myString);
-  }
+  };
 
-  countWords = (str) => {
+  countWords = str => {
     return str.trim().split(/\s+/).length;
-  }
+  };
 
-  createNewFromMnemonic = (e) => {
+  createNewFromMnemonic = e => {
     e.preventDefault();
 
     const pass1 = e.target.pass1.value;
     const pass2 = e.target.pass2.value;
-    const mnemonic = e.target.mnemonic.value;
+    const mnemonicInitial = e.target.mnemonic.value;
+    const mnemonic = mnemonicInitial.replace(/\s+/g, " ");
 
     if (pass1 === "" || pass2 === "") {
       this.setOpenAlert("Fill out all the fields", false);
@@ -69,7 +70,6 @@ export default class NewFromMnemonic extends React.Component {
     }
     if (this.countWords(mnemonic) < 24 || this.countWords(mnemonic) > 25) {
       this.setOpenAlert("Mnemonic seed must contain 24 or 25 words", false);
-      console.log("word count " + this.countWords(mnemonic));
       return false;
     }
     if (this.hasNumber(mnemonic)) {
@@ -98,9 +98,7 @@ export default class NewFromMnemonic extends React.Component {
         "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
         true
       );
-      console.log(
-        "wallet doesn't exist. creating new one: " + this.state.wallet_path
-      );
+      console.log("wallet doesn't exist. creating new one: " + filepath);
       console.log("mnemonic seed: " + mnemonic);
 
       this.props.createWallet("recoveryWallet", {
@@ -112,7 +110,7 @@ export default class NewFromMnemonic extends React.Component {
       });
       console.log("Recover wallet from mnemonic performed!");
     });
-  }
+  };
 
   render() {
     return (
@@ -144,22 +142,15 @@ export default class NewFromMnemonic extends React.Component {
             <form onSubmit={this.createNewFromMnemonic}>
               <div className="group-wrap">
                 <div className="form-group">
-                  <input
-                    type="password"
-                    name="pass1"
-                    ref="pass1"
-                    placeholder="password"
-                  />
+                  <input type="password" name="pass1" placeholder="password" />
                   <input
                     type="password"
                     name="pass2"
-                    ref="pass2"
                     placeholder="repeat password"
                   />
                   <label>Mnemonic Seed for your Wallet</label>
                   <textarea
                     name="mnemonic"
-                    ref="mnemonic"
                     placeholder="mnemonic seed"
                     rows="3"
                   />

@@ -9,32 +9,32 @@ const { dialog } = window.require("electron").remote;
 export default class OpenFile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { wallet_path: '' };
+    this.state = { wallet_path: "" };
   }
 
-  goToPage = () =>  {
+  goToPage = () => {
     this.props.goToPage();
-  }
+  };
 
-  toggleExitModal = () =>  {
+  toggleExitModal = () => {
     this.setState({
       exit_modal: !this.state.exit_modal
     });
-  }
+  };
 
-  setCloseApp = () =>  {
+  setCloseApp = () => {
     closeApp(this);
-  }
+  };
 
   setOpenAlert = (alert, disabled) => {
     openAlert(this, alert, disabled);
-  }
+  };
 
-  setCloseAlert = () =>  {
+  setCloseAlert = () => {
     closeAlert(this);
-  }
+  };
 
-  browseFile = () =>  {
+  browseFile = () => {
     var filename = "";
     filename = dialog.showOpenDialog({});
     console.log("filename " + filename);
@@ -42,9 +42,9 @@ export default class OpenFile extends React.Component {
     this.setState(() => ({
       wallet_path: filename
     }));
-  }
+  };
 
-  openFile = (e) => {
+  openFile = e => {
     e.preventDefault();
     let filename = e.target.filepath.value;
     const pass = e.target.pass.value;
@@ -58,7 +58,7 @@ export default class OpenFile extends React.Component {
       return false;
     }
     this.setState({
-      alert_close_disabled: true,
+      alert_close_disabled: true
     });
     this.props.createWallet(
       "openWallet",
@@ -66,7 +66,8 @@ export default class OpenFile extends React.Component {
         path: this.state.wallet_path,
         password: pass,
         network: this.props.config.network,
-        daemonAddress: this.props.config.daemonAddress
+        daemonAddress: this.props.config.daemonAddress,
+        language: "English"
       },
       err => {
         this.setOpenAlert("Error opening wallet: " + err, false);
@@ -77,12 +78,12 @@ export default class OpenFile extends React.Component {
       "Please wait while your wallet file is loaded. Don't close the application. This can take a while, please be patient.",
       true
     );
-  }
+  };
 
-  setWalletPath = (e) => {
+  setWalletPath = e => {
     let filename = e.target.value;
-    this.setState({ wallet_path: filename })
-  }
+    this.setState({ wallet_path: filename });
+  };
 
   render() {
     return (
