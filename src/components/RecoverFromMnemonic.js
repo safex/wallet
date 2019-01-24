@@ -53,8 +53,8 @@ export default class NewFromMnemonic extends React.Component {
 
     const pass1 = e.target.pass1.value;
     const pass2 = e.target.pass2.value;
-    const mnemonicInitial = e.target.mnemonic.value;
-    const mnemonic = mnemonicInitial.replace(/\s+/g, " ");
+    const mnemonicValue = e.target.mnemonic.value;
+    const mnemonic = mnemonicValue.replace(/\s+/g, " ");
 
     if (pass1 === "" || pass2 === "") {
       this.setOpenAlert("Fill out all the fields", false);
