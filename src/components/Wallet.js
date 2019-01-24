@@ -13,6 +13,7 @@ import {
 export default class Wallet extends React.Component {
   constructor(props) {
     super(props);
+    this.mounted = false;
     this.state = {
       wallet: null,
       alert_close_disabled: false,
@@ -22,7 +23,12 @@ export default class Wallet extends React.Component {
 
   componentDidMount = () => {
     this.refreshCallback();
+    this.mounted = true;
   };
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
 
   goToPage = () => {
     this.props.goToPage();
@@ -79,10 +85,10 @@ export default class Wallet extends React.Component {
         console.log("Unable to store wallet: " + e);
       });
     wallet.off("refreshed");
-    setTimeout(() => {
-      wallet.on("newBlock", this.newBlockCallback);
-      wallet.on("updated", this.updatedCallback);
-    }, 300);
+    // setTimeout(() => {
+    wallet.on("newBlock", this.newBlockCallback);
+    wallet.on("updated", this.updatedCallback);
+    // }, 300);
   };
 
   newBlockCallback = height => {
@@ -107,58 +113,59 @@ export default class Wallet extends React.Component {
     wallet.off("updated");
     wallet.off("newBlock");
     wallet.off("refreshed");
-    setTimeout(() => {
-      this.setState(() => ({
-        wallet: {
-          blockchain_height: wallet.blockchainHeight()
-        }
-      }));
-      console.log("Starting blockchain rescan sync...");
-      wallet.rescanBlockchain();
-      console.log("Blockchain rescan executed...");
+    // setTimeout(() => {
+    this.setState(() => ({
+      wallet: {
+        blockchain_height: wallet.blockchainHeight()
+      }
+    }));
+    console.log("Starting blockchain rescan sync...");
+    wallet.rescanBlockchain();
+    console.log("Blockchain rescan executed...");
 
-      setTimeout(() => {
-        console.log("Rescan setting callbacks");
-        this.setWalletData(wallet);
-        this.setCloseAlert();
-        wallet
-          .store()
-          .then(() => {
-            console.log("Wallet stored");
-          })
-          .catch(e => {
-            console.log("Unable to store wallet: " + e);
-          });
-        wallet.on("newBlock", this.newBlockCallback);
-        wallet.on("updated", this.updatedCallback);
-      }, 1000);
-    }, 1000);
+    // setTimeout(() => {
+    console.log("Rescan setting callbacks");
+    this.setWalletData(wallet);
+    this.setCloseAlert();
+    wallet
+      .store()
+      .then(() => {
+        console.log("Wallet stored");
+      })
+      .catch(e => {
+        console.log("Unable to store wallet: " + e);
+      });
+    wallet.on("newBlock", this.newBlockCallback);
+    wallet.on("updated", this.updatedCallback);
+    //   }, 1000);
+    // }, 1000);
   };
 
   setWalletData = wallet_meta => {
-    this.setState({
-      alert_close_disabled: false,
-      wallet: {
-        wallet_address: wallet_meta.address(),
-        spend_key: wallet_meta.secretSpendKey(),
-        view_key: wallet_meta.secretViewKey(),
-        mnemonic: wallet_meta.seed(),
-        wallet_connected: wallet_meta.connected() === "connected",
-        blockchain_height: wallet_meta.blockchainHeight(),
-        balance: this.roundBalanceAmount(
-          wallet_meta.balance() - wallet_meta.unlockedBalance()
-        ),
-        unlocked_balance: this.roundBalanceAmount(
-          wallet_meta.unlockedBalance()
-        ),
-        tokens: this.roundBalanceAmount(
-          wallet_meta.tokenBalance() - wallet_meta.unlockedTokenBalance()
-        ),
-        unlocked_tokens: this.roundBalanceAmount(
-          wallet_meta.unlockedTokenBalance()
-        )
-      }
-    });
+    this.mounted &&
+      this.setState({
+        alert_close_disabled: false,
+        wallet: {
+          wallet_address: wallet_meta.address(),
+          spend_key: wallet_meta.secretSpendKey(),
+          view_key: wallet_meta.secretViewKey(),
+          mnemonic: wallet_meta.seed(),
+          wallet_connected: wallet_meta.connected() === "connected",
+          blockchain_height: wallet_meta.blockchainHeight(),
+          balance: this.roundBalanceAmount(
+            wallet_meta.balance() - wallet_meta.unlockedBalance()
+          ),
+          unlocked_balance: this.roundBalanceAmount(
+            wallet_meta.unlockedBalance()
+          ),
+          tokens: this.roundBalanceAmount(
+            wallet_meta.tokenBalance() - wallet_meta.unlockedTokenBalance()
+          ),
+          unlocked_tokens: this.roundBalanceAmount(
+            wallet_meta.unlockedTokenBalance()
+          )
+        }
+      });
   };
 
   sendCashOrToken = (e, cash_or_token) => {
