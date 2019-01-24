@@ -64,7 +64,7 @@ export default class Wallet extends React.Component {
   };
 
   refreshCallback = () => {
-    console.log("wallet refreshed");
+    console.log("Wallet refreshed");
     let wallet = this.props.walletMeta;
     this.setWalletData(wallet);
     this.setOpenAlert("Please wait while blockchain is being updated...", true);
@@ -135,24 +135,28 @@ export default class Wallet extends React.Component {
     }, 1000);
   };
 
-  setWalletData = wallet => {
+  setWalletData = wallet_meta => {
     this.setState({
       alert_close_disabled: false,
       wallet: {
-        wallet_address: wallet.address(),
-        spend_key: wallet.secretSpendKey(),
-        view_key: wallet.secretViewKey(),
-        mnemonic: wallet.seed(),
-        wallet_connected: wallet.connected() === "connected",
-        blockchain_height: wallet.blockchainHeight(),
+        wallet_address: wallet_meta.address(),
+        spend_key: wallet_meta.secretSpendKey(),
+        view_key: wallet_meta.secretViewKey(),
+        mnemonic: wallet_meta.seed(),
+        wallet_connected: wallet_meta.connected() === "connected",
+        blockchain_height: wallet_meta.blockchainHeight(),
         balance: this.roundBalanceAmount(
-          wallet.balance() - wallet.unlockedBalance()
+          wallet_meta.balance() - wallet_meta.unlockedBalance()
         ),
-        unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
+        unlocked_balance: this.roundBalanceAmount(
+          wallet_meta.unlockedBalance()
+        ),
         tokens: this.roundBalanceAmount(
-          wallet.tokenBalance() - wallet.unlockedTokenBalance()
+          wallet_meta.tokenBalance() - wallet_meta.unlockedTokenBalance()
         ),
-        unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance())
+        unlocked_tokens: this.roundBalanceAmount(
+          wallet_meta.unlockedTokenBalance()
+        )
       }
     });
   };
@@ -212,7 +216,7 @@ export default class Wallet extends React.Component {
             }));
             setTimeout(() => {
               this.sendAmountOnChange();
-            }, 1000);
+            }, 300);
           })
           .catch(e => {
             this.setState(() => ({
@@ -332,20 +336,20 @@ export default class Wallet extends React.Component {
               placeholder="address"
             />
 
-            <label htmlFor="spend_key">Secret Spend Key</label>
+            <label htmlFor="spend_key">Secret (Private) Spend Key</label>
             <input
               type="text"
               name="spend_key"
               defaultValue={this.props.wallet.spend_key}
-              placeholder="secret spend key"
+              placeholder="secret (private) spend key"
             />
 
-            <label htmlFor="view_key">Secret View Key</label>
+            <label htmlFor="view_key">Secret (Private) View Key</label>
             <input
               type="text"
               name="view_key"
               defaultValue={this.props.wallet.view_key}
-              placeholder="secret view key"
+              placeholder="secret (private) view key"
             />
 
             <label className={this.props.wallet.mnemonic ? "" : "hidden"}>

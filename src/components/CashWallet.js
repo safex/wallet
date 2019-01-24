@@ -82,6 +82,7 @@ export default class CashWallet extends React.Component {
 
   startBalanceCheck = () => {
     let wallet = this.state.wallet_meta;
+    wallet.setSeedLanguage("English");
     this.setWalletData(wallet);
     this.setState({
       page: "wallet"
