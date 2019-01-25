@@ -149,7 +149,7 @@
 
 @media (max-width: 767px) {
   .item-wrap h2 {
-    font-size: 34px;
+    font-size: 34px !important;
   }
   .item-wrap .login-wrap .btn {
     font-size: 24px;

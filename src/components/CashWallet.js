@@ -17,10 +17,10 @@ export default class CashWallet extends React.Component {
       wallet: null,
       page: null,
       config: {
-        network: "mainnet",
-        daemonAddress: "rpc.safex.io:17402"
-        // network: "testnet",
-        // daemonAddress: "192.168.1.22:29393"
+        // network: "mainnet",
+        // daemonAddress: "rpc.safex.io:17402"
+        network: "testnet",
+        daemonAddress: "192.168.1.22:29393"
       }
     };
   }

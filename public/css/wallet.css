@@ -96,12 +96,11 @@
   display: flex;
   justify-content: space-between;
   margin: 0;
+  background: none !important;
+  padding: 0 !important;
 }
 .wallet-inner-wrap .group {
   width: calc(50% - 5px);
-}
-.wallet-inner-wrap .group .btn {
-  font-size: 24px;
 }
 .wallet-file-wrap .group input:last-of-type {
   margin-bottom: 5px;
@@ -147,7 +146,7 @@
   margin-bottom: 7px;
 }
 .wallet-inner-wrap .btn {
-  font-size: 24px;
+  font-size: 24px !important;
 }
 .wallet-inner-wrap textarea {
   width: 100%;
@@ -227,6 +226,9 @@
   .wallet-inner-wrap label,
   .wallet-inner-wrap .display-value {
     font-size: 17px;
+  }
+  .wallet-inner-wrap .btn {
+    font-size: 20px !important;
   }
   .wallet-inner-wrap input::-webkit-input-placeholder,
   .wallet-inner-wrap input::-moz-placeholder,
