@@ -327,7 +327,7 @@
 
 @media (max-width: 767px) {
   .modal {
-    width: calc(100% - 20px);
+    width: calc(100% - 40px);
   }
   .sendModal {
     padding: 45px 10px 10px;
