@@ -73,8 +73,7 @@ export default class CreateNew extends React.Component {
         path: filepath,
         password: pass1,
         network: this.props.config.network,
-        daemonAddress: this.props.config.daemonAddress,
-        language: "English"
+        daemonAddress: this.props.config.daemonAddress
       });
       this.setOpenAlert(
         "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
@@ -109,7 +108,7 @@ export default class CreateNew extends React.Component {
           </button>
 
           <h2>Create New Wallet File</h2>
-          <div className="col-xs-6 col-xs-push-3 login-wrap">
+          <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
             <form
               className={this.state.mnemonic_active ? "hidden" : ""}
               onSubmit={this.createNew}

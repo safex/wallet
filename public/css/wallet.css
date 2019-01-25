@@ -8,7 +8,7 @@
 }
 .wallet-inner-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  padding: 20px;
+  padding: 20px !important;
 }
 .wallet-inner-wrap.no-mnemonic {
   padding: 40px 20px 20px;
@@ -100,6 +100,9 @@
 .wallet-inner-wrap .group {
   width: calc(50% - 5px);
 }
+.wallet-inner-wrap .group .btn {
+  font-size: 24px;
+}
 .wallet-file-wrap .group input:last-of-type {
   margin-bottom: 5px;
 }
@@ -143,6 +146,9 @@
   border-bottom: 1px solid #8ffdfd;
   margin-bottom: 7px;
 }
+.wallet-inner-wrap .btn {
+  font-size: 24px;
+}
 .wallet-inner-wrap textarea {
   width: 100%;
   background: transparent;
@@ -179,6 +185,17 @@
   color: #fff;
   font-size: 30px;
 }
+.wallet-inner-wrap .display-value {
+  width: 100%;
+  background: transparent;
+  text-align: center;
+  border: 0px none;
+  color: #fff;
+  font-size: 20px;
+  padding: 0px;
+  border-bottom: 1px solid #8ffdfd;
+  margin-bottom: 7px;
+}
 .login-wrap .btn,
 .wallet-inner-wrap .btn {
   font-size: 25px;
@@ -190,9 +207,31 @@
   border: 0px;
   border-bottom: 5px solid #8ffdfd;
   border-radius: 0px;
-  margin-top: 5px;
+  margin-top: 3px;
 }
 .wallet-inner-wrap .btn:focus,
 .wallet-inner-wrap .btn:active {
   outline: none;
+}
+
+@media (max-width: 767px) {
+  .wallet-inner-wrap {
+    background: url(../images/login-bg.png) no-repeat top left / cover;
+    padding: 30px 10px 10px !important;
+  }
+  .wallet-inner-wrap .blockheight span,
+  .wallet-inner-wrap .signal p,
+  .wallet-inner-wrap input,
+  .wallet-inner-wrap textarea,
+  .item-wrap .login-wrap label,
+  .wallet-inner-wrap label,
+  .wallet-inner-wrap .display-value {
+    font-size: 17px;
+  }
+  .wallet-inner-wrap input::-webkit-input-placeholder,
+  .wallet-inner-wrap input::-moz-placeholder,
+  .wallet-inner-wrap input:-moz-placeholder,
+  .wallet-inner-wrap input:-ms-input-placeholder {
+    font-size: 17px;
+  }
 }

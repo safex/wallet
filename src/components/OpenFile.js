@@ -66,8 +66,7 @@ export default class OpenFile extends React.Component {
         path: this.state.wallet_path,
         password: pass,
         network: this.props.config.network,
-        daemonAddress: this.props.config.daemonAddress,
-        language: "English"
+        daemonAddress: this.props.config.daemonAddress
       },
       err => {
         this.setOpenAlert("Error opening wallet: " + err, false);
@@ -75,7 +74,7 @@ export default class OpenFile extends React.Component {
       }
     );
     this.setOpenAlert(
-      "Please wait while your wallet file is loaded. Don't close the application. This can take a while, please be patient.",
+      "Please wait while your wallet file is loaded. Don't close the application until the process is complete. This can take a while, please be patient.",
       true
     );
   };
@@ -111,7 +110,7 @@ export default class OpenFile extends React.Component {
           </button>
           <h2>Open Wallet File</h2>
 
-          <div className="col-xs-6 col-xs-push-3 login-wrap">
+          <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
             <button
               className={
                 this.state.wallet_loaded ? "hidden" : "browse-btn button-shine"

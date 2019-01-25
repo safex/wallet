@@ -138,7 +138,7 @@ export default class NewFromMnemonic extends React.Component {
           </button>
 
           <h2>Recover Wallet From Mnemonic Seed</h2>
-          <div className="col-xs-6 col-xs-push-3 login-wrap">
+          <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
             <form onSubmit={this.createNewFromMnemonic}>
               <div className="group-wrap">
                 <div className="form-group">

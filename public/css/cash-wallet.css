@@ -8,7 +8,7 @@
 }
 .options-wrap.option-wrap-hidden {
   padding: 0;
-} 
+}
 .options-wrap .options-inner {
   height: 100%;
   height: 577px;
@@ -57,7 +57,6 @@
   font-size: 30px;
   margin-top: 35px;
   margin-bottom: 20px;
-  white-space: nowrap;
 }
 .options-wrap .options-inner .item.disabled img {
   filter: grayscale(70%);
@@ -84,6 +83,7 @@
   letter-spacing: 1px;
   font-size: 18px;
   margin: 0px;
+  z-index: -1;
 }
 
 .page-wrap {
@@ -91,6 +91,42 @@
   height: 100%;
 }
 
+@media (max-width: 767px) {
+  .options-wrap .options-inner {
+    flex-direction: column;
+    width: 100%;
+  }
+  .options-wrap .item img {
+    width: auto;
+    height: 100%;
+    margin-right: 10px;
+    margin-bottom: -10px;
+  }
+  .options-wrap .item:nth-of-type(2) img {
+    height: 125%;
+    margin-bottom: 0px;
+  }
+  .options-wrap .options-inner .item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: calc(25% - 10px);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .options-wrap .options-inner .item:last-of-type {
+    margin-bottom: 0;
+  }
+  .options-wrap .item h3 {
+    margin-left: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: left;
+    font-size: 24px;
+  }
+}
 @media (min-width: 1024px) {
   .options-wrap {
     max-width: 1024px;

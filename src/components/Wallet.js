@@ -28,6 +28,7 @@ export default class Wallet extends React.Component {
 
   componentWillUnmount() {
     this.mounted = false;
+    this.props.walletMeta.off();
   }
 
   goToPage = () => {
@@ -85,10 +86,10 @@ export default class Wallet extends React.Component {
         console.log("Unable to store wallet: " + e);
       });
     wallet.off("refreshed");
-    // setTimeout(() => {
-    wallet.on("newBlock", this.newBlockCallback);
-    wallet.on("updated", this.updatedCallback);
-    // }, 300);
+    setTimeout(() => {
+      wallet.on("newBlock", this.newBlockCallback);
+      wallet.on("updated", this.updatedCallback);
+    }, 300);
   };
 
   newBlockCallback = height => {
@@ -113,32 +114,32 @@ export default class Wallet extends React.Component {
     wallet.off("updated");
     wallet.off("newBlock");
     wallet.off("refreshed");
-    // setTimeout(() => {
-    this.setState(() => ({
-      wallet: {
-        blockchain_height: wallet.blockchainHeight()
-      }
-    }));
-    console.log("Starting blockchain rescan sync...");
-    wallet.rescanBlockchain();
-    console.log("Blockchain rescan executed...");
+    setTimeout(() => {
+      this.setState(() => ({
+        wallet: {
+          blockchain_height: wallet.blockchainHeight()
+        }
+      }));
+      console.log("Starting blockchain rescan sync...");
+      wallet.rescanBlockchain();
+      console.log("Blockchain rescan executed...");
 
-    // setTimeout(() => {
-    console.log("Rescan setting callbacks");
-    this.setWalletData(wallet);
-    this.setCloseAlert();
-    wallet
-      .store()
-      .then(() => {
-        console.log("Wallet stored");
-      })
-      .catch(e => {
-        console.log("Unable to store wallet: " + e);
-      });
-    wallet.on("newBlock", this.newBlockCallback);
-    wallet.on("updated", this.updatedCallback);
-    //   }, 1000);
-    // }, 1000);
+      setTimeout(() => {
+        console.log("Rescan setting callbacks");
+        this.setWalletData(wallet);
+        this.setCloseAlert();
+        wallet
+          .store()
+          .then(() => {
+            console.log("Wallet stored");
+          })
+          .catch(e => {
+            console.log("Unable to store wallet: " + e);
+          });
+        wallet.on("newBlock", this.newBlockCallback);
+        wallet.on("updated", this.updatedCallback);
+      }, 1000);
+    }, 1000);
   };
 
   setWalletData = wallet_meta => {
@@ -200,7 +201,6 @@ export default class Wallet extends React.Component {
         } else {
           console.log("Token transaction created: " + txId);
         }
-
         tx.commit()
           .then(() => {
             console.log("Transaction commited successfully");
@@ -222,7 +222,18 @@ export default class Wallet extends React.Component {
               tx_being_sent: false
             }));
             setTimeout(() => {
-              this.sendAmountOnChange();
+              this.props.wallet.balance = this.roundBalanceAmount(
+                wallet.unlockedBalance() - wallet.balance()
+              );
+              this.props.wallet.unlocked_balance = this.roundBalanceAmount(
+                wallet.unlockedBalance()
+              );
+              this.props.wallet.tokens = this.roundBalanceAmount(
+                wallet.unlockedTokenBalance() - wallet.tokenBalance()
+              );
+              this.props.wallet.unlocked_tokens = this.roundBalanceAmount(
+                wallet.unlockedTokenBalance()
+              );
             }, 300);
           })
           .catch(e => {
@@ -246,24 +257,6 @@ export default class Wallet extends React.Component {
 
   setCloseSendPopup = () => {
     closeSendPopup(this);
-  };
-
-  //This is fired when amount is changed
-  sendAmountOnChange = () => {
-    let wallet = this.props.walletMeta;
-
-    this.props.wallet.balance = this.roundBalanceAmount(
-      wallet.unlockedBalance() - wallet.balance()
-    );
-    this.props.wallet.unlocked_balance = this.roundBalanceAmount(
-      wallet.unlockedBalance()
-    );
-    this.props.wallet.tokens = this.roundBalanceAmount(
-      wallet.unlockedTokenBalance() - wallet.tokenBalance()
-    );
-    this.props.wallet.unlocked_tokens = this.roundBalanceAmount(
-      wallet.unlockedTokenBalance()
-    );
   };
 
   render() {
@@ -295,8 +288,8 @@ export default class Wallet extends React.Component {
           <div
             className={
               this.props.wallet.mnemonic
-                ? "col-xs-6 col-xs-push-3 wallet-inner-wrap"
-                : "col-xs-6 col-xs-push-3 wallet-inner-wrap no-mnemonic"
+                ? "col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap wallet-inner-wrap"
+                : "col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap wallet-inner-wrap no-mnemonic"
             }
           >
             <div className="btn-wrap">
@@ -373,26 +366,12 @@ export default class Wallet extends React.Component {
             <div className="group-wrap">
               <div className="group">
                 <label htmlFor="balance">Pending Safex Cash</label>
-                <input
-                  type="text"
-                  placeholder="Balance"
-                  name="balance"
-                  className="yellow-field"
-                  value={this.props.wallet.balance}
-                  onChange={this.sendAmountOnChange}
-                  readOnly
-                />
+                <p className="display-value">{this.props.wallet.balance}</p>
 
                 <label htmlFor="unlocked_balance">Available Safex Cash</label>
-                <input
-                  type="text"
-                  placeholder="Unlocked balance"
-                  name="unlocked_balance"
-                  className="green-field"
-                  value={this.props.wallet.unlocked_balance}
-                  onChange={this.sendAmountOnChange}
-                  readOnly
-                />
+                <p className="display-value">
+                  {this.props.wallet.unlocked_balance}
+                </p>
                 <button
                   className="btn button-shine"
                   onClick={this.setOpenSendPopup.bind(this, 0)}
@@ -403,22 +382,13 @@ export default class Wallet extends React.Component {
 
               <div className="group">
                 <label htmlFor="tokens">Pending Safex Tokens</label>
-                <input
-                  type="text"
-                  className="yellow-field"
-                  placeholder="Tokens"
-                  value={this.props.wallet.tokens}
-                  readOnly
-                />
+                <p className="display-value">{this.props.wallet.tokens}</p>
+
                 <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
-                <input
-                  type="text"
-                  className="green-field"
-                  placeholder="Unlocked Tokens"
-                  name="unlocked_tokens"
-                  value={this.props.wallet.unlocked_tokens}
-                  readOnly
-                />
+                <p className="display-value">
+                  {this.props.wallet.unlocked_tokens}
+                </p>
+
                 <button
                   className="btn button-shine"
                   onClick={this.setOpenSendPopup.bind(this, 1)}

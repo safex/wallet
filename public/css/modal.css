@@ -324,3 +324,12 @@
   line-height: 1.2;
   font-size: 18px;
 }
+
+@media (max-width: 767px) {
+  .modal {
+    width: calc(100% - 20px);
+  }
+  .sendModal {
+    padding: 45px 10px 10px;
+  }
+}

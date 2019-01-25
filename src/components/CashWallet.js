@@ -19,6 +19,8 @@ export default class CashWallet extends React.Component {
       config: {
         network: "mainnet",
         daemonAddress: "rpc.safex.io:17402"
+        // network: "testnet",
+        // daemonAddress: "192.168.1.22:29393"
       }
     };
   }
@@ -186,7 +188,7 @@ export default class CashWallet extends React.Component {
                   onClick={() => this.goToPage("recover-from-mnemonic")}
                 >
                   <img src="images/mnemonic.png" alt="mnemonic" />
-                  <h3>Recover from Mnemonic</h3>
+                  <h3>Recover Wallet</h3>
                 </div>
 
                 <button

@@ -109,8 +109,7 @@ export default class CreateFromKeys extends React.Component {
         restoreHeight: 0,
         addressString: safex_address,
         viewKeyString: view_key,
-        spendKeyString: spend_key,
-        language: "English"
+        spendKeyString: spend_key
       });
       console.log("Create wallet from keys performed!");
       console.log("Create new wallet from keys checkpoint 1");
@@ -144,7 +143,7 @@ export default class CreateFromKeys extends React.Component {
           </button>
 
           <h2>Create New Wallet From Keys</h2>
-          <div className="col-xs-6 col-xs-push-3 login-wrap">
+          <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
             <form onSubmit={this.createWalletFromKeys}>
               <div className="group-wrap">
                 <div className="form-group">
