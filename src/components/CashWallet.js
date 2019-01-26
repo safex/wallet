@@ -17,10 +17,8 @@ export default class CashWallet extends React.Component {
       wallet: null,
       page: null,
       config: {
-        // network: "mainnet",
-        // daemonAddress: "rpc.safex.io:17402"
-        network: "testnet",
-        daemonAddress: "192.168.1.22:29393"
+        network: "mainnet",
+        daemonAddress: "rpc.safex.io:17402"
       }
     };
   }
@@ -112,6 +110,33 @@ export default class CashWallet extends React.Component {
     });
   };
 
+  networkSelect = () => {
+    if (this.state.config.network === 'mainnet') {
+      this.setState({
+        config: {
+          network: "testnet",
+          daemonAddress: "192.168.1.22:29393"
+        }
+      });
+    } else {
+      this.setState({
+        config: {
+          network: "mainnet",
+          daemonAddress: "rpc.safex.io:17402"
+        }
+      });
+    }
+  }
+
+  resetNetworkSelect = () => {
+    this.setState({
+      config: {
+        network: "mainnet",
+        daemonAddress: "rpc.safex.io:17402"
+      }
+    });
+  }
+
   render() {
     switch (this.state.page) {
       case "wallet":
@@ -128,6 +153,8 @@ export default class CashWallet extends React.Component {
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
+            networkSelect={this.networkSelect}
+            resetNetworkSelect={this.resetNetworkSelect}
           />
         );
       case "create-from-keys":
@@ -136,6 +163,8 @@ export default class CashWallet extends React.Component {
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
+            networkSelect={this.networkSelect}
+            resetNetworkSelect={this.resetNetworkSelect}
           />
         );
       case "open-file":
@@ -144,6 +173,8 @@ export default class CashWallet extends React.Component {
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
+            networkSelect={this.networkSelect}
+            resetNetworkSelect={this.resetNetworkSelect}
           />
         );
       case "recover-from-mnemonic":
@@ -152,6 +183,8 @@ export default class CashWallet extends React.Component {
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
+            networkSelect={this.networkSelect}
+            resetNetworkSelect={this.resetNetworkSelect}
           />
         );
       default:

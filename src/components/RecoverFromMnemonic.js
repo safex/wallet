@@ -2,6 +2,8 @@ import React from "react";
 import Alert from "./partials/Alert";
 import ExitModal from "./partials/ExitModal";
 import { closeApp, openAlert, closeAlert } from "../utils/utils.js";
+import Toggle from "react-toggle-component"
+import "react-toggle-component/styles.css"
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
@@ -10,6 +12,10 @@ export default class NewFromMnemonic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentWillUnmount() {
+    this.props.resetNetworkSelect();
   }
 
   goToPage = () => {
@@ -139,6 +145,14 @@ export default class NewFromMnemonic extends React.Component {
 
           <h2>Recover Wallet From Mnemonic Seed</h2>
           <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
+            <div className="toggle-wrap">
+              <label className="net-label">Network Select:</label>
+              <Toggle name="toggle-10"
+                onChange={this.props.networkSelect}
+                mode="select"
+                labelRight="Testnet"
+                label="Mainnet" />
+            </div>
             <form onSubmit={this.createNewFromMnemonic}>
               <div className="group-wrap">
                 <div className="form-group">

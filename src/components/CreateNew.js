@@ -3,6 +3,8 @@ import ExitModal from "./partials/ExitModal";
 import { closeApp } from "../utils/utils.js";
 import Alert from "./partials/Alert";
 import { openAlert, closeAlert } from "../utils/utils.js";
+import Toggle from "react-toggle-component"
+import "react-toggle-component/styles.css"
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
@@ -10,7 +12,13 @@ const { dialog } = window.require("electron").remote;
 export default class CreateNew extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      config: this.props.config
+    };
+  }
+
+  componentWillUnmount() {
+    this.props.resetNetworkSelect();
   }
 
   goToPage = () => {
@@ -80,7 +88,7 @@ export default class CreateNew extends React.Component {
         true
       );
     });
-  };
+  }
 
   render() {
     return (
@@ -109,6 +117,14 @@ export default class CreateNew extends React.Component {
 
           <h2>Create New Wallet File</h2>
           <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
+            <div className="toggle-wrap">
+              <label className="net-label">Network Select:</label>
+              <Toggle name="toggle-10"
+                onChange={this.props.networkSelect}
+                mode="select"
+                labelRight="Testnet"
+                label="Mainnet" />
+            </div>
             <form
               className={this.state.mnemonic_active ? "hidden" : ""}
               onSubmit={this.createNew}

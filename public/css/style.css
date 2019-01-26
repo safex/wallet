@@ -73,6 +73,23 @@ img {
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
+.toggle-wrap {
+  padding: 5px 0 10px 10px;
+}
+.toggle-wrap .net-label {
+  display: inline;
+  position: relative;
+  top: 2px;
+  margin-right: 15px;
+}
+.rsbc-switch-button>label:first-child,
+.rsbc-switch-button label+label {
+  display: inline !important;
+}
+.rsbc-switch-button.rsbc-switch-button-flat-round input[type=checkbox]+label {
+  top: -3px;
+}
+
 .button-shine {
   position: relative;
   text-align: center;
