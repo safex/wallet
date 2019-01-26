@@ -3,8 +3,8 @@ import ExitModal from "./partials/ExitModal";
 import { closeApp } from "../utils/utils.js";
 import Alert from "./partials/Alert";
 import { openAlert, closeAlert } from "../utils/utils.js";
-import Toggle from "react-toggle-component"
-import "react-toggle-component/styles.css"
+import Toggle from "react-toggle-component";
+import "react-toggle-component/styles.css";
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
