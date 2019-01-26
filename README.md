@@ -41,6 +41,8 @@ $ npm run dev
 #### MacOS
 
 ```
+$ brew install boost
+$ brew install openssl
 $ npm install
 $ ./node_modules/.bin/electron-rebuild
 $ npm run dev
