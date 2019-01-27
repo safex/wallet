@@ -76,7 +76,8 @@
 }
 
 @media (min-width: 1024px) {
-  .options-wrap {
+  .options-wrap,
+  .intro-page-wrap  {
     max-width: 1024px;
     margin: 0 auto;
   }
