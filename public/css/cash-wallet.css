@@ -1,8 +1,14 @@
 /* Options Screen */
+.intro-page-wrap {
+  padding: 0px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .options-wrap {
   position: relative;
-  padding: 10px;
-  height: 100%;
+  padding: 10px 0;
+  height: 577px;
   display: flex;
   align-items: center;
   -webkit-app-region: drag;
@@ -12,7 +18,6 @@
 }
 .options-wrap .options-inner {
   height: 100%;
-  height: 577px;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -63,70 +68,6 @@
   filter: grayscale(70%);
   -webkit-filter: grayscale(70%);
   opacity: 0.9;
-}
-.close-app-btn {
-  background: transparent;
-  position: relative;
-  display: inline-block;
-  right: 0;
-  top: 0;
-  color: #fff;
-  font-size: 18px;
-  padding: 2px 9px 1px;
-  border: 1px solid #8ffdfd;
-  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
-  z-index: 2;
-}
-.buttons-wrap {
-  position: absolute;
-  right: 0;
-}
-.minimize-app-btn {
-  background: transparent;
-  position: relative;
-  width: 31px;
-  top: 0;
-  color: #fff;
-  font-size: 19px;
-  padding: 4px 0px 5px;
-  line-height: 1;
-  border: 1px solid #8ffdfd;
-  margin-right: 10px;
-  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
-  z-index: 2;
-  display: inline-block;
-}
-.maximize-app-btn {
-  background: transparent;
-  position: relative;
-  display: inline-block;
-  width: 31px;
-  top: 1px;
-  color: #fff;
-  font-size: 19px;
-  padding: 5px 9px 4px;
-  line-height: 1;
-  border: 1px solid #8ffdfd;
-  margin-right: 10px;
-  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
-  z-index: 2;
-}
-.maximize-app-btn span {
-  border: 2px solid #fff;
-  border-top: 4px solid #fff;
-  width: 100%;
-  height: 14px;
-  display: inline-block;
-}
-#version {
-  position: absolute;
-  top: 5px;
-  left: 10px;
-  color: #fff;
-  letter-spacing: 1px;
-  font-size: 18px;
-  margin: 0px;
-  z-index: -1;
 }
 
 .page-wrap {

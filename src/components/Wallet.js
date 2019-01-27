@@ -3,7 +3,7 @@ import { closeApp } from "../utils/utils.js";
 import ExitModal from "./partials/ExitModal";
 import SendModal from "./partials/SendModal";
 import Alert from "./partials/Alert";
-import Buttons from "./partials/Buttons";
+import Header from "./partials/Header";
 import {
   openSendPopup,
   closeSendPopup,
@@ -263,20 +263,13 @@ export default class Wallet extends React.Component {
   render() {
     return (
       <div className="item-wrap wallet-wrap">
+        <Header goToPage={this.goToPage} toggleExitModal={this.toggleExitModal} />
         <div className="item-inner">
-          <button
-            onClick={this.goToPage}
-            className="go-back-btn button-shine"
-            disabled={this.state.alert_close_disabled ? "disabled" : ""}
-          >
-            Back
-          </button>
           <img
             src="images/create-new.png"
             className="item-pic"
             alt="create-new"
           />
-          <Buttons toggleExitModal={this.toggleExitModal} />
           <h2>Wallet File</h2>
 
           <div

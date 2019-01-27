@@ -2,7 +2,7 @@ import React from "react";
 import { openAlert, closeAlert } from "../utils/utils.js";
 import Alert from "./partials/Alert";
 import ExitModal from "./partials/ExitModal";
-import Buttons from "./partials/Buttons";
+import Header from "./partials/Header";
 import { closeApp } from "../utils/utils.js";
 
 const { dialog } = window.require("electron").remote;
@@ -88,23 +88,14 @@ export default class OpenFile extends React.Component {
   render() {
     return (
       <div className="item-wrap open-file-wrap">
+        <Header goToPage={this.goToPage} toggleExitModal={this.toggleExitModal} />
         <div className="item-inner">
           <img
             src="images/open-wallet-file.png"
             className="item-pic"
             alt="open-wallet-file"
           />
-          <button
-            onClick={this.goToPage}
-            className="go-back-btn button-shine"
-            disabled={this.state.alert_close_disabled ? "disabled" : ""}
-          >
-            Back
-          </button>
-          <Buttons toggleExitModal={this.toggleExitModal} />
-          
           <h2>Open Wallet File</h2>
-
           <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
             <button
               className={

@@ -2,7 +2,7 @@
 .item-wrap {
   height: 100%;
   width: 100%;
-  padding: 10px;
+  padding: 0px 10px 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -122,21 +122,6 @@
 .item-wrap .login-wrap .btn:focus,
 .item-wrap .login-wrap .btn:active {
   outline: none;
-}
-.go-back-btn {
-  position: absolute;
-  top: -12px;
-  left: -10px;
-  background: rgba(255, 255, 255, 0.3);
-  padding: 0px 25px 1px;
-  border: 0px none;
-  text-transform: uppercase;
-  color: #fff;
-  font-size: 18px;
-  border-radius: 0px;
-}
-.go-back-btn:hover {
-  cursor: pointer;
 }
 
 @media (min-width: 1024px) {
