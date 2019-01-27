@@ -3,6 +3,7 @@ import { closeApp } from "../utils/utils.js";
 import ExitModal from "./partials/ExitModal";
 import SendModal from "./partials/SendModal";
 import Alert from "./partials/Alert";
+import Buttons from "./partials/Buttons";
 import {
   openSendPopup,
   closeSendPopup,
@@ -275,14 +276,7 @@ export default class Wallet extends React.Component {
             className="item-pic"
             alt="create-new"
           />
-          <button
-            onClick={this.toggleExitModal}
-            className="close-app-btn button-shine"
-            title="Exit"
-            disabled={this.state.alert_close_disabled ? "disabled" : ""}
-          >
-            X
-          </button>
+          <Buttons toggleExitModal={this.toggleExitModal} />
           <h2>Wallet File</h2>
 
           <div

@@ -65,7 +65,8 @@
 }
 .close-app-btn {
   background: transparent;
-  position: absolute;
+  position: relative;
+  display: inline-block;
   right: 0;
   top: 0;
   color: #fff;
@@ -74,6 +75,47 @@
   border: 1px solid #8ffdfd;
   font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
   z-index: 2;
+}
+.buttons-wrap {
+  position: absolute;
+  right: 0;
+}
+.minimize-app-btn {
+  background: transparent;
+  position: relative;
+  width: 31px;
+  top: 0;
+  color: #fff;
+  font-size: 19px;
+  padding: 4px 0px 5px;
+  line-height: 1;
+  border: 1px solid #8ffdfd;
+  margin-right: 10px;
+  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
+  z-index: 2;
+  display: inline-block;
+}
+.maximize-app-btn {
+  background: transparent;
+  position: relative;
+  display: inline-block;
+  width: 31px;
+  top: 1px;
+  color: #fff;
+  font-size: 19px;
+  padding: 5px 9px 4px;
+  line-height: 1;
+  border: 1px solid #8ffdfd;
+  margin-right: 10px;
+  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
+  z-index: 2;
+}
+.maximize-app-btn span {
+  border: 2px solid #fff;
+  border-top: 4px solid #fff;
+  width: 100%;
+  height: 14px;
+  display: inline-block;
 }
 #version {
   position: absolute;
