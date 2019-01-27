@@ -19,6 +19,7 @@ header .logo {
   color: #fff;
   font-size: 18px;
   border-radius: 0px;
+  -webkit-app-region: no-drag;
 }
 .go-back-btn:hover {
   cursor: pointer;
@@ -27,6 +28,7 @@ header .logo {
   position: absolute;
   right: 0;
   top: -3px;
+  -webkit-app-region: no-drag;
 }
 .minimize-app-btn {
   background: transparent;
