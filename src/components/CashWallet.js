@@ -4,10 +4,9 @@ import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
 import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import ExitModal from "./partials/ExitModal";
-import Buttons from "./partials/Buttons";
+import Header from "./partials/Header";
 import { closeApp } from "../utils/utils.js";
 import Wallet from "./Wallet";
-import packageJson from "../../package";
 
 const safex = window.require("safex-nodejs-libwallet");
 
@@ -190,7 +189,8 @@ export default class CashWallet extends React.Component {
         );
       default:
         return (
-          <div>
+          <div className="intro-page-wrap">
+            <Header toggleExitModal={this.toggleExitModal} />
             <div className="options-wrap">
               <div className="options-inner">
                 <div
@@ -224,10 +224,6 @@ export default class CashWallet extends React.Component {
                   <img src="images/mnemonic.png" alt="mnemonic" />
                   <h3>Recover Wallet</h3>
                 </div>
-
-                <Buttons toggleExitModal={this.toggleExitModal}/>
-
-                <p id="version">{packageJson.version}</p>
               </div>
             </div>
             <ExitModal

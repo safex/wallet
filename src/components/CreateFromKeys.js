@@ -1,7 +1,7 @@
 import React from "react";
 import Alert from "./partials/Alert";
 import ExitModal from "./partials/ExitModal";
-import Buttons from "./partials/Buttons";
+import Header from "./partials/Header";
 import {
   verify_safex_address,
   closeApp,
@@ -127,21 +127,13 @@ export default class CreateFromKeys extends React.Component {
   render() {
     return (
       <div className="item-wrap create-from-keys-wrap">
+        <Header goToPage={this.goToPage} toggleExitModal={this.toggleExitModal} />
         <div className="item-inner">
           <img
             src="images/new-from-keys.png"
             className="item-pic"
             alt="new-from-keys"
           />
-          <button
-            onClick={this.goToPage}
-            className="go-back-btn button-shine"
-            disabled={this.state.alert_close_disabled ? "disabled" : ""}
-          >
-            Back
-          </button>
-          <Buttons toggleExitModal={this.toggleExitModal} />
-
           <h2>Create New Wallet From Keys</h2>
           <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
             <div className="toggle-wrap">
