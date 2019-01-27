@@ -28,6 +28,7 @@
   text-align: center;
   text-transform: uppercase;
   margin: 20px 0 30px;
+  -webkit-app-region: drag;
 }
 .item-wrap .login-wrap {
   padding: 0;
