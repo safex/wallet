@@ -4,6 +4,7 @@ import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
 import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import ExitModal from "./partials/ExitModal";
+import Buttons from "./partials/Buttons";
 import { closeApp } from "../utils/utils.js";
 import Wallet from "./Wallet";
 import packageJson from "../../package";
@@ -191,13 +192,7 @@ export default class CashWallet extends React.Component {
                   <h3>Recover Wallet</h3>
                 </div>
 
-                <button
-                  onClick={this.toggleExitModal}
-                  className="close-app-btn button-shine"
-                  title="Exit"
-                >
-                  X
-                </button>
+                <Buttons toggleExitModal={this.toggleExitModal}/>
 
                 <p id="version">{packageJson.version}</p>
               </div>

@@ -2,6 +2,7 @@ import React from "react";
 import Alert from "./partials/Alert";
 import ExitModal from "./partials/ExitModal";
 import { closeApp, openAlert, closeAlert } from "../utils/utils.js";
+import Buttons from "./partials/Buttons";
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
@@ -128,14 +129,7 @@ export default class NewFromMnemonic extends React.Component {
           >
             Back
           </button>
-          <button
-            onClick={this.toggleExitModal}
-            className="close-app-btn button-shine"
-            title="Exit"
-            disabled={this.state.alert_close_disabled ? "disabled" : ""}
-          >
-            X
-          </button>
+          <Buttons toggleExitModal={this.toggleExitModal} />
 
           <h2>Recover Wallet From Mnemonic Seed</h2>
           <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">

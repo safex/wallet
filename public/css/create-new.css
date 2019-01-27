@@ -22,18 +22,6 @@
 .create-new-wrap .item-pic {
   right: 17px;
 }
-.item-wrap .close-app-btn {
-  background: transparent;
-  position: absolute;
-  right: 0;
-  top: 0;
-  color: #fff;
-  font-size: 18px;
-  padding: 2px 9px 1px;
-  border: 1px solid #8ffdfd;
-  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
-  z-index: 2;
-}
 .item-wrap h2 {
   color: #fff;
   font-size: 44px;
@@ -145,6 +133,9 @@
   color: #fff;
   font-size: 18px;
   border-radius: 0px;
+}
+.go-back-btn:hover {
+  cursor: pointer;
 }
 
 @media (min-width: 1024px) {
