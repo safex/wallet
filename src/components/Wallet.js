@@ -174,6 +174,7 @@ export default class Wallet extends React.Component {
     e.preventDefault();
     let sendingAddress = e.target.send_to.value;
     let amount = e.target.amount.value * 10000000000;
+    let paymentid = e.target.paymentid.value;
     let wallet = this.props.walletMeta;
 
     if (sendingAddress === "") {
@@ -184,72 +185,137 @@ export default class Wallet extends React.Component {
       this.setOpenAlert("Enter Amount", false);
       return false;
     }
-    console.log("amount " + amount);
-    this.setState(() => ({
-      tx_being_sent: true,
-      send_cash_or_token: cash_or_token
-    }));
-    wallet
-      .createTransaction({
-        address: sendingAddress,
-        amount: amount,
-        tx_type: cash_or_token // cash transaction
-      })
-      .then(tx => {
-        let txId = tx.transactionsIds();
-        if (cash_or_token === 0) {
-          console.log("Cash transaction created: " + txId);
-        } else {
-          console.log("Token transaction created: " + txId);
-        }
-        tx.commit()
-          .then(() => {
-            console.log("Transaction commited successfully");
-            this.setCloseSendPopup();
-            if (cash_or_token === 0) {
-              this.setOpenAlert(
-                "Transaction commited successfully, Your cash transaction ID is: " +
-                  txId,
-                false
-              );
-            } else {
-              this.setOpenAlert(
-                "Transaction commited successfully, Your token transaction ID is: " +
-                  txId,
-                false
-              );
-            }
-            this.setState(() => ({
-              tx_being_sent: false
-            }));
-            setTimeout(() => {
-              this.props.wallet.balance = this.roundBalanceAmount(
-                wallet.unlockedBalance() - wallet.balance()
-              );
-              this.props.wallet.unlocked_balance = this.roundBalanceAmount(
-                wallet.unlockedBalance()
-              );
-              this.props.wallet.tokens = this.roundBalanceAmount(
-                wallet.unlockedTokenBalance() - wallet.tokenBalance()
-              );
-              this.props.wallet.unlocked_tokens = this.roundBalanceAmount(
-                wallet.unlockedTokenBalance()
-              );
-            }, 300);
-          })
-          .catch(e => {
-            this.setState(() => ({
-              tx_being_sent: false
-            }));
-            this.setOpenAlert("Error on commiting transaction: " + e, false);
-          });
-      })
-      .catch(e => {
-        this.setState(() => ({
-          tx_being_sent: false
-        }));
-        this.setOpenAlert("Couldn't create transaction: " + e, false);
-      });
+    if (paymentid !== "") {
+      console.log("amount " + amount);
+      console.log("paymentid " + paymentid);
+      this.setState(() => ({
+        tx_being_sent: true,
+        send_cash_or_token: cash_or_token
+      }));
+      wallet
+        .createTransaction({
+          address: sendingAddress,
+          amount: amount,
+          paymentId: paymentid,
+          tx_type: cash_or_token // cash transaction
+        })
+        .then(tx => {
+          let txId = tx.transactionsIds();
+          if (cash_or_token === 0) {
+            console.log("Cash transaction created: " + txId);
+          } else {
+            console.log("Token transaction created: " + txId);
+          }
+          tx.commit()
+            .then(() => {
+              console.log("Transaction commited successfully");
+              this.setCloseSendPopup();
+              if (cash_or_token === 0) {
+                this.setOpenAlert(
+                  "Transaction commited successfully, Your cash transaction ID is: " +
+                    txId,
+                  false
+                );
+              } else {
+                this.setOpenAlert(
+                  "Transaction commited successfully, Your token transaction ID is: " +
+                    txId,
+                  false
+                );
+              }
+              this.setState(() => ({ tx_being_sent: false }));
+              setTimeout(() => {
+                this.props.wallet.balance = this.roundBalanceAmount(
+                  wallet.unlockedBalance() - wallet.balance()
+                );
+                this.props.wallet.unlocked_balance = this.roundBalanceAmount(
+                  wallet.unlockedBalance()
+                );
+                this.props.wallet.tokens = this.roundBalanceAmount(
+                  wallet.unlockedTokenBalance() - wallet.tokenBalance()
+                );
+                this.props.wallet.unlocked_tokens = this.roundBalanceAmount(
+                  wallet.unlockedTokenBalance()
+                );
+              }, 300);
+            })
+            .catch(e => {
+              this.setState(() => ({ tx_being_sent: false }));
+              this.setOpenAlert("Error on commiting transaction: " + e, false);
+            });
+        })
+        .catch(e => {
+          this.setState(() => ({ tx_being_sent: false }));
+          this.setOpenAlert("Couldn't create transaction: " + e, false);
+        });
+    } else {
+      console.log("amount " + amount);
+      this.setState(() => ({
+        tx_being_sent: true,
+        send_cash_or_token: cash_or_token
+      }));
+      wallet
+        .createTransaction({
+          address: sendingAddress,
+          amount: amount,
+          tx_type: cash_or_token // cash transaction
+        })
+        .then(tx => {
+          let txId = tx.transactionsIds();
+          if (cash_or_token === 0) {
+            console.log("Cash transaction created: " + txId);
+          } else {
+            console.log("Token transaction created: " + txId);
+          }
+          tx.commit()
+            .then(() => {
+              console.log("Transaction commited successfully");
+              this.setCloseSendPopup();
+              if (cash_or_token === 0) {
+                this.setOpenAlert(
+                  "Transaction commited successfully, Your cash transaction ID is: " +
+                    txId,
+                  false
+                );
+              } else {
+                this.setOpenAlert(
+                  "Transaction commited successfully, Your token transaction ID is: " +
+                    txId,
+                  false
+                );
+              }
+              this.setState(() => ({
+                tx_being_sent: false
+              }));
+              setTimeout(() => {
+                this.props.wallet.balance = this.roundBalanceAmount(
+                  wallet.unlockedBalance() - wallet.balance()
+                );
+                this.props.wallet.unlocked_balance = this.roundBalanceAmount(
+                  wallet.unlockedBalance()
+                );
+                this.props.wallet.tokens = this.roundBalanceAmount(
+                  wallet.unlockedTokenBalance() - wallet.tokenBalance()
+                );
+                this.props.wallet.unlocked_tokens = this.roundBalanceAmount(
+                  wallet.unlockedTokenBalance()
+                );
+              }, 300);
+            })
+            .catch(e => {
+              this.setState(() => ({
+                tx_being_sent: false
+              }));
+              this.setOpenAlert("Error on commiting transaction: " + e, false);
+            });
+        })
+        .catch(e => {
+          this.setState(() => ({
+            tx_being_sent: false
+          }));
+          this.setOpenAlert("Couldn't create transaction: " + e, false);
+        });
+    }
   };
 
   setOpenSendPopup = send_cash_or_token => {
@@ -263,7 +329,10 @@ export default class Wallet extends React.Component {
   render() {
     return (
       <div className="item-wrap wallet-wrap">
-        <Header goToPage={this.goToPage} toggleExitModal={this.toggleExitModal} />
+        <Header
+          goToPage={this.goToPage}
+          toggleExitModal={this.toggleExitModal}
+        />
         <div className="item-inner">
           <img
             src="images/create-new.png"
