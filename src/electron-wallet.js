@@ -30,7 +30,7 @@ function createWindow() {
       webSecurity: false
     },
     useContentSize: true,
-    frame: false,
+    frame: false
   });
 
   // and load the index.html of the app.

@@ -13,13 +13,6 @@
   .item-wrap .login-wrap form input:-ms-input-placeholder {
     font-size: 17px;
   }
-  .item-wrap .close-app-btn {
-    right: -10px;
-    top: -12px;
-  }
-  .options-wrap {
-    padding: 0;
-  }
   .options-wrap .options-inner {
     flex-direction: column;
     width: 100%;
@@ -56,7 +49,6 @@
   }
   .go-back-btn {
     top: initial;
-    bottom: -12px;
     padding: 4px 25px 5px;
   }
 
@@ -97,5 +89,3 @@
     padding: 45px 10px 10px;
   }
 }
-
-    

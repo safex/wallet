@@ -20,7 +20,9 @@ export default class SendModal extends React.Component {
                 </div>
               ) : (
                 <div className="available-wrap">
-                  <span>Available Safex Tokens: {this.props.availableTokens} </span>
+                  <span>
+                    Available Safex Tokens: {this.props.availableTokens}{" "}
+                  </span>
                 </div>
               )}
               {this.props.send_cash_or_token === 0 ? (
@@ -29,7 +31,9 @@ export default class SendModal extends React.Component {
                 <h3>Send Tokens</h3>
               )}
               <form
-                onSubmit={e => {this.props.sendCashOrToken(e, this.props.send_cash_or_token)}}
+                onSubmit={e => {
+                  this.props.sendCashOrToken(e, this.props.send_cash_or_token);
+                }}
               >
                 <label htmlFor="send_to">Destination</label>
                 <textarea
@@ -39,6 +43,8 @@ export default class SendModal extends React.Component {
                 />
                 <label htmlFor="amount">Amount</label>
                 <input name="amount" placeholder="Enter Amount" />
+                <label htmlFor="paymentid">(Optional) Payment ID</label>
+                <input name="paymentid" placeholder="(optional) payment id" />
                 <button
                   className="btn button-shine"
                   type="submit"
