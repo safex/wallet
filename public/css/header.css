@@ -90,4 +90,5 @@ header .logo {
   font-size: 18px;
   margin: 0px;
   z-index: -1;
+  -webkit-app-region: no-drag;
 }
