@@ -4,6 +4,7 @@ import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
 import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import ExitModal from "./partials/ExitModal";
+import LoadingModal from "./partials/LoadingModal";
 import Header from "./partials/Header";
 import { closeApp } from "../utils/utils.js";
 import Wallet from "./Wallet";
@@ -16,12 +17,34 @@ export default class CashWallet extends React.Component {
     this.state = {
       wallet: null,
       page: null,
-      config: {
-        network: "mainnet",
-        daemonAddress: "rpc.safex.io:17402"
-      }
+      config: { network: "mainnet", daemonAddress: "rpc.safex.io:17402" }
     };
   }
+
+  componentDidMount() {
+    let wallet = JSON.parse(localStorage.getItem("wallet"));
+    let password = JSON.parse(localStorage.getItem("password"));
+    let path = localStorage.getItem("wallet_path");
+    if (wallet) {
+      this.toggleLoadingModal();
+      this.createWallet(
+        "openWallet",
+        {
+          path: path,
+          password: password,
+          network: wallet.config.network,
+          daemonAddress: wallet.config.daemonAddress
+        },
+        true
+      );
+    }
+  }
+
+  toggleLoadingModal = () => {
+    this.setState({
+      loading_modal: !this.state.loading_modal
+    });
+  };
 
   toggleExitModal = () => {
     this.setState({
@@ -41,7 +64,7 @@ export default class CashWallet extends React.Component {
     return Math.floor(parseFloat(balance) / 100000000) / 100;
   };
 
-  createWallet = (createWalletFunctionType, args, callback) => {
+  createWallet = (createWalletFunctionType, args, callback, wallet_loaded) => {
     console.log(createWalletFunctionType, args);
 
     try {
@@ -84,9 +107,7 @@ export default class CashWallet extends React.Component {
     let wallet = this.state.wallet_meta;
     wallet.setSeedLanguage("English");
     this.setWalletData(wallet);
-    this.setState({
-      page: "wallet"
-    });
+    this.setState({ page: "wallet" });
   };
 
   setWalletData = wallet => {
@@ -107,7 +128,8 @@ export default class CashWallet extends React.Component {
           wallet.unlockedTokenBalance() - wallet.tokenBalance()
         ),
         tokens: this.roundBalanceAmount(wallet.tokenBalance()),
-        unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance())
+        unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance()),
+        config: this.state.config
       }
     });
   };
@@ -229,6 +251,7 @@ export default class CashWallet extends React.Component {
                 </div>
               </div>
             </div>
+            <LoadingModal loadingModal={this.state.loading_modal} />
             <ExitModal
               exitModal={this.state.exit_modal}
               closeExitModal={this.toggleExitModal}

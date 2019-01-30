@@ -82,6 +82,8 @@ export default class OpenFile extends React.Component {
         return false;
       }
     );
+    localStorage.setItem("wallet_path", this.state.wallet_path);
+    localStorage.setItem("password", JSON.stringify(pass));
     this.setOpenAlert(
       "Please wait while your wallet file is loaded. Don't close the application until the process is complete. This can take a while, please be patient.",
       true
@@ -96,7 +98,10 @@ export default class OpenFile extends React.Component {
   render() {
     return (
       <div className="item-wrap open-file-wrap">
-        <Header goToPage={this.goToPage} toggleExitModal={this.toggleExitModal} />
+        <Header
+          goToPage={this.goToPage}
+          toggleExitModal={this.toggleExitModal}
+        />
         <div className="item-inner">
           <img
             src="images/open-wallet-file.png"

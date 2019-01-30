@@ -115,6 +115,8 @@ export default class NewFromMnemonic extends React.Component {
         daemonAddress: this.props.config.daemonAddress,
         mnemonic: mnemonic
       });
+      localStorage.setItem("wallet_path", this.state.wallet_path);
+      localStorage.setItem("password", JSON.stringify(pass1));
       console.log("Recover wallet from mnemonic performed!");
     });
   };
@@ -122,7 +124,10 @@ export default class NewFromMnemonic extends React.Component {
   render() {
     return (
       <div className="item-wrap new-from-mnemonic-wrap">
-        <Header goToPage={this.goToPage} toggleExitModal={this.toggleExitModal} />
+        <Header
+          goToPage={this.goToPage}
+          toggleExitModal={this.toggleExitModal}
+        />
         <div className="item-inner">
           <img
             src="images/mnemonic.png"

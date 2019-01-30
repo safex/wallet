@@ -324,3 +324,7 @@
   line-height: 1.2;
   font-size: 18px;
 }
+
+.loadingModal h3 {
+  margin: 0 0 3px;
+}
