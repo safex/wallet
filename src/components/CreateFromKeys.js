@@ -112,7 +112,7 @@ export default class CreateFromKeys extends React.Component {
         viewKeyString: view_key,
         spendKeyString: spend_key
       });
-      localStorage.setItem("wallet_path", this.state.wallet_path);
+      localStorage.setItem("wallet_path", filepath);
       localStorage.setItem("password", JSON.stringify(pass1));
       console.log("Create wallet from keys performed!");
       console.log("Create new wallet from keys checkpoint 1");
