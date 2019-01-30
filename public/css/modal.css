@@ -325,6 +325,15 @@
   font-size: 18px;
 }
 
+.loadingModal {
+  width: 500px;
+}
 .loadingModal h3 {
   margin: 0 0 3px;
+}
+.loadingModal input {
+  border: 1px solid #327a9b;
+}
+.loadingModalWrap .alert {
+    width: calc(500px - 40px);
 }
