@@ -115,7 +115,7 @@ export default class NewFromMnemonic extends React.Component {
         daemonAddress: this.props.config.daemonAddress,
         mnemonic: mnemonic
       });
-      localStorage.setItem("wallet_path", this.state.wallet_path);
+      localStorage.setItem("wallet_path", filepath);
       localStorage.setItem("password", JSON.stringify(pass1));
       console.log("Recover wallet from mnemonic performed!");
     });

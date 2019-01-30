@@ -84,7 +84,7 @@ export default class CreateNew extends React.Component {
         network: this.props.config.network,
         daemonAddress: this.props.config.daemonAddress
       });
-      localStorage.setItem("wallet_path", this.state.wallet_path);
+      localStorage.setItem("wallet_path", filepath);
       localStorage.setItem("password", JSON.stringify(pass1));
       this.setOpenAlert(
         "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
