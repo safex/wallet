@@ -76,6 +76,8 @@ export default class CreateNew extends React.Component {
         network: this.props.config.network,
         daemonAddress: this.props.config.daemonAddress
       });
+      localStorage.setItem("wallet_path", this.state.wallet_path);
+      localStorage.setItem("password", JSON.stringify(pass1));
       this.setOpenAlert(
         "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
         true
@@ -86,7 +88,10 @@ export default class CreateNew extends React.Component {
   render() {
     return (
       <div className="item-wrap create-new-wrap">
-        <Header goToPage={this.goToPage} toggleExitModal={this.toggleExitModal} />
+        <Header
+          goToPage={this.goToPage}
+          toggleExitModal={this.toggleExitModal}
+        />
         <div className="item-inner">
           <img
             src="images/create-new.png"
@@ -117,7 +122,6 @@ export default class CreateNew extends React.Component {
                 )}
               </button>
             </form>
-
             <Alert
               openAlert={this.state.alert}
               alertText={this.state.alert_text}

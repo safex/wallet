@@ -112,6 +112,8 @@ export default class CreateFromKeys extends React.Component {
         viewKeyString: view_key,
         spendKeyString: spend_key
       });
+      localStorage.setItem("wallet_path", this.state.wallet_path);
+      localStorage.setItem("password", JSON.stringify(pass1));
       console.log("Create wallet from keys performed!");
       console.log("Create new wallet from keys checkpoint 1");
     });
@@ -121,7 +123,10 @@ export default class CreateFromKeys extends React.Component {
   render() {
     return (
       <div className="item-wrap create-from-keys-wrap">
-        <Header goToPage={this.goToPage} toggleExitModal={this.toggleExitModal} />
+        <Header
+          goToPage={this.goToPage}
+          toggleExitModal={this.toggleExitModal}
+        />
         <div className="item-inner">
           <img
             src="images/new-from-keys.png"
