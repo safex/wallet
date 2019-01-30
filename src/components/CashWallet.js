@@ -23,20 +23,8 @@ export default class CashWallet extends React.Component {
 
   componentDidMount() {
     let wallet = JSON.parse(localStorage.getItem("wallet"));
-    let password = JSON.parse(localStorage.getItem("password"));
-    let path = localStorage.getItem("wallet_path");
     if (wallet) {
       this.toggleLoadingModal();
-      this.createWallet(
-        "openWallet",
-        {
-          path: path,
-          password: password,
-          network: wallet.config.network,
-          daemonAddress: wallet.config.daemonAddress
-        },
-        true
-      );
     }
   }
 
@@ -216,7 +204,10 @@ export default class CashWallet extends React.Component {
                 </div>
               </div>
             </div>
-            <LoadingModal loadingModal={this.state.loading_modal} />
+            <LoadingModal 
+              loadingModal={this.state.loading_modal} 
+              createWallet={this.createWallet} 
+            />
             <ExitModal
               exitModal={this.state.exit_modal}
               closeExitModal={this.toggleExitModal}
