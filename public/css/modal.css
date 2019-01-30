@@ -173,7 +173,7 @@
   border: 0px none;
   border-radius: 5px;
   padding: 5px 10px;
-  margin: 0 0 8px;
+  margin: 0 0 10px !important;
   font-size: 14px;
   background: url(../images/input-bg.png) repeat-y top left;
   background-size: 100% 100%;
