@@ -17,10 +17,8 @@ export default class CashWallet extends React.Component {
       wallet: null,
       page: null,
       config: {
-        // network: "mainnet",
-        // daemonAddress: "rpc.safex.io:17402"
-        network: "testnet",
-        daemonAddress: "192.168.1.22:29393"
+        network: "mainnet",
+        daemonAddress: "rpc.safex.io:17402"
       }
     };
   }
@@ -100,13 +98,15 @@ export default class CashWallet extends React.Component {
         mnemonic: wallet.seed(),
         wallet_connected: wallet.connected() === "connected",
         blockchain_height: wallet.blockchainHeight(),
-        balance: this.roundBalanceAmount(
-          wallet.balance() - wallet.unlockedBalance()
+        pending_balance: this.roundBalanceAmount(
+          wallet.unlockedBalance() - wallet.balance()
         ),
+        balance: this.roundBalanceAmount(wallet.balance()),
         unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
-        tokens: this.roundBalanceAmount(
-          wallet.tokenBalance() - wallet.unlockedTokenBalance()
+        pending_tokens: this.roundBalanceAmount(
+          wallet.unlockedTokenBalance() - wallet.tokenBalance()
         ),
+        tokens: this.roundBalanceAmount(wallet.tokenBalance()),
         unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance())
       }
     });
@@ -120,6 +120,7 @@ export default class CashWallet extends React.Component {
             goToPage={this.goToPage}
             wallet={this.state.wallet}
             walletMeta={this.state.wallet_meta}
+            setWalletData={this.setWalletData}
           />
         );
       case "create-new":

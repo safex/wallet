@@ -74,7 +74,7 @@ export default class Wallet extends React.Component {
   refreshCallback = () => {
     console.log("Wallet refreshed");
     let wallet = this.props.walletMeta;
-    this.setWalletData(wallet);
+    this.props.setWalletData(this.props.walletMeta);
     this.setOpenAlert("Please wait while blockchain is being updated...", true);
     wallet
       .store()
@@ -100,7 +100,7 @@ export default class Wallet extends React.Component {
       console.log("syncedHeight up to date...");
       if (wallet.synchronized()) {
         console.log("newBlock wallet synchronized, setting state...");
-        this.setWalletData(wallet);
+        this.props.setWalletData(this.props.walletMeta);
       }
     }
   };
@@ -127,7 +127,7 @@ export default class Wallet extends React.Component {
 
       setTimeout(() => {
         console.log("Rescan setting callbacks");
-        this.setWalletData(wallet);
+        this.props.setWalletData(this.props.walletMeta);
         this.setCloseAlert();
         wallet
           .store()
@@ -141,33 +141,6 @@ export default class Wallet extends React.Component {
         wallet.on("updated", this.updatedCallback);
       }, 1000);
     }, 1000);
-  };
-
-  setWalletData = wallet_meta => {
-    this.mounted &&
-      this.setState({
-        alert_close_disabled: false,
-        wallet: {
-          wallet_address: wallet_meta.address(),
-          spend_key: wallet_meta.secretSpendKey(),
-          view_key: wallet_meta.secretViewKey(),
-          mnemonic: wallet_meta.seed(),
-          wallet_connected: wallet_meta.connected() === "connected",
-          blockchain_height: wallet_meta.blockchainHeight(),
-          balance: this.roundBalanceAmount(
-            wallet_meta.balance() - wallet_meta.unlockedBalance()
-          ),
-          unlocked_balance: this.roundBalanceAmount(
-            wallet_meta.unlockedBalance()
-          ),
-          tokens: this.roundBalanceAmount(
-            wallet_meta.tokenBalance() - wallet_meta.unlockedTokenBalance()
-          ),
-          unlocked_tokens: this.roundBalanceAmount(
-            wallet_meta.unlockedTokenBalance()
-          )
-        }
-      });
   };
 
   sendCashOrToken = (e, cash_or_token) => {
@@ -226,44 +199,40 @@ export default class Wallet extends React.Component {
         }
         tx.commit()
           .then(() => {
-            console.log("Transaction commited successfully");
             this.setCloseSendPopup();
             if (this.state.cash_or_token === 0) {
+              console.log("Cash transaction commited successfully");
               this.setOpenAlert(
                 "Transaction commited successfully, Your cash transaction ID is: " +
                   txId,
                 false
               );
             } else {
+              console.log("Token transaction commited successfully");
               this.setOpenAlert(
                 "Transaction commited successfully, Your token transaction ID is: " +
                   txId,
                 false
               );
             }
-            this.setState(() => ({ tx_being_sent: false }));
+            this.setState(() => ({
+              tx_being_sent: false
+            }));
             setTimeout(() => {
-              this.props.wallet.balance = this.roundBalanceAmount(
-                wallet.unlockedBalance() - wallet.balance()
-              );
-              this.props.wallet.unlocked_balance = this.roundBalanceAmount(
-                wallet.unlockedBalance()
-              );
-              this.props.wallet.tokens = this.roundBalanceAmount(
-                wallet.unlockedTokenBalance() - wallet.tokenBalance()
-              );
-              this.props.wallet.unlocked_tokens = this.roundBalanceAmount(
-                wallet.unlockedTokenBalance()
-              );
+              this.props.setWalletData(this.props.walletMeta);
             }, 300);
           })
           .catch(e => {
-            this.setState(() => ({ tx_being_sent: false }));
+            this.setState(() => ({
+              tx_being_sent: false
+            }));
             this.setOpenAlert("Error on commiting transaction: " + e, false);
           });
       })
       .catch(e => {
-        this.setState(() => ({ tx_being_sent: false }));
+        this.setState(() => ({
+          tx_being_sent: false
+        }));
         this.setOpenAlert("Couldn't create transaction: " + e, false);
       });
   };
@@ -372,7 +341,9 @@ export default class Wallet extends React.Component {
             <div className="group-wrap">
               <div className="group">
                 <label htmlFor="balance">Pending Safex Cash</label>
-                <p className="display-value">{this.props.wallet.balance}</p>
+                <p className="display-value">
+                  {this.props.wallet.pending_balance}
+                </p>
 
                 <label htmlFor="unlocked_balance">Available Safex Cash</label>
                 <p className="display-value">
@@ -388,7 +359,9 @@ export default class Wallet extends React.Component {
 
               <div className="group">
                 <label htmlFor="tokens">Pending Safex Tokens</label>
-                <p className="display-value">{this.props.wallet.tokens}</p>
+                <p className="display-value">
+                  {this.props.wallet.pending_tokens}
+                </p>
 
                 <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
                 <p className="display-value">
