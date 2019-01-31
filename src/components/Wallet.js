@@ -249,6 +249,13 @@ export default class Wallet extends React.Component {
     closeSendPopup(this);
   };
 
+  connectionError = () => {
+    this.setOpenAlert(
+      "Daemon connection error, please try again later ",
+      false
+    );
+  };
+
   render() {
     return (
       <div className="item-wrap wallet-wrap">
@@ -352,7 +359,11 @@ export default class Wallet extends React.Component {
                 </p>
                 <button
                   className="btn button-shine"
-                  onClick={this.setOpenSendPopup.bind(this, 0)}
+                  onClick={
+                    this.props.wallet.wallet_connected
+                      ? this.setOpenSendPopup.bind(this, 0)
+                      : this.connectionError
+                  }
                 >
                   Send Cash
                 </button>
@@ -371,7 +382,11 @@ export default class Wallet extends React.Component {
 
                 <button
                   className="btn button-shine"
-                  onClick={this.setOpenSendPopup.bind(this, 1)}
+                  onClick={
+                    this.props.wallet.wallet_connected
+                      ? this.setOpenSendPopup.bind(this, 1)
+                      : this.connectionError
+                  }
                 >
                   Send Tokens
                 </button>
