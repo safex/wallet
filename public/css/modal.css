@@ -327,10 +327,10 @@
 
 .loadingModal {
   width: 500px;
-  padding: 25px 20px 30px;
+  padding: 20px 20px 25px;
 }
 .loadingModal h3 {
-  margin: 0 0 3px;
+  margin: 0;
 }
 .loadingModal input {
   border: 1px solid #327a9b;
