@@ -331,6 +331,7 @@
 }
 .loadingModal h3 {
   margin: 0;
+  line-height: 1.2;
 }
 .loadingModal label {
   text-transform: initial;
@@ -343,4 +344,10 @@
 }
 .loadingModal p {
   font-size: 20px;
+}
+.loadingModal .cancel-btn {
+  margin: 0 5px 0 0;
+}
+.loadingModal button {
+  margin: 0 0 0 5px;
 }

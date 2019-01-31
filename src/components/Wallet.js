@@ -30,11 +30,15 @@ export default class Wallet extends React.Component {
     }
   };
 
-  componentWillUnmount() {
+  logOut = () => {
+    this.setOpenAlert("Logging out...", true);
     this.mounted = false;
     this.props.walletMeta.off();
     localStorage.clear();
-  }
+    setTimeout(() => {
+      this.goToPage();
+    }, 1000);
+  };
 
   goToPage = () => {
     this.props.goToPage();
@@ -167,9 +171,7 @@ export default class Wallet extends React.Component {
     if (paymentid !== "") {
       console.log("amount " + amount);
       console.log("paymentid " + paymentid);
-      this.setState(() => ({
-        tx_being_sent: true
-      }));
+      this.setState(() => ({ tx_being_sent: true }));
       this.sendTransaction({
         address: sendingAddress,
         amount: amount,
@@ -178,9 +180,7 @@ export default class Wallet extends React.Component {
       });
     } else {
       console.log("amount " + amount);
-      this.setState(() => ({
-        tx_being_sent: true
-      }));
+      this.setState(() => ({ tx_being_sent: true }));
       this.sendTransaction({
         address: sendingAddress,
         amount: amount,
@@ -252,10 +252,7 @@ export default class Wallet extends React.Component {
   render() {
     return (
       <div className="item-wrap wallet-wrap">
-        <Header
-          goToPage={this.goToPage}
-          toggleExitModal={this.toggleExitModal}
-        />
+        <Header logOut={this.logOut} toggleExitModal={this.toggleExitModal} />
         <div className="item-inner">
           <img
             src="images/create-new.png"
