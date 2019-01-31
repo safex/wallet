@@ -18,14 +18,14 @@ export default class LoadingModal extends React.Component {
     closeAlert(this);
   };
 
-  loadPreviousWallet = (e) => {
+  loadPreviousWallet = e => {
     e.preventDefault();
     let wallet = JSON.parse(localStorage.getItem("wallet"));
     let password = JSON.parse(localStorage.getItem("password"));
     let path = localStorage.getItem("wallet_path");
     let passwordInput = e.target.password.value;
 
-    if (passwordInput === '') {
+    if (passwordInput === "") {
       this.setOpenAlert("Enter password for your wallet", false);
       return false;
     }
@@ -46,7 +46,7 @@ export default class LoadingModal extends React.Component {
     this.setState({
       loading: true
     });
-  }
+  };
 
   render() {
     return (
@@ -58,23 +58,28 @@ export default class LoadingModal extends React.Component {
               : "modal loadingModal"
           }
         >
-          <form onSubmit={this.loadPreviousWallet} className={this.state.loading ? "hidden" : ""}>
+          <form
+            onSubmit={this.loadPreviousWallet}
+            className={this.state.loading ? "hidden" : ""}
+          >
             <label htmlFor="password">Enter password:</label>
-            <input name="password" type="password"></input>
+            <input name="password" type="password" />
             <button>Submit</button>
           </form>
-          <h3 className={this.state.loading ? "" : "hidden"}>Loading wallet file, please wait...</h3>
+          <h3 className={this.state.loading ? "" : "hidden"}>
+            Loading wallet file, please wait...
+          </h3>
+
+          <Alert
+            openAlert={this.state.alert}
+            alertText={this.state.alert_text}
+            alertCloseDisabled={this.state.alert_close_disabled}
+            closeAlert={this.setCloseAlert}
+          />
         </div>
 
         <div
           className={this.props.loadingModal ? "backdrop active" : "backdrop"}
-        />
-
-        <Alert
-          openAlert={this.state.alert}
-          alertText={this.state.alert_text}
-          alertCloseDisabled={this.state.alert_close_disabled}
-          closeAlert={this.setCloseAlert}
         />
       </div>
     );
