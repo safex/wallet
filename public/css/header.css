@@ -10,7 +10,7 @@ header .logo {
 .go-back-btn {
   position: absolute;
   top: -12px;
-  left: -10px;
+  left: 0;
   background: rgba(255, 255, 255, 0.3);
   padding: 0px 25px 1px;
   border: 0px none;
@@ -24,7 +24,7 @@ header .logo {
 }
 .buttons-wrap {
   position: absolute;
-  right: 0;
+  right: 10px;
   top: -3px;
 }
 .buttons-wrap button {

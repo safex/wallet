@@ -15,7 +15,7 @@
 }
 .wallet-inner-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  padding: 30px 20px 20px !important;
+  padding: 50px 20px 20px !important;
 }
 .wallet-inner-wrap.no-mnemonic {
   padding: 40px 20px 20px;
@@ -29,6 +29,18 @@
   left: 0;
   z-index: 2;
   width: 100%;
+}
+.wallet-inner-wrap .address-info {
+  text-align: center;
+  background: rgba(143, 253, 253, 0.62);
+  border: 0px none;
+  padding: 4px 12px 7px;
+  border-radius: 0px;
+  position: absolute;
+  right: 50px;
+}
+.wallet-inner-wrap .address-info img {
+  max-height: 18px;
 }
 .wallet-inner-wrap .rescan {
   text-align: center;
@@ -151,6 +163,7 @@
   padding: 0px;
   border-bottom: 1px solid #8ffdfd;
   margin-bottom: 7px;
+  border-radius: 0px;
 }
 .wallet-inner-wrap .btn {
   font-size: 24px !important;
@@ -160,6 +173,7 @@
   background: transparent;
   text-align: center;
   border: 0px none;
+  border-radius: 0px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 20px;
   padding: 0px;

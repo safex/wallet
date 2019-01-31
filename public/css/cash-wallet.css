@@ -1,6 +1,6 @@
 /* Options Screen */
 .intro-page-wrap {
-  padding: 0px 10px;
+  padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,6 +21,7 @@
   position: relative;
   display: flex;
   justify-content: space-between;
+  padding: 0 10px;
   -webkit-app-region: no-drag;
 }
 .options-wrap .options-inner .item {

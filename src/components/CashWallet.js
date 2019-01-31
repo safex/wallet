@@ -18,7 +18,10 @@ export default class CashWallet extends React.Component {
       wallet: null,
       local_wallet: JSON.parse(localStorage.getItem("wallet")),
       page: null,
-      config: { network: "mainnet", daemonAddress: "rpc.safex.io:17402" }
+      config: {
+        network: "mainnet",
+        daemonAddress: "rpc.safex.io:17402"
+      }
     };
   }
 
@@ -96,8 +99,8 @@ export default class CashWallet extends React.Component {
     let wallet = this.state.wallet_meta;
     wallet.setSeedLanguage("English");
     this.setWalletData(wallet);
-    this.setState({ page: "wallet" });
     this.setState({
+      page: "wallet",
       loading_modal: false
     });
   };
@@ -105,6 +108,10 @@ export default class CashWallet extends React.Component {
   setWalletData = wallet => {
     this.setState({
       wallet: {
+        filename: localStorage
+          .getItem("wallet_path")
+          .split("/")
+          .pop(),
         wallet_address: wallet.address(),
         spend_key: wallet.secretSpendKey(),
         view_key: wallet.secretViewKey(),
