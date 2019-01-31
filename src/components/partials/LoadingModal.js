@@ -85,7 +85,7 @@ export default class LoadingModal extends React.Component {
             >
               Cancel
             </button>
-            <button className="confirm-btn button-shine">Submit</button>
+            <button className="confirm-btn button-shine">Continue</button>
           </form>
           <h3 className={this.state.loading ? "" : "hidden"}>
             Loading wallet file, please wait...

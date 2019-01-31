@@ -16,22 +16,23 @@ export default class CashWallet extends React.Component {
     super(props);
     this.state = {
       wallet: null,
+      local_wallet: JSON.parse(localStorage.getItem("wallet")),
       page: null,
       config: { network: "mainnet", daemonAddress: "rpc.safex.io:17402" }
     };
   }
 
   componentDidMount() {
-    let wallet = JSON.parse(localStorage.getItem("wallet"));
-    if (wallet) {
-      this.toggleLoadingModal();
+    if (this.state.local_wallet) {
+      var i;
+      for (i = 0; i <= 1; i++) {
+        this.toggleLoadingModal();
+      }
     }
   }
 
   toggleLoadingModal = () => {
-    this.setState({
-      loading_modal: !this.state.loading_modal
-    });
+    this.setState({ loading_modal: !this.state.loading_modal });
   };
 
   toggleExitModal = () => {
@@ -52,7 +53,7 @@ export default class CashWallet extends React.Component {
     return Math.floor(parseFloat(balance) / 100000000) / 100;
   };
 
-  createWallet = (createWalletFunctionType, args, callback, wallet_loaded) => {
+  createWallet = (createWalletFunctionType, args, callback) => {
     console.log(createWalletFunctionType, args);
 
     try {
@@ -96,6 +97,7 @@ export default class CashWallet extends React.Component {
     wallet.setSeedLanguage("English");
     this.setWalletData(wallet);
     this.setState({ page: "wallet" });
+    this.toggleLoadingModal();
   };
 
   setWalletData = wallet => {
