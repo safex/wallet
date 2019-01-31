@@ -6,7 +6,12 @@ export default class LoadingModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
+      wallet_path: localStorage.getItem("wallet_path"),
+      filename: localStorage
+        .getItem("wallet_path")
+        .split("/")
+        .pop()
     };
   }
 
@@ -22,7 +27,7 @@ export default class LoadingModal extends React.Component {
     e.preventDefault();
     let wallet = JSON.parse(localStorage.getItem("wallet"));
     let password = JSON.parse(localStorage.getItem("password"));
-    let path = localStorage.getItem("wallet_path");
+    let path = this.state.wallet_path;
     let passwordInput = e.target.password.value;
 
     if (passwordInput === "") {
@@ -62,7 +67,9 @@ export default class LoadingModal extends React.Component {
             onSubmit={this.loadPreviousWallet}
             className={this.state.loading ? "hidden" : ""}
           >
-            <label htmlFor="password">Enter password:</label>
+            <label htmlFor="password">
+              Enter password for {this.state.filename}:
+            </label>
             <input name="password" type="password" />
             <button
               type="button"
