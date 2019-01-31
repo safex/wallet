@@ -327,6 +327,7 @@
 
 .loadingModal {
   width: 500px;
+  padding: 25px 20px 30px;
 }
 .loadingModal h3 {
   margin: 0 0 3px;
@@ -335,5 +336,8 @@
   border: 1px solid #327a9b;
 }
 .loadingModalWrap .alert {
-    width: calc(500px - 40px);
+  width: calc(500px - 40px);
+}
+.loadingModal p {
+  font-size: 20px;
 }

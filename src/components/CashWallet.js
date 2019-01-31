@@ -24,9 +24,7 @@ export default class CashWallet extends React.Component {
   componentDidMount() {
     let wallet = JSON.parse(localStorage.getItem("wallet"));
     if (wallet) {
-      setTimeout(() => {
-        this.toggleLoadingModal();
-      }, 300);
+      this.toggleLoadingModal();
     }
   }
 
@@ -206,9 +204,9 @@ export default class CashWallet extends React.Component {
                 </div>
               </div>
             </div>
-            <LoadingModal 
-              loadingModal={this.state.loading_modal} 
-              createWallet={this.createWallet} 
+            <LoadingModal
+              loadingModal={this.state.loading_modal}
+              createWallet={this.createWallet}
             />
             <ExitModal
               exitModal={this.state.exit_modal}
