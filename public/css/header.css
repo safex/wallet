@@ -2,7 +2,6 @@
 header {
   position: relative;
   text-align: center;
-  -webkit-app-region: drag;
 }
 header .logo {
   width: 134px;
@@ -19,7 +18,6 @@ header .logo {
   color: #fff;
   font-size: 18px;
   border-radius: 0px;
-  -webkit-app-region: no-drag;
 }
 .go-back-btn:hover {
   cursor: pointer;
@@ -28,7 +26,6 @@ header .logo {
   position: absolute;
   right: 0;
   top: -3px;
-  -webkit-app-region: no-drag;
 }
 .buttons-wrap button {
   -webkit-touch-callout: none; /* iOS Safari */

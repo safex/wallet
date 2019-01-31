@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  -webkit-app-region: drag;
 }
 .options-wrap {
   position: relative;
@@ -20,6 +21,7 @@
   position: relative;
   display: flex;
   justify-content: space-between;
+  -webkit-app-region: no-drag;
 }
 .options-wrap .options-inner .item {
   background: url(../images/option-item-bg.png) repeat-x top left;
