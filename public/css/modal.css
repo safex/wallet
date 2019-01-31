@@ -351,3 +351,20 @@
 .loadingModal button {
   margin: 0 0 0 5px;
 }
+
+.addressModal label {
+  text-transform: initial !important;
+  font-weight: 400 !important;
+  margin-bottom: 5px !important;
+  font-size: 18px !important;
+}
+.addressModal input,
+.addressModal textarea {
+  font-size: 18px !important;
+  padding: 5px !important;
+}
+.addressModal .pass-input {
+  border: 1px solid #327a9b !important;
+  text-align: left !important;
+  padding: 5px 10px !important;
+}

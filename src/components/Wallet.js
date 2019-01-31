@@ -2,6 +2,7 @@ import React from "react";
 import { closeApp } from "../utils/utils.js";
 import ExitModal from "./partials/ExitModal";
 import SendModal from "./partials/SendModal";
+import AddressModal from "./partials/AddressModal";
 import Alert from "./partials/Alert";
 import Header from "./partials/Header";
 import {
@@ -32,9 +33,11 @@ export default class Wallet extends React.Component {
 
   logOut = () => {
     this.setOpenAlert("Logging out...", true);
+    this.setState({ address_modal: false });
     this.mounted = false;
     this.props.walletMeta.off();
-    localStorage.clear();
+    localStorage.removeItem("wallet");
+    localStorage.removeItem("password");
     setTimeout(() => {
       this.goToPage();
     }, 1000);
@@ -171,7 +174,9 @@ export default class Wallet extends React.Component {
     if (paymentid !== "") {
       console.log("amount " + amount);
       console.log("paymentid " + paymentid);
-      this.setState(() => ({ tx_being_sent: true }));
+      this.setState(() => ({
+        tx_being_sent: true
+      }));
       this.sendTransaction({
         address: sendingAddress,
         amount: amount,
@@ -180,7 +185,9 @@ export default class Wallet extends React.Component {
       });
     } else {
       console.log("amount " + amount);
-      this.setState(() => ({ tx_being_sent: true }));
+      this.setState(() => ({
+        tx_being_sent: true
+      }));
       this.sendTransaction({
         address: sendingAddress,
         amount: amount,
@@ -249,6 +256,12 @@ export default class Wallet extends React.Component {
     closeSendPopup(this);
   };
 
+  toggleAddressModal = () => {
+    this.setState({
+      address_modal: !this.state.address_modal
+    });
+  };
+
   connectionError = () => {
     this.setOpenAlert(
       "Daemon connection error, please try again later ",
@@ -303,6 +316,13 @@ export default class Wallet extends React.Component {
                 <span>{this.props.wallet.blockchain_height}</span>
               </button>
               <button
+                className="button-shine address-info"
+                onClick={this.toggleAddressModal}
+                title="Address Info"
+              >
+                <img src="images/key.png" alt="rescan" />
+              </button>
+              <button
                 className="button-shine rescan"
                 onClick={this.rescanBalance}
                 title="Rescan"
@@ -311,39 +331,22 @@ export default class Wallet extends React.Component {
               </button>
             </div>
 
+            <label htmlFor="filename">Wallet File</label>
+            <input
+              type="text"
+              name="filename"
+              defaultValue={this.props.wallet.filename}
+              placeholder="filename"
+              readOnly
+            />
+
             <label htmlFor="address">Wallet Address</label>
             <input
               type="text"
               name="address"
               defaultValue={this.props.wallet.wallet_address}
               placeholder="address"
-            />
-
-            <label htmlFor="spend_key">Secret (Private) Spend Key</label>
-            <input
-              type="text"
-              name="spend_key"
-              defaultValue={this.props.wallet.spend_key}
-              placeholder="secret (private) spend key"
-            />
-
-            <label htmlFor="view_key">Secret (Private) View Key</label>
-            <input
-              type="text"
-              name="view_key"
-              defaultValue={this.props.wallet.view_key}
-              placeholder="secret (private) view key"
-            />
-
-            <label className={this.props.wallet.mnemonic ? "" : "hidden"}>
-              Wallet Mnemonic Seed
-            </label>
-            <textarea
-              name="mnemonic"
-              defaultValue={this.props.wallet.mnemonic}
-              placeholder="mnemonic seed for your wallet"
-              className={this.props.wallet.mnemonic ? "" : "hidden"}
-              rows="2"
+              readOnly
             />
 
             <div className="group-wrap">
@@ -401,6 +404,12 @@ export default class Wallet extends React.Component {
               txBeingSent={this.state.tx_being_sent}
               availableCash={this.props.wallet.unlocked_balance}
               availableTokens={this.props.wallet.unlocked_tokens}
+            />
+
+            <AddressModal
+              wallet={this.props.wallet}
+              addressModal={this.state.address_modal}
+              toggleAddressModal={this.toggleAddressModal}
             />
 
             <Alert
