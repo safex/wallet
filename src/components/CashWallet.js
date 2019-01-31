@@ -97,7 +97,9 @@ export default class CashWallet extends React.Component {
     wallet.setSeedLanguage("English");
     this.setWalletData(wallet);
     this.setState({ page: "wallet" });
-    this.toggleLoadingModal();
+    this.setState({
+      loading_modal: false
+    });
   };
 
   setWalletData = wallet => {
