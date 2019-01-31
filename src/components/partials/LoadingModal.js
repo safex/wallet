@@ -7,12 +7,19 @@ export default class LoadingModal extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      wallet_path: localStorage.getItem("wallet_path"),
-      filename: localStorage
-        .getItem("wallet_path")
-        .split("/")
-        .pop()
+      wallet_path: localStorage.getItem("wallet_path")
     };
+  }
+
+  componentDidMount() {
+    if (this.state.wallet_path) {
+      this.setState({
+        filename: localStorage
+          .getItem("wallet_path")
+          .split("/")
+          .pop()
+      });
+    }
   }
 
   setOpenAlert = (alert, disabled) => {
