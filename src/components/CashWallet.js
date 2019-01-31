@@ -242,6 +242,7 @@ export default class CashWallet extends React.Component {
             <LoadingModal
               loadingModal={this.state.loading_modal}
               createWallet={this.createWallet}
+              toggleLoadingModal={this.toggleLoadingModal}
             />
             <ExitModal
               exitModal={this.state.exit_modal}
