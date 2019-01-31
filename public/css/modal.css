@@ -332,6 +332,9 @@
 .loadingModal h3 {
   margin: 0;
 }
+.loadingModal label {
+  text-transform: initial;
+}
 .loadingModal input {
   border: 1px solid #327a9b;
 }
