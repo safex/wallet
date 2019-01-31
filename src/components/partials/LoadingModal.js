@@ -64,6 +64,13 @@ export default class LoadingModal extends React.Component {
           >
             <label htmlFor="password">Enter password:</label>
             <input name="password" type="password" />
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={this.props.toggleLoadingModal}
+            >
+              Cancel
+            </button>
             <button>Submit</button>
           </form>
           <h3 className={this.state.loading ? "" : "hidden"}>
