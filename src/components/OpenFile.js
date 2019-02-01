@@ -44,13 +44,15 @@ export default class OpenFile extends React.Component {
   };
 
   browseFile = () => {
-    var filename = "";
+    let filename = "";
     filename = dialog.showOpenDialog({});
-    console.log("filename " + filename);
 
-    this.setState(() => ({
-      wallet_path: filename
-    }));
+    if (filename !== undefined) {
+      this.setState(() => ({
+        wallet_path: filename
+      }));
+      console.log("filename " + filename);
+    }
   };
 
   openFile = e => {
@@ -101,6 +103,7 @@ export default class OpenFile extends React.Component {
         <Header
           goToPage={this.goToPage}
           toggleExitModal={this.toggleExitModal}
+          alertCloseDisabled={this.state.alert_close_disabled}
         />
         <div className="item-inner">
           <img
