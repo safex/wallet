@@ -1,6 +1,5 @@
 import React from "react";
-import { addClass, verify_safex_address } from "../utils/utils.js";
-
+import { verify_safex_address } from "../utils/utils.js";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 

@@ -1,6 +1,7 @@
 import React from "react";
 const remote = window.require("electron").remote;
 import packageJson from "../../../package";
+import { closeApp } from "../../utils/utils.js";
 
 export default class Header extends React.Component {
   minimizeApp = () => {
@@ -16,6 +17,10 @@ export default class Header extends React.Component {
     } else {
       window.maximize();
     }
+  };
+
+  setCloseApp = () => {
+    closeApp(this);
   };
 
   render() {
@@ -50,7 +55,7 @@ export default class Header extends React.Component {
             <span />
           </button>
           <button
-            onClick={this.props.toggleExitModal}
+            onClick={this.setCloseApp}
             className="close-app-btn button-shine"
             title="Exit"
             disabled={this.props.alertCloseDisabled ? "disabled" : ""}

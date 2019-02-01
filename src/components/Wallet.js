@@ -24,19 +24,8 @@ export default class Wallet extends React.Component {
 
   componentWillUnmount() {
     this.mounted = false;
-  }
-
-  logOut = () => {
-    this.props.setOpenAlert("Logging out...", true);
-    this.setState({ address_modal: false });
-    this.mounted = false;
     this.props.walletMeta.off();
-    localStorage.removeItem("wallet");
-    localStorage.removeItem("password");
-    setTimeout(() => {
-      this.goToPage();
-    }, 1000);
-  };
+  }
 
   roundBalanceAmount = balance => {
     return Math.floor(parseFloat(balance) / 100000000) / 100;

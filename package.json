@@ -47,7 +47,6 @@
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^15.6.2",
     "react-switch": "^4.0.1",
-    "react-toggle-component": "^1.0.5",
     "safex-addressjs": "git+https://github.com/safex/safex_addressjs.git",
     "safex-nodejs-libwallet": "git+https://github.com/safex/safex-nodejs-libwallet.git"
   },

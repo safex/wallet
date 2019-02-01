@@ -86,22 +86,33 @@ p:hover {
 }
 
 .toggle-wrap {
-  padding: 5px 0;
+  padding: 0 0 5px;
   text-align: center;
 }
-.toggle-wrap .net-label {
+.toggle-wrap label {
   display: inline;
-  position: relative;
-  top: 2px;
-  margin-right: 12px;
+  margin-right: 10px;
 }
-.rsbc-switch-button>label:first-child,
-.rsbc-switch-button label+label {
-  display: inline !important;
+.toggle-wrap span {
+  display: inline;
+  text-align: left;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 1);
+  margin-bottom: 0;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: capitalize;
 }
-.rsbc-switch-button.rsbc-switch-button-flat-round input[type=checkbox]+label {
-  top: -3px;
+.toggle-wrap .react-switch {
+  margin: 0 3px;
+  top: 7px;
 }
+.toggle-wrap .react-switch-handle {
+  height: 25px !important;
+  width: 25px !important;
+  top: 2px !important;
+}
+    
 
 .button-shine {
   position: relative;
@@ -115,6 +126,7 @@ p:hover {
   transition: all 0.2s ease-in;
 }
 .button-shine:hover {
+  cursor: pointer;
   color: white;
   box-shadow: 0 0 25px 0 rgba(255, 214, 22, 0.8);
   -webkit-transition: all 0.2s ease-out;

@@ -3,10 +3,9 @@ import CreateNew from "./CreateNew";
 import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
 import RecoverFromMnemonic from "./RecoverFromMnemonic";
-import ExitModal from "./partials/ExitModal";
 import LoadingModal from "./partials/LoadingModal";
 import Header from "./partials/Header";
-import { closeApp, openAlert, closeAlert } from "../utils/utils.js";
+import { openAlert, closeAlert } from "../utils/utils.js";
 import Wallet from "./Wallet";
 import Alert from "./partials/Alert";
 import Switch from "react-switch";
@@ -43,16 +42,6 @@ export default class CashWallet extends React.Component {
     });
   };
 
-  toggleExitModal = () => {
-    this.setState({
-      exit_modal: !this.state.exit_modal
-    });
-  };
-
-  setCloseApp = () => {
-    closeApp(this);
-  };
-
   goToPage = page => {
     if (this.state.page !== "wallet") {
       this.setState({ page });
@@ -63,6 +52,7 @@ export default class CashWallet extends React.Component {
       localStorage.removeItem("password");
       setTimeout(() => {
         this.setState({ page });
+        this.setCloseAlert();
       }, 1000);
     }
   };
@@ -183,7 +173,17 @@ export default class CashWallet extends React.Component {
                 <Switch
                   checked={this.state.network}
                   onChange={this.toggleNetwork}
-                  id="normal-switch"
+                  onColor="#86d3ff"
+                  onHandleColor="#2693e6"
+                  handleDiameter={30}
+                  uncheckedIcon={false}
+                  checkedIcon={false}
+                  boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                  activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                  height={20}
+                  width={48}
+                  className="react-switch"
+                  id="material-switch"
                 />
                 <span>Mainnet</span>
               </div>
@@ -197,11 +197,6 @@ export default class CashWallet extends React.Component {
           alertText={this.state.alert_text}
           alertCloseDisabled={this.state.alert_close_disabled}
           closeAlert={this.setCloseAlert}
-        />
-        <ExitModal
-          exitModal={this.state.exit_modal}
-          closeExitModal={this.toggleExitModal}
-          closeApp={this.setCloseApp}
         />
       </div>
     );
@@ -222,7 +217,7 @@ export default class CashWallet extends React.Component {
 
     switch (this.state.page) {
       case "wallet":
-        title = "Wallet";
+        title = "Wallet File";
         icon = "images/create-new.png";
         page = (
           <Wallet
@@ -236,7 +231,7 @@ export default class CashWallet extends React.Component {
         );
         break;
       case "create-new":
-        title = "Create New";
+        title = "Create New Wallet File";
         icon = "images/create-new.png";
         page = (
           <CreateNew
@@ -249,8 +244,8 @@ export default class CashWallet extends React.Component {
         );
         break;
       case "create-from-keys":
-        title = "Create From Keys";
-        icon = "";
+        title = "Create New Wallet From Keys";
+        icon = "images/new-from-keys.png";
         page = (
           <CreateFromKeys
             goToPage={this.goToPage}
@@ -262,8 +257,8 @@ export default class CashWallet extends React.Component {
         );
         break;
       case "open-file":
-        title = "Open File";
-        icon = "";
+        title = "Open Wallet File";
+        icon = "images/open-wallet-file.png";
         page = (
           <OpenFile
             goToPage={this.goToPage}
@@ -275,8 +270,8 @@ export default class CashWallet extends React.Component {
         );
         break;
       case "recover-from-mnemonic":
-        title = "Recover From Mnemonic";
-        icon = "";
+        title = "Recover Wallet From Mnemonic Seed";
+        icon = "images/mnemonic.png";
         page = (
           <RecoverFromMnemonic
             goToPage={this.goToPage}
@@ -330,11 +325,6 @@ export default class CashWallet extends React.Component {
               loadingModal={this.state.loading_modal}
               createWallet={this.createWallet}
               toggleLoadingModal={this.toggleLoadingModal}
-            />
-            <ExitModal
-              exitModal={this.state.exit_modal}
-              closeExitModal={this.toggleExitModal}
-              closeApp={this.setCloseApp}
             />
           </div>
         );
