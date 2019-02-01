@@ -23,13 +23,13 @@
   font-style: normal;
 }
 @font-face {
-  font-family: "Atrament", sans-serif;
+  font-family: "Atrament";
   src: url("../fonts/Atrament-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
-  font-family: "Atrament-Bold", sans-serif;
+  font-family: "Atrament-Bold";
   src: url("../fonts/Atrament-Regular.woff") format("woff");
   font-weight: 700;
   font-style: normal;
