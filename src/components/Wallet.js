@@ -272,7 +272,11 @@ export default class Wallet extends React.Component {
   render() {
     return (
       <div className="item-wrap wallet-wrap">
-        <Header logOut={this.logOut} toggleExitModal={this.toggleExitModal} />
+        <Header
+          logOut={this.logOut}
+          toggleExitModal={this.toggleExitModal}
+          alertCloseDisabled={this.state.alert_close_disabled}
+        />
         <div className="item-inner">
           <img
             src="images/create-new.png"

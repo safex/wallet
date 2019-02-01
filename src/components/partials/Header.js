@@ -26,12 +26,14 @@ export default class Buttons extends React.Component {
           className={
             this.props.goToPage ? "go-back-btn button-shine" : "hidden"
           }
+          disabled={this.props.alertCloseDisabled ? "disabled" : ""}
         >
           Back
         </button>
         <button
           onClick={this.props.logOut}
           className={this.props.logOut ? "go-back-btn button-shine" : "hidden"}
+          disabled={this.props.alertCloseDisabled ? "disabled" : ""}
         >
           Log out
         </button>
@@ -42,6 +44,7 @@ export default class Buttons extends React.Component {
             onClick={this.minimizeApp}
             className="minimize-app-btn button-shine"
             title="Minimize"
+            disabled={this.props.alertCloseDisabled ? "disabled" : ""}
           >
             _
           </button>
@@ -49,6 +52,7 @@ export default class Buttons extends React.Component {
             onClick={this.maximizeApp}
             className="maximize-app-btn button-shine"
             title="Maximize"
+            disabled={this.props.alertCloseDisabled ? "disabled" : ""}
           >
             <span />
           </button>
@@ -56,6 +60,7 @@ export default class Buttons extends React.Component {
             onClick={this.props.toggleExitModal}
             className="close-app-btn button-shine"
             title="Exit"
+            disabled={this.props.alertCloseDisabled ? "disabled" : ""}
           >
             X
           </button>

@@ -126,6 +126,7 @@ export default class CreateFromKeys extends React.Component {
         <Header
           goToPage={this.goToPage}
           toggleExitModal={this.toggleExitModal}
+          alertCloseDisabled={this.state.alert_close_disabled}
         />
         <div className="item-inner">
           <img
