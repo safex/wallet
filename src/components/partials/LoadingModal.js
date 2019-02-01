@@ -22,7 +22,7 @@ export default class LoadingModal extends React.Component {
     }
   }
 
-  setOpenAlert = (alert, disabled) => {
+  setOpenAlert = (alert, disabled = false) => {
     openAlert(this, alert, disabled);
   };
 
@@ -38,11 +38,11 @@ export default class LoadingModal extends React.Component {
     let passwordInput = e.target.password.value;
 
     if (passwordInput === "") {
-      this.setOpenAlert("Enter password for your wallet", false);
+      this.props.setOpenAlert("Enter password for your wallet");
       return false;
     }
     if (passwordInput !== password) {
-      this.setOpenAlert("Wrong password", false);
+      this.props.setOpenAlert("Wrong password");
       return false;
     }
     this.props.createWallet(
@@ -101,6 +101,7 @@ export default class LoadingModal extends React.Component {
 
         <div
           className={this.props.loadingModal ? "backdrop active" : "backdrop"}
+          onClick={this.props.toggleLoadingModal}
         />
       </div>
     );

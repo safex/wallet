@@ -2,7 +2,7 @@ import React from "react";
 const remote = window.require("electron").remote;
 import packageJson from "../../../package";
 
-export default class Buttons extends React.Component {
+export default class Header extends React.Component {
   minimizeApp = () => {
     let window = remote.getCurrentWindow();
     window.minimize();
@@ -29,13 +29,6 @@ export default class Buttons extends React.Component {
           disabled={this.props.alertCloseDisabled ? "disabled" : ""}
         >
           Back
-        </button>
-        <button
-          onClick={this.props.logOut}
-          className={this.props.logOut ? "go-back-btn button-shine" : "hidden"}
-          disabled={this.props.alertCloseDisabled ? "disabled" : ""}
-        >
-          Log out
         </button>
         <img src="images/logo.png" className="logo" alt="Logo" />
         <p id="version">{packageJson.version}</p>

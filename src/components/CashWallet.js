@@ -6,8 +6,10 @@ import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import ExitModal from "./partials/ExitModal";
 import LoadingModal from "./partials/LoadingModal";
 import Header from "./partials/Header";
-import { closeApp } from "../utils/utils.js";
+import { closeApp, openAlert, closeAlert } from "../utils/utils.js";
 import Wallet from "./Wallet";
+import Alert from "./partials/Alert";
+import Switch from "react-switch";
 
 const safex = window.require("safex-nodejs-libwallet");
 
@@ -18,10 +20,11 @@ export default class CashWallet extends React.Component {
       wallet: null,
       local_wallet: JSON.parse(localStorage.getItem("wallet")),
       page: null,
-      config: {
-        network: "mainnet",
-        daemonAddress: "rpc.safex.io:17402"
-      }
+      config: { network: "mainnet", daemonAddress: "rpc.safex.io:17402" },
+      alert: false,
+      alert_text: "",
+      alert_close_disabled: false,
+      network: true
     };
   }
 
@@ -35,7 +38,9 @@ export default class CashWallet extends React.Component {
   }
 
   toggleLoadingModal = () => {
-    this.setState({ loading_modal: !this.state.loading_modal });
+    this.setState({
+      loading_modal: !this.state.loading_modal
+    });
   };
 
   toggleExitModal = () => {
@@ -49,7 +54,17 @@ export default class CashWallet extends React.Component {
   };
 
   goToPage = page => {
-    this.setState({ page });
+    if (this.state.page !== "wallet") {
+      this.setState({ page });
+    } else {
+      this.setOpenAlert("Logging out...", true);
+      this.setState({ address_modal: false });
+      localStorage.removeItem("wallet");
+      localStorage.removeItem("password");
+      setTimeout(() => {
+        this.setState({ page });
+      }, 1000);
+    }
   };
 
   roundBalanceAmount = balance => {
@@ -133,84 +148,145 @@ export default class CashWallet extends React.Component {
     });
   };
 
-  networkSelect = () => {
-    if (this.state.config.network === 'mainnet') {
-      this.setState({
-        config: {
-          network: "testnet",
-          daemonAddress: "192.168.1.22:29393"
-        }
-      });
-    } else {
-      this.setState({
-        config: {
-          network: "mainnet",
-          daemonAddress: "rpc.safex.io:17402"
-        }
-      });
-    }
-  }
+  toggleNetwork = () => {
+    this.setState(() => ({
+      network: !this.state.network,
+      config: this.state.network
+        ? {
+            network: "testnet",
+            daemonAddress: "192.168.1.22:29393"
+          }
+        : {
+            network: "mainnet",
+            daemonAddress: "rpc.safex.io:17402"
+          }
+    }));
+  };
 
-  resetNetworkSelect = () => {
-    this.setState({
-      config: {
-        network: "mainnet",
-        daemonAddress: "rpc.safex.io:17402"
-      }
-    });
-  }
+  renderPageWrapper = (title, page, icon) => {
+    return (
+      <div className="item-wrap create-new-wrap">
+        <Header
+          goToPage={this.goToPage}
+          toggleExitModal={this.toggleExitModal}
+          alertCloseDisabled={this.state.alert_close_disabled}
+        />
+        <div className="item-inner">
+          <img src={icon} className="item-pic" role="presentation" />
+          <h2>{title}</h2>
+          <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
+            {page && this.state.page !== "wallet" && (
+              <div className="toggle-wrap">
+                <label className="net-label">Network Select:</label>
+
+                <span>Testnet</span>
+                <Switch
+                  checked={this.state.network}
+                  onChange={this.toggleNetwork}
+                  id="normal-switch"
+                />
+                <span>Mainnet</span>
+              </div>
+            )}
+            {page}
+          </div>
+        </div>
+
+        <Alert
+          openAlert={this.state.alert}
+          alertText={this.state.alert_text}
+          alertCloseDisabled={this.state.alert_close_disabled}
+          closeAlert={this.setCloseAlert}
+        />
+        <ExitModal
+          exitModal={this.state.exit_modal}
+          closeExitModal={this.toggleExitModal}
+          closeApp={this.setCloseApp}
+        />
+      </div>
+    );
+  };
+
+  setOpenAlert = (alert, disabled) => {
+    openAlert(this, alert, disabled);
+  };
+
+  setCloseAlert = () => {
+    closeAlert(this);
+  };
 
   render() {
+    let page = null;
+    let title = null;
+    let icon = null;
+
     switch (this.state.page) {
       case "wallet":
-        return (
+        title = "Wallet";
+        icon = "images/create-new.png";
+        page = (
           <Wallet
             goToPage={this.goToPage}
             wallet={this.state.wallet}
             walletMeta={this.state.wallet_meta}
             setWalletData={this.setWalletData}
+            setOpenAlert={this.setOpenAlert}
+            setCloseAlert={this.setCloseAlert}
           />
         );
+        break;
       case "create-new":
-        return (
+        title = "Create New";
+        icon = "images/create-new.png";
+        page = (
           <CreateNew
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
-            networkSelect={this.networkSelect}
-            resetNetworkSelect={this.resetNetworkSelect}
+            setOpenAlert={this.setOpenAlert}
+            setCloseAlert={this.setCloseAlert}
           />
         );
+        break;
       case "create-from-keys":
-        return (
+        title = "Create From Keys";
+        icon = "";
+        page = (
           <CreateFromKeys
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
-            networkSelect={this.networkSelect}
-            resetNetworkSelect={this.resetNetworkSelect}
+            setOpenAlert={this.setOpenAlert}
+            setCloseAlert={this.setCloseAlert}
           />
         );
+        break;
       case "open-file":
-        return (
+        title = "Open File";
+        icon = "";
+        page = (
           <OpenFile
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
-            networkSelect={this.networkSelect}
-            resetNetworkSelect={this.resetNetworkSelect}
+            setOpenAlert={this.setOpenAlert}
+            setCloseAlert={this.setCloseAlert}
           />
         );
+        break;
       case "recover-from-mnemonic":
-        return (
+        title = "Recover From Mnemonic";
+        icon = "";
+        page = (
           <RecoverFromMnemonic
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
-            networkSelect={this.networkSelect}
-            resetNetworkSelect={this.resetNetworkSelect}
+            setOpenAlert={this.setOpenAlert}
+            setCloseAlert={this.setCloseAlert}
           />
         );
+        break;
       default:
         return (
           <div className="intro-page-wrap">
@@ -263,5 +339,7 @@ export default class CashWallet extends React.Component {
           </div>
         );
     }
+
+    return this.renderPageWrapper(title, page, icon);
   }
 }

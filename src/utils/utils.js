@@ -84,6 +84,11 @@ function closeApp() {
   window.close();
 }
 
+/**
+ * Add class
+ */
+const addClass = (condition, className) => (condition ? ` ${className} ` : "");
+
 module.exports = {
   verify_safex_address,
   structureSafexKeys,
@@ -91,5 +96,6 @@ module.exports = {
   closeAlert,
   openSendPopup,
   closeSendPopup,
-  closeApp
+  closeApp,
+  addClass
 };
