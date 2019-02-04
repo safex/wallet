@@ -1,6 +1,6 @@
 import React from "react";
 import Alert from "./Alert";
-import { openAlert, closeAlert } from "../../utils/utils.js";
+import { openAlert, closeAlert, addClass } from "../../utils/utils.js";
 
 export default class LoadingModal extends React.Component {
   constructor(props) {
@@ -65,9 +65,7 @@ export default class LoadingModal extends React.Component {
       <div className="loadingModalWrap">
         <div
           className={
-            this.props.loadingModal
-              ? "modal loadingModal active"
-              : "modal loadingModal"
+            "modal loadingModal" + addClass(this.props.loadingModal, "active")
           }
         >
           <form
@@ -100,7 +98,7 @@ export default class LoadingModal extends React.Component {
         </div>
 
         <div
-          className={this.props.loadingModal ? "backdrop active" : "backdrop"}
+          className={"backdrop" + addClass(this.props.loadingModal, "active")}
           onClick={this.props.toggleLoadingModal}
         />
       </div>

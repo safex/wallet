@@ -1,4 +1,5 @@
 import React from "react";
+import { addClass } from "../../utils/utils.js";
 
 export default class SendModal extends React.Component {
   render() {
@@ -6,7 +7,7 @@ export default class SendModal extends React.Component {
       <div>
         <div
           className={
-            this.props.sendModal ? "modal sendModal active" : "modal sendModal"
+            "modal sendModal" + addClass(this.props.sendModal, "active")
           }
         >
           <div className="sendModalInner">
@@ -58,7 +59,7 @@ export default class SendModal extends React.Component {
         </div>
 
         <div
-          className={this.props.sendModal ? "backdrop active" : "backdrop"}
+          className={"backdrop" + addClass(this.props.sendModal, "active")}
           onClick={this.props.closeSendPopup}
         />
       </div>

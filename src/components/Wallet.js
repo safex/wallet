@@ -231,7 +231,7 @@ export default class Wallet extends React.Component {
   };
 
   connectionError = () => {
-    this.setOpenAlert(
+    this.props.setOpenAlert(
       "Daemon connection error, please try again later ",
       false
     );
@@ -303,7 +303,7 @@ export default class Wallet extends React.Component {
             <p className="display-value">{this.props.wallet.pending_balance}</p>
 
             <label htmlFor="unlocked_balance">Available Safex Cash</label>
-            <p className="display-value">
+            <p className="display-value green-field">
               {this.props.wallet.unlocked_balance}
             </p>
             <button
@@ -323,7 +323,9 @@ export default class Wallet extends React.Component {
             <p className="display-value">{this.props.wallet.pending_tokens}</p>
 
             <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
-            <p className="display-value">{this.props.wallet.unlocked_tokens}</p>
+            <p className="display-value green-field">
+              {this.props.wallet.unlocked_tokens}
+            </p>
 
             <button
               className="btn button-shine"

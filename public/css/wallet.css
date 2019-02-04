@@ -216,6 +216,12 @@
   border-bottom: 1px solid #8ffdfd;
   margin-bottom: 7px;
 }
+.wallet-inner-wrap .green-field {
+  color: rgba(14, 200, 193, 1);
+}
+.wallet-inner-wrap .yellow-field {
+  color: rgba(255, 214, 22, 0.8);
+}
 .login-wrap .btn,
 .wallet-inner-wrap .btn {
   font-size: 25px;

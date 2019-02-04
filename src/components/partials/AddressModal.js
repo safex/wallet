@@ -1,6 +1,6 @@
 import React from "react";
 import Alert from "./Alert";
-import { openAlert, closeAlert } from "../../utils/utils.js";
+import { openAlert, closeAlert, addClass } from "../../utils/utils.js";
 
 export default class AddressModal extends React.Component {
   constructor(props) {
@@ -49,9 +49,7 @@ export default class AddressModal extends React.Component {
       <div className="addressModalWrap">
         <div
           className={
-            this.props.addressModal
-              ? "modal addressModal active"
-              : "modal addressModal"
+            "modal addressModal" + addClass(this.props.addressModal, "active")
           }
         >
           <span className="close" onClick={this.closeAddressModal}>
@@ -102,7 +100,7 @@ export default class AddressModal extends React.Component {
               defaultValue={this.props.wallet.mnemonic}
               placeholder="mnemonic seed for your wallet"
               className={this.props.wallet.mnemonic ? "" : "hidden"}
-              rows="2"
+              rows="3"
             />
           </div>
 

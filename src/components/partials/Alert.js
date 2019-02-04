@@ -1,10 +1,11 @@
 import React from "react";
+import { addClass } from "../../utils/utils.js";
 
 export default class Alert extends React.Component {
   render() {
     return (
       <div>
-        <div className={this.props.openAlert ? "alert active" : "alert"}>
+        <div className={"alert" + addClass(this.props.openAlert, "active")}>
           <div className="mainAlertPopupInner">
             <p className={this.props.alertCloseDisabled ? "disabled" : ""}>
               {this.props.alertText}
@@ -20,9 +21,7 @@ export default class Alert extends React.Component {
         </div>
 
         <div
-          className={
-            this.props.openAlert ? "alertBackdrop active" : "alertBackdrop"
-          }
+          className={"alertBackdrop" + addClass(this.props.openAlert, "active")}
           onClick={this.props.alertCloseDisabled ? "" : this.props.closeAlert}
         />
       </div>

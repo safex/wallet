@@ -98,7 +98,6 @@ p:hover {
   text-align: left;
   font-size: 20px;
   color: rgba(255, 255, 255, 1);
-  margin-bottom: 0;
   font-weight: 600;
   line-height: 1.2;
   text-transform: capitalize;
@@ -112,7 +111,6 @@ p:hover {
   width: 25px !important;
   top: 2px !important;
 }
-    
 
 .button-shine {
   position: relative;
