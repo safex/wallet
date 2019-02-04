@@ -29,30 +29,6 @@ function structureSafexKeys(spend, view) {
 }
 
 /**
- * Open Alert Popup
- * @param alert
- * @param alert_state
- * @param disabled
- */
-function openAlert(target, alert, disabled) {
-  target.setState({
-    alert: true,
-    alert_text: alert,
-    alert_close_disabled: disabled
-  });
-}
-
-/**
- * Close Alert Popup
- */
-function closeAlert(target) {
-  target.setState({
-    alert: false,
-    alert_close_disabled: false
-  });
-}
-
-/**
  * Open Send Popup
  */
 function openSendPopup(target, send_cash_or_token) {
@@ -89,13 +65,47 @@ function closeApp() {
  */
 const addClass = (condition, className) => (condition ? ` ${className} ` : "");
 
-module.exports = {
+/**
+ * Open Modal
+ * @param target
+ * @param modal_type
+ * @param alert
+ * @param disabled
+ * @param send_cash_or_token
+ */
+function openModal(target, modal_type, alert, disabled, send_cash_or_token) {
+  target.setState({
+    modal: true,
+    [modal_type]: true,
+    alert_text: alert,
+    send_cash_or_token: send_cash_or_token,
+    alert_close_disabled: disabled
+  });
+}
+
+/**
+ * Close Modal
+ */
+function closeModal(target) {
+  target.setState({
+    modal: false
+  });
+  setTimeout(() => {
+    target.setState({
+      loading_modal: false,
+      alert: false,
+      loaded: false
+    });
+  }, 300);
+}
+
+export {
   verify_safex_address,
   structureSafexKeys,
-  openAlert,
-  closeAlert,
   openSendPopup,
   closeSendPopup,
   closeApp,
-  addClass
+  addClass,
+  openModal,
+  closeModal
 };

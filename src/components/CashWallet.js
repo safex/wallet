@@ -13,7 +13,6 @@ const safex = window.require("safex-nodejs-libwallet");
 
 export default class CashWallet extends React.Component {
   constructor(props) {
-    console.error(process.env.REACT_APP_TEST);
     super(props);
     this.state = {
       wallet: null,

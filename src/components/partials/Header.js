@@ -1,5 +1,4 @@
 import React from "react";
-// import packageJson from "../../../package";
 import { closeApp } from "../../utils/utils.js";
 
 const remote = window.require("electron").remote;
@@ -25,9 +24,6 @@ export default class Header extends React.Component {
   };
 
   render() {
-    console.error(process.env);
-    // console.error(remote.app.getVersion());
-
     return (
       <header>
         <button
@@ -37,10 +33,10 @@ export default class Header extends React.Component {
           }
           disabled={this.props.alertCloseDisabled ? "disabled" : ""}
         >
-          Back
+          {this.props.page === "wallet" ? "Log out" : "Back"}
         </button>
         <img src="images/logo.png" className="logo" alt="Logo" />
-        {/* <p id="version">{packageJson.version}</p> */}
+        <p id="version">{remote.app.getVersion()}</p>
         <div className="buttons-wrap">
           <button
             onClick={this.minimizeApp}
