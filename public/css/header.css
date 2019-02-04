@@ -2,6 +2,7 @@
 header {
   position: relative;
   text-align: center;
+  -webkit-app-region: drag;
 }
 header .logo {
   width: 134px;

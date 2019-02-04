@@ -6,12 +6,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  -webkit-app-region: drag;
 }
 .item-wrap .item-inner {
   display: block;
   position: relative;
   height: 577px;
+  -webkit-app-region: drag;
 }
 .item-pic {
   position: absolute;
