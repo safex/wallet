@@ -1,6 +1,5 @@
 import React from "react";
 import SendModal from "./partials/SendModal";
-import AddressModal from "./partials/AddressModal";
 import { openSendPopup, closeSendPopup, addClass } from "../utils/utils.js";
 
 export default class Wallet extends React.Component {
@@ -37,7 +36,7 @@ export default class Wallet extends React.Component {
       .store()
       .then(() => {
         console.log("Wallet stored");
-        this.setCloseAlert();
+        this.props.closeModal();
       })
       .catch(e => {
         console.log("Unable to store wallet: " + e);
@@ -55,7 +54,7 @@ export default class Wallet extends React.Component {
     wallet
       .store()
       .then(() => {
-        this.props.setCloseAlert();
+        this.props.closeModal();
         console.log("Wallet stored");
       })
       .catch(e => {
@@ -104,7 +103,7 @@ export default class Wallet extends React.Component {
       setTimeout(() => {
         console.log("Rescan setting callbacks");
         this.props.setWalletData(this.props.walletMeta);
-        this.setCloseAlert();
+        this.props.closeModal();
         wallet
           .store()
           .then(() => {
@@ -224,12 +223,6 @@ export default class Wallet extends React.Component {
     closeSendPopup(this);
   };
 
-  toggleAddressModal = () => {
-    this.setState({
-      address_modal: !this.state.address_modal
-    });
-  };
-
   connectionError = () => {
     this.props.setOpenAlert(
       "Daemon connection error, please try again later ",
@@ -264,7 +257,7 @@ export default class Wallet extends React.Component {
           </button>
           <button
             className="button-shine address-info"
-            onClick={this.toggleAddressModal}
+            onClick={this.props.setOpenAddressModal}
             title="Address Info"
           >
             <img src="images/key.png" alt="rescan" />
@@ -348,12 +341,6 @@ export default class Wallet extends React.Component {
           txBeingSent={this.state.tx_being_sent}
           availableCash={this.props.wallet.unlocked_balance}
           availableTokens={this.props.wallet.unlocked_tokens}
-        />
-
-        <AddressModal
-          wallet={this.props.wallet}
-          addressModal={this.state.address_modal}
-          toggleAddressModal={this.toggleAddressModal}
         />
       </div>
     );

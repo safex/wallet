@@ -3,17 +3,17 @@ import CreateNew from "./CreateNew";
 import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
 import RecoverFromMnemonic from "./RecoverFromMnemonic";
-import LoadingModal from "./partials/LoadingModal";
+import Modal from "./partials/Modal";
 import Header from "./partials/Header";
-import { openAlert, closeAlert } from "../utils/utils.js";
+import { openModal, closeModal } from "../utils/utils.js";
 import Wallet from "./Wallet";
-import Alert from "./partials/Alert";
 import Switch from "react-switch";
 
 const safex = window.require("safex-nodejs-libwallet");
 
 export default class CashWallet extends React.Component {
   constructor(props) {
+    console.error(process.env.REACT_APP_TEST);
     super(props);
     this.state = {
       wallet: null,
@@ -31,15 +31,25 @@ export default class CashWallet extends React.Component {
     if (this.state.local_wallet) {
       var i;
       for (i = 0; i <= 1; i++) {
-        this.toggleLoadingModal();
+        this.setOpenModal("loading_modal", "", false, null);
       }
     }
   }
 
-  toggleLoadingModal = () => {
-    this.setState({
-      loading_modal: !this.state.loading_modal
-    });
+  setOpenModal = (modal_type, alert, disabled, send_cash_or_token) => {
+    openModal(this, modal_type, alert, disabled, send_cash_or_token);
+  };
+
+  setCloseModal = () => {
+    closeModal(this);
+  };
+
+  setOpenAlert = (alert, disabled) => {
+    this.setOpenModal("alert", alert, disabled, null);
+  };
+
+  setOpenAddressModal = () => {
+    this.setOpenModal("address_modal", "", false, null);
   };
 
   goToPage = page => {
@@ -52,7 +62,7 @@ export default class CashWallet extends React.Component {
       localStorage.removeItem("password");
       setTimeout(() => {
         this.setState({ page });
-        this.setCloseAlert();
+        this.setCloseModal();
       }, 1000);
     }
   };
@@ -144,7 +154,7 @@ export default class CashWallet extends React.Component {
       config: this.state.network
         ? {
             network: "testnet",
-            daemonAddress: "192.168.1.22:29393"
+            daemonAddress: "192.168.19.198:29393"
           }
         : {
             network: "mainnet",
@@ -158,7 +168,6 @@ export default class CashWallet extends React.Component {
       <div className="item-wrap create-new-wrap">
         <Header
           goToPage={this.goToPage}
-          toggleExitModal={this.toggleExitModal}
           alertCloseDisabled={this.state.alert_close_disabled}
         />
         <div className="item-inner">
@@ -191,23 +200,22 @@ export default class CashWallet extends React.Component {
             {page}
           </div>
         </div>
-
-        <Alert
+        <Modal
+          modal={this.state.modal}
+          wallet={this.state.wallet}
+          loadingModal={this.state.loading_modal}
+          createWallet={this.createWallet}
+          closeModal={this.setCloseModal}
+          addressModal={this.state.address_modal}
+          openModal={this.setOpenModal}
           openAlert={this.state.alert}
+          setOpenAlert={this.setOpenAlert}
+          closeAlert={this.setCloseAlert}
           alertText={this.state.alert_text}
           alertCloseDisabled={this.state.alert_close_disabled}
-          closeAlert={this.setCloseAlert}
         />
       </div>
     );
-  };
-
-  setOpenAlert = (alert, disabled) => {
-    openAlert(this, alert, disabled);
-  };
-
-  setCloseAlert = () => {
-    closeAlert(this);
   };
 
   render() {
@@ -226,7 +234,8 @@ export default class CashWallet extends React.Component {
             walletMeta={this.state.wallet_meta}
             setWalletData={this.setWalletData}
             setOpenAlert={this.setOpenAlert}
-            setCloseAlert={this.setCloseAlert}
+            setOpenAddressModal={this.setOpenAddressModal}
+            closeModal={this.setCloseModal}
           />
         );
         break;
@@ -285,7 +294,7 @@ export default class CashWallet extends React.Component {
       default:
         return (
           <div className="intro-page-wrap">
-            <Header toggleExitModal={this.toggleExitModal} />
+            <Header />
             <div className="options-wrap">
               <div className="options-inner">
                 <div
@@ -321,10 +330,19 @@ export default class CashWallet extends React.Component {
                 </div>
               </div>
             </div>
-            <LoadingModal
+            <Modal
+              modal={this.state.modal}
+              wallet={this.state.wallet}
               loadingModal={this.state.loading_modal}
+              addressModal={this.state.address_modal}
               createWallet={this.createWallet}
-              toggleLoadingModal={this.toggleLoadingModal}
+              closeModal={this.setCloseModal}
+              openModal={this.setOpenModal}
+              openAlert={this.state.alert}
+              setOpenAlert={this.setOpenAlert}
+              closeAlert={this.setCloseAlert}
+              alertText={this.state.alert_text}
+              alertCloseDisabled={this.state.alert_close_disabled}
             />
           </div>
         );

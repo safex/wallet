@@ -1,7 +1,8 @@
 import React from "react";
-const remote = window.require("electron").remote;
-import packageJson from "../../../package";
+// import packageJson from "../../../package";
 import { closeApp } from "../../utils/utils.js";
+
+const remote = window.require("electron").remote;
 
 export default class Header extends React.Component {
   minimizeApp = () => {
@@ -24,6 +25,9 @@ export default class Header extends React.Component {
   };
 
   render() {
+    console.error(process.env);
+    // console.error(remote.app.getVersion());
+
     return (
       <header>
         <button
@@ -36,7 +40,7 @@ export default class Header extends React.Component {
           Back
         </button>
         <img src="images/logo.png" className="logo" alt="Logo" />
-        <p id="version">{packageJson.version}</p>
+        {/* <p id="version">{packageJson.version}</p> */}
         <div className="buttons-wrap">
           <button
             onClick={this.minimizeApp}

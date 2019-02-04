@@ -73,7 +73,7 @@ export default class CreateNew extends React.Component {
           </div>
         </div>
         <button type="submit" className="submit btn button-shine">
-          <span>Create {this.state.wallet_created && "New"}</span>
+          <span>Create</span>
         </button>
       </form>
     );
