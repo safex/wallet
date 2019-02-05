@@ -111,6 +111,9 @@ p:hover {
   width: 25px !important;
   top: 2px !important;
 }
+.progress {
+  margin: 15px 0 0;
+}
 
 .button-shine {
   position: relative;

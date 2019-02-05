@@ -1,23 +1,9 @@
 import React from "react";
-import { addClass } from "../utils/utils.js";
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
 export default class CreateNew extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      config: this.props.config
-    };
-  }
-
-  toggleMnemonic = () => {
-    this.setState({
-      mnemonic_active: !this.state.mnemonic_active
-    });
-  };
-
   createNew = e => {
     e.preventDefault();
 
@@ -48,8 +34,8 @@ export default class CreateNew extends React.Component {
       this.props.createWallet("createWallet", {
         path: filepath,
         password: pass1,
-        network: this.props.config.network,
-        daemonAddress: this.props.config.daemonAddress
+        network: this.props.env.NETWORK,
+        daemonAddress: this.props.env.ADDRESS
       });
       localStorage.setItem("wallet_path", filepath);
       localStorage.setItem("password", JSON.stringify(pass1));
@@ -62,10 +48,7 @@ export default class CreateNew extends React.Component {
 
   render() {
     return (
-      <form
-        className={addClass(this.state.mnemonic_active, "hidden")}
-        onSubmit={this.createNew}
-      >
+      <form onSubmit={this.createNew}>
         <div className="group-wrap">
           <div className="form-group">
             <input type="password" name="pass1" placeholder="password" />

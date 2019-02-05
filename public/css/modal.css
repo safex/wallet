@@ -308,6 +308,10 @@
 .sendModal {
   z-index: 10002;
   width: 100% !important;
+  border: 0px;
+}
+.sendModal:hover {
+  border: 0px;
 }
 .sendModalBackdrop {
   z-index: 10001;

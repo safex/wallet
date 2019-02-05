@@ -63,10 +63,12 @@ export default class LoadingModal extends React.Component {
 
     if (passwordInput === "") {
       this.props.setOpenAlert("Enter password for your wallet");
+      console.log("Enter password for your wallet");
       return false;
     }
     if (passwordInput !== password) {
       this.props.setOpenAlert("Wrong password");
+      console.log("Wrong password");
       return false;
     }
     this.setState({ loaded: true });
@@ -99,24 +101,6 @@ export default class LoadingModal extends React.Component {
             </button>
             <button className="confirm-btn button-shine">Continue</button>
           </form>
-        </div>
-      );
-    }
-    if (this.props.openAlert) {
-      modal = (
-        <div className={"alert" + addClass(this.props.openAlert, "active")}>
-          <div className="mainAlertPopupInner">
-            <p className={this.props.alertCloseDisabled ? "disabled" : ""}>
-              {this.props.alertText}
-            </p>
-            {this.props.alertCloseDisabled ? (
-              <span className="hidden" />
-            ) : (
-              <span className="close" onClick={this.props.closeModal}>
-                X
-              </span>
-            )}
-          </div>
         </div>
       );
     }
@@ -177,6 +161,34 @@ export default class LoadingModal extends React.Component {
               className={this.props.wallet.mnemonic ? "" : "hidden"}
               rows="3"
             />
+          </div>
+        </div>
+      );
+    }
+    if (this.props.openAlert) {
+      modal = (
+        <div className={"alert" + addClass(this.props.openAlert, "active")}>
+          <div className="mainAlertPopupInner">
+            <p className={this.props.alertCloseDisabled ? "disabled" : ""}>
+              {this.props.alertText}
+            </p>
+            <div className={this.props.progress < 100 ? "progress" : "hidden"}>
+              <div
+                className="progress-bar progress-bar-striped progress-bar-animated active"
+                role="progressbar"
+                aria-valuenow={this.props.progress}
+                aria-valuemin="10"
+                aria-valuemax="100"
+                style={{ width: this.props.progress + "%" }}
+              />
+            </div>
+            {this.props.alertCloseDisabled ? (
+              <span className="hidden" />
+            ) : (
+              <span className="close" onClick={this.props.closeModal}>
+                X
+              </span>
+            )}
           </div>
         </div>
       );

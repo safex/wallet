@@ -66,7 +66,7 @@ export default class NewFromMnemonic extends React.Component {
       this.setState(() => ({
         alert_close_disabled: true
       }));
-      this.setOpenAlert(
+      this.props.setOpenAlert(
         "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
         true
       );
@@ -76,8 +76,8 @@ export default class NewFromMnemonic extends React.Component {
       this.props.createWallet("recoveryWallet", {
         path: filepath,
         password: pass1,
-        network: this.props.config.network,
-        daemonAddress: this.props.config.daemonAddress,
+        network: this.props.env.NETWORK,
+        daemonAddress: this.props.env.ADDRESS,
         mnemonic: mnemonic
       });
       localStorage.setItem("wallet_path", filepath);

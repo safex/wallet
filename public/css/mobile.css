@@ -19,6 +19,9 @@
   .item-wrap .login-wrap form input:-ms-input-placeholder {
     font-size: 17px;
   }
+  .item-wrap .item-inner {
+    padding: 0 10px;
+  }
   .options-wrap .options-inner {
     flex-direction: column;
     width: 100%;

@@ -5,9 +5,8 @@ import OpenFile from "./OpenFile";
 import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import Modal from "./partials/Modal";
 import Header from "./partials/Header";
-import { openModal, closeModal, closeAlert } from "../utils/utils.js";
+import { openModal, closeModal, closeAlert, parseEnv } from "../utils/utils.js";
 import Wallet from "./Wallet";
-import Switch from "react-switch";
 
 const safex = window.require("safex-nodejs-libwallet");
 
@@ -15,27 +14,29 @@ export default class CashWallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      progress: 0,
       wallet: null,
       local_wallet: JSON.parse(localStorage.getItem("wallet")),
       page: null,
-      config: {
-        network: "mainnet",
-        daemonAddress: "rpc.safex.io:17402"
-      },
       alert: false,
       alert_text: "",
       alert_close_disabled: false,
       network: true
     };
+
+    this.wallet_meta = null;
+    this.env = parseEnv();
+    this.progress_timeout_id = null;
   }
 
   componentDidMount() {
     if (this.state.local_wallet) {
-      var i;
-      for (i = 0; i <= 1; i++) {
-        this.setOpenModal("loading_modal", "", false, null);
-      }
+      this.setOpenModal("loading_modal", "", false, null);
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.progress_timeout_id);
   }
 
   setOpenModal = (modal_type, alert, disabled, send_cash_or_token) => {
@@ -83,15 +84,9 @@ export default class CashWallet extends React.Component {
     try {
       safex[createWalletFunctionType](args)
         .then(wallet => {
-          this.setState(
-            {
-              wallet_loaded: true,
-              wallet_meta: wallet
-            },
-            () => {
-              console.log(this.state.wallet_meta);
-            }
-          );
+          this.wallet_meta = wallet;
+          console.log(this.wallet_meta);
+          this.refreshProgressInterval();
           this.setWalletData(wallet);
           wallet.on("refreshed", () => {
             console.log("Wallet File refreshed");
@@ -100,6 +95,7 @@ export default class CashWallet extends React.Component {
               .then(() => {
                 console.log("Wallet stored");
                 this.startBalanceCheck();
+                clearTimeout(this.progress_timeout_id);
               })
               .catch(e => {
                 console.log("Unable to store wallet: " + e);
@@ -116,8 +112,34 @@ export default class CashWallet extends React.Component {
     }
   };
 
+  refreshProgressInterval = () => {
+    let wallet = this.wallet_meta;
+
+    const progress = this.percentCalculation(
+      wallet.blockchainHeight(),
+      wallet.daemonBlockchainHeight()
+    );
+
+    this.setState({ progress });
+
+    if (progress < 100) {
+      setTimeout(this.refreshProgressInterval, 1000);
+    }
+
+    console.log(
+      this.percentCalculation(
+        wallet.blockchainHeight(),
+        wallet.daemonBlockchainHeight()
+      )
+    );
+  };
+
+  percentCalculation = (partialValue, totalValue) => {
+    return (100 * partialValue) / totalValue;
+  };
+
   startBalanceCheck = () => {
-    let wallet = this.state.wallet_meta;
+    let wallet = this.wallet_meta;
     wallet.setSeedLanguage("English");
     this.setWalletData(wallet);
     this.setState({
@@ -147,24 +169,12 @@ export default class CashWallet extends React.Component {
           Math.abs(wallet.tokenBalance() - wallet.unlockedTokenBalance())
         ),
         unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance()),
-        config: this.state.config
+        config: {
+          network: this.env.NETWORK,
+          daemonAddress: this.env.ADDRESS
+        }
       }
     });
-  };
-
-  toggleNetwork = () => {
-    this.setState(() => ({
-      network: !this.state.network,
-      config: this.state.network
-        ? {
-            network: "testnet",
-            daemonAddress: "192.168.19.198:29393"
-          }
-        : {
-            network: "mainnet",
-            daemonAddress: "rpc.safex.io:17402"
-          }
-    }));
   };
 
   renderPageWrapper = (title, page, icon) => {
@@ -179,37 +189,14 @@ export default class CashWallet extends React.Component {
           <img src={icon} className="item-pic" alt={icon} />
           <h2>{title}</h2>
           <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
-            {process.env.NODE_ENV === "development" &&
-              page &&
-              this.state.page !== "wallet" && (
-                <div className="toggle-wrap">
-                  <label className="net-label">Network Select:</label>
-
-                  <span>Testnet</span>
-                  <Switch
-                    checked={this.state.network}
-                    onChange={this.toggleNetwork}
-                    onColor="#86d3ff"
-                    onHandleColor="#2693e6"
-                    handleDiameter={30}
-                    uncheckedIcon={false}
-                    checkedIcon={false}
-                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                    height={20}
-                    width={48}
-                    className="react-switch"
-                    id="material-switch"
-                  />
-                  <span>Mainnet</span>
-                </div>
-              )}
             {page}
           </div>
         </div>
         <Modal
           modal={this.state.modal}
           wallet={this.state.wallet}
+          env={this.env}
+          progress={this.state.progress}
           loadingModal={this.state.loading_modal}
           createWallet={this.createWallet}
           closeModal={this.setCloseModal}
@@ -236,9 +223,10 @@ export default class CashWallet extends React.Component {
         icon = "images/create-new.png";
         page = (
           <Wallet
+            env={this.env}
             goToPage={this.goToPage}
             wallet={this.state.wallet}
-            walletMeta={this.state.wallet_meta}
+            walletMeta={this.wallet_meta}
             setWalletData={this.setWalletData}
             setOpenAlert={this.setOpenAlert}
             setOpenAddressModal={this.setOpenAddressModal}
@@ -252,6 +240,7 @@ export default class CashWallet extends React.Component {
         icon = "images/create-new.png";
         page = (
           <CreateNew
+            env={this.env}
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
@@ -265,6 +254,7 @@ export default class CashWallet extends React.Component {
         icon = "images/new-from-keys.png";
         page = (
           <CreateFromKeys
+            env={this.env}
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
@@ -278,6 +268,7 @@ export default class CashWallet extends React.Component {
         icon = "images/open-wallet-file.png";
         page = (
           <OpenFile
+            env={this.env}
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
@@ -291,6 +282,7 @@ export default class CashWallet extends React.Component {
         icon = "images/mnemonic.png";
         page = (
           <RecoverFromMnemonic
+            env={this.env}
             goToPage={this.goToPage}
             createWallet={this.createWallet}
             config={this.state.config}
@@ -340,11 +332,13 @@ export default class CashWallet extends React.Component {
             </div>
             <Modal
               modal={this.state.modal}
+              env={this.env}
               wallet={this.state.wallet}
+              progress={this.state.progress}
               loadingModal={this.state.loading_modal}
-              addressModal={this.state.address_modal}
               createWallet={this.createWallet}
               closeModal={this.setCloseModal}
+              addressModal={this.state.address_modal}
               openModal={this.setOpenModal}
               openAlert={this.state.alert}
               closeAlert={this.setCloseAlert}

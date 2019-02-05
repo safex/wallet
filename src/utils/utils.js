@@ -124,6 +124,15 @@ function closeAlert(target) {
   }, 300);
 }
 
+function parseEnv() {
+  const env_obj = {};
+
+  for (let key in process.env)
+    env_obj[key.replace("REACT_APP_", "")] = process.env[key];
+
+  return env_obj;
+}
+
 export {
   verify_safex_address,
   structureSafexKeys,
@@ -133,5 +142,6 @@ export {
   addClass,
   openModal,
   closeModal,
-  closeAlert
+  closeAlert,
+  parseEnv
 };

@@ -73,8 +73,8 @@ export default class CreateFromKeys extends React.Component {
       this.props.createWallet("createWalletFromKeys", {
         path: filepath,
         password: pass1,
-        network: this.props.config.network,
-        daemonAddress: this.props.config.daemonAddress,
+        network: this.props.env.NETWORK,
+        daemonAddress: this.props.env.ADDRESS,
         restoreHeight: 0,
         addressString: safex_address,
         viewKeyString: view_key,

@@ -43,8 +43,8 @@ export default class OpenFile extends React.Component {
       {
         path: this.state.wallet_path,
         password: pass,
-        network: this.props.config.network,
-        daemonAddress: this.props.config.daemonAddress
+        network: this.props.env.NETWORK,
+        daemonAddress: this.props.env.ADDRESS
       },
       err => {
         this.props.setOpenAlert("Error opening wallet: " + err);
@@ -67,12 +67,7 @@ export default class OpenFile extends React.Component {
   render() {
     return (
       <div className="open-file-wrap">
-        <button
-          className={
-            this.state.wallet_loaded ? "hidden" : "browse-btn button-shine"
-          }
-          onClick={this.browseFile}
-        >
+        <button className="browse-btn button-shine" onClick={this.browseFile}>
           Browse
         </button>
         <form onSubmit={this.openFile}>
