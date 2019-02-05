@@ -62,7 +62,7 @@ export default class CreateFromKeys extends React.Component {
         );
         return false;
       }
-      this.props.setState(() => ({
+      this.setState(() => ({
         alert_close_disabled: true
       }));
       this.props.setOpenAlert(
