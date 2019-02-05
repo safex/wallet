@@ -54,7 +54,7 @@ export default class Wallet extends React.Component {
     wallet
       .store()
       .then(() => {
-        this.props.closeModal();
+        this.props.closeAlert();
         console.log("Wallet stored");
       })
       .catch(e => {
@@ -83,7 +83,7 @@ export default class Wallet extends React.Component {
   rescanBalance = () => {
     var wallet = this.props.walletMeta;
     console.log(wallet);
-    this.setOpenAlert(
+    this.props.setOpenAlert(
       "Rescanning, this may take some time, please wait ",
       true
     );
@@ -177,14 +177,14 @@ export default class Wallet extends React.Component {
             this.setCloseSendPopup();
             if (this.state.cash_or_token === 0) {
               console.log("Cash transaction commited successfully");
-              this.setOpenAlert(
+              this.props.setOpenAlert(
                 "Transaction commited successfully, Your cash transaction ID is: " +
                   txId,
                 false
               );
             } else {
               console.log("Token transaction commited successfully");
-              this.setOpenAlert(
+              this.props.setOpenAlert(
                 "Transaction commited successfully, Your token transaction ID is: " +
                   txId,
                 false

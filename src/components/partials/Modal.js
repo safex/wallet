@@ -112,7 +112,7 @@ export default class LoadingModal extends React.Component {
             {this.props.alertCloseDisabled ? (
               <span className="hidden" />
             ) : (
-              <span className="close" onClick={this.props.closeAlert}>
+              <span className="close" onClick={this.props.closeModal}>
                 X
               </span>
             )}
@@ -187,6 +187,7 @@ export default class LoadingModal extends React.Component {
         <div className={"modal" + addClass(this.props.modal, "active")}>
           {modal}
         </div>
+
         <div
           className={"backdrop" + addClass(this.props.modal, "active")}
           onClick={this.props.alertCloseDisabled ? "" : this.props.closeModal}

@@ -55,17 +55,17 @@ export default class CreateFromKeys extends React.Component {
         return false;
       }
       if (safex.walletExists(filepath)) {
-        this.setOpenAlert(
+        this.props.setOpenAlert(
           `Wallet already exists. Please choose a different file name. 
           This application does not enable overwriting an existing wallet file 
           OR you can open it using the Load Existing Wallet`
         );
         return false;
       }
-      this.setState(() => ({
+      this.props.setState(() => ({
         alert_close_disabled: true
       }));
-      this.setOpenAlert(
+      this.props.setOpenAlert(
         "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
         true
       );

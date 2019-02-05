@@ -5,7 +5,7 @@ import OpenFile from "./OpenFile";
 import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import Modal from "./partials/Modal";
 import Header from "./partials/Header";
-import { openModal, closeModal } from "../utils/utils.js";
+import { openModal, closeModal, closeAlert } from "../utils/utils.js";
 import Wallet from "./Wallet";
 import Switch from "react-switch";
 
@@ -18,7 +18,10 @@ export default class CashWallet extends React.Component {
       wallet: null,
       local_wallet: JSON.parse(localStorage.getItem("wallet")),
       page: null,
-      config: { network: "mainnet", daemonAddress: "rpc.safex.io:17402" },
+      config: {
+        network: "mainnet",
+        daemonAddress: "rpc.safex.io:17402"
+      },
       alert: false,
       alert_text: "",
       alert_close_disabled: false,
@@ -51,6 +54,10 @@ export default class CashWallet extends React.Component {
     this.setOpenModal("address_modal", "", false, null);
   };
 
+  setCloseAlert = () => {
+    closeAlert(this);
+  };
+
   goToPage = page => {
     if (this.state.page !== "wallet") {
       this.setState({ page });
@@ -61,7 +68,7 @@ export default class CashWallet extends React.Component {
       localStorage.removeItem("password");
       setTimeout(() => {
         this.setState({ page });
-        this.setCloseModal();
+        this.setCloseAlert();
       }, 1000);
     }
   };
@@ -166,36 +173,39 @@ export default class CashWallet extends React.Component {
     return (
       <div className="item-wrap create-new-wrap">
         <Header
+          page={this.state.page}
           goToPage={this.goToPage}
           alertCloseDisabled={this.state.alert_close_disabled}
         />
         <div className="item-inner">
-          <img src={icon} className="item-pic" role="presentation" />
+          <img src={icon} className="item-pic" alt={icon} />
           <h2>{title}</h2>
           <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
-            {page && this.state.page !== "wallet" && (
-              <div className="toggle-wrap">
-                <label className="net-label">Network Select:</label>
+            {process.env.NODE_ENV === "development" &&
+              page &&
+              this.state.page !== "wallet" && (
+                <div className="toggle-wrap">
+                  <label className="net-label">Network Select:</label>
 
-                <span>Testnet</span>
-                <Switch
-                  checked={this.state.network}
-                  onChange={this.toggleNetwork}
-                  onColor="#86d3ff"
-                  onHandleColor="#2693e6"
-                  handleDiameter={30}
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                  activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                  height={20}
-                  width={48}
-                  className="react-switch"
-                  id="material-switch"
-                />
-                <span>Mainnet</span>
-              </div>
-            )}
+                  <span>Testnet</span>
+                  <Switch
+                    checked={this.state.network}
+                    onChange={this.toggleNetwork}
+                    onColor="#86d3ff"
+                    onHandleColor="#2693e6"
+                    handleDiameter={30}
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                    height={20}
+                    width={48}
+                    className="react-switch"
+                    id="material-switch"
+                  />
+                  <span>Mainnet</span>
+                </div>
+              )}
             {page}
           </div>
         </div>
@@ -208,8 +218,8 @@ export default class CashWallet extends React.Component {
           addressModal={this.state.address_modal}
           openModal={this.setOpenModal}
           openAlert={this.state.alert}
-          setOpenAlert={this.setOpenAlert}
           closeAlert={this.setCloseAlert}
+          setOpenAlert={this.setOpenAlert}
           alertText={this.state.alert_text}
           alertCloseDisabled={this.state.alert_close_disabled}
         />
@@ -235,6 +245,7 @@ export default class CashWallet extends React.Component {
             setOpenAlert={this.setOpenAlert}
             setOpenAddressModal={this.setOpenAddressModal}
             closeModal={this.setCloseModal}
+            closeAlert={this.setCloseAlert}
           />
         );
         break;
@@ -338,8 +349,8 @@ export default class CashWallet extends React.Component {
               closeModal={this.setCloseModal}
               openModal={this.setOpenModal}
               openAlert={this.state.alert}
-              setOpenAlert={this.setOpenAlert}
               closeAlert={this.setCloseAlert}
+              setOpenAlert={this.setOpenAlert}
               alertText={this.state.alert_text}
               alertCloseDisabled={this.state.alert_close_disabled}
             />

@@ -33,7 +33,7 @@
   text-transform: uppercase;
   font-size: 17px;
   padding: 15px;
-  width: 500px;
+  width: 50%;
   visibility: hidden;
   opacity: 0;
   transition: all ease 0.3s;
@@ -326,7 +326,7 @@
 }
 
 .loadingModal {
-  padding: 20px 20px 25px;
+  padding: 10px;
 }
 .loadingModal h3 {
   margin: 0;
@@ -360,6 +360,7 @@
   padding: 5px !important;
   border-bottom: 1px solid #8ffdfd;
   border-radius: 0;
+  text-align: center;
 }
 .addressModal .pass-input {
   border: 1px solid #327a9b !important;

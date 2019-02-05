@@ -87,14 +87,39 @@ function openModal(target, modal_type, alert, disabled, send_cash_or_token) {
  * Close Modal
  */
 function closeModal(target) {
+  if (
+    (target.state.loading_modal && target.state.alert) ||
+    (target.state.address_modal && target.state.alert)
+  ) {
+    target.setState({
+      alert: false
+    });
+  } else {
+    target.setState({
+      modal: false,
+      alert_close_disabled: false
+    });
+    setTimeout(() => {
+      target.setState({
+        loading_modal: false,
+        alert: false,
+        address_modal: false
+      });
+    }, 300);
+  }
+}
+
+/**
+ * Close Modal
+ */
+function closeAlert(target) {
   target.setState({
-    modal: false
+    modal: false,
+    alert_close_disabled: false
   });
   setTimeout(() => {
     target.setState({
-      loading_modal: false,
-      alert: false,
-      loaded: false
+      alert: false
     });
   }, 300);
 }
@@ -107,5 +132,6 @@ export {
   closeApp,
   addClass,
   openModal,
-  closeModal
+  closeModal,
+  closeAlert
 };
