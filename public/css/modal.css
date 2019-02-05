@@ -307,6 +307,7 @@
 
 .sendModal {
   z-index: 10002;
+  width: 100% !important;
 }
 .sendModalBackdrop {
   z-index: 10001;

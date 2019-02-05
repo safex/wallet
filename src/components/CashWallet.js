@@ -140,14 +140,12 @@ export default class CashWallet extends React.Component {
         wallet_connected: wallet.connected() === "connected",
         blockchain_height: wallet.blockchainHeight(),
         pending_balance: this.roundBalanceAmount(
-          wallet.unlockedBalance() - wallet.balance()
+          Math.abs(wallet.balance() - wallet.unlockedBalance())
         ),
-        balance: this.roundBalanceAmount(wallet.balance()),
         unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
         pending_tokens: this.roundBalanceAmount(
-          wallet.unlockedTokenBalance() - wallet.tokenBalance()
+          Math.abs(wallet.tokenBalance() - wallet.unlockedTokenBalance())
         ),
-        tokens: this.roundBalanceAmount(wallet.tokenBalance()),
         unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance()),
         config: this.state.config
       }
