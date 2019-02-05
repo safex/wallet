@@ -59,7 +59,10 @@ export default class SendModal extends React.Component {
         </div>
 
         <div
-          className={"backdrop" + addClass(this.props.sendModal, "active")}
+          className={
+            "backdrop sendModalBackdrop" +
+            addClass(this.props.sendModal, "active")
+          }
           onClick={this.props.closeSendPopup}
         />
       </div>

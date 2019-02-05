@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 10001;
+  z-index: 10003;
   opacity: 0;
   visibility: hidden;
   transition: all ease 0.3s;
@@ -33,7 +33,7 @@
   text-transform: uppercase;
   font-size: 17px;
   padding: 15px;
-  width: 50%;
+  width: 510px;
   visibility: hidden;
   opacity: 0;
   transition: all ease 0.3s;
@@ -48,7 +48,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 100002;
+  z-index: 100004;
 }
 .modal.active {
   visibility: visible;
@@ -305,6 +305,12 @@
   z-index: 100006;
 }
 
+.sendModal {
+  z-index: 10002;
+}
+.sendModalBackdrop {
+  z-index: 10001;
+}
 .sendModal textarea,
 .sendModal input {
   padding: 4px 10px 5px !important;
