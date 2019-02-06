@@ -6,7 +6,9 @@ const { dialog } = window.require("electron").remote;
 export default class CreateFromKeys extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      alert_close_disabled: false
+    };
   }
 
   createWalletFromKeys = e => {

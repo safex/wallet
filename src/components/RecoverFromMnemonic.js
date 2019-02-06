@@ -5,14 +5,10 @@ const { dialog } = window.require("electron").remote;
 export default class NewFromMnemonic extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      alert_close_disabled: false
+    };
   }
-
-  toggleMnemonic = () => {
-    this.setState({
-      mnemonic_active: !this.state.mnemonic_active
-    });
-  };
 
   hasNumber = myString => {
     return /\d/.test(myString);

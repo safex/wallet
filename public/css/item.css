@@ -135,6 +135,29 @@
   outline: none;
 }
 
+/* Open File */
+.open-file-wrap .item-pic {
+  bottom: 0px;
+  right: 29px;
+}
+.open-file-wrap .login-wrap form input {
+  margin: 0 0 10px;
+}
+.open-file-wrap .login-wrap form input:last-of-type {
+  margin-bottom: 0;
+}
+.open-file-wrap .browse-btn {
+  width: 100%;
+  font-size: 30px;
+  background: rgba(143, 253, 253, 0.62);
+  color: #fff;
+  text-transform: uppercase;
+  border: 0px;
+  border-radius: 0px;
+  margin: 0 0 5px;
+  border-bottom: 5px solid #8ffdfd;
+}
+
 @media (min-width: 1024px) {
   .item-wrap {
     max-width: 1024px;

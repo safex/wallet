@@ -124,6 +124,9 @@ function closeAlert(target) {
   }, 300);
 }
 
+/**
+ * Parse env object
+ */
 function parseEnv() {
   const env_obj = {};
 
@@ -131,6 +134,13 @@ function parseEnv() {
     env_obj[key.replace("REACT_APP_", "")] = process.env[key];
 
   return env_obj;
+}
+
+/**
+ * Round Amount
+ */
+function roundAmount(balance) {
+  return Math.floor(parseFloat(balance) / 100000000) / 100;
 }
 
 export {
@@ -143,5 +153,6 @@ export {
   openModal,
   closeModal,
   closeAlert,
+  roundAmount,
   parseEnv
 };

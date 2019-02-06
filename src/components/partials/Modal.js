@@ -172,7 +172,13 @@ export default class LoadingModal extends React.Component {
             <p className={this.props.alertCloseDisabled ? "disabled" : ""}>
               {this.props.alertText}
             </p>
-            <div className={this.props.progress < 100 ? "progress" : "hidden"}>
+            <div
+              className={
+                this.props.progress && this.props.progress > 0
+                  ? "progress"
+                  : "hidden"
+              }
+            >
               <div
                 className="progress-bar progress-bar-striped progress-bar-animated active"
                 role="progressbar"

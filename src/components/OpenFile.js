@@ -6,7 +6,8 @@ export default class OpenFile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wallet_path: ""
+      wallet_path: "",
+      alert_close_disabled: false
     };
   }
 

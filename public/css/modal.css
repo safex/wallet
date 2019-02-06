@@ -309,6 +309,10 @@
   z-index: 10002;
   width: 100% !important;
   border: 0px;
+  max-height: 100%;
+  display: flex;
+  align-items: flex-end;
+  border-radius: 0px;
 }
 .sendModal:hover {
   border: 0px;
@@ -324,8 +328,8 @@
 }
 .sendModal .available-wrap {
   position: absolute;
-  left: 15px;
-  top: 15px;
+  left: 20px;
+  top: 20px;
   display: flex;
   flex-direction: row;
   align-items: baseline;

@@ -30,6 +30,11 @@
   z-index: 2;
   width: 100%;
 }
+.wallet-inner-wrap .btns-right-wrap {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 .wallet-inner-wrap .address-info {
   text-align: center;
   background: rgba(143, 253, 253, 0.62);
@@ -58,7 +63,13 @@
   padding: 0;
   background: transparent;
   margin-left: 10px;
+  display: inline-block;
 }
+
+.wallet-inner-wrap .signal {
+  margin-bottom: 5px;
+}
+
 .wallet-inner-wrap .signal:hover {
   box-shadow: none !important;
   cursor: initial;
@@ -67,6 +78,7 @@
   -webkit-filter: invert(0.2);
   filter: invert(0.2);
   max-height: 23px;
+  margin-right: 8px;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
@@ -90,6 +102,7 @@
   min-width: 75px;
   text-align: left;
   background: transparent;
+  display: inline-block;
 }
 .wallet-inner-wrap .blockheight:hover {
   box-shadow: none !important;
@@ -101,7 +114,8 @@
   margin-right: 8px;
   max-height: 22px;
 }
-.wallet-inner-wrap .blockheight span {
+.wallet-inner-wrap .blockheight span,
+.wallet-inner-wrap .signal span {
   letter-spacing: 0px;
   color: #fff;
   font-size: 19px;
@@ -162,7 +176,7 @@
   font-size: 20px;
   padding: 0px;
   border-bottom: 1px solid #8ffdfd;
-  margin-bottom: 7px;
+  margin-bottom: 10px;
   border-radius: 0px;
 }
 .wallet-inner-wrap .btn {
@@ -220,7 +234,7 @@
   color: rgba(14, 200, 193, 1);
 }
 .wallet-inner-wrap .yellow-field {
-  color: rgba(255, 214, 22, 0.8);
+  color: #dfc983;
 }
 .login-wrap .btn,
 .wallet-inner-wrap .btn {

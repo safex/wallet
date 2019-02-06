@@ -9,7 +9,8 @@ export default class Wallet extends React.Component {
     this.state = {
       wallet: null,
       alert_close_disabled: false,
-      tx_being_sent: false
+      tx_being_sent: false,
+      cash_or_token: null
     };
   }
 
@@ -46,7 +47,6 @@ export default class Wallet extends React.Component {
   refreshCallback = () => {
     console.log("Wallet refreshed");
     let wallet = this.props.walletMeta;
-    this.props.setWalletData(this.props.walletMeta);
     this.props.setOpenAlert(
       "Please wait while blockchain is being updated...",
       true
@@ -75,7 +75,6 @@ export default class Wallet extends React.Component {
       console.log("syncedHeight up to date...");
       if (wallet.synchronized()) {
         console.log("newBlock wallet synchronized, setting state...");
-        this.props.setWalletData(this.props.walletMeta);
       }
     }
   };
@@ -234,42 +233,43 @@ export default class Wallet extends React.Component {
     return (
       <div className="wallet-inner-wrap">
         <div className="btn-wrap">
-          <button
+          <div
             className={
               "signal" +
               addClass(this.props.wallet.wallet_connected, "connected")
             }
-            disabled
             title="Status"
           >
             <img src="images/connected-white.png" alt="connected" />
-            <p>
-              {this.props.wallet.wallet_connected ? (
-                <span>Connected</span>
-              ) : (
-                <span>Connection error</span>
-              )}
-            </p>
-          </button>
-          <button className="blockheight" title="Blockchain Height" disabled>
+            <span>Status: &nbsp;</span>
+            <span>
+              {this.props.wallet.wallet_connected
+                ? "Connected"
+                : "Connection error"}
+            </span>
+          </div>
+          <div className="blockheight">
             <img src="images/blocks.png" alt="blocks" />
+            <span>Blockchain height: &nbsp;</span>
             <span>{this.props.wallet.blockchain_height}</span>
-          </button>
-          <button
-            className="button-shine address-info"
-            onClick={this.props.setOpenAddressModal}
-            title="Address Info"
-          >
-            <img src="images/key.png" alt="rescan" />
-          </button>
-          <button
-            className="button-shine rescan"
-            onClick={this.rescanBalance}
-            title="Rescan"
-            disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
-          >
-            <img src="images/rescan.png" alt="rescan" />
-          </button>
+          </div>
+          <div className="btns-right-wrap">
+            <button
+              className="button-shine address-info"
+              onClick={this.props.setOpenAddressModal}
+              title="Address Info"
+            >
+              <img src="images/key.png" alt="rescan" />
+            </button>
+            <button
+              className="button-shine rescan"
+              onClick={this.rescanBalance}
+              title="Rescan"
+              disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
+            >
+              <img src="images/rescan.png" alt="rescan" />
+            </button>
+          </div>
         </div>
 
         <label htmlFor="filename">Wallet File</label>
@@ -293,7 +293,9 @@ export default class Wallet extends React.Component {
         <div className="group-wrap">
           <div className="group">
             <label htmlFor="balance">Pending Safex Cash</label>
-            <p className="display-value">{this.props.wallet.pending_balance}</p>
+            <p className="display-value yellow-field">
+              {this.props.wallet.pending_balance}
+            </p>
 
             <label htmlFor="unlocked_balance">Available Safex Cash</label>
             <p className="display-value green-field">
@@ -313,7 +315,9 @@ export default class Wallet extends React.Component {
 
           <div className="group">
             <label htmlFor="tokens">Pending Safex Tokens</label>
-            <p className="display-value">{this.props.wallet.pending_tokens}</p>
+            <p className="display-value yellow-field">
+              {this.props.wallet.pending_tokens}
+            </p>
 
             <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
             <p className="display-value green-field">

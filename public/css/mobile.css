@@ -12,6 +12,7 @@
   }
   .item-wrap .login-wrap .btn {
     font-size: 24px;
+    height: auto;
   }
   .item-wrap .login-wrap form input::-webkit-input-placeholder,
   .item-wrap .login-wrap form input::-moz-placeholder,
@@ -21,6 +22,7 @@
   }
   .item-wrap .item-inner {
     padding: 0 10px;
+    height: calc(100% - 63px);
   }
   .options-wrap .options-inner {
     flex-direction: column;
@@ -57,17 +59,25 @@
     font-size: 24px;
   }
   .go-back-btn {
-    top: initial;
-    padding: 4px 25px 5px;
+    top: initial !important;
+    padding: 4px 25px 5px !important;
+    bottom: 0;
+    position: fixed !important;
+    z-index: 2;
+  }
+  .minimize-app-btn,
+  .maximize-app-btn {
+    display: none;
   }
 
   /* Wallet */
   .wallet-inner-wrap {
     background: url(../images/login-bg.png) no-repeat top left / cover;
-    padding: 40px 20px 20px !important;
+    padding: 20px !important;
+    margin-top: 30px;
   }
   .wallet-inner-wrap .blockheight span,
-  .wallet-inner-wrap .signal p,
+  .wallet-inner-wrap .signal span,
   .wallet-inner-wrap input,
   .wallet-inner-wrap textarea,
   .item-wrap .login-wrap label,
@@ -84,6 +94,14 @@
   .wallet-inner-wrap input:-ms-input-placeholder {
     font-size: 17px;
   }
+  .wallet-inner-wrap .btn-wrap {
+    position: absolute;
+    top: -3px;
+  }
+  .wallet-inner-wrap .btns-right-wrap {
+    right: 0;
+    top: 33px;
+  }
 
   /* Open File */
   .open-file-wrap .login-wrap .browse-btn {
@@ -96,5 +114,9 @@
   }
   .sendModal {
     padding: 45px 10px 10px;
+  }
+  .sendModal .available-wrap {
+    left: 10px;
+    top: 10px;
   }
 }

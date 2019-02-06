@@ -14,14 +14,18 @@ export default class CashWallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      progress: 0,
       wallet: null,
       local_wallet: JSON.parse(localStorage.getItem("wallet")),
       page: null,
+      network: true,
+
+      //UI variables
+      progress: 0,
       alert: false,
       alert_text: "",
       alert_close_disabled: false,
-      network: true
+      address_modal: false,
+      loading_modal: false
     };
 
     this.wallet_meta = null;
@@ -85,9 +89,8 @@ export default class CashWallet extends React.Component {
       safex[createWalletFunctionType](args)
         .then(wallet => {
           this.wallet_meta = wallet;
-          console.log(this.wallet_meta);
           this.refreshProgressInterval();
-          this.setWalletData(wallet);
+
           wallet.on("refreshed", () => {
             console.log("Wallet File refreshed");
             wallet
@@ -95,7 +98,6 @@ export default class CashWallet extends React.Component {
               .then(() => {
                 console.log("Wallet stored");
                 this.startBalanceCheck();
-                clearTimeout(this.progress_timeout_id);
               })
               .catch(e => {
                 console.log("Unable to store wallet: " + e);
@@ -104,11 +106,15 @@ export default class CashWallet extends React.Component {
           });
         })
         .catch(err => {
-          console.log("error with the creation of the wallet " + err);
-          return callback(err);
+          this.setOpenAlert(
+            "Error with the creation of the wallet " + err,
+            false
+          );
+          return callback;
         });
     } catch (e) {
-      return callback(e);
+      this.setOpenAlert("Error with the creation of the wallet " + e, false);
+      return callback;
     }
   };
 
@@ -122,16 +128,14 @@ export default class CashWallet extends React.Component {
 
     this.setState({ progress });
 
-    if (progress < 100) {
-      setTimeout(this.refreshProgressInterval, 1000);
+    if (progress < 100 || progress === Infinity) {
+      this.progress_timeout_id = setTimeout(this.refreshProgressInterval, 2000);
+    } else {
+      setTimeout(() => {
+        this.setState({ progress: false });
+        clearTimeout(this.progress_timeout_id);
+      }, 2000);
     }
-
-    console.log(
-      this.percentCalculation(
-        wallet.blockchainHeight(),
-        wallet.daemonBlockchainHeight()
-      )
-    );
   };
 
   percentCalculation = (partialValue, totalValue) => {
@@ -179,7 +183,7 @@ export default class CashWallet extends React.Component {
 
   renderPageWrapper = (title, page, icon) => {
     return (
-      <div className="item-wrap create-new-wrap">
+      <div className="item-wrap">
         <Header
           page={this.state.page}
           goToPage={this.goToPage}
@@ -188,7 +192,7 @@ export default class CashWallet extends React.Component {
         <div className="item-inner">
           <img src={icon} className="item-pic" alt={icon} />
           <h2>{title}</h2>
-          <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap login-wrap">
+          <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap">
             {page}
           </div>
         </div>
