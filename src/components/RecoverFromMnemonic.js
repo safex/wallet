@@ -1,4 +1,5 @@
 import React from "react";
+import { hasNumber, countWords } from "../utils/utils.js";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
@@ -9,14 +10,6 @@ export default class NewFromMnemonic extends React.Component {
       alert_close_disabled: false
     };
   }
-
-  hasNumber = myString => {
-    return /\d/.test(myString);
-  };
-
-  countWords = str => {
-    return str.trim().split(/\s+/).length;
-  };
 
   createNewFromMnemonic = e => {
     e.preventDefault();
@@ -38,15 +31,15 @@ export default class NewFromMnemonic extends React.Component {
       this.props.setOpenAlert("Enter mnemonic seed for your wallet");
       return false;
     }
-    if (this.countWords(mnemonic) < 24 || this.countWords(mnemonic) > 25) {
+    if (countWords(mnemonic) < 24 || countWords(mnemonic) > 25) {
       this.props.setOpenAlert("Mnemonic seed must contain 24 or 25 words");
       return false;
     }
-    if (this.hasNumber(mnemonic)) {
+    if (hasNumber(mnemonic)) {
       this.props.setOpenAlert("Mnemonic seed must not contain a number");
       return false;
     }
-    console.log("word count " + this.countWords(mnemonic));
+    console.log("word count " + countWords(mnemonic));
     dialog.showSaveDialog(filepath => {
       if (!filepath) {
         return false;

@@ -143,6 +143,27 @@ function roundAmount(balance) {
   return Math.floor(parseFloat(balance) / 100000000) / 100;
 }
 
+/**
+ * Calculate percentage of 2 numbers
+ */
+function percentCalculation(partialValue, totalValue) {
+  return (100 * partialValue) / totalValue;
+}
+
+/**
+ * Check if string contains a number
+ */
+function hasNumber(myString) {
+  return /\d/.test(myString);
+}
+
+/**
+ * Count the number of words in a string
+ */
+function countWords(str) {
+  return str.trim().split(/\s+/).length;
+}
+
 export {
   verify_safex_address,
   structureSafexKeys,
@@ -154,5 +175,8 @@ export {
   closeModal,
   closeAlert,
   roundAmount,
+  percentCalculation,
+  hasNumber,
+  countWords,
   parseEnv
 };

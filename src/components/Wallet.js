@@ -27,10 +27,6 @@ export default class Wallet extends React.Component {
     this.props.walletMeta.off();
   }
 
-  roundBalanceAmount = balance => {
-    return Math.floor(parseFloat(balance) / 100000000) / 100;
-  };
-
   updatedCallback = () => {
     console.log("UPDATED");
     this.props.walletMeta
@@ -90,15 +86,9 @@ export default class Wallet extends React.Component {
     wallet.off("newBlock");
     wallet.off("refreshed");
     setTimeout(() => {
-      this.setState(() => ({
-        wallet: {
-          blockchain_height: wallet.blockchainHeight()
-        }
-      }));
       console.log("Starting blockchain rescan sync...");
       wallet.rescanBlockchain();
       console.log("Blockchain rescan executed...");
-
       setTimeout(() => {
         console.log("Rescan setting callbacks");
         this.props.setWalletData(this.props.walletMeta);
@@ -238,7 +228,6 @@ export default class Wallet extends React.Component {
               "signal" +
               addClass(this.props.wallet.wallet_connected, "connected")
             }
-            title="Status"
           >
             <img src="images/connected-white.png" alt="connected" />
             <span>Status: &nbsp;</span>
@@ -272,7 +261,7 @@ export default class Wallet extends React.Component {
           </div>
         </div>
 
-        <label htmlFor="filename">Wallet File</label>
+        <label htmlFor="filename">Wallet File Name</label>
         <input
           type="text"
           name="filename"

@@ -5,7 +5,14 @@ import OpenFile from "./OpenFile";
 import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import Modal from "./partials/Modal";
 import Header from "./partials/Header";
-import { openModal, closeModal, closeAlert, parseEnv } from "../utils/utils.js";
+import {
+  openModal,
+  closeModal,
+  closeAlert,
+  parseEnv,
+  roundAmount,
+  percentCalculation
+} from "../utils/utils.js";
 import Wallet from "./Wallet";
 
 const safex = window.require("safex-nodejs-libwallet");
@@ -31,6 +38,7 @@ export default class CashWallet extends React.Component {
     this.wallet_meta = null;
     this.env = parseEnv();
     this.progress_timeout_id = null;
+    this.daemon_height = null;
   }
 
   componentDidMount() {
@@ -90,9 +98,9 @@ export default class CashWallet extends React.Component {
         .then(wallet => {
           this.wallet_meta = wallet;
           this.refreshProgressInterval();
-
+          this.daemon_height = wallet.daemonBlockchainHeight();
           wallet.on("refreshed", () => {
-            console.log("Wallet File refreshed");
+            console.log("Wallet File synchronized");
             wallet
               .store()
               .then(() => {
@@ -121,25 +129,21 @@ export default class CashWallet extends React.Component {
   refreshProgressInterval = () => {
     let wallet = this.wallet_meta;
 
-    const progress = this.percentCalculation(
+    const progress = percentCalculation(
       wallet.blockchainHeight(),
-      wallet.daemonBlockchainHeight()
+      this.daemon_height
     );
 
     this.setState({ progress });
 
-    if (progress < 100 || progress === Infinity) {
-      this.progress_timeout_id = setTimeout(this.refreshProgressInterval, 2000);
+    if ((this.daemon_height > 0 && progress < 100) || progress === Infinity) {
+      this.progress_timeout_id = setTimeout(this.refreshProgressInterval, 800);
     } else {
       setTimeout(() => {
         this.setState({ progress: false });
         clearTimeout(this.progress_timeout_id);
-      }, 2000);
+      }, 1000);
     }
-  };
-
-  percentCalculation = (partialValue, totalValue) => {
-    return (100 * partialValue) / totalValue;
   };
 
   startBalanceCheck = () => {
@@ -165,14 +169,14 @@ export default class CashWallet extends React.Component {
         mnemonic: wallet.seed(),
         wallet_connected: wallet.connected() === "connected",
         blockchain_height: wallet.blockchainHeight(),
-        pending_balance: this.roundBalanceAmount(
+        pending_balance: roundAmount(
           Math.abs(wallet.balance() - wallet.unlockedBalance())
         ),
-        unlocked_balance: this.roundBalanceAmount(wallet.unlockedBalance()),
-        pending_tokens: this.roundBalanceAmount(
+        unlocked_balance: roundAmount(wallet.unlockedBalance()),
+        pending_tokens: roundAmount(
           Math.abs(wallet.tokenBalance() - wallet.unlockedTokenBalance())
         ),
-        unlocked_tokens: this.roundBalanceAmount(wallet.unlockedTokenBalance()),
+        unlocked_tokens: roundAmount(wallet.unlockedTokenBalance()),
         config: {
           network: this.env.NETWORK,
           daemonAddress: this.env.ADDRESS

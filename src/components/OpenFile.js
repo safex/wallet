@@ -1,5 +1,4 @@
 import React from "react";
-
 const { dialog } = window.require("electron").remote;
 
 export default class OpenFile extends React.Component {
