@@ -86,10 +86,6 @@ export default class CashWallet extends React.Component {
     }
   };
 
-  roundBalanceAmount = balance => {
-    return Math.floor(parseFloat(balance) / 100000000) / 100;
-  };
-
   createWallet = (createWalletFunctionType, args, callback) => {
     console.log(createWalletFunctionType, args);
 
