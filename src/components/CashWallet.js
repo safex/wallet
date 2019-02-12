@@ -93,7 +93,7 @@ export default class CashWallet extends React.Component {
       safex[createWalletFunctionType](args)
         .then(wallet => {
           this.wallet_meta = wallet;
-          this.refreshProgressInterval();
+          // this.refreshProgressInterval();
           this.daemon_height = wallet.daemonBlockchainHeight();
           wallet.on("refreshed", () => {
             console.log("Wallet File synchronized");
@@ -124,14 +124,11 @@ export default class CashWallet extends React.Component {
 
   refreshProgressInterval = () => {
     let wallet = this.wallet_meta;
-
     const progress = percentCalculation(
       wallet.blockchainHeight(),
       this.daemon_height
     );
-
     this.setState({ progress });
-
     if ((this.daemon_height > 0 && progress < 100) || progress === Infinity) {
       this.progress_timeout_id = setTimeout(this.refreshProgressInterval, 800);
     } else {

@@ -379,6 +379,7 @@
   text-align: center;
 }
 .addressModal .pass-input {
+  border-radius: 5px;
   border: 1px solid #327a9b !important;
   text-align: left !important;
   padding: 5px 10px !important;

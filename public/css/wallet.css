@@ -222,8 +222,7 @@
 .wallet-inner-wrap .yellow-field {
   color: #dfc983;
 }
-.login-wrap .btn,
-.wallet-inner-wrap .btn {
+.login-wrap .btn {
   font-size: 25px;
   padding: 6px 12px 4px;
   width: 100%;
@@ -234,6 +233,9 @@
   border-bottom: 5px solid #8ffdfd;
   border-radius: 0px;
   margin-top: 3px;
+}
+.wallet-inner-wrap .btn {
+  background: rgba(143, 253, 253, 0.7) !important;
 }
 .wallet-inner-wrap .btn:focus,
 .wallet-inner-wrap .btn:active {

@@ -71,6 +71,7 @@ export default class Wallet extends React.Component {
       console.log("syncedHeight up to date...");
       if (wallet.synchronized()) {
         console.log("newBlock wallet synchronized, setting state...");
+        this.props.setWalletData(wallet);
       }
     }
   };
@@ -115,7 +116,6 @@ export default class Wallet extends React.Component {
     this.setState(() => ({
       cash_or_token: cash_or_token
     }));
-
     if (sendingAddress === "") {
       this.props.setOpenAlert("Fill out all the fields", false);
       return false;
@@ -125,8 +125,6 @@ export default class Wallet extends React.Component {
       return false;
     }
     if (paymentid !== "") {
-      console.log("amount " + amount);
-      console.log("paymentid " + paymentid);
       this.setState(() => ({
         tx_being_sent: true
       }));
@@ -137,7 +135,6 @@ export default class Wallet extends React.Component {
         tx_type: cash_or_token
       });
     } else {
-      console.log("amount " + amount);
       this.setState(() => ({
         tx_being_sent: true
       }));
@@ -151,28 +148,20 @@ export default class Wallet extends React.Component {
 
   sendTransaction = args => {
     let wallet = this.props.walletMeta;
-
     wallet
       .createTransaction(args)
       .then(tx => {
         let txId = tx.transactionsIds();
-        if (this.state.cash_or_token === 0) {
-          console.log("Cash transaction created: " + txId);
-        } else {
-          console.log("Token transaction created: " + txId);
-        }
         tx.commit()
           .then(() => {
             this.setCloseSendPopup();
             if (this.state.cash_or_token === 0) {
-              console.log("Cash transaction commited successfully");
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your cash transaction ID is: " +
                   txId,
                 false
               );
             } else {
-              console.log("Token transaction commited successfully");
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your token transaction ID is: " +
                   txId,
