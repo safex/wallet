@@ -174,7 +174,7 @@
   border: 0px none;
   border-radius: 5px;
   padding: 5px 10px;
-  margin: 0 0 10px !important;
+  margin: 0 0 7px !important;
   font-size: 14px;
   background: url(../images/input-bg.png) repeat-y top left;
   background-size: 100% 100%;
@@ -314,12 +314,13 @@
   display: flex;
   align-items: flex-end;
   border-radius: 0px;
+  padding: 20px;
 }
 .sendModal:hover {
   border: 0px;
 }
-.sendModalBackdrop {
-  z-index: 10001;
+.sendModal h3 {
+  margin: 0 0 20px !important;
 }
 .sendModal textarea,
 .sendModal input {
@@ -330,7 +331,7 @@
 .sendModal .available-wrap {
   position: absolute;
   left: 20px;
-  top: 20px;
+  top: 16px;
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -339,6 +340,9 @@
   text-transform: capitalize;
   line-height: 1.2;
   font-size: 18px;
+}
+.sendModalBackdrop {
+  z-index: 10001;
 }
 
 .loadingModal {
