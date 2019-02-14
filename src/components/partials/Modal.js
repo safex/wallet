@@ -111,7 +111,7 @@ export default class LoadingModal extends React.Component {
             "addressModal" + addClass(this.props.addressModal, "active")
           }
         >
-          <span className="close" onClick={this.props.closeModal}>
+          <span className="close" onClick={this.closeAddressModal}>
             X
           </span>
           <form
@@ -119,7 +119,7 @@ export default class LoadingModal extends React.Component {
             className={this.state.loaded ? "hidden" : ""}
           >
             <label htmlFor="password">
-              Enter password for {this.state.filename}:
+              Enter password for {this.props.wallet.filename}:
             </label>
             <input name="password" type="password" className="pass-input" />
             <button
@@ -165,9 +165,9 @@ export default class LoadingModal extends React.Component {
         </div>
       );
     }
-    if (this.props.openAlert) {
+    if (this.props.alert) {
       modal = (
-        <div className={"alert" + addClass(this.props.openAlert, "active")}>
+        <div className={"alert" + addClass(this.props.alert, "active")}>
           <div className="mainAlertPopupInner">
             <p className={this.props.alertCloseDisabled ? "disabled" : ""}>
               {this.props.alertText}
@@ -206,10 +206,17 @@ export default class LoadingModal extends React.Component {
           {modal}
         </div>
 
-        <div
-          className={"backdrop" + addClass(this.props.modal, "active")}
-          onClick={this.props.alertCloseDisabled ? "" : this.props.closeModal}
-        />
+        {this.props.addressModal ? (
+          <div
+            className={"backdrop" + addClass(this.props.modal, "active")}
+            onClick={this.closeAddressModal}
+          />
+        ) : (
+          <div
+            className={"backdrop" + addClass(this.props.modal, "active")}
+            onClick={this.props.alertCloseDisabled ? "" : this.props.closeModal}
+          />
+        )}
       </div>
     );
   }

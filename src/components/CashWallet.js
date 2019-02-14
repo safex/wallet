@@ -203,7 +203,7 @@ export default class CashWallet extends React.Component {
           closeModal={this.setCloseModal}
           addressModal={this.state.address_modal}
           openModal={this.setOpenModal}
-          openAlert={this.state.alert}
+          alert={this.state.alert}
           closeAlert={this.setCloseAlert}
           setOpenAlert={this.setOpenAlert}
           alertText={this.state.alert_text}
@@ -341,7 +341,7 @@ export default class CashWallet extends React.Component {
               closeModal={this.setCloseModal}
               addressModal={this.state.address_modal}
               openModal={this.setOpenModal}
-              openAlert={this.state.alert}
+              alert={this.state.alert}
               closeAlert={this.setCloseAlert}
               setOpenAlert={this.setOpenAlert}
               alertText={this.state.alert_text}
