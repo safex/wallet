@@ -9,8 +9,8 @@ export default class Wallet extends React.Component {
     this.state = {
       wallet: null,
       alert_close_disabled: false,
-      tx_being_sent: false,
-      cash_or_token: null
+      send_cash_or_token: null,
+      tx_being_sent: false
     };
   }
 
@@ -106,91 +106,6 @@ export default class Wallet extends React.Component {
         wallet.on("updated", this.updatedCallback);
       }, 1000);
     }, 1000);
-  };
-
-  sendCashOrToken = (e, cash_or_token) => {
-    e.preventDefault();
-    let sendingAddress = e.target.send_to.value;
-    let amount = e.target.amount.value * 10000000000;
-    let paymentid = e.target.paymentid.value;
-    this.setState(() => ({
-      cash_or_token: cash_or_token
-    }));
-    if (sendingAddress === "") {
-      this.props.setOpenAlert("Fill out all the fields", false);
-      return false;
-    }
-    if (amount === "") {
-      this.props.setOpenAlert("Enter Amount", false);
-      return false;
-    }
-    if (paymentid !== "") {
-      this.setState(() => ({
-        tx_being_sent: true
-      }));
-      this.sendTransaction({
-        address: sendingAddress,
-        amount: amount,
-        paymentId: paymentid,
-        tx_type: cash_or_token
-      });
-    } else {
-      this.setState(() => ({
-        tx_being_sent: true
-      }));
-      this.sendTransaction({
-        address: sendingAddress,
-        amount: amount,
-        tx_type: cash_or_token
-      });
-    }
-  };
-
-  sendTransaction = args => {
-    let wallet = this.props.walletMeta;
-    wallet
-      .createTransaction(args)
-      .then(tx => {
-        let txId = tx.transactionsIds();
-        tx.commit()
-          .then(() => {
-            this.setCloseSendPopup();
-            if (this.state.cash_or_token === 0) {
-              this.props.setOpenAlert(
-                "Transaction commited successfully, Your cash transaction ID is: " +
-                  txId,
-                false
-              );
-            } else {
-              this.props.setOpenAlert(
-                "Transaction commited successfully, Your token transaction ID is: " +
-                  txId,
-                false
-              );
-            }
-            this.setState(() => ({
-              tx_being_sent: false
-            }));
-            setTimeout(() => {
-              this.props.setWalletData(this.props.walletMeta);
-            }, 300);
-          })
-          .catch(e => {
-            this.setState(() => ({
-              tx_being_sent: false
-            }));
-            this.props.setOpenAlert(
-              "Error on commiting transaction: " + e,
-              false
-            );
-          });
-      })
-      .catch(e => {
-        this.setState(() => ({
-          tx_being_sent: false
-        }));
-        this.props.setOpenAlert("Couldn't create transaction: " + e, false);
-      });
   };
 
   setOpenSendPopup = send_cash_or_token => {
@@ -316,13 +231,14 @@ export default class Wallet extends React.Component {
         </div>
 
         <SendModal
+          walletMeta={this.props.walletMeta}
           sendModal={this.state.send_modal}
-          send_cash_or_token={this.state.send_cash_or_token}
           closeSendPopup={this.setCloseSendPopup}
-          sendCashOrToken={this.sendCashOrToken}
-          txBeingSent={this.state.tx_being_sent}
+          send_cash_or_token={this.state.send_cash_or_token}
           availableCash={this.props.wallet.unlocked_balance}
           availableTokens={this.props.wallet.unlocked_tokens}
+          setOpenAlert={this.props.setOpenAlert}
+          setWalletData={this.props.setWalletData}
         />
       </div>
     );
