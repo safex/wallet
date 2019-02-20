@@ -15,7 +15,15 @@ export default class Wallet extends React.Component {
   }
 
   componentDidMount = () => {
+
+    let wallet = this.props.walletMeta;
+    wallet.off("refreshed");
+
     this.refreshCallback();
+
+    wallet.on("refreshed", this.refreshCallback);
+    wallet.on("updated", this.updatedCallback);
+
     this.mounted = true;
     if (!localStorage.getItem("wallet")) {
       localStorage.setItem("wallet", JSON.stringify(this.props.wallet));
@@ -43,10 +51,16 @@ export default class Wallet extends React.Component {
   refreshCallback = () => {
     console.log("Wallet refreshed");
     let wallet = this.props.walletMeta;
-    this.props.setOpenAlert(
-      "Please wait while blockchain is being updated...",
-      true
-    );
+
+    let syncedHeight = wallet.daemonBlockchainHeight() - wallet.blockchainHeight() < 10;
+    if (syncedHeight) {
+      console.log("syncedHeight up to date...");
+      if (wallet.synchronized()) {
+        console.log("refreshCallback wallet synchronized, setting state...");
+        this.props.setWalletData(wallet);
+      }
+    }
+
     wallet
       .store()
       .then(() => {
@@ -57,24 +71,8 @@ export default class Wallet extends React.Component {
         this.props.setOpenAlert("Unable to store wallet: " + e, false);
         console.log("Unable to store wallet: " + e);
       });
-    wallet.off("refreshed");
-    setTimeout(() => {
-      wallet.on("newBlock", this.newBlockCallback);
-      wallet.on("updated", this.updatedCallback);
-    }, 300);
   };
 
-  newBlockCallback = height => {
-    let wallet = this.props.walletMeta;
-    let syncedHeight = wallet.daemonBlockchainHeight() - height < 10;
-    if (syncedHeight) {
-      console.log("syncedHeight up to date...");
-      if (wallet.synchronized()) {
-        console.log("newBlock wallet synchronized, setting state...");
-        this.props.setWalletData(wallet);
-      }
-    }
-  };
 
   rescanBalance = () => {
     var wallet = this.props.walletMeta;
@@ -84,7 +82,6 @@ export default class Wallet extends React.Component {
       true
     );
     wallet.off("updated");
-    wallet.off("newBlock");
     wallet.off("refreshed");
     setTimeout(() => {
       console.log("Starting blockchain rescan sync...");
@@ -102,8 +99,8 @@ export default class Wallet extends React.Component {
           .catch(e => {
             console.log("Unable to store wallet: " + e);
           });
-        wallet.on("newBlock", this.newBlockCallback);
-        wallet.on("updated", this.updatedCallback);
+          wallet.on("refreshed", this.refreshCallback);
+          wallet.on("updated", this.updatedCallback);
       }, 1000);
     }, 1000);
   };
