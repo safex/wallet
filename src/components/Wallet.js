@@ -22,7 +22,8 @@ export default class Wallet extends React.Component {
     this.refreshCallback();
 
     wallet.on("refreshed", this.refreshCallback);
-    //wallet.on("updated", this.updatedCallback);
+
+    this.props.closeAlert();
 
     this.mounted = true;
     if (!localStorage.getItem("wallet")) {
@@ -35,18 +36,6 @@ export default class Wallet extends React.Component {
     this.props.walletMeta.off();
   }
 
-  // updatedCallback = () => {
-  //   console.log("UPDATED");
-  //   this.props.walletMeta
-  //     .store()
-  //     .then(() => {
-  //       console.log("Wallet stored");
-  //       this.props.closeModal();
-  //     })
-  //     .catch(e => {
-  //       console.log("Unable to store wallet: " + e);
-  //     });
-  // };
 
   refreshCallback = () => {
     console.log("Wallet refreshed");
@@ -64,7 +53,6 @@ export default class Wallet extends React.Component {
     wallet
       .store()
       .then(() => {
-        this.props.closeAlert();
         console.log("Wallet stored");
       })
       .catch(e => {
@@ -100,7 +88,6 @@ export default class Wallet extends React.Component {
             console.log("Unable to store wallet: " + e);
           });
           wallet.on("refreshed", this.refreshCallback);
-          //wallet.on("updated", this.updatedCallback);
       }, 1000);
     }, 1000);
   };
