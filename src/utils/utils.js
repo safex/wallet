@@ -89,7 +89,8 @@ function openModal(target, modal_type, alert, disabled, send_cash_or_token) {
 function closeModal(target) {
   if (
     (target.state.loading_modal && target.state.alert) ||
-    (target.state.address_modal && target.state.alert)
+    (target.state.address_modal && target.state.alert) ||
+    (target.state.ring_size_modal && target.state.alert)
   ) {
     target.setState({
       alert: false
@@ -103,7 +104,8 @@ function closeModal(target) {
       target.setState({
         loading_modal: false,
         alert: false,
-        address_modal: false
+        address_modal: false,
+        ring_size_modal: false
       });
     }, 300);
   }

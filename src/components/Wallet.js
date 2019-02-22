@@ -15,7 +15,6 @@ export default class Wallet extends React.Component {
   }
 
   componentDidMount = () => {
-
     let wallet = this.props.walletMeta;
     wallet.off("refreshed");
 
@@ -36,12 +35,12 @@ export default class Wallet extends React.Component {
     this.props.walletMeta.off();
   }
 
-
   refreshCallback = () => {
     console.log("Wallet refreshed");
     let wallet = this.props.walletMeta;
 
-    let syncedHeight = wallet.daemonBlockchainHeight() - wallet.blockchainHeight() < 10;
+    let syncedHeight =
+      wallet.daemonBlockchainHeight() - wallet.blockchainHeight() < 10;
     if (syncedHeight) {
       console.log("syncedHeight up to date...");
       if (wallet.synchronized()) {
@@ -60,7 +59,6 @@ export default class Wallet extends React.Component {
         console.log("Unable to store wallet: " + e);
       });
   };
-
 
   rescanBalance = () => {
     var wallet = this.props.walletMeta;
@@ -87,7 +85,7 @@ export default class Wallet extends React.Component {
           .catch(e => {
             console.log("Unable to store wallet: " + e);
           });
-          wallet.on("refreshed", this.refreshCallback);
+        wallet.on("refreshed", this.refreshCallback);
       }, 1000);
     }, 1000);
   };
@@ -131,6 +129,13 @@ export default class Wallet extends React.Component {
             <span>{this.props.wallet.blockchain_height}</span>
           </div>
           <div className="btns-right-wrap">
+            <button
+              className="button-shine ring-size-btn"
+              onClick={this.props.openRingSizeModal}
+              title="Change Ring Size"
+            >
+              <img src="images/lock.png" alt="lock" />
+            </button>
             <button
               className="button-shine address-info"
               onClick={this.props.setOpenAddressModal}
@@ -223,6 +228,7 @@ export default class Wallet extends React.Component {
           availableTokens={this.props.wallet.unlocked_tokens}
           setOpenAlert={this.props.setOpenAlert}
           setWalletData={this.props.setWalletData}
+          mixin={this.props.mixin}
         />
       </div>
     );

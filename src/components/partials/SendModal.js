@@ -36,6 +36,7 @@ export default class SendModal extends React.Component {
       let sendingAddress = e.target.send_to.value;
       let amount = e.target.amount.value * 10000000000;
       let paymentid = e.target.paymentid.value;
+      let mixin = e.target.mixin.value;
       this.setState(() => ({
         cash_or_token: cash_or_token
       }));
@@ -55,7 +56,8 @@ export default class SendModal extends React.Component {
           address: sendingAddress,
           amount: amount,
           paymentId: paymentid,
-          tx_type: cash_or_token
+          tx_type: cash_or_token,
+          mixin: this.props.mixin ? mixin : 6
         });
       } else {
         this.setState(() => ({
@@ -64,6 +66,7 @@ export default class SendModal extends React.Component {
         this.sendTransaction({
           address: sendingAddress,
           amount: amount,
+          mixin: this.props.mixin ? mixin : 6,
           tx_type: cash_or_token
         });
       }
@@ -169,6 +172,13 @@ export default class SendModal extends React.Component {
                   name="paymentid"
                   placeholder="(optional) payment id"
                   value={this.state.payment_id}
+                  onChange={this.inputOnChange.bind(this, "payment_id")}
+                />
+                <label htmlFor="paymentid">(Optional) Default Mixin</label>
+                <input
+                  name="mixin"
+                  placeholder="(optional) default mixin"
+                  value={this.state.mixin}
                   onChange={this.inputOnChange.bind(this, "payment_id")}
                 />
                 <button

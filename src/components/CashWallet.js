@@ -25,6 +25,7 @@ export default class CashWallet extends React.Component {
       local_wallet: JSON.parse(localStorage.getItem("wallet")),
       page: null,
       network: true,
+      mixin: 6,
 
       //UI variables
       progress: 0,
@@ -32,6 +33,7 @@ export default class CashWallet extends React.Component {
       alert_text: "",
       alert_close_disabled: false,
       address_modal: false,
+      ring_size_modal: false,
       loading_modal: false
     };
 
@@ -65,6 +67,10 @@ export default class CashWallet extends React.Component {
 
   setOpenAddressModal = () => {
     this.setOpenModal("address_modal", "", false, null);
+  };
+
+  openRingSizeModal = () => {
+    this.setOpenModal("ring_size_modal", "", false, null);
   };
 
   setCloseAlert = () => {
@@ -125,15 +131,12 @@ export default class CashWallet extends React.Component {
 
   refreshProgressInterval = () => {
     let wallet = this.wallet_meta;
-    let blockchainHeight =  wallet.blockchainHeight();
+    let blockchainHeight = wallet.blockchainHeight();
+    const progress = percentCalculation(blockchainHeight, this.daemon_height);
 
     if (!this.daemon_height) {
       this.daemon_height = wallet.daemonBlockchainHeight();
     }
-
-    console.log("refreshProgressInterval height="+blockchainHeight+ " daemonHeight="+this.daemon_height);
-
-    const progress = percentCalculation(blockchainHeight, this.daemon_height);
 
     this.setState({ progress });
     if ((this.daemon_height > 0 && progress < 100) || progress === Infinity) {
@@ -185,6 +188,30 @@ export default class CashWallet extends React.Component {
     });
   };
 
+  changeRingSize = e => {
+    let wallet = this.wallet_meta;
+    if (
+      e.target.value === "" ||
+      e.target.value === " " ||
+      e.target.value.startsWith(0)
+    ) {
+      this.setState({
+        mixin: 0
+      });
+      return false;
+    }
+    if (e.target.value < 9) {
+      this.setState({
+        mixin: e.target.value
+      });
+    } else {
+      this.setState({
+        mixin: 8
+      });
+    }
+    wallet.setDefaultMixin(parseFloat(this.state.mixin));
+  };
+
   renderPageWrapper = (title, page, icon) => {
     return (
       <div className="item-wrap">
@@ -209,6 +236,9 @@ export default class CashWallet extends React.Component {
           createWallet={this.createWallet}
           closeModal={this.setCloseModal}
           addressModal={this.state.address_modal}
+          ringSizeModal={this.state.ring_size_modal}
+          mixin={this.state.mixin}
+          changeRingSize={this.changeRingSize}
           openModal={this.setOpenModal}
           alert={this.state.alert}
           closeAlert={this.setCloseAlert}
@@ -238,6 +268,8 @@ export default class CashWallet extends React.Component {
             setWalletData={this.setWalletData}
             setOpenAlert={this.setOpenAlert}
             setOpenAddressModal={this.setOpenAddressModal}
+            openRingSizeModal={this.openRingSizeModal}
+            mixin={this.state.mixin}
             closeModal={this.setCloseModal}
             closeAlert={this.setCloseAlert}
           />
@@ -347,6 +379,9 @@ export default class CashWallet extends React.Component {
               createWallet={this.createWallet}
               closeModal={this.setCloseModal}
               addressModal={this.state.address_modal}
+              ringSizeModal={this.state.ring_size_modal}
+              mixin={this.state.mixin}
+              changeRingSize={this.changeRingSize}
               openModal={this.setOpenModal}
               alert={this.state.alert}
               closeAlert={this.setCloseAlert}

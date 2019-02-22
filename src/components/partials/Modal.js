@@ -49,7 +49,7 @@ export default class LoadingModal extends React.Component {
     this.props.setOpenAlert("Loading wallet file, please wait...", true);
   };
 
-  closeAddressModal = () => {
+  closeMyModal = () => {
     this.props.closeModal();
     setTimeout(() => {
       this.setState({ loaded: false });
@@ -111,7 +111,7 @@ export default class LoadingModal extends React.Component {
             "addressModal" + addClass(this.props.addressModal, "active")
           }
         >
-          <span className="close" onClick={this.closeAddressModal}>
+          <span className="close" onClick={this.closeMyModal}>
             X
           </span>
           <form
@@ -160,6 +160,49 @@ export default class LoadingModal extends React.Component {
               placeholder="mnemonic seed for your wallet"
               className={this.props.wallet.mnemonic ? "" : "hidden"}
               rows="3"
+            />
+          </div>
+        </div>
+      );
+    }
+    if (this.props.ringSizeModal) {
+      modal = (
+        <div
+          className={
+            "ringSizeModal" + addClass(this.props.ringSizeModal, "active")
+          }
+        >
+          <span className="close" onClick={this.closeMyModal}>
+            X
+          </span>
+          <form
+            onSubmit={this.loadWalletInfo}
+            className={this.state.loaded ? "hidden" : ""}
+          >
+            <label htmlFor="password">
+              Enter password for {this.props.wallet.filename}:
+            </label>
+            <input name="password" type="password" className="pass-input" />
+            <button
+              type="button"
+              className="cancel-btn button-shine"
+              onClick={this.props.closeModal}
+            >
+              Cancel
+            </button>
+            <button className="confirm-btn button-shine">Continue</button>
+          </form>
+
+          <div className={this.state.loaded ? "ring-size-wrap" : "hidden"}>
+            <label htmlFor="view_key">Set Ring Size (0-8)</label>
+            <input
+              type="text"
+              name="set_ring_size"
+              className="pass-input"
+              value={this.props.mixin}
+              onChange={this.props.changeRingSize}
+              maxLength="2"
+              max="8"
             />
           </div>
         </div>

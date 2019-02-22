@@ -388,3 +388,13 @@
   text-align: left !important;
   padding: 5px 10px !important;
 }
+.ringSizeModal .pass-input {
+  border-radius: 5px;
+  border: 1px solid #327a9b;
+  text-align: left;
+  padding: 5px 10px;
+}
+.ringSizeModal .ring-size-wrap .pass-input {
+  text-align: center;
+  font-size: 18px;
+}

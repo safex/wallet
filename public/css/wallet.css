@@ -1,7 +1,9 @@
 /* Wallet File Wrap */
 .wallet-inner-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
+  background-size: 100% 370px;
   padding: 50px 20px 20px !important;
+  height: 440px;
 }
 .wallet-inner-wrap.no-mnemonic {
   padding: 40px 20px 20px;
@@ -21,28 +23,23 @@
   right: 0;
   top: 0;
 }
-.wallet-inner-wrap .address-info {
+.wallet-inner-wrap .btns-right-wrap button {
+  background: transparent;
+  border: 0px none;
   text-align: center;
   background: rgba(143, 253, 253, 0.62);
   border: 0px none;
   padding: 4px 12px 7px;
   border-radius: 0px;
-  position: absolute;
-  right: 50px;
+  float: left;
+  margin-right: 10px;
+  min-width: 42px;
 }
-.wallet-inner-wrap .address-info img {
+.wallet-inner-wrap .btns-right-wrap button img {
   max-height: 18px;
 }
-.wallet-inner-wrap .rescan {
-  text-align: center;
-  background: rgba(143, 253, 253, 0.62);
-  border: 0px none;
-  padding: 4px 12px 7px;
-  border-radius: 0px;
-  float: right;
-}
-.wallet-inner-wrap .rescan img {
-  max-height: 18px;
+.wallet-inner-wrap .btns-right-wrap button.rescan {
+  margin-right: 0;
 }
 .wallet-inner-wrap .signal {
   border: 0px none;
@@ -51,11 +48,9 @@
   margin-left: 10px;
   display: inline-block;
 }
-
 .wallet-inner-wrap .signal {
   margin-bottom: 5px;
 }
-
 .wallet-inner-wrap .signal:hover {
   box-shadow: none !important;
   cursor: initial;
