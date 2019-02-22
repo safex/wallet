@@ -326,6 +326,7 @@
   text-transform: initial;
   margin: 0 0 5px;
   color: rgba(255, 0, 78, 0.75);
+  letter-spacing: 0.5px;
 }
 .sendModal textarea,
 .sendModal input {

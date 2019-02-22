@@ -9,7 +9,8 @@ export default class SendModal extends React.Component {
       amount: "",
       payment_id: "",
       cash_or_token: null,
-      tx_being_sent: false
+      tx_being_sent: false,
+      mixin: this.props.mixin
     };
   }
 
@@ -132,7 +133,7 @@ export default class SendModal extends React.Component {
       });
       return false;
     }
-    if (e.target.value < 9) {
+    if (e.target.value <= 8 && e.target.value >= 1) {
       this.setState({
         mixin: e.target.value
       });
@@ -141,7 +142,7 @@ export default class SendModal extends React.Component {
         mixin: 8
       });
     }
-    wallet.setDefaultMixin(parseFloat(this.props.mixin));
+    wallet.setDefaultMixin(parseFloat(this.state.mixin));
   };
 
   render() {
@@ -205,6 +206,9 @@ export default class SendModal extends React.Component {
                   name="mixin"
                   placeholder="(optinal) Default mixin is 6"
                   onChange={this.changeDefaultMixin}
+                  min="1"
+                  max="8"
+                  maxLength="1"
                 />
                 <h4>*Changing default mixin may jeopardize your privacy</h4>
                 <button
