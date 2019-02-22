@@ -57,7 +57,7 @@ export default class SendModal extends React.Component {
           amount: amount,
           paymentId: paymentid,
           tx_type: cash_or_token,
-          mixin: this.props.mixin ? mixin : 6
+          mixin: mixin !== "" ? mixin : 6
         });
       } else {
         this.setState(() => ({
@@ -66,7 +66,7 @@ export default class SendModal extends React.Component {
         this.sendTransaction({
           address: sendingAddress,
           amount: amount,
-          mixin: this.props.mixin ? mixin : 6,
+          mixin: mixin !== "" ? mixin : 6,
           tx_type: cash_or_token
         });
       }
@@ -120,6 +120,30 @@ export default class SendModal extends React.Component {
       });
   };
 
+  changeDefaultMixin = e => {
+    let wallet = this.props.walletMeta;
+    if (
+      e.target.value === "" ||
+      e.target.value === " " ||
+      e.target.value.startsWith(0)
+    ) {
+      this.setState({
+        mixin: 0
+      });
+      return false;
+    }
+    if (e.target.value < 9) {
+      this.setState({
+        mixin: e.target.value
+      });
+    } else {
+      this.setState({
+        mixin: 8
+      });
+    }
+    wallet.setDefaultMixin(parseFloat(this.props.mixin));
+  };
+
   render() {
     return (
       <div>
@@ -170,17 +194,19 @@ export default class SendModal extends React.Component {
                 <label htmlFor="paymentid">(Optional) Payment ID</label>
                 <input
                   name="paymentid"
-                  placeholder="(optional) payment id"
+                  placeholder="(optional) Payment ID"
                   value={this.state.payment_id}
                   onChange={this.inputOnChange.bind(this, "payment_id")}
                 />
-                <label htmlFor="paymentid">(Optional) Default Mixin</label>
+                <label htmlFor="paymentid">
+                  (Optional) Set Transaction Mixin
+                </label>
                 <input
                   name="mixin"
-                  placeholder="(optional) default mixin"
-                  value={this.state.mixin}
-                  onChange={this.inputOnChange.bind(this, "payment_id")}
+                  placeholder="(optinal) Default mixin is 6"
+                  onChange={this.changeDefaultMixin}
                 />
+                <h4>*Changing default mixin may jeopardize your privacy</h4>
                 <button
                   className="btn button-shine"
                   type="submit"

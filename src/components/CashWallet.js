@@ -33,7 +33,6 @@ export default class CashWallet extends React.Component {
       alert_text: "",
       alert_close_disabled: false,
       address_modal: false,
-      ring_size_modal: false,
       loading_modal: false
     };
 
@@ -67,10 +66,6 @@ export default class CashWallet extends React.Component {
 
   setOpenAddressModal = () => {
     this.setOpenModal("address_modal", "", false, null);
-  };
-
-  openRingSizeModal = () => {
-    this.setOpenModal("ring_size_modal", "", false, null);
   };
 
   setCloseAlert = () => {
@@ -188,30 +183,6 @@ export default class CashWallet extends React.Component {
     });
   };
 
-  changeRingSize = e => {
-    let wallet = this.wallet_meta;
-    if (
-      e.target.value === "" ||
-      e.target.value === " " ||
-      e.target.value.startsWith(0)
-    ) {
-      this.setState({
-        mixin: 0
-      });
-      return false;
-    }
-    if (e.target.value < 9) {
-      this.setState({
-        mixin: e.target.value
-      });
-    } else {
-      this.setState({
-        mixin: 8
-      });
-    }
-    wallet.setDefaultMixin(parseFloat(this.state.mixin));
-  };
-
   renderPageWrapper = (title, page, icon) => {
     return (
       <div className="item-wrap">
@@ -236,7 +207,6 @@ export default class CashWallet extends React.Component {
           createWallet={this.createWallet}
           closeModal={this.setCloseModal}
           addressModal={this.state.address_modal}
-          ringSizeModal={this.state.ring_size_modal}
           mixin={this.state.mixin}
           changeRingSize={this.changeRingSize}
           openModal={this.setOpenModal}
@@ -379,7 +349,6 @@ export default class CashWallet extends React.Component {
               createWallet={this.createWallet}
               closeModal={this.setCloseModal}
               addressModal={this.state.address_modal}
-              ringSizeModal={this.state.ring_size_modal}
               mixin={this.state.mixin}
               changeRingSize={this.changeRingSize}
               openModal={this.setOpenModal}

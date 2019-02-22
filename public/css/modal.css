@@ -322,6 +322,11 @@
 .sendModal h3 {
   margin: 0 0 20px !important;
 }
+.sendModal h4 {
+  text-transform: initial;
+  margin: 0 0 5px;
+  color: rgba(255, 0, 78, 0.75);
+}
 .sendModal textarea,
 .sendModal input {
   padding: 4px 10px 5px !important;

@@ -130,13 +130,6 @@ export default class Wallet extends React.Component {
           </div>
           <div className="btns-right-wrap">
             <button
-              className="button-shine ring-size-btn"
-              onClick={this.props.openRingSizeModal}
-              title="Change Ring Size"
-            >
-              <img src="images/lock.png" alt="lock" />
-            </button>
-            <button
               className="button-shine address-info"
               onClick={this.props.setOpenAddressModal}
               title="Address Info"
