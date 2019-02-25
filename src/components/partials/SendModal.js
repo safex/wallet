@@ -81,6 +81,7 @@ export default class SendModal extends React.Component {
       .createTransaction(args)
       .then(tx => {
         let txId = tx.transactionsIds();
+        console.log(args);
         tx.commit()
           .then(() => {
             this.closeSendPopup();
@@ -124,26 +125,27 @@ export default class SendModal extends React.Component {
 
   changeDefaultMixin = e => {
     let wallet = this.props.walletMeta;
-    if (
-      e.target.value === "" ||
-      e.target.value === " " ||
-      e.target.value.startsWith(0)
-    ) {
-      this.setState({
-        mixin: e.target.value
-      });
-      return false;
+    try {
+      if (e.target.value === "" || e.target.value === " ") {
+        this.setState({
+          mixin: e.target.value
+        });
+        return false;
+      }
+      if (e.target.value <= 8) {
+        this.setState({
+          mixin: e.target.value
+        });
+      } else {
+        this.setState({
+          mixin: 6
+        });
+      }
+      wallet.setDefaultMixin(parseFloat(e.target.value));
+      console.log(e.target.value);
+    } catch (err) {
+      this.props.setOpenAlert(`${err}`);
     }
-    if (e.target.value <= 8 && e.target.value >= 0) {
-      this.setState({
-        mixin: e.target.value
-      });
-    } else {
-      this.setState({
-        mixin: 8
-      });
-    }
-    wallet.setDefaultMixin(parseFloat(e.target.value));
   };
 
   disableInputPaste = e => {
@@ -210,15 +212,17 @@ export default class SendModal extends React.Component {
                   (Optional) Set Transaction Mixin (0-8)
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   name="mixin"
                   placeholder="(optinal) Default mixin is 6"
                   value={this.state.mixin}
                   onChange={this.changeDefaultMixin}
                   onPaste={this.disableInputPaste}
+                  pattern="\d*"
                   min="0"
                   max="8"
                   maxLength="1"
+                  step="1"
                 />
                 <h4>*Changing default mixin may jeopardize your privacy</h4>
                 <button
