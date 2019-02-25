@@ -23,13 +23,13 @@
   font-style: normal;
 }
 @font-face {
-  font-family: "Atrament", sans-serif;
+  font-family: "Atrament";
   src: url("../fonts/Atrament-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
-  font-family: "Atrament-Bold", sans-serif;
+  font-family: "Atrament-Bold";
   src: url("../fonts/Atrament-Regular.woff") format("woff");
   font-weight: 700;
   font-style: normal;
@@ -65,6 +65,54 @@ body {
 }
 img {
   pointer-events: none;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+button,
+.toggle-wrap {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+p:hover {
+  cursor: initial;
+}
+
+.toggle-wrap {
+  padding: 0 0 5px;
+  text-align: center;
+}
+.toggle-wrap label {
+  display: inline;
+  margin-right: 10px;
+}
+.toggle-wrap span {
+  display: inline;
+  text-align: left;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 1);
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+.toggle-wrap .react-switch {
+  margin: 0 3px;
+  top: 7px;
+}
+.toggle-wrap .react-switch-handle {
+  height: 25px !important;
+  width: 25px !important;
+  top: 2px !important;
+}
+.progress {
+  margin: 15px 0 0;
 }
 
 .button-shine {
@@ -79,6 +127,7 @@ img {
   transition: all 0.2s ease-in;
 }
 .button-shine:hover {
+  cursor: pointer;
   color: white;
   box-shadow: 0 0 25px 0 rgba(255, 214, 22, 0.8);
   -webkit-transition: all 0.2s ease-out;
@@ -117,14 +166,6 @@ img {
 .animated {
   animation-duration: 1s;
   animation-fill-mode: both;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 @-webkit-keyframes shine {
   from {

@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 10001;
+  z-index: 10003;
   opacity: 0;
   visibility: hidden;
   transition: all ease 0.3s;
@@ -33,7 +33,7 @@
   text-transform: uppercase;
   font-size: 17px;
   padding: 15px;
-  width: calc(100% - 40px);
+  width: 510px;
   visibility: hidden;
   opacity: 0;
   transition: all ease 0.3s;
@@ -48,7 +48,8 @@
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 100002;
+  z-index: 100004;
+  -webkit-app-region: no-drag;
 }
 .modal.active {
   visibility: visible;
@@ -84,7 +85,7 @@
   letter-spacing: 0.8px;
   margin-bottom: 0;
   text-transform: initial;
-  line-height: 1.2;
+  line-height: 1;
   text-align: center;
 }
 .modal button:hover {
@@ -119,7 +120,7 @@
   font-size: 14px;
   background: url(../images/input-bg.png) repeat-y top left;
   background-size: 100% 100%;
-  color: #fff;
+  color: #fff !important;
   width: 100%;
   max-height: 90px;
   transition: all ease 0.3s;
@@ -173,11 +174,11 @@
   border: 0px none;
   border-radius: 5px;
   padding: 5px 10px;
-  margin: 0 0 8px;
+  margin: 0 0 7px !important;
   font-size: 14px;
   background: url(../images/input-bg.png) repeat-y top left;
   background-size: 100% 100%;
-  color: #fff;
+  color: #fff !important;
   width: 100%;
   max-height: 90px;
   transition: all ease 0.3s;
@@ -306,11 +307,109 @@
 }
 
 .sendModal {
-  min-height: 301px;
+  z-index: 10002;
+  width: 100% !important;
+  border: 0px;
+  max-height: 100%;
+  display: flex;
+  align-items: flex-end;
+  border-radius: 0px;
+  padding: 20px;
+}
+.sendModal:hover {
+  border: 0px;
+}
+.sendModal h3 {
+  margin: 0 0 20px !important;
+}
+.sendModal h4 {
+  text-transform: initial;
+  margin: 0 0 5px;
+  color: rgba(255, 0, 78, 0.75);
+  letter-spacing: 0.5px;
 }
 .sendModal textarea,
 .sendModal input {
   padding: 4px 10px 5px !important;
   border-radius: 0px;
   text-align: left !important;
+}
+.sendModal .available-wrap {
+  position: absolute;
+  left: 20px;
+  top: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+.sendModal .available-wrap span {
+  text-transform: capitalize;
+  line-height: 1.2;
+  font-size: 18px;
+}
+.sendModalBackdrop {
+  z-index: 10001;
+}
+.sendModal input[type="number"]::-webkit-inner-spin-button,
+.sendModal input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.loadingModal {
+  padding: 10px;
+}
+.loadingModal h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+.loadingModal label {
+  text-transform: initial;
+}
+.loadingModal input {
+  border: 1px solid #327a9b;
+}
+.loadingModal p {
+  font-size: 20px;
+}
+.loadingModal .cancel-btn {
+  margin: 0 5px 0 0;
+}
+.loadingModal button {
+  margin: 0 0 0 5px;
+}
+
+.addressModal h3 {
+  font-size: 21px;
+}
+.addressModal label {
+  text-transform: initial !important;
+  font-weight: 400 !important;
+  margin-bottom: 5px !important;
+  font-size: 19px !important;
+}
+.addressModal input,
+.addressModal textarea {
+  font-size: 19px !important;
+  padding: 5px !important;
+  border-bottom: 1px solid #8ffdfd;
+  border-radius: 0;
+  text-align: center;
+}
+.addressModal .pass-input {
+  border-radius: 5px;
+  border: 1px solid #327a9b !important;
+  text-align: left !important;
+  padding: 5px 10px !important;
+}
+.ringSizeModal .pass-input {
+  border-radius: 5px;
+  border: 1px solid #327a9b;
+  text-align: left;
+  padding: 5px 10px;
+}
+.ringSizeModal .ring-size-wrap .pass-input {
+  text-align: center;
+  font-size: 18px;
 }

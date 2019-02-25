@@ -23,13 +23,14 @@ function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1024,
-    height: 600,
+    height: 650,
     minWidth: 1024,
-    minHeight: 600,
+    minHeight: 650,
     webPreferences: {
       webSecurity: false
     },
-    useContentSize: true
+    useContentSize: true,
+    frame: false
   });
 
   // and load the index.html of the app.
@@ -42,7 +43,8 @@ function createWindow() {
     });
   mainWindow.loadURL(startUrl);
 
-  // mainWindow.webContents.openDevTools();
+  if (process.env.NODE_ENV === "development")
+    mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on("closed", function() {

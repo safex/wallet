@@ -1,46 +1,17 @@
 import React from "react";
-import Alert from "./partials/Alert";
-
+import { verify_safex_address } from "../utils/utils.js";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
-
-import { verify_safex_address, openAlert, closeAlert } from "../utils/utils.js";
 
 export default class CreateFromKeys extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wallet_path: "",
-      wallet_exists: false,
-      wallet: {},
-      wallet_loaded: false,
-      wallet_address: "",
-      spend_key: "",
-      view_key: "",
-      net: "mainnet",
-      daemonHostPort: "rpc.safex.io:17402",
-      create_from_keys_alert: false
+      alert_close_disabled: false
     };
-
-    this.goBack = this.goBack.bind(this);
-    this.setOpenAlert = this.setOpenAlert.bind(this);
-    this.setCloseAlert = this.setCloseAlert.bind(this);
-    this.createWalletFromKeys = this.createWalletFromKeys.bind(this);
   }
 
-  goBack() {
-    this.props.goBack();
-  }
-
-  setOpenAlert(alert, alert_state, disabled) {
-    openAlert(this, alert, alert_state, disabled);
-  }
-
-  setCloseAlert() {
-    closeAlert(this);
-  }
-
-  createWalletFromKeys(e) {
+  createWalletFromKeys = e => {
     e.preventDefault();
 
     //here we need the key set
@@ -53,206 +24,88 @@ export default class CreateFromKeys extends React.Component {
     var pass2 = e.target.pass2.value;
 
     if (
-      safex_address !== "" ||
-      view_key !== "" ||
-      spend_key !== "" ||
-      pass1 !== "" ||
-      pass2 !== ""
+      safex_address === "" ||
+      view_key === "" ||
+      spend_key === "" ||
+      pass1 === "" ||
+      pass2 === ""
     ) {
-      if (pass1 !== "" && pass2 !== "" && pass1 === pass2) {
-        if (
-          this.state.net == "testnet" ||
-          verify_safex_address(spend_key, view_key, safex_address)
-        ) {
-          dialog.showSaveDialog(filepath => {
-            if (filepath !== undefined) {
-              this.setState({
-                wallet_path: filepath
-              });
-              var args = {
-                path: this.state.wallet_path,
-                password: pass1,
-                network: this.state.net,
-                daemonAddress: this.state.daemonHostPort,
-                restoreHeight: 0,
-                addressString: safex_address,
-                viewKeyString: view_key,
-                spendKeyString: spend_key
-              };
-              if (!safex.walletExists(filepath)) {
-                this.setState(() => ({
-                  wallet_exists: false,
-                  modal_close_disabled: true
-                }));
-                this.setOpenAlert(
-                  "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
-                  "create_from_keys_alert",
-                  true
-                );
-                console.log(
-                  "wallet doesn't exist. creating new one: " +
-                    this.state.wallet_path
-                );
-
-                safex
-                  .createWalletFromKeys(args)
-                  .then(wallet => {
-                    console.log("Create wallet form keys performed!");
-                    this.setState({
-                      wallet_loaded: true,
-                      wallet: wallet,
-                      wallet_address: wallet.address(),
-                      spend_key: wallet.secretSpendKey(),
-                      view_key: wallet.secretViewKey(),
-                      modal_close_disabled: false
-                    });
-                    console.log("wallet address  " + this.state.wallet_address);
-                    console.log(
-                      "wallet spend private key  " + this.state.spend_key
-                    );
-                    console.log(
-                      "wallet view private key  " + this.state.view_key
-                    );
-                    console.log("create_new_wallet_from_keys checkpoint 1");
-
-                    wallet.on("refreshed", () => {
-                      console.log("Wallet File successfully created!");
-                      this.refs.address.value = "";
-                      this.refs.spendkey.value = "";
-                      this.refs.viewkey.value = "";
-                      this.refs.pass1.value = "";
-                      this.refs.pass2.value = "";
-                      this.setOpenAlert(
-                        "Wallet File successfully created!",
-                        "create_new_wallet_alert",
-                        false
-                      );
-                      wallet
-                        .store()
-                        .then(() => {
-                          console.log("Wallet stored");
-                        })
-                        .catch(e => {
-                          console.log("Unable to store wallet: " + e);
-                        });
-                    });
-                  })
-                  .catch(err => {
-                    console.log("Create wallet form keys failed!");
-                    this.setOpenAlert(
-                      "Error with the creation of the wallet " + err,
-                      "create_from_keys_alert",
-                      false
-                    );
-                  });
-              } else {
-                console.log("Safex wallet exists!");
-                this.setState(() => ({
-                  modal_close_disabled: false
-                }));
-                this.setOpenAlert(
-                  "Wallet already exists. Please choose a different file name  " +
-                    "this application does not enable overwriting an existing wallet file " +
-                    "OR you can open it using the Load Existing Wallet",
-                  "create_from_keys_alert",
-                  false
-                );
-              }
-            }
-          });
-          console.log("create_new_wallet_from_keys checkpoint 2");
-        } else {
-          console.log("Incorrect keys");
-          this.setOpenAlert("Incorrect keys", "create_from_keys_alert", false);
-        }
-      } else {
-        this.setOpenAlert(
-          "Passwords do not match",
-          "create_from_keys_alert",
-          false
-        );
-      }
-    } else {
-      this.setOpenAlert(
-        "Fill out all the fields",
-        "create_from_keys_alert",
-        false
-      );
+      this.props.setOpenAlert("Fill out all the fields");
+      return false;
     }
-  }
+    if (pass1 !== pass2) {
+      this.props.setOpenAlert("Passwords do not match");
+      return false;
+    }
+    if (spend_key.length !== 64) {
+      this.props.setOpenAlert("Incorrect spend key");
+      return false;
+    }
+    if (view_key.length !== 64) {
+      this.props.setOpenAlert("Incorrect view key");
+      return false;
+    }
+    if (
+      this.state.network === "mainnet" &&
+      verify_safex_address(spend_key, view_key, safex_address) === false
+    ) {
+      this.props.setOpenAlert("Incorrect keys");
+      return false;
+    }
+    dialog.showSaveDialog(filepath => {
+      if (!filepath) {
+        return false;
+      }
+      if (safex.walletExists(filepath)) {
+        this.props.setOpenAlert(
+          `Wallet already exists. Please choose a different file name. 
+          This application does not enable overwriting an existing wallet file 
+          OR you can open it using the Load Existing Wallet`
+        );
+        return false;
+      }
+      this.setState(() => ({
+        alert_close_disabled: true
+      }));
+      this.props.setOpenAlert(
+        "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
+        true
+      );
+      console.log("Wallet doesn't exist. creating new one: " + filepath);
+      this.props.createWallet("createWalletFromKeys", {
+        path: filepath,
+        password: pass1,
+        network: this.props.env.NETWORK,
+        daemonAddress: this.props.env.ADDRESS,
+        restoreHeight: 0,
+        addressString: safex_address,
+        viewKeyString: view_key,
+        spendKeyString: spend_key
+      });
+      localStorage.setItem("wallet_path", filepath);
+      localStorage.setItem("password", JSON.stringify(pass1));
+      console.log("Create wallet from keys performed!");
+      console.log("Create new wallet from keys checkpoint 1");
+    });
+    console.log("Create new wallet from keys checkpoint 2");
+  };
 
   render() {
     return (
-      <div
-        className={
-          this.state.closing
-            ? "create-new-wrap create-from-keys-wrap animated fadeOut"
-            : "create-new-wrap create-from-keys-wrap"
-        }
-      >
-        <img
-          src="images/new-from-keys.png"
-          className="create-new-pic"
-          alt="new-from-keys"
-        />
-        <button
-          onClick={this.goBack}
-          className="go-back-btn button-shine"
-          disabled={this.state.alert_close_disabled ? "disabled" : ""}
-        >
-          Back
-        </button>
-
-        <h2>Create New Wallet From Keys</h2>
-        <div className="col-xs-6 col-xs-push-3 login-wrap">
-          <form onSubmit={this.createWalletFromKeys}>
-            <div className="group-wrap">
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="address"
-                  ref="address"
-                  placeholder="address"
-                />
-                <input
-                  type="text"
-                  name="spendkey"
-                  ref="spendkey"
-                  placeholder="secret spendkey"
-                />
-                <input
-                  type="text"
-                  name="viewkey"
-                  ref="viewkey"
-                  placeholder="secret viewkey"
-                />
-                <input
-                  type="password"
-                  name="pass1"
-                  ref="pass1"
-                  placeholder="password"
-                />
-                <input
-                  type="password"
-                  name="pass2"
-                  ref="pass2"
-                  placeholder="repeat password"
-                />
-              </div>
-            </div>
-            <button type="submit" className="submit btn button-shine">
-              Create
-            </button>
-          </form>
-
-          <Alert
-            openAlert={this.state.create_from_keys_alert}
-            alertText={this.state.alert_text}
-            alertCloseDisabled={this.state.alert_close_disabled}
-            closeAlert={this.setCloseAlert}
-          />
+      <form onSubmit={this.createWalletFromKeys}>
+        <div className="group-wrap">
+          <div className="form-group">
+            <input type="text" name="address" placeholder="address" />
+            <input type="text" name="spendkey" placeholder="secret spendkey" />
+            <input type="text" name="viewkey" placeholder="secret viewkey" />
+            <input type="password" name="pass1" placeholder="password" />
+            <input type="password" name="pass2" placeholder="repeat password" />
+          </div>
         </div>
-      </div>
+        <button type="submit" className="submit btn button-shine">
+          Create
+        </button>
+      </form>
     );
   }
 }

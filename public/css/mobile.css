@@ -1,0 +1,122 @@
+@media (max-width: 991px) {
+  .modal {
+    width: 66.66666667%;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Cash Wallet */
+  .item-wrap h2 {
+    font-size: 30px !important;
+    margin: 30px 0 40px !important;
+  }
+  .item-wrap .login-wrap .btn {
+    font-size: 24px;
+    height: auto;
+  }
+  .item-wrap .login-wrap form input::-webkit-input-placeholder,
+  .item-wrap .login-wrap form input::-moz-placeholder,
+  .item-wrap .login-wrap form input:-moz-placeholder,
+  .item-wrap .login-wrap form input:-ms-input-placeholder {
+    font-size: 17px;
+  }
+  .item-wrap .item-inner {
+    padding: 0 10px;
+    height: calc(100% - 63px);
+  }
+  .options-wrap .options-inner {
+    flex-direction: column;
+    width: 100%;
+    height: inherit;
+  }
+  .options-wrap .item img {
+    width: auto;
+    height: 100%;
+    margin-right: 10px;
+    margin-bottom: -10px;
+  }
+  .options-wrap .item:nth-of-type(2) img {
+    height: 125%;
+    margin-bottom: 0px;
+  }
+  .options-wrap .options-inner .item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 25%;
+    overflow: hidden;
+  }
+  .options-wrap .options-inner .item:last-of-type {
+    margin-bottom: 0;
+  }
+  .options-wrap .item h3 {
+    margin-left: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: left;
+    font-size: 24px;
+  }
+  .go-back-btn {
+    top: initial !important;
+    padding: 4px 25px 5px !important;
+    bottom: 0;
+    position: fixed !important;
+    z-index: 2;
+  }
+  .minimize-app-btn,
+  .maximize-app-btn {
+    display: none;
+  }
+
+  /* Wallet */
+  .wallet-inner-wrap {
+    background: url(../images/login-bg.png) no-repeat top left / cover;
+    padding: 20px !important;
+    margin-top: 30px;
+  }
+  .wallet-inner-wrap .blockheight span,
+  .wallet-inner-wrap .signal span,
+  .wallet-inner-wrap input,
+  .wallet-inner-wrap textarea,
+  .item-wrap .login-wrap label,
+  .wallet-inner-wrap label,
+  .wallet-inner-wrap .display-value {
+    font-size: 17px;
+  }
+  .wallet-inner-wrap .btn {
+    font-size: 20px !important;
+  }
+  .wallet-inner-wrap input::-webkit-input-placeholder,
+  .wallet-inner-wrap input::-moz-placeholder,
+  .wallet-inner-wrap input:-moz-placeholder,
+  .wallet-inner-wrap input:-ms-input-placeholder {
+    font-size: 17px;
+  }
+  .wallet-inner-wrap .btn-wrap {
+    position: absolute;
+    top: -3px;
+  }
+  .wallet-inner-wrap .btns-right-wrap {
+    right: 0;
+    top: 33px;
+  }
+
+  /* Open File */
+  .open-file-wrap .login-wrap .browse-btn {
+    font-size: 24px;
+  }
+
+  /* Modal */
+  .modal {
+    width: calc(100% - 20px);
+  }
+  .sendModal {
+    padding: 45px 10px 10px;
+  }
+  .sendModal .available-wrap {
+    left: 10px;
+    top: 10px;
+  }
+}

@@ -1,26 +1,12 @@
 /* Alert */
 .alert {
-  display: table;
-  border: 1px solid #327a9b;
-  background: #000;
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 17px;
-  padding: 12px 15px 15px;
-  width: calc(100% - 40px);
-  visibility: hidden;
-  opacity: 0;
-  transition: all ease 0.3s;
-  -o-transition: all ease 0.3s;
-  -moz-transition: all ease 0.3s;
-  -webkit-transition: all ease 0.3s;
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 100005;
+  text-shadow: none;
+  box-shadow: none;
+  visibility: visible;
+  opacity: 1;
+  margin: 0;
+  padding: 0;
+  border: 0px none;
 }
 .alert.active {
   visibility: visible;
@@ -28,9 +14,6 @@
 }
 .alert:hover {
   outline: 0px none;
-  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
-  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
-  border: 1px solid #00e7ff;
 }
 .alert .close {
   position: absolute;
@@ -54,39 +37,15 @@
   background: transparent;
   border: 0px none;
   margin-right: 0;
-  padding-right: 25px;
+  padding-right: 20px;
   font-size: 20px;
   letter-spacing: 0.5px;
   margin-bottom: 0;
   text-transform: initial;
-  line-height: 1.2;
+  line-height: 1;
   text-align: left;
   word-break: break-word;
 }
 .alert p.disabled {
   padding-right: 0;
-}
-.alertBackdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 100004;
-  opacity: 0;
-  visibility: hidden;
-  transition: all ease 0.3s;
-  -o-transition: all ease 0.3s;
-  -moz-transition: all ease 0.3s;
-  -webkit-transition: all ease 0.3s;
-}
-.alertBackdrop.active {
-  visibility: visible;
-  opacity: 1;
 }

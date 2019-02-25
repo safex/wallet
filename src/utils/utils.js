@@ -1,16 +1,16 @@
-var swg = window.require("safex-addressjs");
+var safex = window.require("safex-addressjs");
 const remote = window.require("electron").remote;
 
 /**
  * Verify Safex Address
  */
 function verify_safex_address(spend, view, address) {
-  var spend_pub = swg.sec_key_to_pub(spend);
-  var view_pub = swg.sec_key_to_pub(view);
+  var spend_pub = safex.sec_key_to_pub(spend);
+  var view_pub = safex.sec_key_to_pub(view);
 
-  var _address = swg.pubkeys_to_string(spend_pub, view_pub);
+  var _address = safex.pubkeys_to_string(spend_pub, view_pub);
 
-  if (_address == address) {
+  if (_address === address) {
     return true;
   } else {
     return false;
@@ -19,73 +19,22 @@ function verify_safex_address(spend, view, address) {
 
 /**
  * Structure Safex Address
- *
- * key object
- * {
- *     spend : {
- *         sec : secret_key
- *         pub: : public_key
- *     },
- *     view : {
- *         sec : secret_key
- *         pub: : public_key
- *     },
- *     checksum : checksum of address
- * }
  */
 function structureSafexKeys(spend, view) {
-  const keys = swg.structure_keys(spend, view);
-  const checksum = swg.address_checksum(keys.spend.pub, keys.view.pub);
+  const keys = safex.structure_keys(spend, view);
+  const checksum = safex.address_checksum(keys.spend.pub, keys.view.pub);
   keys["checksum"] = checksum;
 
   return keys;
 }
 
 /**
- * Open Alert Popup
- * @param alert
- * @param alert_state
- * @param disabled
+ * Open Send Popup
  */
-function openAlert(target, alert, alert_state, disabled) {
+function openSendPopup(target, send_cash_or_token) {
   target.setState({
-    [alert_state]: true,
-    alert_text: alert,
-    alert_close_disabled: disabled
-  });
-}
-
-/**
- * Close Alert Popup
- */
-function closeAlert(target) {
-  target.setState({
-    alert: false,
-    open_file_alert: false,
-    create_new_wallet_alert: false,
-    create_from_keys_alert: false,
-    new_from_mnemonic_alert: false,
-    alert_close_disabled: false
-  });
-}
-
-/**
- * Open Send Cash Popup
- */
-function openSendCashPopup(target) {
-  target.setState({
-    send_cash: true,
-    send_token: false
-  });
-}
-
-/**
- * Open Send Token Popup
- */
-function openSendTokenPopup(target) {
-  target.setState({
-    send_token: true,
-    send_cash: false
+    send_modal: true,
+    send_cash_or_token: send_cash_or_token
   });
 }
 
@@ -94,31 +43,140 @@ function openSendTokenPopup(target) {
  */
 function closeSendPopup(target) {
   target.setState({
-    send_cash: false,
-    send_token: false
+    send_modal: false
   });
+  setTimeout(() => {
+    target.setState({
+      send_cash_or_token: false
+    });
+  }, 300);
 }
 
 /**
  * Close App
  */
-function closeApp(target) {
+function closeApp() {
   let window = remote.getCurrentWindow();
-
-  target.setState({ closing: true, exit_modal: false });
-
-  setTimeout(() => {
-    window.close();
-  }, 1000);
+  window.close();
 }
 
-module.exports = {
+/**
+ * Add class
+ */
+const addClass = (condition, className) => (condition ? ` ${className} ` : "");
+
+/**
+ * Open Modal
+ * @param target
+ * @param modal_type
+ * @param alert
+ * @param disabled
+ * @param send_cash_or_token
+ */
+function openModal(target, modal_type, alert, disabled, send_cash_or_token) {
+  target.setState({
+    modal: true,
+    [modal_type]: true,
+    alert_text: alert,
+    send_cash_or_token: send_cash_or_token,
+    alert_close_disabled: disabled
+  });
+}
+
+/**
+ * Close Modal
+ */
+function closeModal(target) {
+  if (
+    (target.state.loading_modal && target.state.alert) ||
+    (target.state.address_modal && target.state.alert)
+  ) {
+    target.setState({
+      alert: false
+    });
+  } else {
+    target.setState({
+      modal: false,
+      alert_close_disabled: false
+    });
+    setTimeout(() => {
+      target.setState({
+        loading_modal: false,
+        alert: false,
+        address_modal: false
+      });
+    }, 300);
+  }
+}
+
+/**
+ * Close Modal
+ */
+function closeAlert(target) {
+  target.setState({
+    modal: false,
+    alert_close_disabled: false
+  });
+  setTimeout(() => {
+    target.setState({
+      alert: false
+    });
+  }, 300);
+}
+
+/**
+ * Parse env object
+ */
+function parseEnv() {
+  const env_obj = {};
+
+  for (let key in process.env)
+    env_obj[key.replace("REACT_APP_", "")] = process.env[key];
+
+  return env_obj;
+}
+
+/**
+ * Round Amount
+ */
+function roundAmount(balance) {
+  return Math.floor(parseFloat(balance) / 100000000) / 100;
+}
+
+/**
+ * Calculate percentage of 2 numbers
+ */
+function percentCalculation(partialValue, totalValue) {
+  return (100 * partialValue) / totalValue;
+}
+
+/**
+ * Check if string contains a number
+ */
+function hasNumber(myString) {
+  return /\d/.test(myString);
+}
+
+/**
+ * Count the number of words in a string
+ */
+function countWords(str) {
+  return str.trim().split(/\s+/).length;
+}
+
+export {
   verify_safex_address,
   structureSafexKeys,
-  openAlert,
-  closeAlert,
-  openSendCashPopup,
-  openSendTokenPopup,
+  openSendPopup,
   closeSendPopup,
-  closeApp
+  closeApp,
+  addClass,
+  openModal,
+  closeModal,
+  closeAlert,
+  roundAmount,
+  percentCalculation,
+  hasNumber,
+  countWords,
+  parseEnv
 };

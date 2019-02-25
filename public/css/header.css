@@ -1,0 +1,106 @@
+/* Header */
+header {
+  position: relative;
+  text-align: center;
+  -webkit-app-region: drag;
+}
+header .logo {
+  width: 134px;
+  margin-right: 4px;
+}
+.go-back-btn {
+  position: absolute;
+  top: -12px;
+  left: 0;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 0px 25px 1px;
+  border: 0px none;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 0px;
+  -webkit-app-region: no-drag;
+}
+.go-back-btn:hover {
+  cursor: pointer;
+}
+.buttons-wrap {
+  position: absolute;
+  right: 10px;
+  top: -3px;
+  -webkit-app-region: no-drag;
+}
+.buttons-wrap button {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+.minimize-app-btn {
+  background: transparent;
+  position: relative;
+  width: 31px;
+  top: 0;
+  color: #fff;
+  font-size: 19px;
+  padding: 4px 0px 5px;
+  line-height: 1;
+  border: 1px solid #8ffdfd;
+  margin-right: 10px;
+  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
+  z-index: 2;
+  display: inline-block;
+}
+.maximize-app-btn {
+  background: transparent;
+  position: relative;
+  display: inline-block;
+  width: 31px;
+  top: 1px;
+  color: #fff;
+  font-size: 19px;
+  padding: 5px 9px 4px;
+  line-height: 1;
+  border: 1px solid #8ffdfd;
+  margin-right: 10px;
+  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
+  z-index: 2;
+}
+.maximize-app-btn span {
+  border: 2px solid #fff;
+  border-top: 4px solid #fff;
+  width: 100%;
+  height: 14px;
+  display: inline-block;
+}
+.close-app-btn {
+  background: transparent;
+  position: relative;
+  display: inline-block;
+  right: 0;
+  top: 0;
+  color: #fff;
+  font-size: 18px;
+  padding: 2px 9px 1px;
+  border: 1px solid #8ffdfd;
+  font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
+  z-index: 2;
+}
+#version {
+  display: inline-block;
+  position: relative;
+  top: 10px;
+  color: #fff;
+  letter-spacing: 1px;
+  font-size: 18px;
+  margin-left: 4px;
+  z-index: -1;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
