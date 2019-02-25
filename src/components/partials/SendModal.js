@@ -10,7 +10,7 @@ export default class SendModal extends React.Component {
       payment_id: "",
       cash_or_token: null,
       tx_being_sent: false,
-      mixin: this.props.mixin
+      mixin: ""
     };
   }
 
@@ -20,7 +20,8 @@ export default class SendModal extends React.Component {
       this.setState({
         address: "",
         amount: "",
-        payment_id: ""
+        payment_id: "",
+        mixin: ""
       });
     }, 300);
   };
@@ -58,7 +59,7 @@ export default class SendModal extends React.Component {
           amount: amount,
           paymentId: paymentid,
           tx_type: cash_or_token,
-          mixin: mixin !== "" ? mixin : 6
+          mixin: mixin
         });
       } else {
         this.setState(() => ({
@@ -67,8 +68,8 @@ export default class SendModal extends React.Component {
         this.sendTransaction({
           address: sendingAddress,
           amount: amount,
-          mixin: mixin !== "" ? mixin : 6,
-          tx_type: cash_or_token
+          tx_type: cash_or_token,
+          mixin: mixin
         });
       }
     };
@@ -129,11 +130,11 @@ export default class SendModal extends React.Component {
       e.target.value.startsWith(0)
     ) {
       this.setState({
-        mixin: 0
+        mixin: e.target.value
       });
       return false;
     }
-    if (e.target.value <= 8 && e.target.value >= 1) {
+    if (e.target.value <= 8 && e.target.value >= 0) {
       this.setState({
         mixin: e.target.value
       });
@@ -142,7 +143,7 @@ export default class SendModal extends React.Component {
         mixin: 8
       });
     }
-    wallet.setDefaultMixin(parseFloat(this.state.mixin));
+    wallet.setDefaultMixin(parseFloat(e.target.value));
   };
 
   render() {
@@ -200,13 +201,15 @@ export default class SendModal extends React.Component {
                   onChange={this.inputOnChange.bind(this, "payment_id")}
                 />
                 <label htmlFor="paymentid">
-                  (Optional) Set Transaction Mixin
+                  (Optional) Set Transaction Mixin (0-8)
                 </label>
                 <input
+                  type="number"
                   name="mixin"
                   placeholder="(optinal) Default mixin is 6"
+                  value={this.state.mixin}
                   onChange={this.changeDefaultMixin}
-                  min="1"
+                  min="0"
                   max="8"
                   maxLength="1"
                 />

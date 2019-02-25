@@ -350,6 +350,12 @@
 .sendModalBackdrop {
   z-index: 10001;
 }
+.sendModal input[type="number"]::-webkit-inner-spin-button,
+.sendModal input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 
 .loadingModal {
   padding: 10px;
@@ -374,15 +380,18 @@
   margin: 0 0 0 5px;
 }
 
+.addressModal h3 {
+  font-size: 21px;
+}
 .addressModal label {
   text-transform: initial !important;
   font-weight: 400 !important;
   margin-bottom: 5px !important;
-  font-size: 18px !important;
+  font-size: 19px !important;
 }
 .addressModal input,
 .addressModal textarea {
-  font-size: 18px !important;
+  font-size: 19px !important;
   padding: 5px !important;
   border-bottom: 1px solid #8ffdfd;
   border-radius: 0;

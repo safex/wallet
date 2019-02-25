@@ -17,13 +17,9 @@ export default class Wallet extends React.Component {
   componentDidMount = () => {
     let wallet = this.props.walletMeta;
     wallet.off("refreshed");
-
     this.refreshCallback();
-
     wallet.on("refreshed", this.refreshCallback);
-
     this.props.closeAlert();
-
     this.mounted = true;
     if (!localStorage.getItem("wallet")) {
       localStorage.setItem("wallet", JSON.stringify(this.props.wallet));

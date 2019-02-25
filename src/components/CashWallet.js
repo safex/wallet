@@ -135,7 +135,7 @@ export default class CashWallet extends React.Component {
 
     this.setState({ progress });
     if ((this.daemon_height > 0 && progress < 100) || progress === Infinity) {
-      this.progress_timeout_id = setTimeout(this.refreshProgressInterval, 2000);
+      this.progress_timeout_id = setTimeout(this.refreshProgressInterval, 1000);
     } else {
       setTimeout(() => {
         this.setState({ progress: false });

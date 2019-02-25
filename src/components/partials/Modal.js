@@ -111,7 +111,7 @@ export default class LoadingModal extends React.Component {
             "addressModal" + addClass(this.props.addressModal, "active")
           }
         >
-          <span className="close" onClick={this.closAddressModal}>
+          <span className="close" onClick={this.closeAddressModal}>
             X
           </span>
           <form
