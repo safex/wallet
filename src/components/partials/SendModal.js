@@ -47,7 +47,7 @@ export default class SendModal extends React.Component {
         return false;
       }
       if (amount === "") {
-        this.props.setOpenAlert("Enter Amount", false);
+        this.props.setOpenAlert("Enter amount", false);
         return false;
       }
       if (paymentid !== "") {
@@ -59,7 +59,7 @@ export default class SendModal extends React.Component {
           amount: amount,
           paymentId: paymentid,
           tx_type: cash_or_token,
-          mixin: mixin
+          mixin: mixin === "" ? 6 : mixin
         });
       } else {
         this.setState(() => ({
@@ -69,7 +69,7 @@ export default class SendModal extends React.Component {
           address: sendingAddress,
           amount: amount,
           tx_type: cash_or_token,
-          mixin: mixin
+          mixin: mixin === "" ? 6 : mixin
         });
       }
     };
@@ -146,6 +146,11 @@ export default class SendModal extends React.Component {
     wallet.setDefaultMixin(parseFloat(e.target.value));
   };
 
+  disableInputPaste = e => {
+    e.preventDefault();
+    return false;
+  };
+
   render() {
     return (
       <div>
@@ -188,6 +193,7 @@ export default class SendModal extends React.Component {
                 />
                 <label htmlFor="amount">Amount</label>
                 <input
+                  type="number"
                   name="amount"
                   placeholder="Enter Amount"
                   value={this.state.amount}
@@ -209,6 +215,7 @@ export default class SendModal extends React.Component {
                   placeholder="(optinal) Default mixin is 6"
                   value={this.state.mixin}
                   onChange={this.changeDefaultMixin}
+                  onPaste={this.disableInputPaste}
                   min="0"
                   max="8"
                   maxLength="1"
