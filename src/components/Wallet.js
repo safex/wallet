@@ -39,7 +39,7 @@ export default class Wallet extends React.Component {
       console.log("syncedHeight up to date...");
       if (wallet.synchronized()) {
         console.log("refreshCallback wallet synchronized, setting state...");
-        this.props.setWalletData(wallet);
+        this.props.setWalletData();
       }
     }
 
@@ -69,7 +69,7 @@ export default class Wallet extends React.Component {
       console.log("Blockchain rescan executed...");
       setTimeout(() => {
         console.log("Rescan setting callbacks");
-        this.props.setWalletData(this.props.walletMeta);
+        this.props.setWalletData();
         this.props.closeModal();
         wallet
           .store()

@@ -348,6 +348,7 @@
 .sendModal .btn:focus,
 .sendModal .btn:active {
   outline: none;
+  color: #fff;
 }
 .sendModal .available-wrap {
   position: absolute;

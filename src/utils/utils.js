@@ -67,7 +67,7 @@ function closeModal(target) {
     (target.state.loading_modal && target.state.alert) ||
     (target.state.address_modal && target.state.alert) ||
     (target.state.send_modal && target.state.alert) ||
-    (target.state.send_modal && target.state.mixin_modal)
+    target.state.mixin_modal
   ) {
     target.setState({
       alert: false,

@@ -161,7 +161,9 @@ export default class LoadingModal extends React.Component {
               tx_being_sent: false
             }));
             setTimeout(() => {
-              this.props.setWalletData(this.props.walletMeta);
+              this.props.setWalletData();
+              this.mixin = 6;
+              console.log("mixin " + this.mixin);
             }, 300);
           })
           .catch(e => {
@@ -321,7 +323,7 @@ export default class LoadingModal extends React.Component {
       modal = (
         <div className={"sendModal" + addClass(this.props.sendModal, "active")}>
           <div className="sendModalInner">
-            <span className="close" onClick={this.props.closeModal}>
+            <span className="close" onClick={this.closeMyModal}>
               X
             </span>
             <div>
@@ -357,6 +359,7 @@ export default class LoadingModal extends React.Component {
                   placeholder="Enter Amount"
                   value={this.state.amount}
                   onChange={this.inputOnChange.bind(this, "amount")}
+                  onPaste={this.disableInputPaste}
                 />
                 <label htmlFor="paymentid">(Optional) Payment ID</label>
                 <input
@@ -385,15 +388,15 @@ export default class LoadingModal extends React.Component {
             <p>
               There was a problem with transaction creation, there are not
               enough outputs in network history to create privacy ring
-              signature. Current mixin level is {this.mixin}.
+              signature.
             </p>
             <p>
               Please lower your transaction mixin to proceed with transaction
-              execution (default network mixin value is 6).
+              execution (default network mixin value is {this.mixin}).
             </p>
             <form onSubmit={this.changeDefaultMixin}>
               <label htmlFor="mixin">Set Transaction Mixin (0-8)</label>
-              <select className="button-shine" name="mixin">
+              <select className="button-shine" name="mixin" defaultValue={6}>
                 {mixin}
               </select>
               <button
@@ -462,7 +465,9 @@ export default class LoadingModal extends React.Component {
           {modal}
         </div>
 
-        {this.props.addressModal ? (
+        {(this.props.addressModal ||
+          (this.props.sendModal && this.props.mixinModal === false)) &&
+        this.props.alert === false ? (
           <div
             className={"backdrop" + addClass(this.props.modal, "active")}
             onClick={this.closeMyModal}

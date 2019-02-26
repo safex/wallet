@@ -78,8 +78,13 @@ export default class CashWallet extends React.Component {
 
   setCloseMyModal = () => {
     this.setState({
-      send_modal: false
+      modal: false
     });
+    setTimeout(() => {
+      this.setState({
+        send_modal: false
+      });
+    }, 300);
   };
 
   setOpenMixinModal = (alert, disabled) => {
@@ -165,14 +170,15 @@ export default class CashWallet extends React.Component {
   startBalanceCheck = () => {
     let wallet = this.wallet_meta;
     wallet.setSeedLanguage("English");
-    this.setWalletData(wallet);
+    this.setWalletData();
     this.setState({
       page: "wallet",
       loading_modal: false
     });
   };
 
-  setWalletData = wallet => {
+  setWalletData = () => {
+    let wallet = this.wallet_meta;
     this.setState({
       wallet: {
         filename: localStorage
@@ -199,6 +205,19 @@ export default class CashWallet extends React.Component {
         }
       }
     });
+
+    console.log(
+      "pending cash balance " +
+        roundAmount(Math.abs(wallet.balance() - wallet.unlockedBalance()))
+    );
+    console.log("cash balance " + roundAmount(wallet.unlockedBalance()));
+    console.log(
+      "pending token balance " +
+        roundAmount(
+          Math.abs(wallet.tokenBalance() - wallet.unlockedTokenBalance())
+        )
+    );
+    console.log("token balance " + roundAmount(wallet.unlockedTokenBalance()));
   };
 
   renderPageWrapper = (title, page, icon) => {

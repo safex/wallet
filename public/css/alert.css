@@ -74,6 +74,10 @@
   border: 2px solid #ff004e;
   margin: 0 5px 0 0;
 }
+.mixinModal .cancel:hover {
+  -webkit-box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
+  box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
+}
 .mixinModal .submit {
   border-radius: 7px;
   background-color: rgba(18, 190, 221, 0.45);
@@ -119,5 +123,5 @@
   outline: none;
 }
 .mixinModal select option {
-  background: #fff;
+  color: #000;
 }
