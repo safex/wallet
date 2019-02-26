@@ -1,6 +1,5 @@
 import React from "react";
-import SendModal from "./partials/SendModal";
-import { openSendPopup, closeSendPopup, addClass } from "../utils/utils.js";
+import { addClass } from "../utils/utils.js";
 
 export default class Wallet extends React.Component {
   constructor(props) {
@@ -9,7 +8,6 @@ export default class Wallet extends React.Component {
     this.state = {
       wallet: null,
       alert_close_disabled: false,
-      send_cash_or_token: null,
       tx_being_sent: false
     };
   }
@@ -84,14 +82,6 @@ export default class Wallet extends React.Component {
         wallet.on("refreshed", this.refreshCallback);
       }, 1000);
     }, 1000);
-  };
-
-  setOpenSendPopup = send_cash_or_token => {
-    openSendPopup(this, send_cash_or_token);
-  };
-
-  setCloseSendPopup = () => {
-    closeSendPopup(this);
   };
 
   connectionError = () => {
@@ -176,7 +166,7 @@ export default class Wallet extends React.Component {
               className="btn button-shine"
               onClick={
                 this.props.wallet.wallet_connected
-                  ? this.setOpenSendPopup.bind(this, 0)
+                  ? this.props.setOpenSendModal.bind(this, 0)
                   : this.connectionError
               }
             >
@@ -199,7 +189,7 @@ export default class Wallet extends React.Component {
               className="btn button-shine"
               onClick={
                 this.props.wallet.wallet_connected
-                  ? this.setOpenSendPopup.bind(this, 1)
+                  ? this.props.setOpenSendModal.bind(this, 1)
                   : this.connectionError
               }
             >
@@ -207,18 +197,6 @@ export default class Wallet extends React.Component {
             </button>
           </div>
         </div>
-
-        <SendModal
-          walletMeta={this.props.walletMeta}
-          sendModal={this.state.send_modal}
-          closeSendPopup={this.setCloseSendPopup}
-          send_cash_or_token={this.state.send_cash_or_token}
-          availableCash={this.props.wallet.unlocked_balance}
-          availableTokens={this.props.wallet.unlocked_tokens}
-          setOpenAlert={this.props.setOpenAlert}
-          setWalletData={this.props.setWalletData}
-          mixin={this.props.mixin}
-        />
       </div>
     );
   }

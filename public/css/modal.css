@@ -314,7 +314,6 @@
   display: flex;
   align-items: flex-end;
   border-radius: 0px;
-  padding: 20px;
 }
 .sendModal:hover {
   border: 0px;
@@ -328,11 +327,27 @@
   color: rgba(255, 0, 78, 0.75);
   letter-spacing: 0.5px;
 }
-.sendModal textarea,
-.sendModal input {
-  padding: 4px 10px 5px !important;
+.sendModal textarea {
+  padding: 4px 10px 5px;
   border-radius: 0px;
-  text-align: left !important;
+  text-align: left;
+  border-bottom: 1px solid #8ffdfd;
+  font-size: 18px;
+}
+.sendModal input {
+  padding: 7px 10px 6px;
+  border-bottom: 1px solid #8ffdfd;
+  font-size: 18px;
+  border-radius: 0px;
+}
+.sendModal .btn {
+  margin-top: 5px;
+  padding: 4px 12px;
+  font-size: 16px !important;
+}
+.sendModal .btn:focus,
+.sendModal .btn:active {
+  outline: none;
 }
 .sendModal .available-wrap {
   position: absolute;

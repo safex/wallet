@@ -25,6 +25,7 @@ export default class CashWallet extends React.Component {
       local_wallet: JSON.parse(localStorage.getItem("wallet")),
       page: null,
       network: true,
+      cash_or_token: null,
       mixin: 6,
 
       //UI variables
@@ -33,7 +34,9 @@ export default class CashWallet extends React.Component {
       alert_text: "",
       alert_close_disabled: false,
       address_modal: false,
-      loading_modal: false
+      loading_modal: false,
+      send_modal: false,
+      mixin_modal: false
     };
 
     this.wallet_meta = null;
@@ -66,6 +69,15 @@ export default class CashWallet extends React.Component {
 
   setOpenAddressModal = () => {
     this.setOpenModal("address_modal", "", false, null);
+  };
+
+  setOpenSendModal = cash_or_token => {
+    this.setOpenModal("send_modal", "", false, cash_or_token);
+    this.setState({ cash_or_token });
+  };
+
+  setOpenMixinModal = (alert, disabled) => {
+    this.setOpenModal("mixin_modal", alert, disabled, null);
   };
 
   setCloseAlert = () => {
@@ -201,14 +213,24 @@ export default class CashWallet extends React.Component {
         <Modal
           modal={this.state.modal}
           wallet={this.state.wallet}
+          walletMeta={this.wallet_meta ? this.wallet_meta : ""}
+          setWalletData={this.setWalletData}
           env={this.env}
           progress={this.state.progress}
           loadingModal={this.state.loading_modal}
           createWallet={this.createWallet}
           closeModal={this.setCloseModal}
           addressModal={this.state.address_modal}
-          mixin={this.state.mixin}
-          changeRingSize={this.changeRingSize}
+          sendModal={this.state.send_modal}
+          availableCash={
+            this.state.wallet ? this.state.wallet.unlocked_balance : ""
+          }
+          availableTokens={
+            this.state.wallet ? this.state.wallet.unlocked_tokens : ""
+          }
+          cash_or_token={this.state.cash_or_token}
+          mixinModal={this.state.mixin_modal}
+          setOpenMixinModal={this.setOpenMixinModal}
           openModal={this.setOpenModal}
           alert={this.state.alert}
           closeAlert={this.setCloseAlert}
@@ -238,8 +260,7 @@ export default class CashWallet extends React.Component {
             setWalletData={this.setWalletData}
             setOpenAlert={this.setOpenAlert}
             setOpenAddressModal={this.setOpenAddressModal}
-            openRingSizeModal={this.openRingSizeModal}
-            mixin={this.state.mixin}
+            setOpenSendModal={this.setOpenSendModal}
             closeModal={this.setCloseModal}
             closeAlert={this.setCloseAlert}
           />
@@ -344,13 +365,23 @@ export default class CashWallet extends React.Component {
               modal={this.state.modal}
               env={this.env}
               wallet={this.state.wallet}
+              walletMeta={this.wallet_meta ? this.wallet_meta : ""}
+              setWalletData={this.setWalletData}
               progress={this.state.progress}
               loadingModal={this.state.loading_modal}
               createWallet={this.createWallet}
               closeModal={this.setCloseModal}
               addressModal={this.state.address_modal}
-              mixin={this.state.mixin}
-              changeRingSize={this.changeRingSize}
+              sendModal={this.state.send_modal}
+              availableCash={
+                this.state.wallet ? this.state.wallet.unlocked_balance : ""
+              }
+              availableTokens={
+                this.state.wallet ? this.state.wallet.unlocked_tokens : ""
+              }
+              cash_or_token={this.state.cash_or_token}
+              mixinModal={this.state.mixin_modal}
+              setOpenMixinModal={this.setOpenMixinModal}
               openModal={this.setOpenModal}
               alert={this.state.alert}
               closeAlert={this.setCloseAlert}
