@@ -55,7 +55,11 @@ export default class LoadingModal extends React.Component {
   };
 
   closeMyModal = () => {
-    this.props.closeModal();
+    if (this.props.addressModal) {
+      this.props.closeModal();
+    } else {
+      this.props.setCloseMyModal();
+    }
     setTimeout(() => {
       this.setState({
         loaded: false,
@@ -139,6 +143,7 @@ export default class LoadingModal extends React.Component {
         console.log(args);
         tx.commit()
           .then(() => {
+            this.closeMyModal();
             if (this.props.cash_or_token === 0) {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your cash transaction ID is: " +
@@ -316,7 +321,7 @@ export default class LoadingModal extends React.Component {
       modal = (
         <div className={"sendModal" + addClass(this.props.sendModal, "active")}>
           <div className="sendModalInner">
-            <span className="close" onClick={this.closeMyModal}>
+            <span className="close" onClick={this.props.closeModal}>
               X
             </span>
             <div>
@@ -457,7 +462,7 @@ export default class LoadingModal extends React.Component {
           {modal}
         </div>
 
-        {this.props.addressModal || this.props.sendModal ? (
+        {this.props.addressModal ? (
           <div
             className={"backdrop" + addClass(this.props.modal, "active")}
             onClick={this.closeMyModal}

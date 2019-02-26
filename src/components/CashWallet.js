@@ -76,6 +76,12 @@ export default class CashWallet extends React.Component {
     this.setState({ cash_or_token });
   };
 
+  setCloseMyModal = () => {
+    this.setState({
+      send_modal: false
+    });
+  };
+
   setOpenMixinModal = (alert, disabled) => {
     this.setOpenModal("mixin_modal", alert, disabled, null);
   };
@@ -222,6 +228,7 @@ export default class CashWallet extends React.Component {
           closeModal={this.setCloseModal}
           addressModal={this.state.address_modal}
           sendModal={this.state.send_modal}
+          setCloseMyModal={this.setCloseMyModal}
           availableCash={
             this.state.wallet ? this.state.wallet.unlocked_balance : ""
           }
@@ -373,6 +380,7 @@ export default class CashWallet extends React.Component {
               closeModal={this.setCloseModal}
               addressModal={this.state.address_modal}
               sendModal={this.state.send_modal}
+              setCloseMyModal={this.setCloseMyModal}
               availableCash={
                 this.state.wallet ? this.state.wallet.unlocked_balance : ""
               }

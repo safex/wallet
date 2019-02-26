@@ -118,3 +118,6 @@
 .mixinModal select:active {
   outline: none;
 }
+.mixinModal select option {
+  background: #fff;
+}
