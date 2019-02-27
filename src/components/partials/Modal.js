@@ -197,11 +197,11 @@ export default class LoadingModal extends React.Component {
     let mixin = e.target.mixin.value;
     try {
       if (mixin === "" || mixin === " ") {
-        this.mixin = mixin;
+        this.mixin = parseFloat(mixin);
         return false;
       }
       if (mixin <= 8) {
-        this.mixin = mixin;
+        this.mixin = parseFloat(mixin);
       } else {
         this.mixin = 6;
       }

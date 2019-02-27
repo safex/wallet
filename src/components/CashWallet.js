@@ -25,7 +25,6 @@ export default class CashWallet extends React.Component {
       local_wallet: JSON.parse(localStorage.getItem("wallet")),
       page: null,
       network: true,
-      cash_or_token: null,
       mixin: 6,
 
       //UI variables
@@ -43,6 +42,7 @@ export default class CashWallet extends React.Component {
     this.env = parseEnv();
     this.progress_timeout_id = null;
     this.daemon_height = null;
+    this.cash_or_token = null;
   }
 
   componentDidMount() {
@@ -55,8 +55,8 @@ export default class CashWallet extends React.Component {
     clearTimeout(this.progress_timeout_id);
   }
 
-  setOpenModal = (modal_type, alert, disabled, send_cash_or_token) => {
-    openModal(this, modal_type, alert, disabled, send_cash_or_token);
+  setOpenModal = (modal_type, alert, disabled, cash_or_token) => {
+    openModal(this, modal_type, alert, disabled, cash_or_token);
   };
 
   setCloseModal = () => {
@@ -73,7 +73,7 @@ export default class CashWallet extends React.Component {
 
   setOpenSendModal = cash_or_token => {
     this.setOpenModal("send_modal", "", false, cash_or_token);
-    this.setState({ cash_or_token });
+    this.cash_or_token = cash_or_token;
   };
 
   setCloseMyModal = () => {
@@ -206,18 +206,18 @@ export default class CashWallet extends React.Component {
       }
     });
 
-    console.log(
-      "pending cash balance " +
-        roundAmount(Math.abs(wallet.balance() - wallet.unlockedBalance()))
-    );
-    console.log("cash balance " + roundAmount(wallet.unlockedBalance()));
-    console.log(
-      "pending token balance " +
-        roundAmount(
-          Math.abs(wallet.tokenBalance() - wallet.unlockedTokenBalance())
-        )
-    );
-    console.log("token balance " + roundAmount(wallet.unlockedTokenBalance()));
+    // console.log(
+    //   "pending cash balance " +
+    //     roundAmount(Math.abs(wallet.balance() - wallet.unlockedBalance()))
+    // );
+    // console.log("cash balance " + roundAmount(wallet.unlockedBalance()));
+    // console.log(
+    //   "pending token balance " +
+    //     roundAmount(
+    //       Math.abs(wallet.tokenBalance() - wallet.unlockedTokenBalance())
+    //     )
+    // );
+    // console.log("token balance " + roundAmount(wallet.unlockedTokenBalance()));
   };
 
   renderPageWrapper = (title, page, icon) => {
@@ -254,7 +254,7 @@ export default class CashWallet extends React.Component {
           availableTokens={
             this.state.wallet ? this.state.wallet.unlocked_tokens : ""
           }
-          cash_or_token={this.state.cash_or_token}
+          cash_or_token={this.cash_or_token}
           mixinModal={this.state.mixin_modal}
           setOpenMixinModal={this.setOpenMixinModal}
           openModal={this.setOpenModal}
@@ -406,7 +406,7 @@ export default class CashWallet extends React.Component {
               availableTokens={
                 this.state.wallet ? this.state.wallet.unlocked_tokens : ""
               }
-              cash_or_token={this.state.cash_or_token}
+              cash_or_token={this.cash_or_token}
               mixinModal={this.state.mixin_modal}
               setOpenMixinModal={this.setOpenMixinModal}
               openModal={this.setOpenModal}
