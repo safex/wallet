@@ -205,19 +205,6 @@ export default class CashWallet extends React.Component {
         }
       }
     });
-
-    // console.log(
-    //   "pending cash balance " +
-    //     roundAmount(Math.abs(wallet.balance() - wallet.unlockedBalance()))
-    // );
-    // console.log("cash balance " + roundAmount(wallet.unlockedBalance()));
-    // console.log(
-    //   "pending token balance " +
-    //     roundAmount(
-    //       Math.abs(wallet.tokenBalance() - wallet.unlockedTokenBalance())
-    //     )
-    // );
-    // console.log("token balance " + roundAmount(wallet.unlockedTokenBalance()));
   };
 
   renderPageWrapper = (title, page, icon) => {
@@ -355,21 +342,21 @@ export default class CashWallet extends React.Component {
             <div className="options-wrap">
               <div className="options-inner">
                 <div
-                  className="item"
+                  className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("create-new")}
                 >
                   <img src="images/create-new.png" alt="create-new" />
                   <h3>Create New</h3>
                 </div>
                 <div
-                  className="item"
+                  className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("create-from-keys")}
                 >
                   <img src="images/new-from-keys.png" alt="new-from-keys" />
                   <h3>New From Keys</h3>
                 </div>
                 <div
-                  className="item"
+                  className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("open-file")}
                 >
                   <img
@@ -379,7 +366,7 @@ export default class CashWallet extends React.Component {
                   <h3>Open Wallet File</h3>
                 </div>
                 <div
-                  className="item"
+                  className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("recover-from-mnemonic")}
                 >
                   <img src="images/mnemonic.png" alt="mnemonic" />
