@@ -135,10 +135,7 @@ export default class CashWallet extends React.Component {
           });
         })
         .catch(err => {
-          this.setOpenAlert(
-            "Error with the creation of the wallet " + err,
-            false
-          );
+          this.setOpenAlert("Error with the creation of the wallet " + err);
           return callback;
         });
     } catch (e) {

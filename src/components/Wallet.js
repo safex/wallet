@@ -49,7 +49,7 @@ export default class Wallet extends React.Component {
         console.log("Wallet stored");
       })
       .catch(e => {
-        this.props.setOpenAlert("Unable to store wallet: " + e, false);
+        this.props.setOpenAlert("Unable to store wallet: " + e);
         console.log("Unable to store wallet: " + e);
       });
   };
@@ -58,7 +58,7 @@ export default class Wallet extends React.Component {
     var wallet = this.props.walletMeta;
     console.log(wallet);
     this.props.setOpenAlert(
-      "Rescanning, this may take some time, please wait ",
+      "Rescanning, this may take some time, please wait. Don't close the application until the process is complete.",
       true
     );
     wallet.off("updated");
@@ -85,10 +85,7 @@ export default class Wallet extends React.Component {
   };
 
   connectionError = () => {
-    this.props.setOpenAlert(
-      "Daemon connection error, please try again later ",
-      false
-    );
+    this.props.setOpenAlert("Daemon connection error, please try again later ");
   };
 
   render() {

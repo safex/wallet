@@ -102,11 +102,11 @@ export default class LoadingModal extends React.Component {
       let paymentid = e.target.paymentid.value;
       let mixin = this.mixin;
       if (sendingAddress === "") {
-        this.props.setOpenAlert("Fill out all the fields", false);
+        this.props.setOpenAlert("Fill out all the fields");
         return false;
       }
       if (amount === "") {
-        this.props.setOpenAlert("Enter amount", false);
+        this.props.setOpenAlert("Enter amount");
         return false;
       }
       if (paymentid !== "") {
@@ -147,14 +147,12 @@ export default class LoadingModal extends React.Component {
             if (this.props.cash_or_token === 0) {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your cash transaction ID is: " +
-                  txId,
-                false
+                  txId
               );
             } else {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your token transaction ID is: " +
-                  txId,
-                false
+                  txId
               );
             }
             this.setState(() => ({
@@ -163,17 +161,14 @@ export default class LoadingModal extends React.Component {
             setTimeout(() => {
               this.props.setWalletData();
               this.mixin = 6;
-              console.log("mixin " + this.mixin);
+              console.log("reset mixin " + this.mixin);
             }, 300);
           })
           .catch(e => {
             this.setState(() => ({
               tx_being_sent: false
             }));
-            this.props.setOpenAlert(
-              "Error on commiting transaction: " + e,
-              false
-            );
+            this.props.setOpenAlert("Error on commiting transaction: " + e);
           });
       })
       .catch(e => {
@@ -181,12 +176,9 @@ export default class LoadingModal extends React.Component {
           tx_being_sent: false
         }));
         if (e.startsWith("not enough outputs for specified ring size")) {
-          this.props.setOpenMixinModal(
-            "Couldn't create transaction: " + e,
-            false
-          );
+          this.props.setOpenMixinModal("Couldn't create transaction: " + e);
         } else {
-          this.props.setOpenAlert("Couldn't create transaction: " + e, false);
+          this.props.setOpenAlert("Couldn't create transaction: " + e);
         }
       });
   };
@@ -401,12 +393,12 @@ export default class LoadingModal extends React.Component {
               </select>
               <button
                 type="button"
-                className="button-shine cancel"
+                className="cancel-btn button-shine"
                 onClick={this.props.closeModal}
               >
                 Cancel
               </button>
-              <button type="submit" className="button-shine submit">
+              <button type="submit" className="confirm-btn button-shine">
                 Set
               </button>
             </form>

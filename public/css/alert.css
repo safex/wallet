@@ -54,6 +54,7 @@
 }
 .mixinModal p {
   margin-bottom: 10px;
+  letter-spacing: 0.2px;
 }
 .alert p.disabled,
 .mixinModal p.disabled {
@@ -73,6 +74,8 @@
   background-color: rgba(221, 18, 99, 0.4);
   border: 2px solid #ff004e;
   margin: 0 5px 0 0;
+  font-size: 15px;
+  padding: 3px 12px 5px;
 }
 .mixinModal .cancel:hover {
   -webkit-box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
@@ -82,7 +85,7 @@
   border-radius: 7px;
   background-color: rgba(18, 190, 221, 0.45);
   color: #fff;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.26px;
@@ -90,7 +93,7 @@
   position: relative;
   top: -0.8px;
   border: 2px solid #54bcd9;
-  padding: 5px 12px 6px;
+  padding: 3px 12px 5px;
   margin: 0 0 0 5px;
 }
 .mixinModal textarea {
