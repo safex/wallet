@@ -60,6 +60,8 @@ export default class LoadingModal extends React.Component {
     } else {
       this.props.setCloseMyModal();
     }
+    this.mixin = 6;
+    console.log("reset mixin " + this.mixin);
     setTimeout(() => {
       this.setState({
         loaded: false,
@@ -188,17 +190,9 @@ export default class LoadingModal extends React.Component {
     let wallet = this.props.walletMeta;
     let mixin = e.target.mixin.value;
     try {
-      if (mixin === "" || mixin === " ") {
-        this.mixin = parseFloat(mixin);
-        return false;
-      }
-      if (mixin <= 8) {
-        this.mixin = parseFloat(mixin);
-      } else {
-        this.mixin = 6;
-      }
       wallet.setDefaultMixin(parseFloat(mixin));
       console.log("mixin " + mixin);
+      this.sendCashOrToken(this.props.cash_or_token);
       this.props.closeModal();
     } catch (err) {
       this.props.setOpenAlert(`${err}`);
