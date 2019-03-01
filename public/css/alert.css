@@ -1,5 +1,6 @@
 /* Alert */
-.alert {
+.alert,
+.mixinModal {
   text-shadow: none;
   box-shadow: none;
   visibility: visible;
@@ -8,14 +9,17 @@
   padding: 0;
   border: 0px none;
 }
-.alert.active {
+.alert.active,
+.mixinModal.active {
   visibility: visible;
   opacity: 1;
 }
-.alert:hover {
+.alert:hover,
+.mixinModal:hover {
   outline: 0px none;
 }
-.alert .close {
+.alert .close,
+.mixinModal .close {
   position: absolute;
   right: 15px;
   top: 14px;
@@ -28,12 +32,14 @@
   -moz-transition: all ease 0.2s;
   transition: all ease 0.2s;
 }
-.alert .close:hover {
+.alert .close:hover,
+.mixinModal .close:hover {
   color: #54bcd9;
   text-shadow: 0 1px 0 #54bcd9;
   opacity: 1;
 }
-.alert p {
+.alert p,
+.mixinModal p {
   background: transparent;
   border: 0px none;
   margin-right: 0;
@@ -46,6 +52,79 @@
   text-align: left;
   word-break: break-word;
 }
-.alert p.disabled {
+.mixinModal p {
+  margin-bottom: 10px;
+  letter-spacing: 0.2px;
+}
+.alert p.disabled,
+.mixinModal p.disabled {
   padding-right: 0;
+}
+
+.mixinModal h4 {
+  text-transform: initial;
+  margin: 0 0 5px;
+  letter-spacing: 0.5px;
+}
+.mixinModal form {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.mixinModal .cancel {
+  background-color: rgba(221, 18, 99, 0.4);
+  border: 2px solid #ff004e;
+  margin: 0 5px 0 0;
+  font-size: 15px;
+  padding: 3px 12px 5px;
+}
+.mixinModal .cancel:hover {
+  -webkit-box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
+  box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
+}
+.mixinModal .submit {
+  border-radius: 7px;
+  background-color: rgba(18, 190, 221, 0.45);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.26px;
+  line-height: 1.2;
+  position: relative;
+  top: -0.8px;
+  border: 2px solid #54bcd9;
+  padding: 3px 12px 5px;
+  margin: 0 0 0 5px;
+}
+.mixinModal textarea {
+  padding: 4px 10px 5px;
+  border-radius: 0px;
+  text-align: left;
+  border: 1px solid #8ffdfd;
+  font-size: 18px;
+}
+.mixinModal input {
+  padding: 5px 10px 5px;
+  border-bottom: 1px solid #8ffdfd;
+  font-size: 20px;
+  border-radius: 0px;
+  text-align: center;
+}
+.mixinModal select {
+  width: 100%;
+  background: transparent;
+  margin-bottom: 10px;
+  text-align-last: center;
+  border: 1px solid #8ffdfd;
+  height: 36px;
+}
+.mixinModal select:hover {
+  box-shadow: 0 0 30px 0 rgba(0, 199, 236, 0.5) !important;
+}
+.mixinModal select:focus,
+.mixinModal select:active {
+  outline: none;
+}
+.mixinModal select option {
+  color: #000;
 }

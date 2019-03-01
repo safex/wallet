@@ -29,30 +29,6 @@ function structureSafexKeys(spend, view) {
 }
 
 /**
- * Open Send Popup
- */
-function openSendPopup(target, send_cash_or_token) {
-  target.setState({
-    send_modal: true,
-    send_cash_or_token: send_cash_or_token
-  });
-}
-
-/**
- * Close Send Popup
- */
-function closeSendPopup(target) {
-  target.setState({
-    send_modal: false
-  });
-  setTimeout(() => {
-    target.setState({
-      send_cash_or_token: false
-    });
-  }, 300);
-}
-
-/**
  * Close App
  */
 function closeApp() {
@@ -73,12 +49,12 @@ const addClass = (condition, className) => (condition ? ` ${className} ` : "");
  * @param disabled
  * @param send_cash_or_token
  */
-function openModal(target, modal_type, alert, disabled, send_cash_or_token) {
+function openModal(target, modal_type, alert, disabled, cash_or_token) {
   target.setState({
     modal: true,
     [modal_type]: true,
     alert_text: alert,
-    send_cash_or_token: send_cash_or_token,
+    cash_or_token: cash_or_token,
     alert_close_disabled: disabled
   });
 }
@@ -89,10 +65,13 @@ function openModal(target, modal_type, alert, disabled, send_cash_or_token) {
 function closeModal(target) {
   if (
     (target.state.loading_modal && target.state.alert) ||
-    (target.state.address_modal && target.state.alert)
+    (target.state.address_modal && target.state.alert) ||
+    (target.state.send_modal && target.state.alert) ||
+    target.state.mixin_modal
   ) {
     target.setState({
-      alert: false
+      alert: false,
+      mixin_modal: false
     });
   } else {
     target.setState({
@@ -103,7 +82,9 @@ function closeModal(target) {
       target.setState({
         loading_modal: false,
         alert: false,
-        address_modal: false
+        address_modal: false,
+        send_modal: false,
+        mixin_modal: false
       });
     }, 300);
   }
@@ -167,8 +148,6 @@ function countWords(str) {
 export {
   verify_safex_address,
   structureSafexKeys,
-  openSendPopup,
-  closeSendPopup,
   closeApp,
   addClass,
   openModal,

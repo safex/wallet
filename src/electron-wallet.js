@@ -106,7 +106,7 @@ function createWindow() {
 require("electron-context-menu")({
   prepend: (params, browserWindow) => [
     {
-      label: "Safex 1 Click Mining App"
+      label: "Safex Cash Wallet"
     }
   ],
   shouldShowMenu: (event, params) => params.mediaType !== "image",

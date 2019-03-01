@@ -39,11 +39,22 @@
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
 }
-.options-wrap .options-inner:hover .item {
-  opacity: 0.55;
+.options-wrap .options-inner .item:nth-of-type(2) {
+  animation-delay: 0.1s;
 }
-.options-wrap .options-inner:hover .item:hover {
-  opacity: 1;
+.options-wrap .options-inner .item:nth-of-type(3) {
+  animation-delay: 0.2s;
+}
+.options-wrap .options-inner .item:nth-of-type(4) {
+  animation-delay: 0.3s;
+}
+.options-wrap .options-inner:hover .item img,
+.options-wrap .options-inner:hover .item h3 {
+  opacity: 0.55 !important;
+}
+.options-wrap .options-inner:hover .item:hover img,
+.options-wrap .options-inner:hover .item:hover h3 {
+  opacity: 1 !important;
 }
 .options-wrap .item:hover {
   cursor: pointer;
@@ -72,6 +83,10 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
 }
 .options-wrap .options-inner .item.disabled img {
   filter: grayscale(70%);

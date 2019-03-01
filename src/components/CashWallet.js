@@ -33,13 +33,16 @@ export default class CashWallet extends React.Component {
       alert_text: "",
       alert_close_disabled: false,
       address_modal: false,
-      loading_modal: false
+      loading_modal: false,
+      send_modal: false,
+      mixin_modal: false
     };
 
     this.wallet_meta = null;
     this.env = parseEnv();
     this.progress_timeout_id = null;
     this.daemon_height = null;
+    this.cash_or_token = null;
   }
 
   componentDidMount() {
@@ -52,8 +55,8 @@ export default class CashWallet extends React.Component {
     clearTimeout(this.progress_timeout_id);
   }
 
-  setOpenModal = (modal_type, alert, disabled, send_cash_or_token) => {
-    openModal(this, modal_type, alert, disabled, send_cash_or_token);
+  setOpenModal = (modal_type, alert, disabled, cash_or_token) => {
+    openModal(this, modal_type, alert, disabled, cash_or_token);
   };
 
   setCloseModal = () => {
@@ -66,6 +69,26 @@ export default class CashWallet extends React.Component {
 
   setOpenAddressModal = () => {
     this.setOpenModal("address_modal", "", false, null);
+  };
+
+  setOpenSendModal = cash_or_token => {
+    this.setOpenModal("send_modal", "", false, cash_or_token);
+    this.cash_or_token = cash_or_token;
+  };
+
+  setCloseMyModal = () => {
+    this.setState({
+      modal: false
+    });
+    setTimeout(() => {
+      this.setState({
+        send_modal: false
+      });
+    }, 300);
+  };
+
+  setOpenMixinModal = (alert, disabled) => {
+    this.setOpenModal("mixin_modal", alert, disabled, null);
   };
 
   setCloseAlert = () => {
@@ -112,10 +135,7 @@ export default class CashWallet extends React.Component {
           });
         })
         .catch(err => {
-          this.setOpenAlert(
-            "Error with the creation of the wallet " + err,
-            false
-          );
+          this.setOpenAlert("Error with the creation of the wallet " + err);
           return callback;
         });
     } catch (e) {
@@ -147,14 +167,15 @@ export default class CashWallet extends React.Component {
   startBalanceCheck = () => {
     let wallet = this.wallet_meta;
     wallet.setSeedLanguage("English");
-    this.setWalletData(wallet);
+    this.setWalletData();
     this.setState({
       page: "wallet",
       loading_modal: false
     });
   };
 
-  setWalletData = wallet => {
+  setWalletData = () => {
+    let wallet = this.wallet_meta;
     this.setState({
       wallet: {
         filename: localStorage
@@ -201,14 +222,25 @@ export default class CashWallet extends React.Component {
         <Modal
           modal={this.state.modal}
           wallet={this.state.wallet}
+          walletMeta={this.wallet_meta ? this.wallet_meta : ""}
+          setWalletData={this.setWalletData}
           env={this.env}
           progress={this.state.progress}
           loadingModal={this.state.loading_modal}
           createWallet={this.createWallet}
           closeModal={this.setCloseModal}
           addressModal={this.state.address_modal}
-          mixin={this.state.mixin}
-          changeRingSize={this.changeRingSize}
+          sendModal={this.state.send_modal}
+          setCloseMyModal={this.setCloseMyModal}
+          availableCash={
+            this.state.wallet ? this.state.wallet.unlocked_balance : ""
+          }
+          availableTokens={
+            this.state.wallet ? this.state.wallet.unlocked_tokens : ""
+          }
+          cash_or_token={this.cash_or_token}
+          mixinModal={this.state.mixin_modal}
+          setOpenMixinModal={this.setOpenMixinModal}
           openModal={this.setOpenModal}
           alert={this.state.alert}
           closeAlert={this.setCloseAlert}
@@ -227,7 +259,7 @@ export default class CashWallet extends React.Component {
 
     switch (this.state.page) {
       case "wallet":
-        title = "Wallet File";
+        title = "Wallet";
         icon = "images/create-new.png";
         page = (
           <Wallet
@@ -238,15 +270,14 @@ export default class CashWallet extends React.Component {
             setWalletData={this.setWalletData}
             setOpenAlert={this.setOpenAlert}
             setOpenAddressModal={this.setOpenAddressModal}
-            openRingSizeModal={this.openRingSizeModal}
-            mixin={this.state.mixin}
+            setOpenSendModal={this.setOpenSendModal}
             closeModal={this.setCloseModal}
             closeAlert={this.setCloseAlert}
           />
         );
         break;
       case "create-new":
-        title = "Create New Wallet File";
+        title = "Create New Wallet";
         icon = "images/create-new.png";
         page = (
           <CreateNew
@@ -274,7 +305,7 @@ export default class CashWallet extends React.Component {
         );
         break;
       case "open-file":
-        title = "Open Wallet File";
+        title = "Open Wallet";
         icon = "images/open-wallet-file.png";
         page = (
           <OpenFile
@@ -308,21 +339,21 @@ export default class CashWallet extends React.Component {
             <div className="options-wrap">
               <div className="options-inner">
                 <div
-                  className="item"
+                  className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("create-new")}
                 >
                   <img src="images/create-new.png" alt="create-new" />
                   <h3>Create New</h3>
                 </div>
                 <div
-                  className="item"
+                  className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("create-from-keys")}
                 >
                   <img src="images/new-from-keys.png" alt="new-from-keys" />
                   <h3>New From Keys</h3>
                 </div>
                 <div
-                  className="item"
+                  className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("open-file")}
                 >
                   <img
@@ -332,7 +363,7 @@ export default class CashWallet extends React.Component {
                   <h3>Open Wallet File</h3>
                 </div>
                 <div
-                  className="item"
+                  className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("recover-from-mnemonic")}
                 >
                   <img src="images/mnemonic.png" alt="mnemonic" />
@@ -344,13 +375,24 @@ export default class CashWallet extends React.Component {
               modal={this.state.modal}
               env={this.env}
               wallet={this.state.wallet}
+              walletMeta={this.wallet_meta ? this.wallet_meta : ""}
+              setWalletData={this.setWalletData}
               progress={this.state.progress}
               loadingModal={this.state.loading_modal}
               createWallet={this.createWallet}
               closeModal={this.setCloseModal}
               addressModal={this.state.address_modal}
-              mixin={this.state.mixin}
-              changeRingSize={this.changeRingSize}
+              sendModal={this.state.send_modal}
+              setCloseMyModal={this.setCloseMyModal}
+              availableCash={
+                this.state.wallet ? this.state.wallet.unlocked_balance : ""
+              }
+              availableTokens={
+                this.state.wallet ? this.state.wallet.unlocked_tokens : ""
+              }
+              cash_or_token={this.cash_or_token}
+              mixinModal={this.state.mixin_modal}
+              setOpenMixinModal={this.setOpenMixinModal}
               openModal={this.setOpenModal}
               alert={this.state.alert}
               closeAlert={this.setCloseAlert}

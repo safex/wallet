@@ -3,7 +3,6 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   background-size: 100% 370px;
   padding: 50px 20px 20px !important;
-  height: 465px;
 }
 .wallet-inner-wrap.no-mnemonic {
   padding: 40px 20px 20px;

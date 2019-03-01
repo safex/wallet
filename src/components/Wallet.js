@@ -1,6 +1,5 @@
 import React from "react";
-import SendModal from "./partials/SendModal";
-import { openSendPopup, closeSendPopup, addClass } from "../utils/utils.js";
+import { addClass } from "../utils/utils.js";
 
 export default class Wallet extends React.Component {
   constructor(props) {
@@ -9,7 +8,6 @@ export default class Wallet extends React.Component {
     this.state = {
       wallet: null,
       alert_close_disabled: false,
-      send_cash_or_token: null,
       tx_being_sent: false
     };
   }
@@ -41,7 +39,7 @@ export default class Wallet extends React.Component {
       console.log("syncedHeight up to date...");
       if (wallet.synchronized()) {
         console.log("refreshCallback wallet synchronized, setting state...");
-        this.props.setWalletData(wallet);
+        this.props.setWalletData();
       }
     }
 
@@ -51,7 +49,7 @@ export default class Wallet extends React.Component {
         console.log("Wallet stored");
       })
       .catch(e => {
-        this.props.setOpenAlert("Unable to store wallet: " + e, false);
+        this.props.setOpenAlert("Unable to store wallet: " + e);
         console.log("Unable to store wallet: " + e);
       });
   };
@@ -60,7 +58,7 @@ export default class Wallet extends React.Component {
     var wallet = this.props.walletMeta;
     console.log(wallet);
     this.props.setOpenAlert(
-      "Rescanning, this may take some time, please wait ",
+      "Please wait while blockchain is being rescanned. Don't close the application until the process is complete. This can take a while, please be patient.",
       true
     );
     wallet.off("updated");
@@ -71,7 +69,7 @@ export default class Wallet extends React.Component {
       console.log("Blockchain rescan executed...");
       setTimeout(() => {
         console.log("Rescan setting callbacks");
-        this.props.setWalletData(this.props.walletMeta);
+        this.props.setWalletData();
         this.props.closeModal();
         wallet
           .store()
@@ -86,19 +84,8 @@ export default class Wallet extends React.Component {
     }, 1000);
   };
 
-  setOpenSendPopup = send_cash_or_token => {
-    openSendPopup(this, send_cash_or_token);
-  };
-
-  setCloseSendPopup = () => {
-    closeSendPopup(this);
-  };
-
   connectionError = () => {
-    this.props.setOpenAlert(
-      "Daemon connection error, please try again later ",
-      false
-    );
+    this.props.setOpenAlert("Daemon connection error, please try again later ");
   };
 
   render() {
@@ -176,7 +163,7 @@ export default class Wallet extends React.Component {
               className="btn button-shine"
               onClick={
                 this.props.wallet.wallet_connected
-                  ? this.setOpenSendPopup.bind(this, 0)
+                  ? this.props.setOpenSendModal.bind(this, 0)
                   : this.connectionError
               }
             >
@@ -199,7 +186,7 @@ export default class Wallet extends React.Component {
               className="btn button-shine"
               onClick={
                 this.props.wallet.wallet_connected
-                  ? this.setOpenSendPopup.bind(this, 1)
+                  ? this.props.setOpenSendModal.bind(this, 1)
                   : this.connectionError
               }
             >
@@ -207,18 +194,6 @@ export default class Wallet extends React.Component {
             </button>
           </div>
         </div>
-
-        <SendModal
-          walletMeta={this.props.walletMeta}
-          sendModal={this.state.send_modal}
-          closeSendPopup={this.setCloseSendPopup}
-          send_cash_or_token={this.state.send_cash_or_token}
-          availableCash={this.props.wallet.unlocked_balance}
-          availableTokens={this.props.wallet.unlocked_tokens}
-          setOpenAlert={this.props.setOpenAlert}
-          setWalletData={this.props.setWalletData}
-          mixin={this.props.mixin}
-        />
       </div>
     );
   }
