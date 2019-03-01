@@ -259,7 +259,7 @@ export default class CashWallet extends React.Component {
 
     switch (this.state.page) {
       case "wallet":
-        title = "Wallet File";
+        title = "Wallet";
         icon = "images/create-new.png";
         page = (
           <Wallet
@@ -277,7 +277,7 @@ export default class CashWallet extends React.Component {
         );
         break;
       case "create-new":
-        title = "Create New Wallet File";
+        title = "Create New Wallet";
         icon = "images/create-new.png";
         page = (
           <CreateNew
@@ -305,7 +305,7 @@ export default class CashWallet extends React.Component {
         );
         break;
       case "open-file":
-        title = "Open Wallet File";
+        title = "Open Wallet";
         icon = "images/open-wallet-file.png";
         page = (
           <OpenFile

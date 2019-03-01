@@ -58,7 +58,7 @@ export default class Wallet extends React.Component {
     var wallet = this.props.walletMeta;
     console.log(wallet);
     this.props.setOpenAlert(
-      "Rescanning, this may take some time, please wait. Don't close the application until the process is complete.",
+      "Please wait while blockchain is being rescanned. Don't close the application until the process is complete. This can take a while, please be patient.",
       true
     );
     wallet.off("updated");

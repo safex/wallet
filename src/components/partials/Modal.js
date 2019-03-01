@@ -179,6 +179,8 @@ export default class LoadingModal extends React.Component {
         }));
         if (e.startsWith("not enough outputs for specified ring size")) {
           this.props.setOpenMixinModal("Couldn't create transaction: " + e);
+          localStorage.setItem("args", JSON.stringify(args));
+          console.log(JSON.parse(localStorage.getItem("args")));
         } else {
           this.props.setOpenAlert("Couldn't create transaction: " + e);
         }
@@ -188,12 +190,22 @@ export default class LoadingModal extends React.Component {
   changeDefaultMixin = e => {
     e.preventDefault();
     let wallet = this.props.walletMeta;
-    let mixin = e.target.mixin.value;
+    let mixin = parseFloat(e.target.mixin.value);
+    let args = JSON.parse(localStorage.getItem("args"));
     try {
-      wallet.setDefaultMixin(parseFloat(mixin));
-      console.log("mixin " + mixin);
-      this.sendCashOrToken(this.props.cash_or_token);
+      this.mixin = mixin;
+      wallet.setDefaultMixin(mixin);
+      this.sendTransaction({
+        address: args.address,
+        amount: args.amount,
+        tx_type: args.tx_type,
+        paymentId: args.paymentId ? args.paymentId : "",
+        mixin: this.mixin
+      });
       this.props.closeModal();
+      setTimeout(() => {
+        localStorage.removeItem(args);
+      }, 2000);
     } catch (err) {
       this.props.setOpenAlert(`${err}`);
     }
@@ -382,7 +394,11 @@ export default class LoadingModal extends React.Component {
             </p>
             <form onSubmit={this.changeDefaultMixin}>
               <label htmlFor="mixin">Set Transaction Mixin (0-8)</label>
-              <select className="button-shine" name="mixin" defaultValue={6}>
+              <select
+                className="button-shine"
+                name="mixin"
+                defaultValue={this.mixin}
+              >
                 {mixin}
               </select>
               <button
@@ -393,7 +409,7 @@ export default class LoadingModal extends React.Component {
                 Cancel
               </button>
               <button type="submit" className="confirm-btn button-shine">
-                Set
+                Send
               </button>
             </form>
             <h4>
