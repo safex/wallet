@@ -129,7 +129,6 @@ p:hover {
 .button-shine:hover {
   cursor: pointer;
   color: white;
-  box-shadow: 0 0 25px 0 rgba(255, 214, 22, 0.8);
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;

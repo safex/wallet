@@ -8,8 +8,8 @@
 }
 .options-wrap {
   position: relative;
-  padding: 10px 0 0;
-  height: 587px;
+  top: 20px;
+  height: 577px;
   display: flex;
   align-items: center;
 }
@@ -34,6 +34,8 @@
   padding: 10px;
   border-bottom: 5px solid transparent;
   overflow: hidden;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
@@ -102,7 +104,6 @@
 @media (min-width: 1024px) {
   .options-wrap,
   .intro-page-wrap {
-    max-width: 1024px;
     margin: 0 auto;
   }
 }

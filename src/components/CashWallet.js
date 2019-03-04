@@ -16,6 +16,7 @@ import {
 import Wallet from "./Wallet";
 
 const safex = window.require("safex-nodejs-libwallet");
+const remote = window.require("electron").remote;
 
 export default class CashWallet extends React.Component {
   constructor(props) {
@@ -35,7 +36,9 @@ export default class CashWallet extends React.Component {
       address_modal: false,
       loading_modal: false,
       send_modal: false,
-      mixin_modal: false
+      mixin_modal: false,
+      value: "",
+      copied: false
     };
 
     this.wallet_meta = null;
@@ -178,12 +181,15 @@ export default class CashWallet extends React.Component {
     let wallet = this.wallet_meta;
     this.setState({
       wallet: {
+        filepath: localStorage.getItem("wallet_path"),
         filename: localStorage
           .getItem("wallet_path")
           .split("/")
           .pop(),
         wallet_address: wallet.address(),
+        pub_spend: wallet.publicSpendKey(),
         spend_key: wallet.secretSpendKey(),
+        pub_view: wallet.publicViewKey(),
         view_key: wallet.secretViewKey(),
         mnemonic: wallet.seed(),
         wallet_connected: wallet.connected() === "connected",
@@ -204,7 +210,77 @@ export default class CashWallet extends React.Component {
     });
   };
 
-  renderPageWrapper = (title, page, icon) => {
+  onCopy = () => {
+    this.setState({ copied: true });
+    setTimeout(() => {
+      this.setState({ copied: false });
+    }, 2000);
+  };
+
+  refreshCallback = () => {
+    console.log("Wallet refreshed");
+    let wallet = this.wallet_meta;
+
+    let syncedHeight =
+      wallet.daemonBlockchainHeight() - wallet.blockchainHeight() < 10;
+    if (syncedHeight) {
+      console.log("syncedHeight up to date...");
+      if (wallet.synchronized()) {
+        console.log("refreshCallback wallet synchronized, setting state...");
+        this.setWalletData();
+      }
+    }
+
+    wallet
+      .store()
+      .then(() => {
+        console.log("Wallet stored");
+      })
+      .catch(e => {
+        this.setOpenAlert("Unable to store wallet: " + e);
+        console.log("Unable to store wallet: " + e);
+      });
+  };
+
+  rescanBalance = () => {
+    let wallet = this.wallet_meta;
+    console.log(wallet);
+    this.setOpenAlert(
+      "Please wait while blockchain is being rescanned. Don't close the application until the process is complete. This can take a while, please be patient.",
+      true
+    );
+    wallet.off("updated");
+    wallet.off("refreshed");
+    setTimeout(() => {
+      console.log("Starting blockchain rescan sync...");
+      wallet.rescanBlockchain();
+      console.log("Blockchain rescan executed...");
+      setTimeout(() => {
+        console.log("Rescan setting callbacks");
+        this.setWalletData();
+        this.setState({
+          modal: false
+        });
+        setTimeout(() => {
+          this.setState({
+            address_modal: false,
+            alert: false
+          });
+        }, 300);
+        wallet
+          .store()
+          .then(() => {
+            console.log("Wallet stored");
+          })
+          .catch(e => {
+            console.log("Unable to store wallet: " + e);
+          });
+        wallet.on("refreshed", this.refreshCallback);
+      }, 1000);
+    }, 1000);
+  };
+
+  renderPageWrapper = (title, version, page, icon) => {
     return (
       <div className="item-wrap">
         <Header
@@ -214,11 +290,17 @@ export default class CashWallet extends React.Component {
         />
         <div className="item-inner">
           <img src={icon} className="item-pic" alt={icon} />
-          <h2>{title}</h2>
+          <h2>
+            {title}&nbsp;
+            <span>{version}</span>
+          </h2>
           <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap">
             {page}
           </div>
         </div>
+        <p className={this.state.copied ? "copied-text active" : "copied-text"}>
+          Copied to clipboard
+        </p>
         <Modal
           modal={this.state.modal}
           wallet={this.state.wallet}
@@ -247,6 +329,8 @@ export default class CashWallet extends React.Component {
           setOpenAlert={this.setOpenAlert}
           alertText={this.state.alert_text}
           alertCloseDisabled={this.state.alert_close_disabled}
+          onCopy={this.onCopy}
+          rescanBalance={this.rescanBalance}
         />
       </div>
     );
@@ -254,12 +338,14 @@ export default class CashWallet extends React.Component {
 
   render() {
     let page = null;
+    let version = null;
     let title = null;
     let icon = null;
 
     switch (this.state.page) {
       case "wallet":
         title = "Wallet";
+        version = remote.app.getVersion();
         icon = "images/create-new.png";
         page = (
           <Wallet
@@ -271,8 +357,10 @@ export default class CashWallet extends React.Component {
             setOpenAlert={this.setOpenAlert}
             setOpenAddressModal={this.setOpenAddressModal}
             setOpenSendModal={this.setOpenSendModal}
-            closeModal={this.setCloseModal}
+            setCloseModal={this.setCloseModal}
             closeAlert={this.setCloseAlert}
+            onCopy={this.onCopy}
+            refreshCallback={this.refreshCallback}
           />
         );
         break;
@@ -343,14 +431,14 @@ export default class CashWallet extends React.Component {
                   onClick={() => this.goToPage("create-new")}
                 >
                   <img src="images/create-new.png" alt="create-new" />
-                  <h3>Create New</h3>
+                  <h3>Create New Wallet</h3>
                 </div>
                 <div
                   className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("create-from-keys")}
                 >
                   <img src="images/new-from-keys.png" alt="new-from-keys" />
-                  <h3>New From Keys</h3>
+                  <h3>New Wallet From Keys</h3>
                 </div>
                 <div
                   className="item animated fadeInDownSmall"
@@ -360,7 +448,7 @@ export default class CashWallet extends React.Component {
                     src="images/open-wallet-file.png"
                     alt="open-wallet-file"
                   />
-                  <h3>Open Wallet File</h3>
+                  <h3>Open Wallet</h3>
                 </div>
                 <div
                   className="item animated fadeInDownSmall"
@@ -399,11 +487,12 @@ export default class CashWallet extends React.Component {
               setOpenAlert={this.setOpenAlert}
               alertText={this.state.alert_text}
               alertCloseDisabled={this.state.alert_close_disabled}
+              rescanBalance={this.rescanBalance}
             />
           </div>
         );
     }
 
-    return this.renderPageWrapper(title, page, icon);
+    return this.renderPageWrapper(title, version, page, icon);
   }
 }

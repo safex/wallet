@@ -1,6 +1,10 @@
 /* Header */
 header {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0 0;
   text-align: center;
   -webkit-app-region: drag;
 }
@@ -10,15 +14,17 @@ header .logo {
 }
 .go-back-btn {
   position: absolute;
-  top: -12px;
+  top: 0;
   left: 0;
   background: rgba(255, 255, 255, 0.3);
-  padding: 0px 25px 1px;
+  padding: 2px 29px;
   border: 0px none;
   text-transform: uppercase;
   color: #fff;
-  font-size: 18px;
-  border-radius: 0px;
+  font-size: 20px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 0px;
   -webkit-app-region: no-drag;
 }
 .go-back-btn:hover {
@@ -27,7 +33,7 @@ header .logo {
 .buttons-wrap {
   position: absolute;
   right: 10px;
-  top: -3px;
+  top: 10px;
   -webkit-app-region: no-drag;
 }
 .buttons-wrap button {

@@ -1,5 +1,7 @@
 import React from "react";
 import { addClass } from "../utils/utils.js";
+import ReactTooltip from "react-tooltip";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default class Wallet extends React.Component {
   constructor(props) {
@@ -15,8 +17,8 @@ export default class Wallet extends React.Component {
   componentDidMount = () => {
     let wallet = this.props.walletMeta;
     wallet.off("refreshed");
-    this.refreshCallback();
-    wallet.on("refreshed", this.refreshCallback);
+    this.props.refreshCallback();
+    wallet.on("refreshed", this.props.refreshCallback);
     this.props.closeAlert();
     this.mounted = true;
     if (!localStorage.getItem("wallet")) {
@@ -29,63 +31,15 @@ export default class Wallet extends React.Component {
     this.props.walletMeta.off();
   }
 
-  refreshCallback = () => {
-    console.log("Wallet refreshed");
-    let wallet = this.props.walletMeta;
-
-    let syncedHeight =
-      wallet.daemonBlockchainHeight() - wallet.blockchainHeight() < 10;
-    if (syncedHeight) {
-      console.log("syncedHeight up to date...");
-      if (wallet.synchronized()) {
-        console.log("refreshCallback wallet synchronized, setting state...");
-        this.props.setWalletData();
-      }
-    }
-
-    wallet
-      .store()
-      .then(() => {
-        console.log("Wallet stored");
-      })
-      .catch(e => {
-        this.props.setOpenAlert("Unable to store wallet: " + e);
-        console.log("Unable to store wallet: " + e);
-      });
-  };
-
-  rescanBalance = () => {
-    var wallet = this.props.walletMeta;
-    console.log(wallet);
-    this.props.setOpenAlert(
-      "Please wait while blockchain is being rescanned. Don't close the application until the process is complete. This can take a while, please be patient.",
-      true
-    );
-    wallet.off("updated");
-    wallet.off("refreshed");
-    setTimeout(() => {
-      console.log("Starting blockchain rescan sync...");
-      wallet.rescanBlockchain();
-      console.log("Blockchain rescan executed...");
-      setTimeout(() => {
-        console.log("Rescan setting callbacks");
-        this.props.setWalletData();
-        this.props.closeModal();
-        wallet
-          .store()
-          .then(() => {
-            console.log("Wallet stored");
-          })
-          .catch(e => {
-            console.log("Unable to store wallet: " + e);
-          });
-        wallet.on("refreshed", this.refreshCallback);
-      }, 1000);
-    }, 1000);
-  };
-
   connectionError = () => {
     this.props.setOpenAlert("Daemon connection error, please try again later ");
+  };
+
+  onCopy = () => {
+    this.setState({ copied: true });
+    setTimeout(() => {
+      this.setState({ copied: false });
+    }, 2000);
   };
 
   render() {
@@ -94,19 +48,30 @@ export default class Wallet extends React.Component {
         <div className="btn-wrap">
           <div
             className={
-              "signal" +
+              "signal block" +
               addClass(this.props.wallet.wallet_connected, "connected")
             }
           >
-            <img src="images/connected-white.png" alt="connected" />
+            <img
+              src={
+                this.props.wallet.wallet_connected
+                  ? "images/connected-green.png"
+                  : "images/connected-red.png"
+              }
+              alt="connected"
+            />
             <span>Status: &nbsp;</span>
-            <span>
+            <span
+              className={
+                this.props.wallet.wallet_connected ? "green-text" : "white-text"
+              }
+            >
               {this.props.wallet.wallet_connected
                 ? "Connected"
                 : "Connection error"}
             </span>
           </div>
-          <div className="blockheight">
+          <div className="blockheight block">
             <img src="images/blocks.png" alt="blocks" />
             <span>Blockchain height: &nbsp;</span>
             <span>{this.props.wallet.blockchain_height}</span>
@@ -115,36 +80,50 @@ export default class Wallet extends React.Component {
             <button
               className="button-shine address-info"
               onClick={this.props.setOpenAddressModal}
-              title="Address Info"
+              data-tip
+              data-for="address-tooptip"
             >
               <img src="images/key.png" alt="rescan" />
             </button>
-            <button
-              className="button-shine rescan"
-              onClick={this.rescanBalance}
-              title="Rescan"
-              disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
-            >
-              <img src="images/rescan.png" alt="rescan" />
-            </button>
+            <ReactTooltip id="address-tooptip">
+              <p>Seed and Keys</p>
+            </ReactTooltip>
           </div>
         </div>
 
-        <label htmlFor="filename">Wallet File Name</label>
-        <input
-          type="text"
-          name="filename"
-          defaultValue={this.props.wallet.filename}
-          placeholder="filename"
-          readOnly
-        />
-
-        <label htmlFor="address">Wallet Address</label>
-        <input
-          type="text"
+        <label htmlFor="address">
+          Wallet Address{" "}
+          <CopyToClipboard
+            text={this.props.wallet.wallet_address}
+            onCopy={this.props.onCopy}
+            className="button-shine"
+          >
+            <button>Copy</button>
+          </CopyToClipboard>
+        </label>
+        <textarea
           name="address"
           defaultValue={this.props.wallet.wallet_address}
           placeholder="address"
+          rows="2"
+          readOnly
+        />
+
+        <label htmlFor="filepath">
+          Wallet File Path
+          <CopyToClipboard
+            text={this.props.wallet.filepath}
+            onCopy={this.props.onCopy}
+            className="button-shine"
+          >
+            <button>Copy</button>
+          </CopyToClipboard>
+        </label>
+        <input
+          type="text"
+          name="filepath"
+          defaultValue={this.props.wallet.filepath}
+          placeholder="filepath"
           readOnly
         />
 

@@ -36,7 +36,6 @@ export default class Header extends React.Component {
           {this.props.page === "wallet" ? "Log out" : "Back"}
         </button>
         <img src="images/logo.png" className="logo" alt="Logo" />
-        <p id="version">{remote.app.getVersion()}</p>
         <div className="buttons-wrap">
           <button
             onClick={this.minimizeApp}

@@ -1,7 +1,7 @@
 {
   "name": "safexcashwallet",
   "description": "Safex Cash Wallet",
-  "version": "v0.0.1",
+  "version": "v0.1.0",
   "homepage": ".",
   "repository": {
     "type": "git",
@@ -46,6 +46,7 @@
     "react": "^15.6.2",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^15.6.2",
+    "react-tooltip": "^3.9.2",
     "safex-addressjs": "git+https://github.com/safex/safex_addressjs.git",
     "safex-nodejs-libwallet": "git+https://github.com/safex/safex-nodejs-libwallet.git"
   },

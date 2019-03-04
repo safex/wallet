@@ -1,7 +1,7 @@
 /* Wallet File Wrap */
 .wallet-inner-wrap {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  background-size: 100% 370px;
+  border-radius: 5px;
   padding: 50px 20px 20px !important;
 }
 .wallet-inner-wrap.no-mnemonic {
@@ -28,17 +28,23 @@
   text-align: center;
   background: rgba(143, 253, 253, 0.62);
   border: 0px none;
-  padding: 4px 12px 7px;
-  border-radius: 0px;
+  padding: 7px 14px 9px;
   float: left;
-  margin-right: 10px;
-  min-width: 42px;
+  width: 44px;
+  display: flex;
+  justify-content: center;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .wallet-inner-wrap .btns-right-wrap button img {
   max-height: 18px;
 }
-.wallet-inner-wrap .btns-right-wrap button.rescan {
-  margin-right: 0;
+.__react_component_tooltip p {
+  margin-bottom: 0px;
+  text-align: center;
+  line-height: 1.2;
+  font-size: 18px;
+  letter-spacing: 0.5px;
 }
 .wallet-inner-wrap .signal {
   border: 0px none;
@@ -57,15 +63,16 @@
 .wallet-inner-wrap .signal img {
   -webkit-filter: invert(0.2);
   filter: invert(0.2);
-  max-height: 23px;
-  margin-right: 8px;
-  -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
 }
 .wallet-inner-wrap .signal.connected img {
   -webkit-filter: none;
   filter: none;
+}
+.wallet-inner-wrap .block img {
+  position: relative;
+  top: 0px;
+  margin-right: 8px;
+  max-height: 22px;
 }
 .wallet-inner-wrap .signal p {
   display: inline-block;
@@ -91,14 +98,12 @@
 .wallet-inner-wrap .blockheight img {
   -webkit-filter: grayscale(0);
   filter: grayscale(0);
-  margin-right: 8px;
-  max-height: 22px;
 }
 .wallet-inner-wrap .blockheight span,
 .wallet-inner-wrap .signal span {
-  letter-spacing: 0px;
+  letter-spacing: 0.5px;
   color: #fff;
-  font-size: 19px;
+  font-size: 20px;
   position: relative;
   top: 4px;
 }
@@ -133,6 +138,26 @@
   margin-bottom: 0;
   font-weight: 600;
   line-height: 1.2;
+  position: relative;
+}
+.wallet-inner-wrap label button {
+  border-radius: 4px;
+  background-color: rgba(18, 190, 221, 0.45);
+  background: rgba(143, 253, 253, 0.62);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.26px;
+  line-height: 1.2;
+  position: absolute;
+  right: 0;
+  top: -3px;
+  padding: 5px 12px;
+  border: 0px;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
 }
 .wallet-inner-wrap .open-file-btn {
   width: auto;
@@ -153,11 +178,12 @@
   text-align: center;
   border: 0px none;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 20px;
+  font-size: 21px;
   padding: 0px;
   border-bottom: 1px solid #8ffdfd;
   margin-bottom: 10px;
   border-radius: 0px;
+  letter-spacing: 0.4px;
 }
 .wallet-inner-wrap .btn {
   font-size: 24px !important;
@@ -169,7 +195,8 @@
   border: 0px none;
   border-radius: 0px;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 20px;
+  font-size: 21px;
+  letter-spacing: 0.4px;
   padding: 0px;
   border-bottom: 1px solid #8ffdfd;
   margin-bottom: 7px;
@@ -205,7 +232,7 @@
   text-align: center;
   border: 0px none;
   color: #fff;
-  font-size: 20px;
+  font-size: 21px;
   padding: 0px;
   border-bottom: 1px solid #8ffdfd;
   margin-bottom: 7px;

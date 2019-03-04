@@ -1,6 +1,15 @@
 /* Alert */
-.alert,
-.mixinModal {
+.alertModal {
+  width: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  bottom: initial;
+  right: initial;
+  transform: translate(-50%, -50%);
+  transition: none;
+}
+.alert {
   text-shadow: none;
   box-shadow: none;
   visibility: visible;
@@ -9,20 +18,21 @@
   padding: 0;
   border: 0px none;
 }
-.alert.active,
-.mixinModal.active {
+.alert.active {
   visibility: visible;
   opacity: 1;
 }
-.alert:hover,
-.mixinModal:hover {
+.alert:hover {
   outline: 0px none;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
 }
-.alert .close,
-.mixinModal .close {
+.alert .close {
   position: absolute;
   right: 15px;
-  top: 14px;
+  top: 16px;
   color: #fff;
   opacity: 1;
   font-size: 19px;
@@ -32,19 +42,17 @@
   -moz-transition: all ease 0.2s;
   transition: all ease 0.2s;
 }
-.alert .close:hover,
-.mixinModal .close:hover {
+.alert .close:hover {
   color: #54bcd9;
   text-shadow: 0 1px 0 #54bcd9;
   opacity: 1;
 }
-.alert p,
-.mixinModal p {
+.alert p {
   background: transparent;
   border: 0px none;
   margin-right: 0;
   padding-right: 20px;
-  font-size: 20px;
+  font-size: 21px;
   letter-spacing: 0.5px;
   margin-bottom: 0;
   text-transform: initial;
@@ -52,12 +60,10 @@
   text-align: left;
   word-break: break-word;
 }
-.mixinModal p {
-  margin-bottom: 10px;
-  letter-spacing: 0.2px;
+.alertModal .alert p {
+  padding-right: 50px;
 }
-.alert p.disabled,
-.mixinModal p.disabled {
+.alert p.disabled {
   padding-right: 0;
 }
 
@@ -65,6 +71,13 @@
   text-transform: initial;
   margin: 0 0 5px;
   letter-spacing: 0.5px;
+}
+.mixinModal p {
+  margin-bottom: 10px;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+  text-align: left;
+  padding-right: 15px;
 }
 .mixinModal form {
   text-align: center;
@@ -116,6 +129,7 @@
   margin-bottom: 10px;
   text-align-last: center;
   border: 1px solid #8ffdfd;
+  font-size: 20px;
   height: 36px;
 }
 .mixinModal select:hover {

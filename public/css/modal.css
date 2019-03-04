@@ -34,7 +34,7 @@
   text-transform: uppercase;
   font-size: 17px;
   padding: 15px;
-  width: 510px;
+  width: 50%;
   visibility: hidden;
   opacity: 0;
   transition: all ease 0.3s;
@@ -82,7 +82,7 @@
   background: transparent;
   border: 0px none;
   margin-right: 0;
-  font-size: 20px;
+  font-size: 24px;
   letter-spacing: 0.8px;
   margin-bottom: 0;
   text-transform: initial;
@@ -106,10 +106,38 @@
 .modal label {
   width: 100%;
   text-transform: capitalize;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 400;
   letter-spacing: 0.6px;
   margin-bottom: 5px;
+  position: relative;
+}
+.modal label .question-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #327a9b;
+  border-radius: 50%;
+  text-indent: 1px;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.modal label .question-wrap:hover {
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
+  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
+}
+.modal label .question-wrap span {
+  position: relative;
+  top: -2px;
+}
+.modal label button {
+  position: absolute;
+  right: 0;
+  padding: 5px 12px;
 }
 .modal textarea {
   text-align: left;
@@ -143,7 +171,7 @@
   /* Chrome/Opera/Safari */
   opacity: 1;
   color: #fff;
-  font-size: 20px !important;
+  font-size: 21px !important;
   text-align: left;
 }
 .modal textarea::-moz-placeholder,
@@ -151,7 +179,7 @@
   /* Firefox 19+ */
   opacity: 1;
   color: #fff;
-  font-size: 20px !important;
+  font-size: 21px !important;
   text-align: left;
 }
 .modal textarea:-moz-placeholder,
@@ -159,7 +187,7 @@
   /* Firefox 18- */
   opacity: 1;
   color: #fff;
-  font-size: 20px !important;
+  font-size: 21px !important;
   text-align: left;
 }
 .modal textarea:-ms-input-placeholder,
@@ -167,7 +195,7 @@
   /* IE 10+ */
   opacity: 1;
   color: #fff;
-  font-size: 20px !important;
+  font-size: 21px !important;
   text-align: left;
 }
 .modal input {
@@ -210,6 +238,7 @@
   color: #fff;
   opacity: 1;
   font-size: 19px;
+  z-index: 1;
   font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
   -o-transition: all ease 0.2s;
   -webkit-transition: all ease 0.2s;
@@ -243,7 +272,7 @@
   border: 2px solid #ff004e;
   margin: 0 5px 0 0;
   padding: 5px 12px;
-  font-size: 14px;
+  font-size: 17px;
 }
 .modal .cancel-btn:hover {
   -webkit-box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
@@ -251,7 +280,7 @@
 }
 .modal .confirm-btn {
   margin: 0 0 0 5px;
-  font-size: 14px;
+  font-size: 17px;
   padding: 5px 12px;
   position: relative;
   top: -0.8px;
@@ -286,7 +315,7 @@
 }
 .modal h3 {
   margin: 0 0 15px;
-  font-size: 20px;
+  font-size: 22px;
   text-transform: initial;
 }
 .modal h5 {
@@ -336,18 +365,18 @@
   border-radius: 0px;
   text-align: left;
   border-bottom: 1px solid #8ffdfd;
-  font-size: 18px;
+  font-size: 21px;
 }
 .sendModal input {
   padding: 7px 10px 6px;
   border-bottom: 1px solid #8ffdfd;
-  font-size: 18px;
+  font-size: 21px;
   border-radius: 0px;
 }
 .sendModal .btn {
   margin-top: 5px;
-  padding: 4px 12px 4.4px;
-  font-size: 16px !important;
+  padding: 4px 18px 4.4px;
+  font-size: 20px !important;
 }
 .sendModal .btn:focus,
 .sendModal .btn:active {
@@ -365,7 +394,8 @@
 .sendModal .available-wrap span {
   text-transform: capitalize;
   line-height: 1.2;
-  font-size: 18px;
+  font-size: 20px;
+  letter-spacing: 0.4px;
 }
 .sendModalBackdrop {
   z-index: 10001;
@@ -386,7 +416,7 @@
 }
 .loadingModal label {
   text-transform: initial;
-  font-size: 21px;
+  font-size: 23px;
   margin-bottom: 8px;
 }
 .loadingModal input {
@@ -400,22 +430,27 @@
   margin: 0 0 0 5px;
 }
 
+.addressModal {
+  text-align: center;
+}
 .addressModal h3 {
-  font-size: 21px;
+  font-size: 24px;
 }
 .addressModal label {
   text-transform: initial !important;
   font-weight: 400 !important;
   margin-bottom: 5px !important;
-  font-size: 19px !important;
+  font-size: 23px !important;
 }
 .addressModal input,
 .addressModal textarea {
-  font-size: 19px !important;
+  font-size: 20px;
+  letter-spacing: 0.3px;
   padding: 5px !important;
   border-bottom: 1px solid #8ffdfd;
   border-radius: 0;
   text-align: center;
+  line-height: 1.2;
 }
 .addressModal .pass-input {
   border-radius: 5px;
@@ -423,6 +458,29 @@
   text-align: left !important;
   padding: 5px 10px !important;
 }
+.addressModal .button-wrap {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+.addressModal .button-wrap p {
+  text-align: left;
+  font-size: 20px;
+  padding-left: 15px;
+  line-height: 1.2;
+}
+.addressModal .rescan {
+  background-color: rgba(18, 190, 221, 0.45);
+  text-align: center;
+  border: 2px solid #54bcd9;
+  padding: 7px 14px 8px;
+  display: flex;
+  font-size: 16px;
+}
+.addressModal .rescan img {
+  max-height: 18px;
+}
+
 .ringSizeModal .pass-input {
   border-radius: 5px;
   border: 1px solid #327a9b;

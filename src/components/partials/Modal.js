@@ -1,11 +1,14 @@
 import React from "react";
 import { addClass } from "../../utils/utils.js";
+import ReactTooltip from "react-tooltip";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default class LoadingModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
+      loaded: false,
       wallet_path: localStorage.getItem("wallet_path"),
       address: "",
       amount: "",
@@ -146,6 +149,10 @@ export default class LoadingModal extends React.Component {
         tx.commit()
           .then(() => {
             this.closeMyModal();
+            if (!txId) {
+              this.props.setOpenAlert("Unable to create transaction id ");
+              return false;
+            }
             if (this.props.cash_or_token === 0) {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your cash transaction ID is: " +
@@ -285,26 +292,17 @@ export default class LoadingModal extends React.Component {
           </form>
 
           <div className={this.state.loaded ? "address-inner-wrap" : "hidden"}>
-            <h3>Address Info</h3>
-
-            <label htmlFor="spend_key">Secret (Private) Spend Key</label>
-            <input
-              type="text"
-              name="spend_key"
-              defaultValue={this.props.wallet.spend_key}
-              placeholder="secret (private) spend key"
-            />
-
-            <label htmlFor="view_key">Secret (Private) View Key</label>
-            <input
-              type="text"
-              name="view_key"
-              defaultValue={this.props.wallet.view_key}
-              placeholder="secret (private) view key"
-            />
+            <h3>Seed and Keys</h3>
 
             <label className={this.props.wallet.mnemonic ? "" : "hidden"}>
               Wallet Mnemonic Seed
+              <CopyToClipboard
+                text={this.props.wallet.mnemonic}
+                onCopy={this.props.onCopy}
+                className="button-shine"
+              >
+                <button>Copy</button>
+              </CopyToClipboard>
             </label>
             <textarea
               name="mnemonic"
@@ -313,6 +311,90 @@ export default class LoadingModal extends React.Component {
               className={this.props.wallet.mnemonic ? "" : "hidden"}
               rows="3"
             />
+
+            <label htmlFor="spend_key">
+              Public Spend Key
+              <CopyToClipboard
+                text={this.props.wallet.pub_spend}
+                onCopy={this.props.onCopy}
+                className="button-shine"
+              >
+                <button>Copy</button>
+              </CopyToClipboard>
+            </label>
+            <input
+              type="text"
+              name="pub_spend"
+              defaultValue={this.props.wallet.pub_spend}
+              placeholder="public spend key"
+            />
+
+            <label htmlFor="spend_key">
+              Secret (Private) Spend Key
+              <CopyToClipboard
+                text={this.props.wallet.spend_key}
+                onCopy={this.props.onCopy}
+                className="button-shine"
+              >
+                <button>Copy</button>
+              </CopyToClipboard>
+            </label>
+            <input
+              type="text"
+              name="spend_key"
+              defaultValue={this.props.wallet.spend_key}
+              placeholder="secret (private) spend key"
+            />
+
+            <label htmlFor="pub_view">
+              Public View Key
+              <CopyToClipboard
+                text={this.props.wallet.pub_view}
+                onCopy={this.props.onCopy}
+                className="button-shine"
+              >
+                <button>Copy</button>
+              </CopyToClipboard>
+            </label>
+            <input
+              type="text"
+              name="pub_view"
+              defaultValue={this.props.wallet.pub_view}
+              placeholder="public view key"
+            />
+
+            <label htmlFor="view_key">
+              Secret (Private) View Key
+              <CopyToClipboard
+                text={this.props.wallet.view_key}
+                onCopy={this.props.onCopy}
+                className="button-shine"
+              >
+                <button>Copy</button>
+              </CopyToClipboard>
+            </label>
+            <input
+              type="text"
+              name="view_key"
+              defaultValue={this.props.wallet.view_key}
+              placeholder="secret (private) view key"
+            />
+
+            <div className="button-wrap">
+              <button
+                className="button-shine rescan"
+                onClick={this.props.rescanBalance}
+                disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
+              >
+                Rescan
+              </button>
+              <p>
+                Rescan blockchain from the begining. Rescan may take a lot of
+                time to complete. This is performed only when your wallet file
+                is created. Use this if you suspect your wallet file is
+                corrupted or missing data.
+              </p>
+            </div>
           </div>
         </div>
       );
@@ -359,7 +441,19 @@ export default class LoadingModal extends React.Component {
                   onChange={this.inputOnChange.bind(this, "amount")}
                   onPaste={this.disableInputPaste}
                 />
-                <label htmlFor="paymentid">(Optional) Payment ID</label>
+                <label htmlFor="paymentid">
+                  (Optional) Payment ID
+                  <div
+                    data-tip
+                    data-for="paymentid-tooptip"
+                    className="question-wrap"
+                  >
+                    <span>?</span>
+                  </div>
+                  <ReactTooltip id="paymentid-tooptip">
+                    <p>Payment ID </p>
+                  </ReactTooltip>
+                </label>
                 <input
                   name="paymentid"
                   placeholder="(optional) Payment ID"
@@ -412,9 +506,7 @@ export default class LoadingModal extends React.Component {
                 Send
               </button>
             </form>
-            <h4>
-              *Lowering your transaction mixin lowers the privacy guarantees
-            </h4>
+            <h4>*Lowering your transaction mixin may harm your privacy</h4>
             {this.props.alertCloseDisabled ? (
               <span className="hidden" />
             ) : (
@@ -444,7 +536,7 @@ export default class LoadingModal extends React.Component {
                 className="progress-bar progress-bar-striped progress-bar-animated active"
                 role="progressbar"
                 aria-valuenow={this.props.progress}
-                aria-valuemin="10"
+                aria-valuemin="100"
                 aria-valuemax="100"
                 style={{ width: this.props.progress + "%" }}
               />
