@@ -73,7 +73,7 @@
   right: 20px;
   width: 32px;
   height: 32px;
-  border: 1px solid #327a9b;
+  border: 1px solid rgba(34, 34, 34, 0.6);
   border-radius: 50%;
   text-align: center;
   transition: all ease 0.3s;

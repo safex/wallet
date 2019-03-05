@@ -107,7 +107,7 @@
   font-size: 16px;
   position: relative;
   top: 2px;
-  letter-spacing: -0.2px;
+  letter-spacing: -0.3px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .wallet-inner-wrap .blockheight:hover span {

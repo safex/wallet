@@ -90,14 +90,12 @@ export default class NewFromMnemonic extends React.Component {
           <span>?</span>
         </div>
         <ReactTooltip id="mnemonic-tooptip">
-          <p>You can recover your Wallet with Mnemonic Seed</p>
+          <p>You can recover your Wallet with Mnemonic Seed.</p>
           <p>Mnemonic Seed example: </p>
           <p>
-            fizzle gyrate arsenic click wives bacon apology richly long inkling{" "}
-            <br />
-            avidly gimmick biweekly frying nephew union umpire sack tasked idiom{" "}
-            <br />
-            budget lazy getting heels nephew
+            fizzle gyrate arsenic click wives bacon apology richly long <br />
+            inkling avidly gimmick biweekly frying nephew union umpire <br />
+            sack tasked idiom budget lazy getting heels nephew
           </p>
         </ReactTooltip>
         <div className="group-wrap">
