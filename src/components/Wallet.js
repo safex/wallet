@@ -85,7 +85,7 @@ export default class Wallet extends React.Component {
             >
               <img src="images/key.png" alt="rescan" />
             </button>
-            <ReactTooltip id="address-tooptip">
+            <ReactTooltip id="address-tooptip" type="info">
               <p>Seed and Keys</p>
             </ReactTooltip>
           </div>

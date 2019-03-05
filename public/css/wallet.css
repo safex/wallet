@@ -10,7 +10,7 @@
 }
 .wallet-wrap .item-pic {
   right: 17px;
-  opacity: 0.6;
+  opacity: 0.4;
 }
 .wallet-inner-wrap .btn-wrap {
   position: absolute;
@@ -38,6 +38,13 @@
 .wallet-inner-wrap .btns-right-wrap button img {
   max-height: 18px;
 }
+.__react_component_tooltip,
+.__react_component_tooltip.type-info {
+  background: rgba(143, 253, 253, 0.62);
+}
+.__react_component_tooltip.show {
+  opacity: 1;
+}
 .__react_component_tooltip p {
   margin-bottom: 0px;
   text-align: center;
@@ -45,8 +52,17 @@
   font-size: 19px;
   letter-spacing: 0.8px;
 }
-.__react_component_tooltip.show {
-  opacity: 1;
+.__react_component_tooltip.type-info.place-top:after {
+  border-top-color: rgba(143, 253, 253, 0.62);
+}
+.__react_component_tooltip.type-info.place-right:after {
+  border-right-color: rgba(143, 253, 253, 0.62);
+}
+.__react_component_tooltip.type-info.place-bottom:after {
+  border-bottom-color: rgba(143, 253, 253, 0.62);
+}
+.__react_component_tooltip.type-info.place-left:after {
+  border-left-color: rgba(143, 253, 253, 0.62);
 }
 .wallet-inner-wrap .signal {
   border: 0px none;

@@ -26,8 +26,6 @@
 }
 .modal {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  background-size: cover;
-  background-repeat: repeat-y;
   border-radius: 5px;
   color: #fff;
   text-transform: uppercase;
