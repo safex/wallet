@@ -10,7 +10,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
   z-index: 10003;
   opacity: 0;
   visibility: hidden;
@@ -25,10 +25,9 @@
   opacity: 1;
 }
 .modal {
-  background: rgba(0, 0, 0, 0.7);
-  background-size: 100% 100%;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  background-size: cover;
   background-repeat: repeat-y;
-  border: 1px solid #327a9b;
   border-radius: 5px;
   color: #fff;
   text-transform: uppercase;
@@ -50,6 +49,10 @@
   bottom: 0;
   right: 0;
   z-index: 100004;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
   -webkit-app-region: no-drag;
 }
 .modal.active {
@@ -60,7 +63,6 @@
   outline: 0px none;
   -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
   box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
-  border: 1px solid #00e7ff;
 }
 .modal button {
   border-radius: 7px;
@@ -73,7 +75,7 @@
   line-height: 1.2;
   position: relative;
   border: 2px solid #54bcd9;
-  padding: 6px 12px 5px;
+  padding: 5px 12px;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
@@ -103,6 +105,9 @@
   margin-bottom: 0;
   margin-top: 5px;
 }
+.modal .label-wrap {
+  display: flex;
+}
 .modal label {
   width: 100%;
   text-transform: capitalize;
@@ -116,8 +121,8 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border: 1px solid #327a9b;
   border-radius: 50%;
   text-indent: 1px;
@@ -127,12 +132,21 @@
   -webkit-transition: all ease 0.3s;
 }
 .modal label .question-wrap:hover {
-  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
-  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  cursor: pointer;
+}
+.modal label .question-wrap:hover span {
+  color: #54bcd9;
 }
 .modal label .question-wrap span {
   position: relative;
-  top: -2px;
+  top: -4px;
+  font-size: 19px;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
 }
 .modal label button {
   position: absolute;
@@ -172,6 +186,7 @@
   opacity: 1;
   color: #fff;
   font-size: 21px !important;
+  letter-spacing: 0.4px;
   text-align: left;
 }
 .modal textarea::-moz-placeholder,
@@ -180,6 +195,7 @@
   opacity: 1;
   color: #fff;
   font-size: 21px !important;
+  letter-spacing: 0.4px;
   text-align: left;
 }
 .modal textarea:-moz-placeholder,
@@ -188,6 +204,7 @@
   opacity: 1;
   color: #fff;
   font-size: 21px !important;
+  letter-spacing: 0.4px;
   text-align: left;
 }
 .modal textarea:-ms-input-placeholder,
@@ -196,6 +213,7 @@
   opacity: 1;
   color: #fff;
   font-size: 21px !important;
+  letter-spacing: 0.4px;
   text-align: left;
 }
 .modal input {
@@ -303,11 +321,6 @@
 .modal .save-btn.green:hover {
   box-shadow: 0 0 30px 0 rgba(14, 200, 193, 0.5) !important;
 }
-.modal .copy-btn {
-  margin-top: 0;
-  font-size: 11.5px;
-  padding: 7px 12px 4px;
-}
 .modal .save-btn {
   margin-top: 5px;
   font-size: 11.5px;
@@ -351,6 +364,9 @@
 .sendModal:hover {
   border: 0px;
 }
+.sendModal .sendModalInner {
+  width: 100%;
+}
 .sendModal h3 {
   margin: 0 0 20px !important;
 }
@@ -375,8 +391,8 @@
 }
 .sendModal .btn {
   margin-top: 5px;
-  padding: 4px 18px 4.4px;
-  font-size: 20px !important;
+  padding: 4px 18px 5px;
+  font-size: 18px !important;
 }
 .sendModal .btn:focus,
 .sendModal .btn:active {
@@ -439,7 +455,7 @@
 .addressModal label {
   text-transform: initial !important;
   font-weight: 400 !important;
-  margin-bottom: 5px !important;
+  margin-bottom: 0px !important;
   font-size: 23px !important;
 }
 .addressModal input,
@@ -463,22 +479,29 @@
   align-items: center;
   margin-top: 5px;
 }
+.addressModal .copy-btn {
+  height: 29px;
+}
 .addressModal .button-wrap p {
   text-align: left;
-  font-size: 20px;
+  font-size: 19px;
   padding-left: 15px;
   line-height: 1.2;
+  letter-spacing: 0.4px;
 }
 .addressModal .rescan {
   background-color: rgba(18, 190, 221, 0.45);
   text-align: center;
   border: 2px solid #54bcd9;
-  padding: 7px 14px 8px;
+  padding: 7px 14px;
   display: flex;
   font-size: 16px;
 }
 .addressModal .rescan img {
   max-height: 18px;
+}
+.addressModal .address-inner-wrap .label-wrap label {
+  text-indent: 52px;
 }
 
 .ringSizeModal .pass-input {

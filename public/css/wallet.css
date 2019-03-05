@@ -1,14 +1,16 @@
 /* Wallet File Wrap */
 .wallet-inner-wrap {
-  background: url(../images/login-bg.png) no-repeat top left / cover;
   border-radius: 5px;
-  padding: 50px 20px 20px !important;
+  padding: 50px 0px 20px !important;
+  width: 94%;
+  left: 3%;
 }
 .wallet-inner-wrap.no-mnemonic {
   padding: 40px 20px 20px;
 }
 .wallet-wrap .item-pic {
   right: 17px;
+  opacity: 0.6;
 }
 .wallet-inner-wrap .btn-wrap {
   position: absolute;
@@ -28,13 +30,10 @@
   text-align: center;
   background: rgba(143, 253, 253, 0.62);
   border: 0px none;
-  padding: 7px 14px 9px;
+  padding: 7px 16px 9px 14px;
   float: left;
-  width: 44px;
   display: flex;
   justify-content: center;
-  border-top-left-radius: 0;
-  border-bottom-right-radius: 0;
 }
 .wallet-inner-wrap .btns-right-wrap button img {
   max-height: 18px;
@@ -43,8 +42,11 @@
   margin-bottom: 0px;
   text-align: center;
   line-height: 1.2;
-  font-size: 18px;
-  letter-spacing: 0.5px;
+  font-size: 19px;
+  letter-spacing: 0.8px;
+}
+.__react_component_tooltip.show {
+  opacity: 1;
 }
 .wallet-inner-wrap .signal {
   border: 0px none;
@@ -101,11 +103,12 @@
 }
 .wallet-inner-wrap .blockheight span,
 .wallet-inner-wrap .signal span {
-  letter-spacing: 0.5px;
   color: #fff;
-  font-size: 20px;
+  font-size: 16px;
   position: relative;
-  top: 4px;
+  top: 2px;
+  letter-spacing: -0.2px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .wallet-inner-wrap .blockheight:hover span {
   color: #fff;
@@ -178,12 +181,14 @@
   text-align: center;
   border: 0px none;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 21px;
-  padding: 0px;
+  font-size: 16px;
+  padding: 0 0 3px;
   border-bottom: 1px solid #8ffdfd;
+  margin-top: 5px;
   margin-bottom: 10px;
   border-radius: 0px;
-  letter-spacing: 0.4px;
+  letter-spacing: -0.2px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .wallet-inner-wrap .btn {
   font-size: 24px !important;
@@ -191,16 +196,16 @@
 .wallet-inner-wrap textarea {
   width: 100%;
   background: transparent;
-  text-align: center;
   border: 0px none;
   border-radius: 0px;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 21px;
-  letter-spacing: 0.4px;
+  font-size: 16px;
   padding: 0px;
   border-bottom: 1px solid #8ffdfd;
   margin-bottom: 7px;
   resize: none;
+  text-align: center;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .wallet-inner-wrap input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */

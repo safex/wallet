@@ -1,5 +1,6 @@
 import React from "react";
 import { hasNumber, countWords } from "../utils/utils.js";
+import ReactTooltip from "react-tooltip";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
@@ -77,7 +78,28 @@ export default class NewFromMnemonic extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.createNewFromMnemonic}>
+      <form
+        className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3"
+        onSubmit={this.createNewFromMnemonic}
+      >
+        <div
+          data-tip
+          data-for="mnemonic-tooptip"
+          className="button-shine question-wrap"
+        >
+          <span>?</span>
+        </div>
+        <ReactTooltip id="mnemonic-tooptip">
+          <p>You can recover your Wallet with Mnemonic Seed</p>
+          <p>Mnemonic Seed example: </p>
+          <p>
+            fizzle gyrate arsenic click wives bacon apology richly long inkling{" "}
+            <br />
+            avidly gimmick biweekly frying nephew union umpire sack tasked idiom{" "}
+            <br />
+            budget lazy getting heels nephew
+          </p>
+        </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">
             <input type="password" name="pass1" placeholder="password" />

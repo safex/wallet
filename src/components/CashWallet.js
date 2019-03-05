@@ -280,9 +280,9 @@ export default class CashWallet extends React.Component {
     }, 1000);
   };
 
-  renderPageWrapper = (title, version, page, icon) => {
+  renderPageWrapper = (title, version, page, page_type, icon) => {
     return (
-      <div className="item-wrap">
+      <div className={"item-wrap " + page_type}>
         <Header
           page={this.state.page}
           goToPage={this.goToPage}
@@ -294,9 +294,7 @@ export default class CashWallet extends React.Component {
             {title}&nbsp;
             <span>{version}</span>
           </h2>
-          <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 login-wrap">
-            {page}
-          </div>
+          <div className="login-wrap">{page}</div>
         </div>
         <p className={this.state.copied ? "copied-text active" : "copied-text"}>
           Copied to clipboard
@@ -338,6 +336,7 @@ export default class CashWallet extends React.Component {
 
   render() {
     let page = null;
+    let page_type = null;
     let version = null;
     let title = null;
     let icon = null;
@@ -347,6 +346,7 @@ export default class CashWallet extends React.Component {
         title = "Wallet";
         version = remote.app.getVersion();
         icon = "images/create-new.png";
+        page_type = "wallet-wrap";
         page = (
           <Wallet
             env={this.env}
@@ -367,6 +367,7 @@ export default class CashWallet extends React.Component {
       case "create-new":
         title = "Create New Wallet";
         icon = "images/create-new.png";
+        page_type = "create-new-wrap";
         page = (
           <CreateNew
             env={this.env}
@@ -381,6 +382,7 @@ export default class CashWallet extends React.Component {
       case "create-from-keys":
         title = "Create New Wallet From Keys";
         icon = "images/new-from-keys.png";
+        page_type = "create-from-keys-wrap";
         page = (
           <CreateFromKeys
             env={this.env}
@@ -395,6 +397,7 @@ export default class CashWallet extends React.Component {
       case "open-file":
         title = "Open Wallet";
         icon = "images/open-wallet-file.png";
+        page_type = "open-file-wrap";
         page = (
           <OpenFile
             env={this.env}
@@ -409,6 +412,7 @@ export default class CashWallet extends React.Component {
       case "recover-from-mnemonic":
         title = "Recover Wallet From Mnemonic Seed";
         icon = "images/mnemonic.png";
+        page_type = "mnemonic-wrap";
         page = (
           <RecoverFromMnemonic
             env={this.env}
@@ -493,6 +497,6 @@ export default class CashWallet extends React.Component {
         );
     }
 
-    return this.renderPageWrapper(title, version, page, icon);
+    return this.renderPageWrapper(title, version, page, page_type, icon);
   }
 }

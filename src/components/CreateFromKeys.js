@@ -1,5 +1,6 @@
 import React from "react";
 import { verify_safex_address } from "../utils/utils.js";
+import ReactTooltip from "react-tooltip";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
@@ -92,7 +93,31 @@ export default class CreateFromKeys extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.createWalletFromKeys}>
+      <form
+        className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3"
+        onSubmit={this.createWalletFromKeys}
+      >
+        <div
+          data-tip
+          data-for="create-from-keys-tooptip"
+          className="button-shine question-wrap"
+        >
+          <span>?</span>
+        </div>
+        <ReactTooltip id="create-from-keys-tooptip">
+          <p>
+            If you already have Safex Wallet Address, you can recreate it here.
+          </p>
+          <p>Your Safex Address should start with Safex:</p>
+          <p>Safex5...3rnQjJmQ2K</p>
+          <p>
+            Your Secret View Key and Secret Spend Key should be a 64 digit Hex.
+            Example:
+          </p>
+          <p>
+            45b9ad1abb6564141793d809c8284e25c5c22d29b7d313c0be62387b1f2df8c3
+          </p>
+        </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">
             <input type="text" name="address" placeholder="address" />

@@ -66,7 +66,7 @@ export default class OpenFile extends React.Component {
 
   render() {
     return (
-      <div className="open-file-wrap">
+      <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 open-file-wrap">
         <button className="browse-btn button-shine" onClick={this.browseFile}>
           Browse
         </button>

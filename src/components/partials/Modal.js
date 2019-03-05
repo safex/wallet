@@ -36,10 +36,6 @@ export default class LoadingModal extends React.Component {
     let path = this.state.wallet_path;
     let passwordInput = e.target.password.value;
 
-    if (passwordInput === "") {
-      this.props.setOpenAlert("Enter password for your wallet");
-      return false;
-    }
     if (passwordInput !== password) {
       this.props.setOpenAlert("Wrong password");
       return false;
@@ -80,11 +76,6 @@ export default class LoadingModal extends React.Component {
     let password = JSON.parse(localStorage.getItem("password"));
     let passwordInput = e.target.password.value;
 
-    if (passwordInput === "") {
-      this.props.setOpenAlert("Enter password for your wallet");
-      console.log("Enter password for your wallet");
-      return false;
-    }
     if (passwordInput !== password) {
       this.props.setOpenAlert("Wrong password");
       console.log("Wrong password");
@@ -103,7 +94,7 @@ export default class LoadingModal extends React.Component {
     return e => {
       e.preventDefault();
       let sendingAddress = e.target.send_to.value;
-      let amount = e.target.amount.value * 10000000000;
+      let amount = parseFloat(e.target.amount.value) * 10000000000;
       let paymentid = e.target.paymentid.value;
       let mixin = this.mixin;
       if (sendingAddress === "") {
@@ -112,6 +103,17 @@ export default class LoadingModal extends React.Component {
       }
       if (amount === "") {
         this.props.setOpenAlert("Enter amount");
+        return false;
+      }
+      if (
+        (this.props.cash_or_token === 0 &&
+          parseFloat(e.target.amount.value) + parseFloat(0.1) >
+            this.props.availableCash) ||
+        this.props.availableCash < parseFloat(0.1)
+      ) {
+        this.props.setOpenAlert(
+          "Not enough available safex cash to complete the transaction"
+        );
         return false;
       }
       if (paymentid !== "") {
@@ -294,16 +296,33 @@ export default class LoadingModal extends React.Component {
           <div className={this.state.loaded ? "address-inner-wrap" : "hidden"}>
             <h3>Seed and Keys</h3>
 
-            <label className={this.props.wallet.mnemonic ? "" : "hidden"}>
-              Wallet Mnemonic Seed
+            <div className="label-wrap">
+              <label
+                data-tip
+                data-for="mnemonic-tooptip"
+                className={this.props.wallet.mnemonic ? "" : "hidden"}
+              >
+                Wallet Mnemonic Seed
+              </label>
               <CopyToClipboard
                 text={this.props.wallet.mnemonic}
                 onCopy={this.props.onCopy}
-                className="button-shine"
+                className="button-shine copy-btn"
               >
                 <button>Copy</button>
               </CopyToClipboard>
-            </label>
+              <ReactTooltip place="bottom" id="mnemonic-tooptip">
+                <p>
+                  Mnemonic seed can be used to recover your wallet in case your
+                  file gets lost or corrupted.
+                </p>
+                <p className="red-text">
+                  Sharing this can and will result in total loss of your Safex
+                  Cash and Safex Tokens.
+                </p>
+                <p>Write it down and keep is safe at all times.</p>
+              </ReactTooltip>
+            </div>
             <textarea
               name="mnemonic"
               defaultValue={this.props.wallet.mnemonic}
@@ -312,16 +331,25 @@ export default class LoadingModal extends React.Component {
               rows="3"
             />
 
-            <label htmlFor="spend_key">
-              Public Spend Key
+            <div className="label-wrap">
+              <label data-tip data-for="pub-spend-tooptip" htmlFor="spend_key">
+                Public Spend Key
+              </label>
               <CopyToClipboard
                 text={this.props.wallet.pub_spend}
                 onCopy={this.props.onCopy}
-                className="button-shine"
+                className="button-shine copy-btn"
               >
                 <button>Copy</button>
               </CopyToClipboard>
-            </label>
+              <ReactTooltip id="pub-spend-tooptip">
+                <p>
+                  Public Spend Key and Public View Key are made to generate your
+                  address.
+                </p>
+              </ReactTooltip>
+            </div>
+
             <input
               type="text"
               name="pub_spend"
@@ -329,16 +357,21 @@ export default class LoadingModal extends React.Component {
               placeholder="public spend key"
             />
 
-            <label htmlFor="spend_key">
-              Secret (Private) Spend Key
+            <div className="label-wrap">
+              <label data-tip data-for="sec-spend-tooptip" htmlFor="spend_key">
+                Secret (Private) Spend Key
+              </label>
               <CopyToClipboard
                 text={this.props.wallet.spend_key}
                 onCopy={this.props.onCopy}
-                className="button-shine"
+                className="button-shine copy-btn"
               >
                 <button>Copy</button>
               </CopyToClipboard>
-            </label>
+              <ReactTooltip id="sec-spend-tooptip">
+                <p>Secret Spend Key is used to sign your transactions.</p>
+              </ReactTooltip>
+            </div>
             <input
               type="text"
               name="spend_key"
@@ -346,16 +379,24 @@ export default class LoadingModal extends React.Component {
               placeholder="secret (private) spend key"
             />
 
-            <label htmlFor="pub_view">
-              Public View Key
+            <div className="label-wrap">
+              <label data-tip data-for="pub-view-tooptip" htmlFor="pub_view">
+                Public View Key
+              </label>
               <CopyToClipboard
                 text={this.props.wallet.pub_view}
                 onCopy={this.props.onCopy}
-                className="button-shine"
+                className="button-shine copy-btn"
               >
                 <button>Copy</button>
               </CopyToClipboard>
-            </label>
+              <ReactTooltip id="pub-view-tooptip">
+                <p>
+                  Public Spend Key and Public View Key are made to generate your
+                  address.
+                </p>
+              </ReactTooltip>
+            </div>
             <input
               type="text"
               name="pub_view"
@@ -363,16 +404,24 @@ export default class LoadingModal extends React.Component {
               placeholder="public view key"
             />
 
-            <label htmlFor="view_key">
-              Secret (Private) View Key
+            <div className="label-wrap">
+              <label data-tip data-for="sec-view-tooptip" htmlFor="view_key">
+                Secret (Private) View Key
+              </label>
               <CopyToClipboard
                 text={this.props.wallet.view_key}
                 onCopy={this.props.onCopy}
-                className="button-shine"
+                className="button-shine copy-btn"
               >
                 <button>Copy</button>
               </CopyToClipboard>
-            </label>
+              <ReactTooltip id="sec-view-tooptip">
+                <p>
+                  Secret view can be used to view all transactions of the given
+                  address.
+                </p>
+              </ReactTooltip>
+            </div>
             <input
               type="text"
               name="view_key"
@@ -389,10 +438,10 @@ export default class LoadingModal extends React.Component {
                 Rescan
               </button>
               <p>
-                Rescan blockchain from the begining. Rescan may take a lot of
-                time to complete. This is performed only when your wallet file
-                is created. Use this if you suspect your wallet file is
-                corrupted or missing data.
+                Rescan blockchain from the begining. This is performed only when
+                your wallet file is created. Use this if you suspect your wallet
+                file is corrupted or missing data. It may take a lot of time to
+                complete.
               </p>
             </div>
           </div>
@@ -432,7 +481,23 @@ export default class LoadingModal extends React.Component {
                   value={this.state.address}
                   onChange={this.inputOnChange.bind(this, "address")}
                 />
-                <label htmlFor="amount">Amount</label>
+                <label htmlFor="amount">
+                  Amount
+                  {this.props.cash_or_token === 1 ? (
+                    <div
+                      data-tip
+                      data-for="amount-tooptip"
+                      className="question-wrap"
+                    >
+                      <span>?</span>
+                    </div>
+                  ) : (
+                    <div className="hidden" />
+                  )}
+                  <ReactTooltip id="amount-tooptip">
+                    <p>Token transaction does not accept decimal values.</p>
+                  </ReactTooltip>
+                </label>
                 <input
                   type="number"
                   name="amount"
@@ -451,7 +516,15 @@ export default class LoadingModal extends React.Component {
                     <span>?</span>
                   </div>
                   <ReactTooltip id="paymentid-tooptip">
-                    <p>Payment ID </p>
+                    <p>
+                      Payment id is additional reference number attached to the
+                      transaction.
+                    </p>
+                    <p>
+                      It is given by exchanges and web shops to differentiate
+                      and track particular deposits and purchases.
+                    </p>
+                    <p>It is not required for regular user transactions.</p>
                   </ReactTooltip>
                 </label>
                 <input

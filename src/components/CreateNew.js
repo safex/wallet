@@ -1,4 +1,5 @@
 import React from "react";
+import ReactTooltip from "react-tooltip";
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
@@ -48,7 +49,27 @@ export default class CreateNew extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.createNew}>
+      <form
+        className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3"
+        onSubmit={this.createNew}
+      >
+        <div
+          data-tip
+          data-for="create-new-tooptip"
+          className="button-shine question-wrap"
+        >
+          <span>?</span>
+        </div>
+        <ReactTooltip id="create-new-tooptip">
+          <p>
+            If you don't already have Safex Wallet, you can always generate a
+            new one here.
+          </p>
+          <p>
+            Enter your password, click create, choose your Wallet File name and
+            save it.
+          </p>
+        </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">
             <input type="password" name="pass1" placeholder="password" />

@@ -44,7 +44,7 @@ export default class Wallet extends React.Component {
 
   render() {
     return (
-      <div className="wallet-inner-wrap">
+      <div className="col-xs-12 wallet-inner-wrap">
         <div className="btn-wrap">
           <div
             className={
@@ -105,7 +105,7 @@ export default class Wallet extends React.Component {
           name="address"
           defaultValue={this.props.wallet.wallet_address}
           placeholder="address"
-          rows="2"
+          rows="1"
           readOnly
         />
 

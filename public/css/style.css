@@ -1,4 +1,22 @@
 @font-face {
+  font-family: "Avenir";
+  src: url("../fonts/AvenirLTStd-Roman.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Avenir Light";
+  src: url("../fonts/AvenirNextLTPro-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Avenir Bold";
+  src: url("../fonts/AvenirNextLTPro-Bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
   font-family: "Brandon Grotesque";
   src: url("../fonts/BrandonGrotesque-Regular.eot");
   src: url("../fonts/BrandonGrotesque-Regular.eot?#iefix")
