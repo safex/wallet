@@ -52,6 +52,7 @@
 }
 .item-wrap .login-wrap form {
   padding: 0px;
+  -webkit-app-region: no-drag;
 }
 .item-wrap .login-wrap .group-wrap {
   background: rgba(143, 253, 253, 0.09);
@@ -156,11 +157,8 @@
 .item-wrap .login-wrap .btn {
   width: 100%;
   font-size: 30px;
-  background: rgba(143, 253, 253, 0.62);
   color: #fff;
   text-transform: uppercase;
-  border: 0px;
-  border-bottom: 5px solid #8ffdfd;
   border-radius: 5px;
   margin-top: 5px;
 }
@@ -169,22 +167,25 @@
   outline: none;
 }
 .item-wrap .copied-text {
-  background: rgba(143, 253, 253, 0.62);
+  background: rgba(18, 190, 221, 0.45);
+  border: 2px solid #54bcd9;
   visibility: hidden;
   opacity: 0;
   position: absolute;
-  left: calc(44%);
+  left: calc(41.5%);
   bottom: 0;
   font-size: 18px;
-  padding: 9px 20px 10px;
-  letter-spacing: 0.5px;
+  padding: 7px 18px;
+  letter-spacing: 0.9px;
   color: #fff;
   z-index: 100006;
   border-radius: 5px;
+  text-transform: uppercase;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
+  -webkit-app-region: no-drag;
 }
 .item-wrap .copied-text.active {
   visibility: visible;
@@ -192,6 +193,10 @@
 }
 
 /* Open File */
+.open-file-wrap {
+  padding: 0;
+  -webkit-app-region: no-drag;
+}
 .open-file-wrap .item-pic {
   bottom: 0px;
   right: 29px;

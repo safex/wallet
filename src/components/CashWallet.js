@@ -214,7 +214,7 @@ export default class CashWallet extends React.Component {
     this.setState({ copied: true });
     setTimeout(() => {
       this.setState({ copied: false });
-    }, 2000);
+    }, 3000);
   };
 
   refreshCallback = () => {

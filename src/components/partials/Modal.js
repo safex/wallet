@@ -282,7 +282,11 @@ export default class LoadingModal extends React.Component {
             <label htmlFor="password">
               Enter password for {this.props.wallet.filename}:
             </label>
-            <input name="password" type="password" className="pass-input" />
+            <input
+              name="password"
+              type="password"
+              className="pass-input login-input"
+            />
             <button
               type="button"
               className="cancel-btn button-shine"
@@ -487,7 +491,7 @@ export default class LoadingModal extends React.Component {
                     <div
                       data-tip
                       data-for="amount-tooptip"
-                      className="question-wrap"
+                      className="button-shine question-wrap"
                     >
                       <span>?</span>
                     </div>
@@ -511,13 +515,13 @@ export default class LoadingModal extends React.Component {
                   <div
                     data-tip
                     data-for="paymentid-tooptip"
-                    className="question-wrap"
+                    className="button-shine question-wrap"
                   >
                     <span>?</span>
                   </div>
                   <ReactTooltip id="paymentid-tooptip">
                     <p>
-                      Payment id is additional reference number attached to the
+                      Payment ID is additional reference number attached to the
                       transaction.
                     </p>
                     <p>
