@@ -1,7 +1,7 @@
 /* Wallet File Wrap */
 .wallet-inner-wrap {
   border-radius: 5px;
-  padding: 50px 0px 20px !important;
+  padding: 50px 0 0 !important;
   width: 94%;
   left: 3%;
   -webkit-app-region: no-drag;
@@ -26,12 +26,10 @@
   top: 0;
 }
 .wallet-inner-wrap .btns-right-wrap button {
-  background: transparent;
-  border: 0px none;
   text-align: center;
-  background: rgba(18, 190, 221, 0.45);
-  border: 0px none;
-  padding: 7px 16px 9px 14px;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 2px solid #54bcd9;
+  padding: 6px 14px 8px 12px;
   float: left;
   display: flex;
   justify-content: center;
@@ -53,11 +51,8 @@
   border: 0px none;
   padding: 0;
   background: transparent;
-  margin-left: 10px;
   display: inline-block;
-}
-.wallet-inner-wrap .signal {
-  margin-bottom: 5px;
+  margin-left: 15px;
 }
 .wallet-inner-wrap .signal:hover {
   box-shadow: none !important;
@@ -88,7 +83,6 @@
 .wallet-inner-wrap .blockheight {
   border: 0px none;
   padding: 0;
-  margin-left: 10px;
   min-width: 75px;
   text-align: left;
   background: transparent;
@@ -152,7 +146,7 @@
 }
 .wallet-inner-wrap label button {
   border-radius: 4px;
-  background-color: rgba(18, 190, 221, 0.45);
+  background: url(../images/login-bg.png) no-repeat top left / cover;
   border: 2px solid #54bcd9;
   color: #fff;
   font-size: 13px;
@@ -269,10 +263,17 @@
   margin-top: 3px;
 }
 .wallet-inner-wrap .btn {
-  background: rgba(18, 190, 221, 0.45) !important;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
   border-bottom: 5px solid #54bcd9 !important;
 }
 .wallet-inner-wrap .btn:focus,
 .wallet-inner-wrap .btn:active {
   outline: none;
+}
+
+@media (min-width: 1200px) {
+  .wallet-inner-wrap {
+    width: 80%;
+    left: 10%;
+  }
 }

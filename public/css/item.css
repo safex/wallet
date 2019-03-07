@@ -167,7 +167,7 @@
   outline: none;
 }
 .item-wrap .copied-text {
-  background: rgba(18, 190, 221, 0.45);
+  background: url(../images/login-bg.png) no-repeat top left / cover;
   border: 2px solid #54bcd9;
   visibility: hidden;
   opacity: 0;

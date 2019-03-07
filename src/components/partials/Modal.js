@@ -7,13 +7,13 @@ export default class LoadingModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
       loaded: false,
       wallet_path: localStorage.getItem("wallet_path"),
       address: "",
       amount: "",
       payment_id: "",
-      tx_being_sent: false
+      tx_being_sent: false,
+      add_transition: false
     };
     this.mixin = 6;
   }
@@ -66,7 +66,8 @@ export default class LoadingModal extends React.Component {
         loaded: false,
         address: "",
         amount: "",
-        payment_id: ""
+        payment_id: "",
+        add_transition: false
       });
     }, 300);
   };
@@ -82,6 +83,12 @@ export default class LoadingModal extends React.Component {
       return false;
     }
     this.setState({ loaded: true });
+
+    setTimeout(() => {
+      this.setState({
+        add_transition: true
+      });
+    }, 300);
   };
 
   inputOnChange = (target, e) => {
@@ -332,7 +339,7 @@ export default class LoadingModal extends React.Component {
               defaultValue={this.props.wallet.mnemonic}
               placeholder="mnemonic seed for your wallet"
               className={this.props.wallet.mnemonic ? "" : "hidden"}
-              rows="3"
+              rows="2"
             />
 
             <div className="label-wrap">
@@ -434,6 +441,12 @@ export default class LoadingModal extends React.Component {
             />
 
             <div className="button-wrap">
+              <p>
+                Rescan blockchain from the begining. This is performed when your
+                wallet file is created. Use this if you suspect your wallet file
+                is corrupted or missing data. It may take a lot of time to
+                complete.
+              </p>
               <button
                 className="button-shine rescan"
                 onClick={this.props.rescanBalance}
@@ -441,12 +454,6 @@ export default class LoadingModal extends React.Component {
               >
                 Rescan
               </button>
-              <p>
-                Rescan blockchain from the begining. This is performed only when
-                your wallet file is created. Use this if you suspect your wallet
-                file is corrupted or missing data. It may take a lot of time to
-                complete.
-              </p>
             </div>
           </div>
         </div>
@@ -533,7 +540,7 @@ export default class LoadingModal extends React.Component {
                 </label>
                 <input
                   name="paymentid"
-                  placeholder="(optional) Payment ID"
+                  placeholder="(Optional) Payment ID"
                   value={this.state.payment_id}
                   onChange={this.inputOnChange.bind(this, "payment_id")}
                 />
@@ -632,9 +639,37 @@ export default class LoadingModal extends React.Component {
 
     return (
       <div>
-        <div className={"modal" + addClass(this.props.modal, "active")}>
-          {modal}
-        </div>
+        {this.state.loaded ? (
+          <div
+            className={
+              "modal modal-70" +
+              addClass(this.state.add_transition, "add_transition") +
+              addClass(this.props.modal, "active")
+            }
+          >
+            {modal}
+          </div>
+        ) : (
+          <div>
+            {this.props.alert ? (
+              <div
+                className={
+                  "modal modal-50" + addClass(this.props.modal, "active")
+                }
+              >
+                {modal}
+              </div>
+            ) : (
+              <div
+                className={
+                  "modal modal-50" + addClass(this.props.modal, "active")
+                }
+              >
+                {modal}
+              </div>
+            )}
+          </div>
+        )}
 
         {(this.props.addressModal ||
           (this.props.sendModal && this.props.mixinModal === false)) &&
