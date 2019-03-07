@@ -172,7 +172,7 @@
   visibility: hidden;
   opacity: 0;
   position: absolute;
-  left: calc(41.5%);
+  left: calc(50% - 80px);
   bottom: 0;
   font-size: 18px;
   padding: 7px 18px;

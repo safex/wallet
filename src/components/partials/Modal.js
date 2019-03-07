@@ -3,6 +3,8 @@ import { addClass } from "../../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
+const safex = window.require("safex-nodejs-libwallet");
+
 export default class LoadingModal extends React.Component {
   constructor(props) {
     super(props);
@@ -100,7 +102,8 @@ export default class LoadingModal extends React.Component {
   sendCashOrToken = cash_or_token => {
     return e => {
       e.preventDefault();
-      let sendingAddress = e.target.send_to.value;
+      let sendingAddressInput = e.target.send_to.value;
+      let sendingAddress = sendingAddressInput.replace(/\s+/g, "");
       let amount = parseFloat(e.target.amount.value) * 10000000000;
       let paymentid = e.target.paymentid.value;
       let mixin = this.mixin;
@@ -110,6 +113,20 @@ export default class LoadingModal extends React.Component {
       }
       if (amount === "") {
         this.props.setOpenAlert("Enter amount");
+        return false;
+      }
+      if (
+        process.env.NODE_ENV !== "development" &&
+        !safex.addressValid(sendingAddress, "mainnet")
+      ) {
+        this.props.setOpenAlert("Enter valid Safex address");
+        return false;
+      }
+      if (
+        process.env.NODE_ENV === "development" &&
+        !safex.addressValid(sendingAddress, "testnet")
+      ) {
+        this.props.setOpenAlert("Enter valid Safex address");
         return false;
       }
       if (
@@ -650,24 +667,10 @@ export default class LoadingModal extends React.Component {
             {modal}
           </div>
         ) : (
-          <div>
-            {this.props.alert ? (
-              <div
-                className={
-                  "modal modal-50" + addClass(this.props.modal, "active")
-                }
-              >
-                {modal}
-              </div>
-            ) : (
-              <div
-                className={
-                  "modal modal-50" + addClass(this.props.modal, "active")
-                }
-              >
-                {modal}
-              </div>
-            )}
+          <div
+            className={"modal modal-50" + addClass(this.props.modal, "active")}
+          >
+            {modal}
           </div>
         )}
 

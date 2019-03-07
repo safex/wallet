@@ -1,5 +1,6 @@
 import React from "react";
 import { closeApp } from "../../utils/utils.js";
+import ReactTooltip from "react-tooltip";
 
 const remote = window.require("electron").remote;
 
@@ -35,32 +36,45 @@ export default class Header extends React.Component {
         >
           {this.props.page === "wallet" ? "Log out" : "Back"}
         </button>
+
         <img src="images/logo.png" className="logo" alt="Logo" />
         <div className="buttons-wrap">
           <button
             onClick={this.minimizeApp}
+            data-tip
+            data-for="minimize-tooptip"
             className="minimize-app-btn button-shine"
-            title="Minimize"
             disabled={this.props.alertCloseDisabled ? "disabled" : ""}
           >
             _
           </button>
+          <ReactTooltip place="bottom" id="minimize-tooptip">
+            <p>Minimize</p>
+          </ReactTooltip>
           <button
             onClick={this.maximizeApp}
+            data-tip
+            data-for="maximize-tooptip"
             className="maximize-app-btn button-shine"
-            title="Maximize"
             disabled={this.props.alertCloseDisabled ? "disabled" : ""}
           >
             <span />
           </button>
+          <ReactTooltip place="bottom" id="maximize-tooptip">
+            <p>Maximize</p>
+          </ReactTooltip>
           <button
             onClick={this.setCloseApp}
+            data-tip
+            data-for="exit-tooptip"
             className="close-app-btn button-shine"
-            title="Exit"
             disabled={this.props.alertCloseDisabled ? "disabled" : ""}
           >
             X
           </button>
+          <ReactTooltip place="bottom" id="exit-tooptip">
+            <p>Exit</p>
+          </ReactTooltip>
         </div>
       </header>
     );
