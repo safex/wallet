@@ -249,6 +249,10 @@ export default class LoadingModal extends React.Component {
     return false;
   };
 
+  connectionError = () => {
+    this.props.setOpenAlert("Daemon connection error, please try again later ");
+  };
+
   render() {
     let modal;
 
@@ -466,8 +470,8 @@ export default class LoadingModal extends React.Component {
               </p>
               <button
                 className="button-shine rescan"
-                onClick={this.props.rescanBalance}
-                disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
+                onClick={this.props.wallet.wallet_connected ? this.props.rescanBalance : this.connectionError}
+                // disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
               >
                 Rescan
               </button>
@@ -550,6 +554,8 @@ export default class LoadingModal extends React.Component {
                     </p>
                     <p>
                       It is given by exchanges and web shops to differentiate
+                    </p>
+                    <p>
                       and track particular deposits and purchases.
                     </p>
                     <p>It is not required for regular user transactions.</p>

@@ -112,13 +112,6 @@ export default class Wallet extends React.Component {
 
         <label htmlFor="filepath">
           Wallet File Path
-          <CopyToClipboard
-            text={this.props.wallet.filepath}
-            onCopy={this.props.onCopy}
-            className="button-shine"
-          >
-            <button>Copy</button>
-          </CopyToClipboard>
         </label>
         <input
           type="text"
