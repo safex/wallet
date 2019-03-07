@@ -36,6 +36,7 @@ export default class CashWallet extends React.Component {
       address_modal: false,
       loading_modal: false,
       send_modal: false,
+      send_modal_disabled: false,
       mixin_modal: false,
       value: "",
       copied: false
@@ -77,6 +78,9 @@ export default class CashWallet extends React.Component {
   setOpenSendModal = cash_or_token => {
     this.setOpenModal("send_modal", "", false, cash_or_token);
     this.cash_or_token = cash_or_token;
+    this.setState({
+      send_modal_disabled: true
+    });
   };
 
   setCloseMyModal = () => {
@@ -88,6 +92,11 @@ export default class CashWallet extends React.Component {
         send_modal: false
       });
     }, 300);
+    setTimeout(() => {
+      this.setState({
+        send_modal_disabled: false
+      });
+    }, 1000);
   };
 
   setOpenMixinModal = (alert, disabled) => {
@@ -355,6 +364,7 @@ export default class CashWallet extends React.Component {
             walletMeta={this.wallet_meta}
             setWalletData={this.setWalletData}
             setOpenAlert={this.setOpenAlert}
+            sendModalDisabled={this.state.send_modal_disabled}
             setOpenAddressModal={this.setOpenAddressModal}
             setOpenSendModal={this.setOpenSendModal}
             setCloseModal={this.setCloseModal}

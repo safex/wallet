@@ -140,7 +140,11 @@ export default class Wallet extends React.Component {
               {this.props.wallet.unlocked_balance}
             </p>
             <button
-              className="btn button-shine"
+              className={
+                this.props.sendModalDisabled
+                  ? "btn button-shine disabled"
+                  : "btn button-shine"
+              }
               onClick={
                 this.props.wallet.wallet_connected
                   ? this.props.setOpenSendModal.bind(this, 0)
@@ -163,7 +167,11 @@ export default class Wallet extends React.Component {
             </p>
 
             <button
-              className="btn button-shine"
+              className={
+                this.props.sendModalDisabled
+                  ? "btn button-shine disabled"
+                  : "btn button-shine"
+              }
               onClick={
                 this.props.wallet.wallet_connected
                   ? this.props.setOpenSendModal.bind(this, 1)

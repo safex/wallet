@@ -266,6 +266,9 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   border-bottom: 5px solid #54bcd9 !important;
 }
+.wallet-inner-wrap .btn.disabled {
+  pointer-events: none;
+}
 .wallet-inner-wrap .btn:focus,
 .wallet-inner-wrap .btn:active {
   outline: none;
