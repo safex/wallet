@@ -15,7 +15,8 @@ export default class LoadingModal extends React.Component {
       amount: "",
       payment_id: "",
       tx_being_sent: false,
-      add_transition: false
+      add_transition: false,
+      remove_transition: false
     };
     this.mixin = 6;
   }
@@ -253,6 +254,22 @@ export default class LoadingModal extends React.Component {
     this.props.setOpenAlert("Daemon connection error, please try again later ");
   };
 
+  setRescanBalance = () => {
+    this.setState({
+      remove_transition: true
+    });
+    setTimeout(() => {
+      this.props.rescanBalance();
+    }, 300);
+    setTimeout(() => {
+      this.setState({
+        loaded: false,
+        remove_transition: false,
+        add_transition: false
+      });
+    }, 600);
+  };
+
   render() {
     let modal;
 
@@ -470,8 +487,12 @@ export default class LoadingModal extends React.Component {
               </p>
               <button
                 className="button-shine rescan"
-                onClick={this.props.wallet.wallet_connected ? this.props.rescanBalance : this.connectionError}
-                // disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
+                onClick={
+                  this.props.wallet.wallet_connected
+                    ? this.setRescanBalance
+                    : this.connectionError
+                }
+                disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
               >
                 Rescan
               </button>
@@ -555,9 +576,7 @@ export default class LoadingModal extends React.Component {
                     <p>
                       It is given by exchanges and web shops to differentiate
                     </p>
-                    <p>
-                      and track particular deposits and purchases.
-                    </p>
+                    <p>and track particular deposits and purchases.</p>
                     <p>It is not required for regular user transactions.</p>
                   </ReactTooltip>
                 </label>
@@ -662,7 +681,9 @@ export default class LoadingModal extends React.Component {
 
     return (
       <div>
-        {this.state.loaded ? (
+        {this.props.addressModal &&
+        this.state.loaded &&
+        this.props.alert === false ? (
           <div
             className={
               "modal modal-70" +
@@ -674,7 +695,11 @@ export default class LoadingModal extends React.Component {
           </div>
         ) : (
           <div
-            className={"modal modal-50" + addClass(this.props.modal, "active")}
+            className={
+              "modal modal-50" +
+              addClass(this.state.remove_transition, "remove_transition") +
+              addClass(this.props.modal, "active")
+            }
           >
             {modal}
           </div>

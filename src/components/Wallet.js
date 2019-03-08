@@ -46,11 +46,6 @@ export default class Wallet extends React.Component {
     return (
       <div className="col-xs-12 wallet-inner-wrap">
         <div className="btn-wrap">
-          <div className="blockheight block">
-            <img src="images/blocks.png" alt="blocks" />
-            <span>Blockchain height: &nbsp;</span>
-            <span>{this.props.wallet.blockchain_height}</span>
-          </div>
           <div
             className={
               "signal block" +
@@ -75,6 +70,11 @@ export default class Wallet extends React.Component {
                 ? "Connected"
                 : "Connection error"}
             </span>
+          </div>
+          <div className="blockheight block">
+            <img src="images/blocks.png" alt="blocks" />
+            <span>Blockchain height: &nbsp;</span>
+            <span>{this.props.wallet.blockchain_height}</span>
           </div>
 
           <div className="btns-right-wrap">
@@ -110,9 +110,7 @@ export default class Wallet extends React.Component {
           readOnly
         />
 
-        <label htmlFor="filepath">
-          Wallet File Path
-        </label>
+        <label htmlFor="filepath">Wallet File Path</label>
         <input
           type="text"
           name="filepath"

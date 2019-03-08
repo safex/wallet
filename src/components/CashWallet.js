@@ -39,7 +39,8 @@ export default class CashWallet extends React.Component {
       send_modal_disabled: false,
       mixin_modal: false,
       value: "",
-      copied: false
+      copied: false,
+      add_transition: false
     };
 
     this.wallet_meta = null;
@@ -267,15 +268,13 @@ export default class CashWallet extends React.Component {
       setTimeout(() => {
         console.log("Rescan setting callbacks");
         this.setWalletData();
+        this.setOpenAlert("Wallet rescan completed.");
         this.setState({
-          modal: false
+          address_modal: false
         });
         setTimeout(() => {
-          this.setState({
-            address_modal: false,
-            alert: false
-          });
-        }, 300);
+          this.setCloseAlert();
+        }, 10000);
         wallet
           .store()
           .then(() => {
@@ -338,6 +337,7 @@ export default class CashWallet extends React.Component {
           alertCloseDisabled={this.state.alert_close_disabled}
           onCopy={this.onCopy}
           rescanBalance={this.rescanBalance}
+          addTransition={this.state.add_transition}
         />
       </div>
     );
@@ -502,6 +502,7 @@ export default class CashWallet extends React.Component {
               alertText={this.state.alert_text}
               alertCloseDisabled={this.state.alert_close_disabled}
               rescanBalance={this.rescanBalance}
+              addTransition={this.state.add_transition}
             />
           </div>
         );
