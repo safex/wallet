@@ -61,10 +61,11 @@ export default class LoadingModal extends React.Component {
     if (this.state.tx_committed) {
       this.props.closeModal();
       this.setState({
-        tx_committed: false
+        modal: false
       });
       setTimeout(() => {
         this.setState({
+          tx_committed: false,
           remove_transition: false,
           add_transition: false
         });
@@ -601,10 +602,11 @@ export default class LoadingModal extends React.Component {
                     <p>It is not required for regular user transactions.</p>
                     <p>
                       Payment ID format should be 16 or 64 Hex character string.
+                      Example:
                     </p>
-                    <p>Payment ID examples:</p>
-                    <p>5f9ca516a59c32e9</p>
+                    <p>16 Hex string: 5f9ca516a59c32e9</p>
                     <p>
+                      64 Hex string:
                       f21c6225fc22d39695d9569da965969df4302fc853dcb2c14a326708e56e5d92
                     </p>
                   </ReactTooltip>

@@ -90,8 +90,7 @@ img {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
-button,
-.toggle-wrap {
+button {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -103,32 +102,6 @@ p:hover {
   cursor: initial;
 }
 
-.toggle-wrap {
-  padding: 0 0 5px;
-  text-align: center;
-}
-.toggle-wrap label {
-  display: inline;
-  margin-right: 10px;
-}
-.toggle-wrap span {
-  display: inline;
-  text-align: left;
-  font-size: 20px;
-  color: rgba(255, 255, 255, 1);
-  font-weight: 600;
-  line-height: 1.2;
-  text-transform: capitalize;
-}
-.toggle-wrap .react-switch {
-  margin: 0 3px;
-  top: 7px;
-}
-.toggle-wrap .react-switch-handle {
-  height: 25px !important;
-  width: 25px !important;
-  top: 2px !important;
-}
 .progress {
   margin: 15px 0 0;
 }
