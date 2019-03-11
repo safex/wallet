@@ -58,6 +58,19 @@ export default class LoadingModal extends React.Component {
   };
 
   closeMyModal = () => {
+    if (this.state.tx_committed) {
+      this.props.closeModal();
+      this.setState({
+        tx_committed: false
+      });
+      setTimeout(() => {
+        this.setState({
+          remove_transition: false,
+          add_transition: false
+        });
+      }, 300);
+      return false;
+    }
     if (this.props.addressModal) {
       this.props.closeModal();
     } else {
@@ -71,19 +84,6 @@ export default class LoadingModal extends React.Component {
         address: "",
         amount: "",
         payment_id: "",
-        add_transition: false
-      });
-    }, 300);
-  };
-
-  closeMyAlert = () => {
-    this.props.closeModal();
-    this.setState({
-      tx_committed: false
-    });
-    setTimeout(() => {
-      this.setState({
-        remove_transition: false,
         add_transition: false
       });
     }, 300);
@@ -602,7 +602,7 @@ export default class LoadingModal extends React.Component {
                     <p>
                       Payment ID format should be 16 or 64 Hex character string.
                     </p>
-                    <p>Payment ID example:</p>
+                    <p>Payment ID examples:</p>
                     <p>5f9ca516a59c32e9</p>
                     <p>
                       f21c6225fc22d39695d9569da965969df4302fc853dcb2c14a326708e56e5d92
@@ -703,7 +703,7 @@ export default class LoadingModal extends React.Component {
                 className="close"
                 onClick={
                   this.state.tx_committed
-                    ? this.closeMyAlert
+                    ? this.closeMyModal
                     : this.props.closeModal
                 }
               >
@@ -742,9 +742,10 @@ export default class LoadingModal extends React.Component {
           </div>
         )}
 
-        {(this.props.addressModal ||
+        {((this.props.addressModal ||
           (this.props.sendModal && this.props.mixinModal === false)) &&
-        this.props.alert === false ? (
+          this.props.alert === false) ||
+        this.state.tx_committed ? (
           <div
             className={"backdrop" + addClass(this.props.modal, "active")}
             onClick={this.closeMyModal}
