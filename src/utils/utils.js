@@ -95,13 +95,15 @@ function closeModal(target) {
  */
 function closeAlert(target) {
   target.setState({
-    modal: false,
-    alert_close_disabled: false
+    modal: false
   });
   setTimeout(() => {
     target.setState({
-      alert: false
+      alert: false,
+      alert_close_disabled: false,
+      button_disabled: false
     });
+    target.tx_committed = false;
   }, 300);
 }
 

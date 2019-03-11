@@ -63,7 +63,7 @@ export default class Wallet extends React.Component {
             <span>Status: &nbsp;</span>
             <span
               className={
-                this.props.wallet.wallet_connected ? "green-text" : "white-text"
+                this.props.wallet.wallet_connected ? "green-text" : "red-text"
               }
             >
               {this.props.wallet.wallet_connected
@@ -72,9 +72,18 @@ export default class Wallet extends React.Component {
             </span>
           </div>
           <div className="blockheight block">
-            <img src="images/blocks.png" alt="blocks" />
+            <img
+              src={
+                this.props.wallet.wallet_connected
+                  ? "images/blocks-green.png"
+                  : "images/blocks-red.png"
+              }
+              alt="blocks"
+            />
             <span>Blockchain height: &nbsp;</span>
-            <span>{this.props.wallet.blockchain_height}</span>
+            <span className="green-text">
+              {this.props.wallet.blockchain_height}
+            </span>
           </div>
 
           <div className="btns-right-wrap">
@@ -132,7 +141,7 @@ export default class Wallet extends React.Component {
             </p>
             <button
               className={
-                this.props.sendModalDisabled
+                this.props.buttonDisabled
                   ? "btn button-shine disabled"
                   : "btn button-shine"
               }
@@ -159,7 +168,7 @@ export default class Wallet extends React.Component {
 
             <button
               className={
-                this.props.sendModalDisabled
+                this.props.buttonDisabled
                   ? "btn button-shine disabled"
                   : "btn button-shine"
               }

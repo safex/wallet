@@ -17,8 +17,7 @@ export default class NewFromMnemonic extends React.Component {
 
     const pass1 = e.target.pass1.value;
     const pass2 = e.target.pass2.value;
-    const mnemonicValue = e.target.mnemonic.value;
-    const mnemonic = mnemonicValue.replace(/\s+/g, "");
+    const mnemonic = e.target.mnemonic.value;
 
     if (pass1 === "" || pass2 === "") {
       this.props.setOpenAlert("Fill out all the fields");
@@ -34,13 +33,13 @@ export default class NewFromMnemonic extends React.Component {
     }
     if (countWords(mnemonic) < 24 || countWords(mnemonic) > 25) {
       this.props.setOpenAlert("Mnemonic seed must contain 24 or 25 words");
+      console.log("word count " + countWords(mnemonic));
       return false;
     }
     if (hasNumber(mnemonic)) {
       this.props.setOpenAlert("Mnemonic seed must not contain a number");
       return false;
     }
-    console.log("word count " + countWords(mnemonic));
     dialog.showSaveDialog(filepath => {
       if (!filepath) {
         return false;
@@ -91,6 +90,7 @@ export default class NewFromMnemonic extends React.Component {
         </div>
         <ReactTooltip id="mnemonic-tooptip">
           <p>You can recover your Wallet with Mnemonic Seed.</p>
+          <p>Mnemonic Seed should contain 24 or 25 words and no numbers.</p>
           <p>Mnemonic Seed example: </p>
           <p>
             fizzle gyrate arsenic click wives bacon apology richly long <br />

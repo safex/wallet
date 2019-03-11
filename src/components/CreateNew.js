@@ -76,7 +76,11 @@ export default class CreateNew extends React.Component {
             <input type="password" name="pass2" placeholder="repeat password" />
           </div>
         </div>
-        <button type="submit" className="submit btn button-shine">
+        <button
+          type="submit"
+          className="submit btn button-shine"
+          disabled={this.props.buttonDisabled ? "disabled" : ""}
+        >
           <span>Create</span>
         </button>
       </form>

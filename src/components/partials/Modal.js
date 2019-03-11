@@ -16,7 +16,8 @@ export default class LoadingModal extends React.Component {
       payment_id: "",
       tx_being_sent: false,
       add_transition: false,
-      remove_transition: false
+      remove_transition: false,
+      tx_committed: false
     };
     this.mixin = 6;
   }
@@ -75,6 +76,19 @@ export default class LoadingModal extends React.Component {
     }, 300);
   };
 
+  closeMyAlert = () => {
+    this.props.closeModal();
+    this.setState({
+      tx_committed: false
+    });
+    setTimeout(() => {
+      this.setState({
+        remove_transition: false,
+        add_transition: false
+      });
+    }, 300);
+  };
+
   loadWalletInfo = e => {
     e.preventDefault();
     let password = JSON.parse(localStorage.getItem("password"));
@@ -114,6 +128,10 @@ export default class LoadingModal extends React.Component {
       }
       if (amount === "") {
         this.props.setOpenAlert("Enter amount");
+        return false;
+      }
+      if (isNaN(amount)) {
+        this.props.setOpenAlert("Enter valid amount");
         return false;
       }
       if (
@@ -176,6 +194,15 @@ export default class LoadingModal extends React.Component {
         tx.commit()
           .then(() => {
             this.closeMyModal();
+            this.setState({
+              tx_committed: true,
+              remove_transition: true
+            });
+            setTimeout(() => {
+              this.setState({
+                add_transition: true
+              });
+            }, 300);
             if (!txId) {
               this.props.setOpenAlert("Unable to create transaction id ");
               return false;
@@ -243,11 +270,6 @@ export default class LoadingModal extends React.Component {
     } catch (err) {
       this.props.setOpenAlert(`${err}`);
     }
-  };
-
-  disableInputPaste = e => {
-    e.preventDefault();
-    return false;
   };
 
   connectionError = () => {
@@ -557,7 +579,6 @@ export default class LoadingModal extends React.Component {
                   placeholder="Enter Amount"
                   value={this.state.amount}
                   onChange={this.inputOnChange.bind(this, "amount")}
-                  onPaste={this.disableInputPaste}
                 />
                 <label htmlFor="paymentid">
                   (Optional) Payment ID
@@ -578,6 +599,14 @@ export default class LoadingModal extends React.Component {
                     </p>
                     <p>and track particular deposits and purchases.</p>
                     <p>It is not required for regular user transactions.</p>
+                    <p>
+                      Payment ID format should be 16 or 64 Hex character string.
+                    </p>
+                    <p>Payment ID example:</p>
+                    <p>5f9ca516a59c32e9</p>
+                    <p>
+                      f21c6225fc22d39695d9569da965969df4302fc853dcb2c14a326708e56e5d92
+                    </p>
                   </ReactTooltip>
                 </label>
                 <input
@@ -670,7 +699,14 @@ export default class LoadingModal extends React.Component {
             {this.props.alertCloseDisabled ? (
               <span className="hidden" />
             ) : (
-              <span className="close" onClick={this.props.closeModal}>
+              <span
+                className="close"
+                onClick={
+                  this.state.tx_committed
+                    ? this.closeMyAlert
+                    : this.props.closeModal
+                }
+              >
                 X
               </span>
             )}
@@ -681,9 +717,10 @@ export default class LoadingModal extends React.Component {
 
     return (
       <div>
-        {this.props.addressModal &&
-        this.state.loaded &&
-        this.props.alert === false ? (
+        {(this.props.addressModal &&
+          this.state.loaded &&
+          this.props.alert === false) ||
+        this.state.tx_committed ? (
           <div
             className={
               "modal modal-70" +

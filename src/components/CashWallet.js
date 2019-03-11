@@ -29,6 +29,7 @@ export default class CashWallet extends React.Component {
       mixin: 6,
 
       //UI variables
+      button_disabled: false,
       progress: 0,
       alert: false,
       alert_text: "",
@@ -36,7 +37,6 @@ export default class CashWallet extends React.Component {
       address_modal: false,
       loading_modal: false,
       send_modal: false,
-      send_modal_disabled: false,
       mixin_modal: false,
       value: "",
       copied: false,
@@ -80,7 +80,7 @@ export default class CashWallet extends React.Component {
     this.setOpenModal("send_modal", "", false, cash_or_token);
     this.cash_or_token = cash_or_token;
     this.setState({
-      send_modal_disabled: true
+      button_disabled: true
     });
   };
 
@@ -95,7 +95,7 @@ export default class CashWallet extends React.Component {
     }, 300);
     setTimeout(() => {
       this.setState({
-        send_modal_disabled: false
+        button_disabled: false
       });
     }, 1000);
   };
@@ -110,7 +110,7 @@ export default class CashWallet extends React.Component {
 
   goToPage = page => {
     if (this.state.page !== "wallet") {
-      this.setState({ page });
+      this.setState({ page: page, button_disabled: false });
     } else {
       this.setOpenAlert("Logging out...", true);
       this.setState({ address_modal: false });
@@ -270,7 +270,8 @@ export default class CashWallet extends React.Component {
         this.setWalletData();
         this.setOpenAlert("Wallet rescan completed.");
         this.setState({
-          address_modal: false
+          address_modal: false,
+          button_disabled: false
         });
         setTimeout(() => {
           this.setCloseAlert();
@@ -364,7 +365,7 @@ export default class CashWallet extends React.Component {
             walletMeta={this.wallet_meta}
             setWalletData={this.setWalletData}
             setOpenAlert={this.setOpenAlert}
-            sendModalDisabled={this.state.send_modal_disabled}
+            buttonDisabled={this.state.button_disabled}
             setOpenAddressModal={this.setOpenAddressModal}
             setOpenSendModal={this.setOpenSendModal}
             setCloseModal={this.setCloseModal}
@@ -386,6 +387,7 @@ export default class CashWallet extends React.Component {
             config={this.state.config}
             setOpenAlert={this.setOpenAlert}
             setCloseAlert={this.setCloseAlert}
+            buttonDisabled={this.state.button_disabled}
           />
         );
         break;
@@ -401,6 +403,7 @@ export default class CashWallet extends React.Component {
             config={this.state.config}
             setOpenAlert={this.setOpenAlert}
             setCloseAlert={this.setCloseAlert}
+            buttonDisabled={this.state.button_disabled}
           />
         );
         break;
@@ -416,6 +419,7 @@ export default class CashWallet extends React.Component {
             config={this.state.config}
             setOpenAlert={this.setOpenAlert}
             setCloseAlert={this.setCloseAlert}
+            buttonDisabled={this.state.button_disabled}
           />
         );
         break;

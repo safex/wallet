@@ -106,11 +106,11 @@
   letter-spacing: -0.3px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
-.wallet-inner-wrap .signal span.green-text {
-  color: rgba(14, 200, 193, 1);
+.wallet-inner-wrap span.green-text {
+  color: rgba(14, 200, 193, 1) !important;
 }
-.wallet-inner-wrap .signal span.red-text {
-  color: rgba(221, 18, 99, 0.4);
+.wallet-inner-wrap span.red-text {
+  color: #871744 !important;
 }
 .wallet-inner-wrap .blockheight:hover span {
   color: #fff;
@@ -248,7 +248,7 @@
   color: rgba(14, 200, 193, 1);
 }
 .wallet-inner-wrap .yellow-field {
-  color: #dfc983;
+  color: #e9d70b;
 }
 .login-wrap .btn {
   font-size: 25px;
@@ -257,8 +257,10 @@
   color: #fff;
   text-transform: uppercase;
   border: 0px;
-  background: rgba(143, 253, 253, 0.62);
-  border-bottom: 5px solid #8ffdfd;
+  /* background: rgba(143, 253, 253, 0.62);
+  border-bottom: 5px solid #8ffdfd; */
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border-bottom: 5px solid #54bcd9;
   border-radius: 0px;
   margin-top: 3px;
 }
