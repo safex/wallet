@@ -88,8 +88,19 @@ export default class Wallet extends React.Component {
 
           <div className="btns-right-wrap">
             <button
+              className="button-shine tx-history"
+              onClick={this.props.setOpenHistoryModal}
+              data-tip
+              data-for="history-tooptip"
+            >
+              <img src="images/history.png" alt="transaction-history" />
+            </button>
+            <ReactTooltip id="history-tooptip">
+              <p>Transaction History</p>
+            </ReactTooltip>
+            <button
               className="button-shine address-info"
-              onClick={this.props.setOpenAddressModal}
+              onClick={this.props.setOpenLoadingModal}
               data-tip
               data-for="address-tooptip"
             >

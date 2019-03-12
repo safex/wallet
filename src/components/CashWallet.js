@@ -38,9 +38,13 @@ export default class CashWallet extends React.Component {
       loading_modal: false,
       send_modal: false,
       mixin_modal: false,
+      history_modal: false,
       value: "",
       copied: false,
-      add_transition: false
+      add_transition: false,
+      remove_transition: false,
+      modal_width: "",
+      history: []
     };
 
     this.wallet_meta = null;
@@ -52,7 +56,7 @@ export default class CashWallet extends React.Component {
 
   componentDidMount() {
     if (this.state.local_wallet) {
-      this.setOpenModal("loading_modal", "", false, null);
+      this.setOpenLoadingModal();
     }
   }
 
@@ -60,24 +64,72 @@ export default class CashWallet extends React.Component {
     clearTimeout(this.progress_timeout_id);
   }
 
-  setOpenModal = (modal_type, alert, disabled, cash_or_token) => {
-    openModal(this, modal_type, alert, disabled, cash_or_token);
+  setOpenModal = (
+    modal_type,
+    alert,
+    disabled,
+    cash_or_token,
+    modal_width,
+    remove_transition
+  ) => {
+    openModal(
+      this,
+      modal_type,
+      alert,
+      disabled,
+      cash_or_token,
+      modal_width,
+      remove_transition
+    );
+    this.setState({
+      modal_width: modal_width,
+      remove_transition: remove_transition
+    });
   };
 
   setCloseModal = () => {
     closeModal(this);
   };
 
-  setOpenAlert = (alert, disabled) => {
-    this.setOpenModal("alert", alert, disabled, null);
+  setOpenAlert = (
+    alert,
+    disabled,
+    modal_width = "modal-50",
+    remove_transition = false
+  ) => {
+    this.setOpenModal(
+      "alert",
+      alert,
+      disabled,
+      null,
+      modal_width,
+      remove_transition
+    );
+  };
+
+  setCloseAlert = () => {
+    closeAlert(this);
+  };
+
+  setOpenLoadingModal = () => {
+    this.setOpenModal("loading_modal", "", false, null, "modal-50");
   };
 
   setOpenAddressModal = () => {
-    this.setOpenModal("address_modal", "", false, null);
+    this.setOpenModal("address_modal", "", false, null, "modal-70", true);
+    setTimeout(() => {
+      this.setState({
+        remove_transition: false
+      });
+    }, 300);
+  };
+
+  setOpenHistoryModal = () => {
+    this.setOpenModal("history_modal", "", false, null, "modal-70");
   };
 
   setOpenSendModal = cash_or_token => {
-    this.setOpenModal("send_modal", "", false, cash_or_token);
+    this.setOpenModal("send_modal", "", false, cash_or_token, "modal-70");
     this.cash_or_token = cash_or_token;
     this.setState({
       button_disabled: true
@@ -90,7 +142,8 @@ export default class CashWallet extends React.Component {
     });
     setTimeout(() => {
       this.setState({
-        send_modal: false
+        send_modal: false,
+        remove_transition: false
       });
     }, 300);
     setTimeout(() => {
@@ -101,11 +154,7 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenMixinModal = (alert, disabled) => {
-    this.setOpenModal("mixin_modal", alert, disabled, null);
-  };
-
-  setCloseAlert = () => {
-    closeAlert(this);
+    this.setOpenModal("mixin_modal", alert, disabled, null, "modal-70");
   };
 
   goToPage = page => {
@@ -132,7 +181,7 @@ export default class CashWallet extends React.Component {
           this.wallet_meta = wallet;
           this.refreshProgressInterval();
           wallet.on("refreshed", () => {
-            this.setState({ progress: false });
+            this.setState({ progress: false, history: wallet.history() });
             clearTimeout(this.progress_timeout_id);
             console.log("Wallet File synchronized initially");
             wallet
@@ -270,12 +319,10 @@ export default class CashWallet extends React.Component {
         this.setWalletData();
         this.setOpenAlert("Wallet rescan completed.");
         this.setState({
+          loading_modal: false,
           address_modal: false,
           button_disabled: false
         });
-        setTimeout(() => {
-          this.setCloseAlert();
-        }, 10000);
         wallet
           .store()
           .then(() => {
@@ -309,6 +356,7 @@ export default class CashWallet extends React.Component {
           Copied to clipboard
         </p>
         <Modal
+          page={this.state.page}
           modal={this.state.modal}
           wallet={this.state.wallet}
           walletMeta={this.wallet_meta ? this.wallet_meta : ""}
@@ -319,6 +367,8 @@ export default class CashWallet extends React.Component {
           createWallet={this.createWallet}
           closeModal={this.setCloseModal}
           addressModal={this.state.address_modal}
+          history={this.state.history ? this.state.history : ""}
+          historyModal={this.state.history_modal}
           sendModal={this.state.send_modal}
           setCloseMyModal={this.setCloseMyModal}
           availableCash={
@@ -330,6 +380,7 @@ export default class CashWallet extends React.Component {
           cash_or_token={this.cash_or_token}
           mixinModal={this.state.mixin_modal}
           setOpenMixinModal={this.setOpenMixinModal}
+          setOpenAddressModal={this.setOpenAddressModal}
           openModal={this.setOpenModal}
           alert={this.state.alert}
           closeAlert={this.setCloseAlert}
@@ -339,6 +390,8 @@ export default class CashWallet extends React.Component {
           onCopy={this.onCopy}
           rescanBalance={this.rescanBalance}
           addTransition={this.state.add_transition}
+          removeTransition={this.state.remove_transition}
+          modalWidth={this.state.modal_width}
         />
       </div>
     );
@@ -366,8 +419,9 @@ export default class CashWallet extends React.Component {
             setWalletData={this.setWalletData}
             setOpenAlert={this.setOpenAlert}
             buttonDisabled={this.state.button_disabled}
-            setOpenAddressModal={this.setOpenAddressModal}
+            setOpenLoadingModal={this.setOpenLoadingModal}
             setOpenSendModal={this.setOpenSendModal}
+            setOpenHistoryModal={this.setOpenHistoryModal}
             setCloseModal={this.setCloseModal}
             closeAlert={this.setCloseAlert}
             onCopy={this.onCopy}
@@ -478,6 +532,7 @@ export default class CashWallet extends React.Component {
               </div>
             </div>
             <Modal
+              page={this.state.page}
               modal={this.state.modal}
               env={this.env}
               wallet={this.state.wallet}
@@ -488,6 +543,8 @@ export default class CashWallet extends React.Component {
               createWallet={this.createWallet}
               closeModal={this.setCloseModal}
               addressModal={this.state.address_modal}
+              history={this.state.history ? this.state.history : ""}
+              historyModal={this.state.history_modal}
               sendModal={this.state.send_modal}
               setCloseMyModal={this.setCloseMyModal}
               availableCash={
@@ -499,6 +556,7 @@ export default class CashWallet extends React.Component {
               cash_or_token={this.cash_or_token}
               mixinModal={this.state.mixin_modal}
               setOpenMixinModal={this.setOpenMixinModal}
+              setOpenAddressModal={this.setOpenAddressModal}
               openModal={this.setOpenModal}
               alert={this.state.alert}
               closeAlert={this.setCloseAlert}
@@ -507,6 +565,8 @@ export default class CashWallet extends React.Component {
               alertCloseDisabled={this.state.alert_close_disabled}
               rescanBalance={this.rescanBalance}
               addTransition={this.state.add_transition}
+              removeTransition={this.state.remove_transition}
+              modalWidth={this.state.modal_width}
             />
           </div>
         );

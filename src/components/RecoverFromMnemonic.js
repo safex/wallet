@@ -90,13 +90,17 @@ export default class NewFromMnemonic extends React.Component {
         </div>
         <ReactTooltip id="mnemonic-tooptip">
           <p>You can recover your Wallet with Mnemonic Seed.</p>
-          <p>Mnemonic Seed should contain 24 or 25 words and no numbers.</p>
-          <p>Mnemonic Seed example: </p>
+          <p>
+            Mnemonic Seed should contain 24 or 25 words and no numbers. Example:
+          </p>
           <p>
             fizzle gyrate arsenic click wives bacon apology richly long <br />
             inkling avidly gimmick biweekly frying nephew union umpire <br />
             sack tasked idiom budget lazy getting heels nephew
           </p>
+          <p>This will create 2 files on your file system.</p>
+          <p>ExampleWallet and ExampleWallet.keys</p>
+          <p>Always use only the file without the extension.</p>
         </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">

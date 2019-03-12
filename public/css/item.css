@@ -53,6 +53,7 @@
 .item-wrap .login-wrap form {
   padding: 0px;
   -webkit-app-region: no-drag;
+  position: relative;
 }
 .item-wrap .login-wrap .group-wrap {
   background: rgba(143, 253, 253, 0.09);

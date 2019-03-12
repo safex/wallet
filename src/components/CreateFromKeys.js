@@ -117,6 +117,9 @@ export default class CreateFromKeys extends React.Component {
           <p>
             45b9ad1abb6564141793d809c8284e25c5c22d29b7d313c0be62387b1f2df8c3
           </p>
+          <p>This will create 2 files on your file system.</p>
+          <p>ExampleWallet and ExampleWallet.keys</p>
+          <p>Always use only the file without the extension.</p>
         </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">

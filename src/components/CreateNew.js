@@ -69,6 +69,9 @@ export default class CreateNew extends React.Component {
             Enter your password, click create, choose your Wallet File name and
             save it.
           </p>
+          <p>This will create 2 files on your file system.</p>
+          <p>ExampleWallet and ExampleWallet.keys</p>
+          <p>Always use only the file without the extension.</p>
         </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">

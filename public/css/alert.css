@@ -79,6 +79,9 @@
   text-align: left;
   padding-right: 15px;
 }
+.mixinModal label {
+  font-size: 20px;
+}
 .mixinModal form {
   text-align: center;
   margin-bottom: 10px;

@@ -1,4 +1,5 @@
 import React from "react";
+import ReactTooltip from "react-tooltip";
 const { dialog } = window.require("electron").remote;
 
 export default class OpenFile extends React.Component {
@@ -71,6 +72,22 @@ export default class OpenFile extends React.Component {
           Browse
         </button>
         <form onSubmit={this.openFile}>
+          <div
+            data-tip
+            data-for="open-tooptip"
+            className="button-shine question-wrap"
+          >
+            <span>?</span>
+          </div>
+          <ReactTooltip id="open-tooptip">
+            <p>
+              To open you Safex Wallet, click browse. This will open a dialog
+              window.
+            </p>
+            <p>Choose the wallet file from your file system.</p>
+            <p>Always use only the file without the extensiton. </p>
+            <p>Enter password for your Wallet and click open.</p>
+          </ReactTooltip>
           <div className="group-wrap">
             <div className="form-group">
               <input

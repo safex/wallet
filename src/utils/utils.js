@@ -48,14 +48,23 @@ const addClass = (condition, className) => (condition ? ` ${className} ` : "");
  * @param alert
  * @param disabled
  * @param send_cash_or_token
+ * @param modal_width
  */
-function openModal(target, modal_type, alert, disabled, cash_or_token) {
+function openModal(
+  target,
+  modal_type,
+  alert,
+  disabled,
+  cash_or_token,
+  modal_width,
+  remove_transition
+) {
   target.setState({
     modal: true,
     [modal_type]: true,
     alert_text: alert,
-    cash_or_token: cash_or_token,
-    alert_close_disabled: disabled
+    alert_close_disabled: disabled,
+    remove_transition: remove_transition
   });
 }
 
@@ -84,14 +93,22 @@ function closeModal(target) {
         alert: false,
         address_modal: false,
         send_modal: false,
-        mixin_modal: false
+        mixin_modal: false,
+        history_modal: false,
+        modal_width: "",
+        remove_transition: false
       });
     }, 300);
+    setTimeout(() => {
+      target.setState({
+        button_disabled: false
+      });
+    }, 1000);
   }
 }
 
 /**
- * Close Modal
+ * Close Alert
  */
 function closeAlert(target) {
   target.setState({
@@ -101,9 +118,10 @@ function closeAlert(target) {
     target.setState({
       alert: false,
       alert_close_disabled: false,
-      button_disabled: false
+      button_disabled: false,
+      modal_width: "",
+      remove_transition: false
     });
-    target.tx_committed = false;
   }, 300);
 }
 

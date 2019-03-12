@@ -1,5 +1,5 @@
 import React from "react";
-import { addClass } from "../../utils/utils.js";
+import { addClass, roundAmount } from "../../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
@@ -9,15 +9,13 @@ export default class LoadingModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: false,
       wallet_path: localStorage.getItem("wallet_path"),
       address: "",
       amount: "",
       payment_id: "",
       tx_being_sent: false,
       add_transition: false,
-      remove_transition: false,
-      tx_committed: false
+      remove_transition: false
     };
     this.mixin = 6;
   }
@@ -58,20 +56,6 @@ export default class LoadingModal extends React.Component {
   };
 
   closeMyModal = () => {
-    if (this.state.tx_committed) {
-      this.props.closeModal();
-      this.setState({
-        modal: false
-      });
-      setTimeout(() => {
-        this.setState({
-          tx_committed: false,
-          remove_transition: false,
-          add_transition: false
-        });
-      }, 300);
-      return false;
-    }
     if (this.props.addressModal) {
       this.props.closeModal();
     } else {
@@ -97,16 +81,10 @@ export default class LoadingModal extends React.Component {
 
     if (passwordInput !== password) {
       this.props.setOpenAlert("Wrong password");
-      console.log("Wrong password");
       return false;
     }
-    this.setState({ loaded: true });
 
-    setTimeout(() => {
-      this.setState({
-        add_transition: true
-      });
-    }, 300);
+    this.props.setOpenAddressModal();
   };
 
   inputOnChange = (target, e) => {
@@ -124,29 +102,29 @@ export default class LoadingModal extends React.Component {
       let paymentid = e.target.paymentid.value;
       let mixin = this.mixin;
       if (sendingAddress === "") {
-        this.props.setOpenAlert("Fill out all the fields");
+        this.props.setOpenAlert("Fill out all the fields", false, "modal-70");
         return false;
       }
       if (amount === "") {
-        this.props.setOpenAlert("Enter amount");
+        this.props.setOpenAlert("Enter amount", false, "modal-70");
         return false;
       }
       if (isNaN(amount)) {
-        this.props.setOpenAlert("Enter valid amount");
+        this.props.setOpenAlert("Enter valid amount", false, "modal-70");
         return false;
       }
       if (
         process.env.NODE_ENV !== "development" &&
         !safex.addressValid(sendingAddress, "mainnet")
       ) {
-        this.props.setOpenAlert("Enter valid Safex address");
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
         return false;
       }
       if (
         process.env.NODE_ENV === "development" &&
         !safex.addressValid(sendingAddress, "testnet")
       ) {
-        this.props.setOpenAlert("Enter valid Safex address");
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
         return false;
       }
       if (
@@ -156,7 +134,9 @@ export default class LoadingModal extends React.Component {
         this.props.availableCash < parseFloat(0.1)
       ) {
         this.props.setOpenAlert(
-          "Not enough available safex cash to complete the transaction"
+          "Not enough available safex cash to complete the transaction",
+          false,
+          "modal-70"
         );
         return false;
       }
@@ -195,28 +175,27 @@ export default class LoadingModal extends React.Component {
         tx.commit()
           .then(() => {
             this.closeMyModal();
-            this.setState({
-              tx_committed: true,
-              remove_transition: true
-            });
-            setTimeout(() => {
-              this.setState({
-                add_transition: true
-              });
-            }, 300);
             if (!txId) {
-              this.props.setOpenAlert("Unable to create transaction id ");
+              this.props.setOpenAlert(
+                "Unable to create transaction id ",
+                false,
+                "modal-70"
+              );
               return false;
             }
             if (this.props.cash_or_token === 0) {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your cash transaction ID is: " +
-                  txId
+                  txId,
+                false,
+                "modal-70"
               );
             } else {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your token transaction ID is: " +
-                  txId
+                  txId,
+                false,
+                "modal-70"
               );
             }
             this.setState(() => ({
@@ -244,7 +223,11 @@ export default class LoadingModal extends React.Component {
           localStorage.setItem("args", JSON.stringify(args));
           console.log(JSON.parse(localStorage.getItem("args")));
         } else {
-          this.props.setOpenAlert("Couldn't create transaction: " + e);
+          this.props.setOpenAlert(
+            "Couldn't create transaction: " + e,
+            false,
+            "modal-70"
+          );
         }
       });
   };
@@ -295,8 +278,15 @@ export default class LoadingModal extends React.Component {
 
   render() {
     let modal;
-
     let mixin = [];
+    let history = [];
+    let options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    };
+
     for (var i = 0; i <= 8; i++) {
       mixin.push(
         <option key={i} value={i}>
@@ -305,6 +295,50 @@ export default class LoadingModal extends React.Component {
       );
     }
     mixin.reverse();
+
+    history = this.props.history.map((txInfo, i) => (
+      <div className="history-item" key={i}>
+        <div className="col-xs-6 item-section">
+          <p className={txInfo.pending ? "hidden" : ""}>
+            <img
+              src={
+                txInfo.direction === "in"
+                  ? "images/arrow-up.png"
+                  : "images/arrow-down.png"
+              }
+              className="arrow-img"
+              alt="arrow-img"
+            />
+            <span className={txInfo.direction === "in" ? "green-text" : ""}>
+              {txInfo.direction === "in" ? "Received" : "Sent"}
+            </span>
+          </p>
+          <p className={txInfo.pending ? "yellow-text" : "hidden"}>
+            {txInfo.pending}
+          </p>
+          {roundAmount(txInfo.tokenAmount) === 0 ? (
+            <span className={txInfo.direction === "in" ? "green-text" : ""}>
+              {roundAmount(txInfo.amount)} SFX
+            </span>
+          ) : (
+            <span className={txInfo.direction === "in" ? "green-text" : ""}>
+              {roundAmount(txInfo.tokenAmount)} SFT
+            </span>
+          )}
+        </div>
+        <div className="col-xs-6 item-section">
+          <p className="text-right">
+            {"" +
+              new Date(txInfo.timestamp * 1000).toLocaleDateString(
+                "en-US",
+                options
+              )}
+          </p>
+          <p>Fee: {roundAmount(txInfo.fee)}</p>
+        </div>
+        <p>{"Transaction ID : " + txInfo.id}</p>
+      </div>
+    ));
 
     if (this.props.loadingModal) {
       modal = (
@@ -316,7 +350,13 @@ export default class LoadingModal extends React.Component {
           <span className="close" onClick={this.props.closeModal}>
             X
           </span>
-          <form onSubmit={this.loadPreviousWallet}>
+          <form
+            onSubmit={
+              this.props.page === "wallet"
+                ? this.loadWalletInfo
+                : this.loadPreviousWallet
+            }
+          >
             <label htmlFor="password">
               Enter password for {this.state.filename}:
             </label>
@@ -343,29 +383,8 @@ export default class LoadingModal extends React.Component {
           <span className="close" onClick={this.closeMyModal}>
             X
           </span>
-          <form
-            onSubmit={this.loadWalletInfo}
-            className={this.state.loaded ? "hidden" : ""}
-          >
-            <label htmlFor="password">
-              Enter password for {this.props.wallet.filename}:
-            </label>
-            <input
-              name="password"
-              type="password"
-              className="pass-input login-input"
-            />
-            <button
-              type="button"
-              className="cancel-btn button-shine"
-              onClick={this.props.closeModal}
-            >
-              Cancel
-            </button>
-            <button className="confirm-btn button-shine">Continue</button>
-          </form>
 
-          <div className={this.state.loaded ? "address-inner-wrap" : "hidden"}>
+          <div>
             <h3>Seed and Keys</h3>
 
             <div className="label-wrap">
@@ -604,9 +623,8 @@ export default class LoadingModal extends React.Component {
                       Payment ID format should be 16 or 64 Hex character string.
                       Example:
                     </p>
-                    <p>16 Hex string: 5f9ca516a59c32e9</p>
+                    <p>5f9ca516a59c32e9</p>
                     <p>
-                      64 Hex string:
                       f21c6225fc22d39695d9569da965969df4302fc853dcb2c14a326708e56e5d92
                     </p>
                   </ReactTooltip>
@@ -675,6 +693,27 @@ export default class LoadingModal extends React.Component {
         </div>
       );
     }
+    if (this.props.historyModal) {
+      modal = (
+        <div
+          className={
+            "historyModal" + addClass(this.props.historyModal, "active")
+          }
+        >
+          {this.props.alertCloseDisabled ? (
+            <span className="hidden" />
+          ) : (
+            <span className="close" onClick={this.props.closeModal}>
+              X
+            </span>
+          )}
+          <div className="mainAlertPopupInner">
+            <h3>Transaction History</h3>
+            <div id="history-wrap">{history}</div>
+          </div>
+        </div>
+      );
+    }
     if (this.props.alert) {
       modal = (
         <div className={"alert" + addClass(this.props.alert, "active")}>
@@ -701,14 +740,7 @@ export default class LoadingModal extends React.Component {
             {this.props.alertCloseDisabled ? (
               <span className="hidden" />
             ) : (
-              <span
-                className="close"
-                onClick={
-                  this.state.tx_committed
-                    ? this.closeMyModal
-                    : this.props.closeModal
-                }
-              >
+              <span className="close" onClick={this.props.closeModal}>
                 X
               </span>
             )}
@@ -719,45 +751,28 @@ export default class LoadingModal extends React.Component {
 
     return (
       <div>
-        {(this.props.addressModal &&
-          this.state.loaded &&
-          this.props.alert === false) ||
-        this.state.tx_committed ? (
-          <div
-            className={
-              "modal modal-70" +
-              addClass(this.state.add_transition, "add_transition") +
-              addClass(this.props.modal, "active")
-            }
-          >
-            {modal}
-          </div>
-        ) : (
-          <div
-            className={
-              "modal modal-50" +
-              addClass(this.state.remove_transition, "remove_transition") +
-              addClass(this.props.modal, "active")
-            }
-          >
-            {modal}
-          </div>
-        )}
+        <div
+          className={
+            "modal" +
+            addClass(this.props.modalWidth, this.props.modalWidth) +
+            addClass(
+              this.state.add_transition || this.props.addTransition,
+              "add_transition"
+            ) +
+            addClass(
+              this.state.remove_transition || this.props.removeTransition,
+              "remove_transition"
+            ) +
+            addClass(this.props.modal, "active")
+          }
+        >
+          {modal}
+        </div>
 
-        {((this.props.addressModal ||
-          (this.props.sendModal && this.props.mixinModal === false)) &&
-          this.props.alert === false) ||
-        this.state.tx_committed ? (
-          <div
-            className={"backdrop" + addClass(this.props.modal, "active")}
-            onClick={this.closeMyModal}
-          />
-        ) : (
-          <div
-            className={"backdrop" + addClass(this.props.modal, "active")}
-            onClick={this.props.alertCloseDisabled ? "" : this.props.closeModal}
-          />
-        )}
+        <div
+          className={"backdrop" + addClass(this.props.modal, "active")}
+          onClick={this.props.alertCloseDisabled ? "" : this.props.closeModal}
+        />
       </div>
     );
   }

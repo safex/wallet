@@ -54,7 +54,6 @@
 .modal-70 {
   width: 70%;
   /* max-width: 695px; */
-  transition: none;
 }
 .modal.active {
   visibility: visible;
@@ -194,7 +193,7 @@
   /* Chrome/Opera/Safari */
   opacity: 1;
   color: #fff;
-  font-size: 21px !important;
+  font-size: 22px !important;
   letter-spacing: 0.7px;
   text-align: left;
 }
@@ -203,7 +202,7 @@
   /* Firefox 19+ */
   opacity: 1;
   color: #fff;
-  font-size: 21px !important;
+  font-size: 22px !important;
   letter-spacing: 0.7px;
   text-align: left;
 }
@@ -212,7 +211,7 @@
   /* Firefox 18- */
   opacity: 1;
   color: #fff;
-  font-size: 21px !important;
+  font-size: 22px !important;
   letter-spacing: 0.7px;
   text-align: left;
 }
@@ -221,7 +220,7 @@
   /* IE 10+ */
   opacity: 1;
   color: #fff;
-  font-size: 21px !important;
+  font-size: 22px !important;
   letter-spacing: 0.7px;
   text-align: left;
 }
@@ -336,7 +335,7 @@
   padding: 7px 12px 4px;
 }
 .modal h3 {
-  margin: 0 0 15px;
+  margin: 0 0 20px;
   font-size: 22px;
   text-transform: initial;
 }
@@ -376,9 +375,6 @@
 .sendModal .sendModalInner {
   width: 100%;
 }
-.sendModal h3 {
-  margin: 0 0 20px !important;
-}
 .sendModal h4 {
   text-transform: initial;
   margin: 0 0 5px;
@@ -390,12 +386,14 @@
   border-radius: 0px;
   text-align: left;
   border-bottom: 1px solid #8ffdfd;
-  font-size: 21px;
+  font-size: 22px;
+  letter-spacing: 0.3px;
 }
 .sendModal input {
   padding: 5px 10px 6px;
   border-bottom: 1px solid #8ffdfd;
-  font-size: 21px;
+  font-size: 22px;
+  letter-spacing: 0.3px;
   border-radius: 0px;
   background: transparent;
 }
@@ -412,7 +410,7 @@
 .sendModal .available-wrap {
   position: absolute;
   left: 20px;
-  top: 15px;
+  top: 13px;
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -420,7 +418,7 @@
 .sendModal .available-wrap span {
   text-transform: capitalize;
   line-height: 1.2;
-  font-size: 20px;
+  font-size: 21px;
   letter-spacing: 0.4px;
 }
 .sendModalBackdrop {
@@ -447,6 +445,8 @@
 }
 .loadingModal input {
   margin: 0 0 10px !important;
+  font-size: 22px;
+  padding: 1px 10px;
 }
 .loadingModal p {
   font-size: 20px;
@@ -491,15 +491,17 @@
 }
 .addressModal .button-wrap {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-top: 5px;
 }
 .addressModal .copy-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  height: 27px;
-  padding: 4px 12px;
+  height: 28px;
+  padding: 0px 12px 1px;
   position: absolute;
   right: 15px;
+  font-size: 15px;
 }
 .addressModal .button-wrap p {
   text-align: left;
@@ -512,7 +514,7 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   text-align: center;
   border: 2px solid #54bcd9;
-  padding: 6px 14px;
+  padding: 5px 14px 7px;
   display: flex;
   font-size: 16px;
 }
@@ -533,4 +535,35 @@
 .ringSizeModal .ring-size-wrap .pass-input {
   text-align: center;
   font-size: 18px;
+}
+
+.historyModal {
+  height: 450px;
+}
+.historyModal h3 {
+  margin-bottom: 50px;
+}
+.historyModal #history-wrap {
+  overflow: auto;
+  height: 400px;
+  letter-spacing: -0.3px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.historyModal #history-wrap .history-item {
+  margin-bottom: 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+.historyModal #history-wrap .history-item p {
+  font-size: 16px;
+  margin-bottom: 3px;
+}
+.historyModal #history-wrap .history-item .arrow-img {
+  max-height: 18px;
+  margin-right: 10px;
+}
+.historyModal #history-wrap .history-item .green-text {
+  color: rgba(14, 200, 193, 1);
+}
+.historyModal #history-wrap .history-item .yellow-text {
+  color: #e9d70b;
 }
