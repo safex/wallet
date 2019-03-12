@@ -73,11 +73,7 @@ export default class Wallet extends React.Component {
           </div>
           <div className="blockheight block">
             <img
-              src={
-                this.props.wallet.wallet_connected
-                  ? "images/blocks-green.png"
-                  : "images/blocks-red.png"
-              }
+              src="images/blocks-green.png"
               alt="blocks"
             />
             <span>Blockchain height: &nbsp;</span>
@@ -89,7 +85,7 @@ export default class Wallet extends React.Component {
           <div className="btns-right-wrap">
             <button
               className="button-shine tx-history"
-              onClick={this.props.setOpenHistoryModal}
+              onClick={this.props.wallet.wallet_connected ? this.props.setOpenHistoryModal : this.connectionError}
               data-tip
               data-for="history-tooptip"
             >

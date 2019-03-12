@@ -709,7 +709,9 @@ export default class LoadingModal extends React.Component {
           )}
           <div className="mainAlertPopupInner">
             <h3>Transaction History</h3>
-            <div id="history-wrap">{history}</div>
+            <div id="history-wrap">
+              {history}
+            </div>
           </div>
         </div>
       );
