@@ -58,6 +58,8 @@ export default class LoadingModal extends React.Component {
   closeMyModal = () => {
     if (this.props.addressModal) {
       this.props.closeModal();
+    } else if (this.state.tx_being_sent) {
+      this.props.setCloseSendModal();
     } else {
       this.props.setCloseMyModal();
     }
@@ -102,29 +104,29 @@ export default class LoadingModal extends React.Component {
       let paymentid = e.target.paymentid.value;
       let mixin = this.mixin;
       if (sendingAddress === "") {
-        this.props.setOpenAlert("Fill out all the fields", false, "modal-70");
+        this.props.setOpenAlert("Fill out all the fields", false, "modal-60");
         return false;
       }
       if (amount === "") {
-        this.props.setOpenAlert("Enter amount", false, "modal-70");
+        this.props.setOpenAlert("Enter amount", false, "modal-60");
         return false;
       }
       if (isNaN(amount)) {
-        this.props.setOpenAlert("Enter valid amount", false, "modal-70");
+        this.props.setOpenAlert("Enter valid amount", false, "modal-60");
         return false;
       }
       if (
         process.env.NODE_ENV !== "development" &&
         !safex.addressValid(sendingAddress, "mainnet")
       ) {
-        this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-60");
         return false;
       }
       if (
         process.env.NODE_ENV === "development" &&
         !safex.addressValid(sendingAddress, "testnet")
       ) {
-        this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-60");
         return false;
       }
       if (
@@ -136,7 +138,7 @@ export default class LoadingModal extends React.Component {
         this.props.setOpenAlert(
           "Not enough available safex cash to complete the transaction",
           false,
-          "modal-70"
+          "modal-60"
         );
         return false;
       }
@@ -179,7 +181,7 @@ export default class LoadingModal extends React.Component {
               this.props.setOpenAlert(
                 "Unable to create transaction id ",
                 false,
-                "modal-70"
+                "modal-60"
               );
               return false;
             }
@@ -188,14 +190,14 @@ export default class LoadingModal extends React.Component {
                 "Transaction commited successfully, Your cash transaction ID is: " +
                   txId,
                 false,
-                "modal-70"
+                "modal-60"
               );
             } else {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your token transaction ID is: " +
                   txId,
                 false,
-                "modal-70"
+                "modal-60"
               );
             }
             this.setState(() => ({
@@ -226,7 +228,7 @@ export default class LoadingModal extends React.Component {
           this.props.setOpenAlert(
             "Couldn't create transaction: " + e,
             false,
-            "modal-70"
+            "modal-60"
           );
         }
       });
@@ -256,10 +258,6 @@ export default class LoadingModal extends React.Component {
     }
   };
 
-  connectionError = () => {
-    this.props.setOpenAlert("Daemon connection error, please try again later ");
-  };
-
   setRescanBalance = () => {
     this.setState({
       remove_transition: true
@@ -284,7 +282,10 @@ export default class LoadingModal extends React.Component {
       weekday: "long",
       year: "numeric",
       month: "long",
-      day: "numeric"
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true
     };
 
     for (var i = 0; i <= 8; i++) {
@@ -296,49 +297,62 @@ export default class LoadingModal extends React.Component {
     }
     mixin.reverse();
 
-    history = this.props.history.map((txInfo, i) => (
-      <div className="history-item" key={i}>
-        <div className="col-xs-6 item-section">
-          <p className={txInfo.pending ? "hidden" : ""}>
-            <img
-              src={
-                txInfo.direction === "in"
-                  ? "images/arrow-up.png"
-                  : "images/arrow-down.png"
-              }
-              className="arrow-img"
-              alt="arrow-img"
-            />
-            <span className={txInfo.direction === "in" ? "green-text" : ""}>
-              {txInfo.direction === "in" ? "Received" : "Sent"}
-            </span>
-          </p>
-          <p className={txInfo.pending ? "yellow-text" : "hidden"}>
-            {txInfo.pending}
-          </p>
-          {roundAmount(txInfo.tokenAmount) === 0 ? (
-            <span className={txInfo.direction === "in" ? "green-text" : ""}>
-              {roundAmount(txInfo.amount)} SFX
-            </span>
-          ) : (
-            <span className={txInfo.direction === "in" ? "green-text" : ""}>
-              {roundAmount(txInfo.tokenAmount)} SFT
-            </span>
-          )}
-        </div>
-        <div className="col-xs-6 item-section">
-          <p className="text-right">
-            {"" +
-              new Date(txInfo.timestamp * 1000).toLocaleDateString(
-                "en-US",
-                options
-              )}
-          </p>
-          <p>Fee: {roundAmount(txInfo.fee)}</p>
-        </div>
-        <p>{"Transaction ID : " + txInfo.id}</p>
-      </div>
-    ));
+    history = this.props.history.map((txInfo, i) => {
+      if (i <= 20) {
+        return (
+          <div className="history-item" key={i}>
+            <div className="row">
+              <div className="col-xs-5 item-section">
+                <p className={txInfo.pending ? "hidden" : ""}>
+                  <img
+                    src={
+                      txInfo.direction === "in"
+                        ? "images/arrow-up.png"
+                        : "images/arrow-down.png"
+                    }
+                    className="arrow-img"
+                    alt="arrow-img"
+                  />
+                  <span
+                    className={txInfo.direction === "in" ? "green-text" : ""}
+                  >
+                    {txInfo.direction === "in" ? "Received" : "Sent"}
+                  </span>
+                </p>
+                <p className={txInfo.pending ? "yellow-text" : "hidden"}>
+                  {txInfo.pending}
+                </p>
+                {roundAmount(txInfo.tokenAmount) === 0 ? (
+                  <span
+                    className={txInfo.direction === "in" ? "green-text" : ""}
+                  >
+                    {roundAmount(txInfo.amount)} SFX
+                  </span>
+                ) : (
+                  <span
+                    className={txInfo.direction === "in" ? "green-text" : ""}
+                  >
+                    {roundAmount(txInfo.tokenAmount)} SFT
+                  </span>
+                )}
+              </div>
+              <div className="col-xs-7 item-section">
+                <p className="text-right">
+                  {"" +
+                    new Date(txInfo.timestamp * 1000).toLocaleDateString(
+                      "en-US",
+                      options
+                    )}
+                </p>
+                <p>Fee: {roundAmount(txInfo.fee)}</p>
+              </div>
+            </div>
+
+            <p className="tx-id">{"Transaction ID : " + txInfo.id}</p>
+          </div>
+        );
+      }
+    });
 
     if (this.props.loadingModal) {
       modal = (
@@ -529,11 +543,7 @@ export default class LoadingModal extends React.Component {
               </p>
               <button
                 className="button-shine rescan"
-                onClick={
-                  this.props.wallet.wallet_connected
-                    ? this.setRescanBalance
-                    : this.connectionError
-                }
+                onClick={this.setRescanBalance}
                 disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
               >
                 Rescan
@@ -610,22 +620,21 @@ export default class LoadingModal extends React.Component {
                     <span>?</span>
                   </div>
                   <ReactTooltip id="paymentid-tooptip">
+                    <p>Payment ID is additional reference number</p>
+                    <p>attached to the transaction.</p>
+                    <p>It is given by exchanges and web shops to</p>
                     <p>
-                      Payment ID is additional reference number attached to the
-                      transaction.
+                      differentiate and track particular deposits and purchases.
                     </p>
-                    <p>
-                      It is given by exchanges and web shops to differentiate
-                    </p>
-                    <p>and track particular deposits and purchases.</p>
                     <p>It is not required for regular user transactions.</p>
                     <p>
                       Payment ID format should be 16 or 64 Hex character string.
-                      Example:
                     </p>
-                    <p>5f9ca516a59c32e9</p>
+                    <p>To generate your own random hex, visit:</p>
                     <p>
-                      f21c6225fc22d39695d9569da965969df4302fc853dcb2c14a326708e56e5d92
+                      <span className="link">
+                        https://www.browserling.com/tools/random-hex
+                      </span>
                     </p>
                   </ReactTooltip>
                 </label>
@@ -708,6 +717,20 @@ export default class LoadingModal extends React.Component {
             </span>
           )}
           <div className="mainAlertPopupInner">
+            <div
+              data-tip
+              data-for="tx-id-tooptip"
+              className="button-shine question-wrap"
+            >
+              <span>?</span>
+            </div>
+            <ReactTooltip id="tx-id-tooptip">
+              <p>Each tranasction has a unique Transaction ID.</p>
+              <p>Transaction ID format is 64 Hex character string.</p>
+              <p>It can be used to track each individual</p>
+              <p>transaction on Safex Blockchain Explorer.</p>
+              <p className="link">http://explore.safex.io/</p>
+            </ReactTooltip>
             <h3>Transaction History</h3>
             <div id="history-wrap">
               {history}
@@ -758,10 +781,6 @@ export default class LoadingModal extends React.Component {
             "modal" +
             addClass(this.props.modalWidth, this.props.modalWidth) +
             addClass(
-              this.state.add_transition || this.props.addTransition,
-              "add_transition"
-            ) +
-            addClass(
               this.state.remove_transition || this.props.removeTransition,
               "remove_transition"
             ) +
@@ -771,10 +790,17 @@ export default class LoadingModal extends React.Component {
           {modal}
         </div>
 
-        <div
-          className={"backdrop" + addClass(this.props.modal, "active")}
-          onClick={this.props.alertCloseDisabled ? "" : this.props.closeModal}
-        />
+        {this.props.sendModal && this.props.alert === false ? (
+          <div
+            className={"backdrop" + addClass(this.props.modal, "active")}
+            onClick={this.closeMyModal}
+          />
+        ) : (
+          <div
+            className={"backdrop" + addClass(this.props.modal, "active")}
+            onClick={this.props.alertCloseDisabled ? "" : this.props.closeModal}
+          />
+        )}
       </div>
     );
   }

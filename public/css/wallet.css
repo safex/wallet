@@ -49,8 +49,12 @@
   margin-bottom: 0px;
   text-align: center;
   line-height: 1.2;
-  font-size: 19px;
+  font-size: 21px;
   letter-spacing: 0.8px;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
+}
+.__react_component_tooltip .link {
+  color: #54bcd9;
 }
 .wallet-inner-wrap .signal {
   border: 0px none;

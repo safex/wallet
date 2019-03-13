@@ -41,7 +41,6 @@ export default class CashWallet extends React.Component {
       history_modal: false,
       value: "",
       copied: false,
-      add_transition: false,
       remove_transition: false,
       modal_width: "",
       history: []
@@ -129,11 +128,29 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenSendModal = cash_or_token => {
-    this.setOpenModal("send_modal", "", false, cash_or_token, "modal-70");
+    this.setOpenModal("send_modal", "", false, cash_or_token, "modal-60");
     this.cash_or_token = cash_or_token;
     this.setState({
       button_disabled: true
     });
+  };
+
+  setCloseSendModal = () => {
+    this.setState({
+      modal: false
+    });
+    setTimeout(() => {
+      this.setState({
+        send_modal: false,
+        remove_transition: false,
+        modal_width: ""
+      });
+    }, 300);
+    setTimeout(() => {
+      this.setState({
+        button_disabled: false
+      });
+    }, 1000);
   };
 
   setCloseMyModal = () => {
@@ -371,6 +388,7 @@ export default class CashWallet extends React.Component {
           history={this.state.history ? this.state.history : ""}
           historyModal={this.state.history_modal}
           sendModal={this.state.send_modal}
+          setCloseSendModal={this.setCloseSendModal}
           setCloseMyModal={this.setCloseMyModal}
           availableCash={
             this.state.wallet ? this.state.wallet.unlocked_balance : ""
@@ -390,7 +408,6 @@ export default class CashWallet extends React.Component {
           alertCloseDisabled={this.state.alert_close_disabled}
           onCopy={this.onCopy}
           rescanBalance={this.rescanBalance}
-          addTransition={this.state.add_transition}
           removeTransition={this.state.remove_transition}
           modalWidth={this.state.modal_width}
         />
@@ -547,6 +564,7 @@ export default class CashWallet extends React.Component {
               history={this.state.history ? this.state.history : ""}
               historyModal={this.state.history_modal}
               sendModal={this.state.send_modal}
+              setCloseSendModal={this.setCloseSendModal}
               setCloseMyModal={this.setCloseMyModal}
               availableCash={
                 this.state.wallet ? this.state.wallet.unlocked_balance : ""
@@ -565,7 +583,6 @@ export default class CashWallet extends React.Component {
               alertText={this.state.alert_text}
               alertCloseDisabled={this.state.alert_close_disabled}
               rescanBalance={this.rescanBalance}
-              addTransition={this.state.add_transition}
               removeTransition={this.state.remove_transition}
               modalWidth={this.state.modal_width}
             />

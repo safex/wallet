@@ -81,7 +81,7 @@ export default class OpenFile extends React.Component {
           </div>
           <ReactTooltip id="open-tooptip">
             <p>
-              To open you Safex Wallet, click browse. This will open a dialog
+              To open your Safex Wallet, click browse. This will open a dialog
               window.
             </p>
             <p>Choose the wallet file from your file system.</p>

@@ -49,11 +49,12 @@
 }
 .modal-50 {
   width: 50%;
-  /* max-width: 590px; */
+}
+.modal-60 {
+  width: 60%;
 }
 .modal-70 {
   width: 70%;
-  /* max-width: 695px; */
 }
 .modal.active {
   visibility: visible;
@@ -418,8 +419,8 @@
 .sendModal .available-wrap span {
   text-transform: capitalize;
   line-height: 1.2;
-  font-size: 21px;
-  letter-spacing: 0.4px;
+  font-size: 22px;
+  letter-spacing: 0.7px;
 }
 .sendModalBackdrop {
   z-index: 10001;
@@ -550,12 +551,15 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .historyModal #history-wrap .history-item {
-  margin-bottom: 60px;
+  margin-bottom: 45px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+.historyModal #history-wrap .history-item .item-section {
+  padding: 0;
 }
 .historyModal #history-wrap .history-item p {
   font-size: 16px;
-  margin-bottom: 3px;
+  margin-bottom: 10px;
 }
 .historyModal #history-wrap .history-item .arrow-img {
   max-height: 18px;
@@ -566,4 +570,27 @@
 }
 .historyModal #history-wrap .history-item .yellow-text {
   color: #e9d70b;
+}
+.historyModal #history-wrap .history-item .tx-id {
+  margin-bottom: 5px;
+}
+.historyModal .question-wrap {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(34, 34, 34, 0.6);
+  border-radius: 50%;
+  text-align: center;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.historyModal .question-wrap span {
+  position: relative;
+  top: -6px;
+  font-size: 18px;
+  color: #fff;
 }

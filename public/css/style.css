@@ -123,6 +123,9 @@ p:hover {
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
+  -webkit-box-shadow: 0 0 30px 0 rgba(0, 199, 236, 0.5) !important;
+  -moz-box-shadow: 0 0 30px 0 rgba(0, 199, 236, 0.5) !important;
+  box-shadow: 0 0 30px 0 rgba(0, 199, 236, 0.5) !important;
 }
 .button-shine:hover:before {
   -webkit-animation: shine 0.5s 0s linear;
