@@ -64,7 +64,8 @@ function openModal(
     [modal_type]: true,
     alert_text: alert,
     alert_close_disabled: disabled,
-    remove_transition: remove_transition
+    remove_transition: remove_transition,
+    button_disabled: true
   });
 }
 

@@ -72,10 +72,7 @@ export default class Wallet extends React.Component {
             </span>
           </div>
           <div className="blockheight block">
-            <img
-              src="images/blocks-green.png"
-              alt="blocks"
-            />
+            <img src="images/blocks-green.png" alt="blocks" />
             <span>Blockchain height: &nbsp;</span>
             <span className="green-text">
               {this.props.wallet.blockchain_height}
@@ -84,8 +81,16 @@ export default class Wallet extends React.Component {
 
           <div className="btns-right-wrap">
             <button
-              className="button-shine tx-history"
-              onClick={this.props.wallet.wallet_connected ? this.props.setOpenHistoryModal : this.connectionError}
+              className={
+                this.props.buttonDisabled
+                  ? "button-shine tx-history disabled"
+                  : "button-shine tx-history"
+              }
+              onClick={
+                this.props.wallet.wallet_connected
+                  ? this.props.setOpenHistoryModal
+                  : this.connectionError
+              }
               data-tip
               data-for="history-tooptip"
             >
@@ -95,7 +100,11 @@ export default class Wallet extends React.Component {
               <p>Transaction History</p>
             </ReactTooltip>
             <button
-              className="button-shine address-info"
+              className={
+                this.props.buttonDisabled
+                  ? "button-shine address-info disabled"
+                  : "button-shine address-info"
+              }
               onClick={this.props.setOpenLoadingModal}
               data-tip
               data-for="address-tooptip"

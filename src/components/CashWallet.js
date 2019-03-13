@@ -143,7 +143,7 @@ export default class CashWallet extends React.Component {
       this.setState({
         send_modal: false,
         remove_transition: false,
-        modal_width: ""
+        modal_width: "modal-60"
       });
     }, 300);
     setTimeout(() => {

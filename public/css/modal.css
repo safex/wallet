@@ -571,8 +571,27 @@
 .historyModal #history-wrap .history-item .yellow-text {
   color: #e9d70b;
 }
+.historyModal #history-wrap .history-item .tx-id-wrap {
+  display: flex;
+}
+.historyModal #history-wrap .history-item .tx-id-wrap span {
+  display: inline-block;
+  width: 125px;
+  text-transform: initial;
+}
 .historyModal #history-wrap .history-item .tx-id {
-  margin-bottom: 5px;
+  background: transparent;
+  border: none;
+  text-transform: initial;
+  font-size: 16px;
+  padding: 0;
+  display: inline-block;
+  letter-spacing: 0;
+  margin-bottom: 0;
+}
+.historyModal #history-wrap .history-item .tx-id:hover {
+  color: #54bcd9;
+  box-shadow: none !important;
 }
 .historyModal .question-wrap {
   position: absolute;

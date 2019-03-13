@@ -36,6 +36,10 @@
   display: flex;
   justify-content: center;
 }
+.wallet-inner-wrap .btns-right-wrap button.disabled {
+  pointer-events: none;
+  opacity: 0.65;
+}
 .wallet-inner-wrap .btns-right-wrap button:last-of-type {
   margin-right: 0;
 }

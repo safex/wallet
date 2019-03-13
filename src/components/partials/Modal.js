@@ -3,6 +3,7 @@ import { addClass, roundAmount } from "../../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
+const { shell } = window.require("electron");
 const safex = window.require("safex-nodejs-libwallet");
 
 export default class LoadingModal extends React.Component {
@@ -274,6 +275,14 @@ export default class LoadingModal extends React.Component {
     }, 600);
   };
 
+  externalLink = txid => {
+    if (process.env.NODE_ENV === "development") {
+      shell.openExternal("http://178.128.89.114/search?value=" + txid);
+    } else {
+      shell.openExternal("http://explore.safex.io/search?value=" + txid);
+    }
+  };
+
   render() {
     let modal;
     let mixin = [];
@@ -348,7 +357,16 @@ export default class LoadingModal extends React.Component {
               </div>
             </div>
 
-            <p className="tx-id">{"Transaction ID : " + txInfo.id}</p>
+            <div className="tx-id-wrap">
+              <span>Transaction ID :</span>
+              <button
+                className="tx-id"
+                onClick={this.externalLink.bind(this, txInfo.id)}
+                title="Searh transaction on Safex Blockchain Explorer"
+              >
+                {txInfo.id}
+              </button>
+            </div>
           </div>
         );
       }
@@ -732,9 +750,7 @@ export default class LoadingModal extends React.Component {
               <p className="link">http://explore.safex.io/</p>
             </ReactTooltip>
             <h3>Transaction History</h3>
-            <div id="history-wrap">
-              {history}
-            </div>
+            <div id="history-wrap">{history}</div>
           </div>
         </div>
       );
