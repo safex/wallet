@@ -167,7 +167,7 @@ export default class Wallet extends React.Component {
                   : this.connectionError
               }
             >
-              Send Cash
+              {this.props.buttonDisabled ? "Please Wait" : "Send Cash"}
             </button>
           </div>
 
@@ -194,7 +194,7 @@ export default class Wallet extends React.Component {
                   : this.connectionError
               }
             >
-              Send Tokens
+              {this.props.buttonDisabled ? "Please Wait" : "Send Tokens"}
             </button>
           </div>
         </div>

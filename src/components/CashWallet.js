@@ -37,6 +37,7 @@ export default class CashWallet extends React.Component {
       address_modal: false,
       loading_modal: false,
       send_modal: false,
+      send_disabled: false,
       mixin_modal: false,
       history_modal: false,
       value: "",
@@ -131,7 +132,8 @@ export default class CashWallet extends React.Component {
     this.setOpenModal("send_modal", "", false, cash_or_token, "modal-60");
     this.cash_or_token = cash_or_token;
     this.setState({
-      button_disabled: true
+      button_disabled: true,
+      send_disabled: false
     });
   };
 
@@ -155,7 +157,8 @@ export default class CashWallet extends React.Component {
 
   setCloseMyModal = () => {
     this.setState({
-      modal: false
+      modal: false,
+      send_disabled: true
     });
     setTimeout(() => {
       this.setState({
@@ -172,7 +175,7 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenMixinModal = (alert, disabled) => {
-    this.setOpenModal("mixin_modal", alert, disabled, null, "modal-70");
+    this.setOpenModal("mixin_modal", alert, disabled, null, "modal-60");
   };
 
   goToPage = page => {
@@ -197,7 +200,11 @@ export default class CashWallet extends React.Component {
       safex[createWalletFunctionType](args)
         .then(wallet => {
           this.wallet_meta = wallet;
-          this.refreshProgressInterval();
+          if (createWalletFunctionType === "openWallet") {
+            this.refreshProgressInterval(100);
+          } else {
+            this.refreshProgressInterval(1000);
+          }
           wallet.on("refreshed", () => {
             this.setState({ progress: false, history: wallet.history() });
             clearTimeout(this.progress_timeout_id);
@@ -224,7 +231,7 @@ export default class CashWallet extends React.Component {
     }
   };
 
-  refreshProgressInterval = () => {
+  refreshProgressInterval = timeout => {
     let wallet = this.wallet_meta;
     let blockchainHeight = wallet.blockchainHeight();
     const progress = percentCalculation(blockchainHeight, this.daemon_height);
@@ -235,7 +242,10 @@ export default class CashWallet extends React.Component {
 
     this.setState({ progress });
     if ((this.daemon_height > 0 && progress < 100) || progress === Infinity) {
-      this.progress_timeout_id = setTimeout(this.refreshProgressInterval, 1000);
+      this.progress_timeout_id = setTimeout(
+        this.refreshProgressInterval,
+        timeout
+      );
     } else {
       setTimeout(() => {
         this.setState({ progress: false });
@@ -388,6 +398,7 @@ export default class CashWallet extends React.Component {
           history={this.state.history ? this.state.history : ""}
           historyModal={this.state.history_modal}
           sendModal={this.state.send_modal}
+          sendDisabled={this.state.send_disabled}
           setCloseSendModal={this.setCloseSendModal}
           setCloseMyModal={this.setCloseMyModal}
           availableCash={
@@ -565,6 +576,7 @@ export default class CashWallet extends React.Component {
               historyModal={this.state.history_modal}
               sendModal={this.state.send_modal}
               setCloseSendModal={this.setCloseSendModal}
+              sendDisabled={this.state.send_disabled}
               setCloseMyModal={this.setCloseMyModal}
               availableCash={
                 this.state.wallet ? this.state.wallet.unlocked_balance : ""
