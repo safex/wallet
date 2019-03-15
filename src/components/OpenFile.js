@@ -50,9 +50,6 @@ export default class OpenFile extends Component {
         return false;
       }
     );
-    // this.setState(() => ({
-    //   filename: filepath.split("/").pop()
-    // }));
     localStorage.setItem("wallet_path", this.state.wallet_path);
     localStorage.setItem("password", JSON.stringify(pass));
     localStorage.setItem("filename", filepath.split("/").pop());

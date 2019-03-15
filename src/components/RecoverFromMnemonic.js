@@ -71,6 +71,7 @@ export default class NewFromMnemonic extends Component {
       });
       localStorage.setItem("wallet_path", filepath);
       localStorage.setItem("password", JSON.stringify(pass1));
+      localStorage.setItem("filename", filepath.split("/").pop());
       console.log("Recover wallet from mnemonic performed!");
     });
   };

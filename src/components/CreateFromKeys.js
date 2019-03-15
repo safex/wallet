@@ -85,6 +85,7 @@ export default class CreateFromKeys extends Component {
       });
       localStorage.setItem("wallet_path", filepath);
       localStorage.setItem("password", JSON.stringify(pass1));
+      localStorage.setItem("filename", filepath.split("/").pop());
       console.log("Create wallet from keys performed!");
       console.log("Create new wallet from keys checkpoint 1");
     });
