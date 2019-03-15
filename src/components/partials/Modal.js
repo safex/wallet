@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { addClass, roundAmount } from "../../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -6,7 +6,168 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 const { shell } = window.require("electron");
 const safex = window.require("safex-nodejs-libwallet");
 
-export default class LoadingModal extends React.Component {
+class Transactions extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { tx_page: 0 };
+    this.totalPages = Math.ceil(this.props.history.length / props.itemsPerPage);
+  }
+
+  firstPage = () => {
+    this.setState({ tx_page: 0 });
+  };
+
+  previousPage = () => {
+    if (this.state.tx_page >= 1) {
+      this.setState(prevState => ({ tx_page: prevState.tx_page - 1 }));
+    }
+  };
+
+  nextPage = () => {
+    if (this.state.tx_page < this.totalPages - 1) {
+      this.setState(prevState => ({ tx_page: prevState.tx_page + 1 }));
+    }
+  };
+
+  lastPage = () => {
+    this.setState({ tx_page: this.totalPages - 1 });
+  };
+
+  externalLink = txid => {
+    if (process.env.NODE_ENV === "development") {
+      shell.openExternal("http://178.128.89.114/search?value=" + txid);
+    } else {
+      shell.openExternal("http://explore.safex.io/search?value=" + txid);
+    }
+  };
+
+  render() {
+    const { tx_page } = this.state;
+    const { itemsPerPage, history } = this.props;
+    // let history = [];
+    let options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true
+    };
+
+    return (
+      <div>
+        {history
+          .slice(tx_page * itemsPerPage, tx_page * itemsPerPage + itemsPerPage)
+          .map((txInfo, i) => {
+            return (
+              <div className="history-item" key={i}>
+                <div className="row">
+                  <div className="col-xs-5 item-section">
+                    <p className={txInfo.pending ? "hidden" : ""}>
+                      <img
+                        src={
+                          txInfo.direction === "in"
+                            ? "images/arrow-up.png"
+                            : "images/arrow-down.png"
+                        }
+                        className="arrow-img"
+                        alt="arrow-img"
+                      />
+                      <span
+                        className={
+                          txInfo.direction === "in" ? "green-text" : ""
+                        }
+                      >
+                        {txInfo.direction === "in" ? "Received" : "Sent"}
+                      </span>
+                    </p>
+                    <p className={txInfo.pending ? "yellow-text" : "hidden"}>
+                      {txInfo.pending}
+                    </p>
+                    {roundAmount(txInfo.tokenAmount) === 0 ? (
+                      <span
+                        className={
+                          txInfo.direction === "in" ? "green-text" : ""
+                        }
+                      >
+                        {roundAmount(txInfo.amount)} SFX
+                      </span>
+                    ) : (
+                      <span
+                        className={
+                          txInfo.direction === "in" ? "green-text" : ""
+                        }
+                      >
+                        {roundAmount(txInfo.tokenAmount)} SFT
+                      </span>
+                    )}
+                  </div>
+                  <div className="col-xs-7 item-section">
+                    <p className="text-right">
+                      {"" +
+                        new Date(txInfo.timestamp * 1000).toLocaleDateString(
+                          "en-US",
+                          options
+                        )}
+                    </p>
+                    <p>Fee: {roundAmount(txInfo.fee)}</p>
+                  </div>
+                </div>
+
+                <div className="tx-id-wrap">
+                  <span>Transaction ID :</span>
+                  <button
+                    className="tx-id"
+                    onClick={this.externalLink.bind(this, txInfo.id)}
+                    title="Searh transaction on Safex Blockchain Explorer"
+                  >
+                    {txInfo.id}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+
+        <div id="pagination">
+          <button
+            data-tip
+            data-for="first-tooptip"
+            className="first-page button-shine"
+            onClick={this.firstPage}
+          >
+            <span>{"<<"}</span>
+          </button>
+          <ReactTooltip id="first-tooptip">
+            <p>First Page</p>
+          </ReactTooltip>
+          <button className="button-shine" onClick={this.previousPage}>
+            previus
+          </button>
+          <strong>
+            page: {tx_page + 1} / {this.totalPages}
+          </strong>{" "}
+          <button className="button-shine" onClick={this.nextPage}>
+            next
+          </button>
+          <button
+            data-tip
+            data-for="last-tooptip"
+            className="last-page button-shine"
+            onClick={this.lastPage}
+          >
+            <span>{">>"}</span>
+          </button>
+          <ReactTooltip id="last-tooptip">
+            <p>Last Page</p>
+          </ReactTooltip>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default class Modal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -275,27 +436,9 @@ export default class LoadingModal extends React.Component {
     }, 600);
   };
 
-  externalLink = txid => {
-    if (process.env.NODE_ENV === "development") {
-      shell.openExternal("http://178.128.89.114/search?value=" + txid);
-    } else {
-      shell.openExternal("http://explore.safex.io/search?value=" + txid);
-    }
-  };
-
   render() {
     let modal;
     let mixin = [];
-    let history = [];
-    let options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true
-    };
 
     for (var i = 0; i <= 8; i++) {
       mixin.push(
@@ -305,72 +448,6 @@ export default class LoadingModal extends React.Component {
       );
     }
     mixin.reverse();
-
-    history = this.props.history.map((txInfo, i) => {
-      if (i <= 20) {
-        return (
-          <div className="history-item" key={i}>
-            <div className="row">
-              <div className="col-xs-5 item-section">
-                <p className={txInfo.pending ? "hidden" : ""}>
-                  <img
-                    src={
-                      txInfo.direction === "in"
-                        ? "images/arrow-up.png"
-                        : "images/arrow-down.png"
-                    }
-                    className="arrow-img"
-                    alt="arrow-img"
-                  />
-                  <span
-                    className={txInfo.direction === "in" ? "green-text" : ""}
-                  >
-                    {txInfo.direction === "in" ? "Received" : "Sent"}
-                  </span>
-                </p>
-                <p className={txInfo.pending ? "yellow-text" : "hidden"}>
-                  {txInfo.pending}
-                </p>
-                {roundAmount(txInfo.tokenAmount) === 0 ? (
-                  <span
-                    className={txInfo.direction === "in" ? "green-text" : ""}
-                  >
-                    {roundAmount(txInfo.amount)} SFX
-                  </span>
-                ) : (
-                  <span
-                    className={txInfo.direction === "in" ? "green-text" : ""}
-                  >
-                    {roundAmount(txInfo.tokenAmount)} SFT
-                  </span>
-                )}
-              </div>
-              <div className="col-xs-7 item-section">
-                <p className="text-right">
-                  {"" +
-                    new Date(txInfo.timestamp * 1000).toLocaleDateString(
-                      "en-US",
-                      options
-                    )}
-                </p>
-                <p>Fee: {roundAmount(txInfo.fee)}</p>
-              </div>
-            </div>
-
-            <div className="tx-id-wrap">
-              <span>Transaction ID :</span>
-              <button
-                className="tx-id"
-                onClick={this.externalLink.bind(this, txInfo.id)}
-                title="Searh transaction on Safex Blockchain Explorer"
-              >
-                {txInfo.id}
-              </button>
-            </div>
-          </div>
-        );
-      }
-    });
 
     if (this.props.loadingModal) {
       modal = (
@@ -665,7 +742,11 @@ export default class LoadingModal extends React.Component {
                 <button
                   className="btn button-shine"
                   type="submit"
-                  disabled={this.state.tx_being_sent ? "disabled" : ""}
+                  disabled={
+                    this.state.tx_being_sent || this.props.sendDisabled
+                      ? "disabled"
+                      : ""
+                  }
                 >
                   Send
                 </button>
@@ -750,7 +831,9 @@ export default class LoadingModal extends React.Component {
               <p className="link">http://explore.safex.io/</p>
             </ReactTooltip>
             <h3>Transaction History</h3>
-            <div id="history-wrap">{history}</div>
+            <div id="history-wrap">
+              <Transactions history={this.props.history} itemsPerPage={3} />
+            </div>
           </div>
         </div>
       );

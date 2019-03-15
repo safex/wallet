@@ -56,6 +56,9 @@
 .modal-70 {
   width: 70%;
 }
+.modal-80 {
+  width: 80%;
+}
 .modal.active {
   visibility: visible;
   opacity: 1;
@@ -397,6 +400,9 @@
   padding: 4px 18px 5px;
   font-size: 18px !important;
 }
+.sendModal .btn.disabled {
+  pointer-events: none;
+}
 .sendModal .btn:focus,
 .sendModal .btn:active {
   outline: none;
@@ -544,8 +550,47 @@
   letter-spacing: -0.3px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
+.historyModal #pagination {
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+.historyModal #pagination strong {
+  margin: 0 10px;
+  position: relative;
+  top: 4px;
+  min-width: 110px;
+  display: inline-block;
+  text-transform: capitalize;
+}
+.historyModal #pagination button {
+  padding: 6px 12px 5px;
+  visibility: visible;
+  opacity: 1;
+  height: 30px;
+}
+.historyModal #pagination button.first-page {
+  margin-right: 8px;
+  padding: 5.5px 12px;
+}
+.historyModal #pagination button.first-page span,
+.historyModal #pagination button.last-page span {
+  font-weight: 400;
+  font-size: 23px;
+  letter-spacing: 1px;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
+  position: relative;
+  top: -7px;
+}
+.historyModal #pagination button.last-page {
+  margin-left: 8px;
+  padding: 5.5px 12px;
+}
 .historyModal #history-wrap .history-item {
-  margin-bottom: 45px;
+  margin-bottom: 40px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 .historyModal #history-wrap .history-item .item-section {
@@ -567,11 +612,13 @@
 }
 .historyModal #history-wrap .history-item .tx-id-wrap {
   display: flex;
+  justify-content: center;
 }
 .historyModal #history-wrap .history-item .tx-id-wrap span {
   display: inline-block;
-  width: 125px;
   text-transform: initial;
+  text-align: left;
+  padding: 0 15px;
 }
 .historyModal #history-wrap .history-item .tx-id {
   background: transparent;

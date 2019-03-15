@@ -125,7 +125,7 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenHistoryModal = () => {
-    this.setOpenModal("history_modal", "", false, null, "modal-70");
+    this.setOpenModal("history_modal", "", false, null, "modal-80");
   };
 
   setOpenSendModal = cash_or_token => {
