@@ -99,7 +99,7 @@ export default class OpenFile extends Component {
               <input type="password" name="pass" placeholder="password" />
             </div>
           </div>
-          <button type="submit" className="submit btn button-shine">
+          <button type="submit" className={this.props.buttonDisabled ? "submit btn button-shine disabled" : "submit btn button-shine"}>
             Open
           </button>
         </form>

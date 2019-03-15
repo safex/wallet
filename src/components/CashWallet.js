@@ -514,6 +514,7 @@ export default class CashWallet extends React.Component {
             config={this.state.config}
             setOpenAlert={this.setOpenAlert}
             setCloseAlert={this.setCloseAlert}
+            buttonDisabled={this.state.button_disabled}
           />
         );
         break;

@@ -111,7 +111,7 @@ export default class NewFromMnemonic extends Component {
             <textarea name="mnemonic" placeholder="mnemonic seed" rows="3" />
           </div>
         </div>
-        <button type="submit" className="submit btn button-shine">
+        <button type="submit" className={this.props.buttonDisabled ? "submit btn button-shine disabled" : "submit btn button-shine"}>
           Create
         </button>
       </form>

@@ -131,7 +131,7 @@ export default class CreateFromKeys extends Component {
             <input type="password" name="pass2" placeholder="repeat password" />
           </div>
         </div>
-        <button type="submit" className="submit btn button-shine">
+        <button type="submit" className={this.props.buttonDisabled ? "submit btn button-shine disabled" : "submit btn button-shine"}>
           Create
         </button>
       </form>
