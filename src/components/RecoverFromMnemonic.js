@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import { hasNumber, countWords } from "../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
-export default class NewFromMnemonic extends React.Component {
+export default class NewFromMnemonic extends Component {
   constructor(props) {
     super(props);
     this.state = {

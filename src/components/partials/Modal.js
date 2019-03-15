@@ -182,6 +182,7 @@ export default class Modal extends Component {
     super(props);
     this.state = {
       wallet_path: localStorage.getItem("wallet_path"),
+      filename: "",
       address: "",
       amount: "",
       payment_id: "",
@@ -190,17 +191,6 @@ export default class Modal extends Component {
       remove_transition: false
     };
     this.mixin = 6;
-  }
-
-  componentDidMount() {
-    if (this.state.wallet_path) {
-      this.setState({
-        filename: localStorage
-          .getItem("wallet_path")
-          .split("/")
-          .pop()
-      });
-    }
   }
 
   loadPreviousWallet = e => {
@@ -477,7 +467,7 @@ export default class Modal extends Component {
             }
           >
             <label htmlFor="password">
-              Enter password for {this.state.filename}:
+              Enter password for {localStorage.getItem("filename")}:
             </label>
             <input name="password" type="password" />
             <button

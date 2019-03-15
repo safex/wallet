@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import { closeApp } from "../../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 
 const remote = window.require("electron").remote;
 
-export default class Header extends React.Component {
+export default class Header extends Component {
   minimizeApp = () => {
     let window = remote.getCurrentWindow();
     window.minimize();

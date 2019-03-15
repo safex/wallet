@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import { verify_safex_address } from "../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
-export default class CreateFromKeys extends React.Component {
+export default class CreateFromKeys extends Component {
   constructor(props) {
     super(props);
     this.state = {

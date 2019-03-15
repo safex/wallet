@@ -1,34 +1,35 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactTooltip from "react-tooltip";
 const { dialog } = window.require("electron").remote;
 
-export default class OpenFile extends React.Component {
+export default class OpenFile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       wallet_path: "",
+      filename: "",
       alert_close_disabled: false
     };
   }
 
   browseFile = () => {
-    let filename = "";
-    filename = dialog.showOpenDialog({});
+    let filepath = dialog.showOpenDialog({});
 
-    if (filename !== undefined) {
+    if (filepath !== undefined) {
       this.setState(() => ({
-        wallet_path: filename
+        wallet_path: filepath[0]
       }));
-      console.log("filename " + filename);
     }
   };
 
   openFile = e => {
     e.preventDefault();
-    let filename = e.target.filepath.value;
+    let filepath = e.target.filepath.value;
     const pass = e.target.pass.value;
 
-    if (filename === "") {
+    console.log(filepath);
+
+    if (filepath === "") {
       this.props.setOpenAlert("Choose the wallet file");
       return false;
     }
@@ -36,9 +37,6 @@ export default class OpenFile extends React.Component {
       this.props.setOpenAlert("Enter password for your wallet file");
       return false;
     }
-    this.setState({
-      alert_close_disabled: true
-    });
     this.props.createWallet(
       "openWallet",
       {
@@ -52,8 +50,12 @@ export default class OpenFile extends React.Component {
         return false;
       }
     );
+    // this.setState(() => ({
+    //   filename: filepath.split("/").pop()
+    // }));
     localStorage.setItem("wallet_path", this.state.wallet_path);
     localStorage.setItem("password", JSON.stringify(pass));
+    localStorage.setItem("filename", filepath.split("/").pop());
     this.props.setOpenAlert(
       "Please wait while your wallet file is loaded. Don't close the application until the process is complete. This can take a while, please be patient.",
       true

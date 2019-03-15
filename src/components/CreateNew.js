@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactTooltip from "react-tooltip";
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
-export default class CreateNew extends React.Component {
+export default class CreateNew extends Component {
   createNew = e => {
     e.preventDefault();
 
