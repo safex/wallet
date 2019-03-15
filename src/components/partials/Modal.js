@@ -44,7 +44,6 @@ class Transactions extends Component {
   render() {
     const { tx_page } = this.state;
     const { itemsPerPage, history } = this.props;
-    // let history = [];
     let options = {
       weekday: "long",
       year: "numeric",
@@ -57,111 +56,122 @@ class Transactions extends Component {
 
     return (
       <div>
-        {history
-          .slice(tx_page * itemsPerPage, tx_page * itemsPerPage + itemsPerPage)
-          .map((txInfo, i) => {
-            return (
-              <div className="history-item" key={i}>
-                <div className="row">
-                  <div className="col-xs-5 item-section">
-                    <p className={txInfo.pending ? "hidden" : ""}>
-                      <img
-                        src={
-                          txInfo.direction === "in"
-                            ? "images/arrow-up.png"
-                            : "images/arrow-down.png"
-                        }
-                        className="arrow-img"
-                        alt="arrow-img"
-                      />
-                      <span
-                        className={
-                          txInfo.direction === "in" ? "green-text" : ""
-                        }
-                      >
-                        {txInfo.direction === "in" ? "Received" : "Sent"}
-                      </span>
-                    </p>
-                    <p className={txInfo.pending ? "yellow-text" : "hidden"}>
-                      {txInfo.pending}
-                    </p>
-                    {roundAmount(txInfo.tokenAmount) === 0 ? (
-                      <span
-                        className={
-                          txInfo.direction === "in" ? "green-text" : ""
-                        }
-                      >
-                        {roundAmount(txInfo.amount)} SFX
-                      </span>
-                    ) : (
-                      <span
-                        className={
-                          txInfo.direction === "in" ? "green-text" : ""
-                        }
-                      >
-                        {roundAmount(txInfo.tokenAmount)} SFT
-                      </span>
-                    )}
+        {this.props.history.length ? (
+          history
+            .slice(
+              tx_page * itemsPerPage,
+              tx_page * itemsPerPage + itemsPerPage
+            )
+            .map((txInfo, i) => {
+              return (
+                <div className="history-item" key={i}>
+                  <div className="row">
+                    <div className="col-xs-5 item-section">
+                      <p className={txInfo.pending ? "hidden" : ""}>
+                        <img
+                          src={
+                            txInfo.direction === "in"
+                              ? "images/arrow-up.png"
+                              : "images/arrow-down.png"
+                          }
+                          className="arrow-img"
+                          alt="arrow-img"
+                        />
+                        <span
+                          className={
+                            txInfo.direction === "in" ? "green-text" : ""
+                          }
+                        >
+                          {txInfo.direction === "in" ? "Received" : "Sent"}
+                        </span>
+                      </p>
+                      <p className={txInfo.pending ? "yellow-text" : "hidden"}>
+                        {txInfo.pending}
+                      </p>
+                      {roundAmount(txInfo.tokenAmount) === 0 ? (
+                        <span
+                          className={
+                            txInfo.direction === "in" ? "green-text" : ""
+                          }
+                        >
+                          {roundAmount(txInfo.amount)} SFX
+                        </span>
+                      ) : (
+                        <span
+                          className={
+                            txInfo.direction === "in" ? "green-text" : ""
+                          }
+                        >
+                          {roundAmount(txInfo.tokenAmount)} SFT
+                        </span>
+                      )}
+                    </div>
+                    <div className="col-xs-7 item-section">
+                      <p className="text-right">
+                        {"" +
+                          new Date(txInfo.timestamp * 1000).toLocaleDateString(
+                            "en-US",
+                            options
+                          )}
+                      </p>
+                      <p>Fee: {roundAmount(txInfo.fee)}</p>
+                    </div>
                   </div>
-                  <div className="col-xs-7 item-section">
-                    <p className="text-right">
-                      {"" +
-                        new Date(txInfo.timestamp * 1000).toLocaleDateString(
-                          "en-US",
-                          options
-                        )}
-                    </p>
-                    <p>Fee: {roundAmount(txInfo.fee)}</p>
+
+                  <div className="tx-id-wrap">
+                    <span>Transaction ID :</span>
+                    <button
+                      className="tx-id"
+                      onClick={this.externalLink.bind(this, txInfo.id)}
+                      title="Searh transaction on Safex Blockchain Explorer"
+                    >
+                      {txInfo.id}
+                    </button>
                   </div>
                 </div>
+              );
+            })
+        ) : (
+          <h5>No Transaction History</h5>
+        )}
 
-                <div className="tx-id-wrap">
-                  <span>Transaction ID :</span>
-                  <button
-                    className="tx-id"
-                    onClick={this.externalLink.bind(this, txInfo.id)}
-                    title="Searh transaction on Safex Blockchain Explorer"
-                  >
-                    {txInfo.id}
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-
-        <div id="pagination">
-          <button
-            data-tip
-            data-for="first-tooptip"
-            className="first-page button-shine"
-            onClick={this.firstPage}
-          >
-            <span>{"<<"}</span>
-          </button>
-          <ReactTooltip id="first-tooptip">
-            <p>First Page</p>
-          </ReactTooltip>
-          <button className="button-shine" onClick={this.previousPage}>
-            previus
-          </button>
-          <strong>
-            page: {tx_page + 1} / {this.totalPages}
-          </strong>{" "}
-          <button className="button-shine" onClick={this.nextPage}>
-            next
-          </button>
-          <button
-            data-tip
-            data-for="last-tooptip"
-            className="last-page button-shine"
-            onClick={this.lastPage}
-          >
-            <span>{">>"}</span>
-          </button>
-          <ReactTooltip id="last-tooptip">
-            <p>Last Page</p>
-          </ReactTooltip>
-        </div>
+        {this.props.history.length ? (
+          <div id="pagination">
+            <button
+              data-tip
+              data-for="first-tooptip"
+              className="first-page button-shine"
+              onClick={this.firstPage}
+            >
+              <span>{"<<"}</span>
+            </button>
+            <ReactTooltip id="first-tooptip">
+              <p>First Page</p>
+            </ReactTooltip>
+            <button className="button-shine" onClick={this.previousPage}>
+              previus
+            </button>
+            <strong>
+              page: {tx_page + 1} / {this.totalPages}
+            </strong>{" "}
+            <button className="button-shine" onClick={this.nextPage}>
+              next
+            </button>
+            <button
+              data-tip
+              data-for="last-tooptip"
+              className="last-page button-shine"
+              onClick={this.lastPage}
+            >
+              <span>{">>"}</span>
+            </button>
+            <ReactTooltip id="last-tooptip">
+              <p>Last Page</p>
+            </ReactTooltip>
+          </div>
+        ) : (
+          <div className="hidden" />
+        )}
       </div>
     );
   }
@@ -816,20 +826,27 @@ export default class Modal extends Component {
             </span>
           )}
           <div className="mainAlertPopupInner">
-            <div
-              data-tip
-              data-for="tx-id-tooptip"
-              className="button-shine question-wrap"
-            >
-              <span>?</span>
-            </div>
-            <ReactTooltip id="tx-id-tooptip">
-              <p>Each tranasction has a unique Transaction ID.</p>
-              <p>Transaction ID format is 64 Hex character string.</p>
-              <p>It can be used to track each individual</p>
-              <p>transaction on Safex Blockchain Explorer.</p>
-              <p className="link">http://explore.safex.io/</p>
-            </ReactTooltip>
+            {this.props.history.length ? (
+              <div>
+                <div
+                  data-tip
+                  data-for="tx-id-tooptip"
+                  className="button-shine question-wrap"
+                >
+                  <span>?</span>
+                </div>
+                <ReactTooltip id="tx-id-tooptip">
+                  <p>Each tranasction has a unique Transaction ID.</p>
+                  <p>Transaction ID format is 64 Hex character string.</p>
+                  <p>It can be used to track each individual</p>
+                  <p>transaction on Safex Blockchain Explorer.</p>
+                  <p className="link">http://explore.safex.io/</p>
+                </ReactTooltip>
+              </div>
+            ) : (
+              <div className="hidden" />
+            )}
+
             <h3>Transaction History</h3>
             <div id="history-wrap">
               <Transactions history={this.props.history} itemsPerPage={3} />

@@ -542,7 +542,7 @@
   height: 450px;
 }
 .historyModal h3 {
-  margin-bottom: 40px;
+  margin-bottom: 35px;
 }
 .historyModal #history-wrap {
   overflow: auto;
@@ -567,6 +567,7 @@
   text-transform: capitalize;
 }
 .historyModal #pagination button {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
   padding: 6px 12px 5px;
   visibility: visible;
   opacity: 1;

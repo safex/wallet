@@ -206,7 +206,7 @@ export default class CashWallet extends React.Component {
             this.refreshProgressInterval(1000);
           }
           wallet.on("refreshed", () => {
-            this.setState({ progress: false, history: wallet.history() });
+            this.setState({ progress: false });
             clearTimeout(this.progress_timeout_id);
             console.log("Wallet File synchronized initially");
             wallet
@@ -293,7 +293,8 @@ export default class CashWallet extends React.Component {
           network: this.env.NETWORK,
           daemonAddress: this.env.ADDRESS
         }
-      }
+      },
+      history: wallet.history().reverse()
     });
   };
 
@@ -395,7 +396,7 @@ export default class CashWallet extends React.Component {
           createWallet={this.createWallet}
           closeModal={this.setCloseModal}
           addressModal={this.state.address_modal}
-          history={this.state.history ? this.state.history : ""}
+          history={this.state.history}
           historyModal={this.state.history_modal}
           sendModal={this.state.send_modal}
           sendDisabled={this.state.send_disabled}
@@ -572,7 +573,7 @@ export default class CashWallet extends React.Component {
               createWallet={this.createWallet}
               closeModal={this.setCloseModal}
               addressModal={this.state.address_modal}
-              history={this.state.history ? this.state.history : ""}
+              history={this.state.history}
               historyModal={this.state.history_modal}
               sendModal={this.state.send_modal}
               setCloseSendModal={this.setCloseSendModal}
