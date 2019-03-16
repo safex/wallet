@@ -64,7 +64,7 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin-bottom: 0;
   border-radius: 5px;
-  padding: 40px 20px 50px;
+  padding: 40px 20px;
 }
 .item-wrap .login-wrap .input-group {
   width: 100%;
@@ -75,7 +75,7 @@
   right: 20px;
   width: 32px;
   height: 32px;
-  border: 1px solid rgba(34, 34, 34, 0.6);
+  border: 1px solid #8ffdfd;
   border-radius: 50%;
   text-align: center;
   transition: all ease 0.3s;
@@ -103,7 +103,7 @@
   font-weight: 600;
   line-height: 1.2;
   text-transform: capitalize;
-  letter-spacing: 0.75px;
+  letter-spacing: .9px;
 }
 .item-wrap .login-wrap form input {
   width: 100%;
@@ -161,7 +161,10 @@
   color: #fff;
   text-transform: uppercase;
   border-radius: 5px;
-  margin-top: 5px;
+  margin-top: 0;
+}
+.item-wrap .login-wrap .btn.disabled {
+  pointer-events: none;
 }
 .item-wrap .login-wrap .btn:focus,
 .item-wrap .login-wrap .btn:active {
@@ -174,9 +177,10 @@
   opacity: 0;
   position: absolute;
   left: calc(50% - 80px);
-  bottom: 0;
+  bottom: 20px;
   font-size: 18px;
   padding: 7px 18px;
+  margin-bottom: 0;
   letter-spacing: 0.9px;
   color: #fff;
   z-index: 100006;

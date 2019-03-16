@@ -133,7 +133,7 @@ p:hover {
   animation: shine 0.5s 0s linear;
 }
 .button-shine:active {
-  box-shadow: 0 0 0 0 transparent;
+  box-shadow: 0 0 0 0 transparent !important;
   -webkit-transition: box-shadow 0.2s ease-in;
   -moz-transition: box-shadow 0.2s ease-in;
   transition: box-shadow 0.2s ease-in;

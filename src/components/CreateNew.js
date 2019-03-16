@@ -62,16 +62,12 @@ export default class CreateNew extends Component {
           <span>?</span>
         </div>
         <ReactTooltip id="create-new-tooptip">
-          <p>
-            If you don't already have Safex Wallet, you can always generate a
-            new one here.
-          </p>
-          <p>
-            Enter your password, click create, choose your Wallet File name and
-            save it.
-          </p>
-          <p>This will create 2 files on your file system.</p>
-          <p>ExampleWallet and ExampleWallet.keys</p>
+          <p>If you don't already have <span className="blue-text">Safex Wallet</span>, </p>
+          <p>you can always generate new one here.</p>
+          <p>Enter your password, click create, </p>
+          <p>choose your Wallet File name and save it.</p>
+          <p>This will create <span className="blue-text">2</span> files on your file system.</p>
+          <p><span className="blue-text">ExampleWallet</span> and <span className="blue-text">ExampleWallet.keys</span></p>
           <p>Always use only the file without the extension.</p>
         </ReactTooltip>
         <div className="group-wrap">
@@ -82,8 +78,7 @@ export default class CreateNew extends Component {
         </div>
         <button
           type="submit"
-          className="submit btn button-shine"
-          disabled={this.props.buttonDisabled ? "disabled" : ""}
+          className={this.props.buttonDisabled ? "submit btn button-shine disabled" : "submit btn button-shine"}
         >
           <span>Create</span>
         </button>

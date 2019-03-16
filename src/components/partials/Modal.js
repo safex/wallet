@@ -121,12 +121,16 @@ class Transactions extends Component {
                   <div className="tx-id-wrap">
                     <span>Transaction ID :</span>
                     <button
+                      data-tip
+                      data-for="link-tooptip"
                       className="tx-id"
                       onClick={this.externalLink.bind(this, txInfo.id)}
-                      title="Searh transaction on Safex Blockchain Explorer"
                     >
                       {txInfo.id}
                     </button>
+                    <ReactTooltip id="link-tooptip">
+                      <p>Show this transaction on Safex Blockchain Explorer</p>
+                    </ReactTooltip>
                   </div>
                 </div>
               );
@@ -350,14 +354,14 @@ export default class Modal extends Component {
             if (this.props.cash_or_token === 0) {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your cash transaction ID is: " +
-                  txId,
+                txId,
                 false,
                 "modal-60"
               );
             } else {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your token transaction ID is: " +
-                  txId,
+                txId,
                 false,
                 "modal-60"
               );
@@ -497,9 +501,13 @@ export default class Modal extends Component {
             <h3>Seed and Keys</h3>
 
             <div className="label-wrap">
-              <label
+              <div 
                 data-tip
-                data-for="mnemonic-tooptip"
+                data-for="mnemonic-tooptip" 
+                className="button-shine question-wrap">
+                <span>?</span>
+              </div>
+              <label
                 className={this.props.wallet.mnemonic ? "" : "hidden"}
               >
                 Wallet Mnemonic Seed
@@ -511,7 +519,7 @@ export default class Modal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <ReactTooltip place="bottom" id="mnemonic-tooptip">
+              <ReactTooltip place="right" id="mnemonic-tooptip">
                 <p>
                   Mnemonic seed can be used to recover your wallet in case your
                   file gets lost or corrupted.
@@ -520,7 +528,7 @@ export default class Modal extends Component {
                   Sharing this can and will result in total loss of your Safex
                   Cash and Safex Tokens.
                 </p>
-                <p>Write it down and keep is safe at all times.</p>
+                <p className="blue-text">Write it down and keep is safe at all times.</p>
               </ReactTooltip>
             </div>
             <textarea
@@ -532,7 +540,13 @@ export default class Modal extends Component {
             />
 
             <div className="label-wrap">
-              <label data-tip data-for="pub-spend-tooptip" htmlFor="spend_key">
+              <div
+                data-tip
+                data-for="pub-spend-tooptip"
+                className="button-shine question-wrap">
+                <span>?</span>
+              </div>
+              <label htmlFor="spend_key">
                 Public Spend Key
               </label>
               <CopyToClipboard
@@ -542,10 +556,9 @@ export default class Modal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <ReactTooltip id="pub-spend-tooptip">
+              <ReactTooltip place="right" id="pub-spend-tooptip">
                 <p>
-                  Public Spend Key and Public View Key are made to generate your
-                  address.
+                  <span className="blue-text">Public Spend Key</span> and <span className="blue-text">Public View Key</span> are made to generate your address.
                 </p>
               </ReactTooltip>
             </div>
@@ -558,7 +571,13 @@ export default class Modal extends Component {
             />
 
             <div className="label-wrap">
-              <label data-tip data-for="sec-spend-tooptip" htmlFor="spend_key">
+              <div
+                data-tip
+                data-for="sec-spend-tooptip"
+                className="button-shine question-wrap">
+                <span>?</span>
+              </div>
+              <label htmlFor="spend_key">
                 Secret (Private) Spend Key
               </label>
               <CopyToClipboard
@@ -568,8 +587,8 @@ export default class Modal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <ReactTooltip id="sec-spend-tooptip">
-                <p>Secret Spend Key is used to sign your transactions.</p>
+              <ReactTooltip place="right" id="sec-spend-tooptip">
+                <p><span className="blue-text">Secret (Private) Spend Key</span> is used to sign your transactions.</p>
               </ReactTooltip>
             </div>
             <input
@@ -580,7 +599,13 @@ export default class Modal extends Component {
             />
 
             <div className="label-wrap">
-              <label data-tip data-for="pub-view-tooptip" htmlFor="pub_view">
+              <div
+                data-tip
+                data-for="pub-view-tooptip"
+                className="button-shine question-wrap">
+                <span>?</span>
+              </div>
+              <label htmlFor="pub_view">
                 Public View Key
               </label>
               <CopyToClipboard
@@ -590,10 +615,9 @@ export default class Modal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <ReactTooltip id="pub-view-tooptip">
+              <ReactTooltip place="right" id="pub-view-tooptip">
                 <p>
-                  Public Spend Key and Public View Key are made to generate your
-                  address.
+                  <span className="blue-text">Public Spend Key</span> and <span className="blue-text">Public View Key</span> are made to generate your address.
                 </p>
               </ReactTooltip>
             </div>
@@ -605,7 +629,13 @@ export default class Modal extends Component {
             />
 
             <div className="label-wrap">
-              <label data-tip data-for="sec-view-tooptip" htmlFor="view_key">
+              <div
+                data-tip
+                data-for="sec-view-tooptip"
+                className="button-shine question-wrap">
+                <span>?</span>
+              </div>
+              <label htmlFor="view_key">
                 Secret (Private) View Key
               </label>
               <CopyToClipboard
@@ -615,9 +645,9 @@ export default class Modal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <ReactTooltip id="sec-view-tooptip">
+              <ReactTooltip place="right" id="sec-view-tooptip">
                 <p>
-                  Secret view can be used to view all transactions of the given
+                  <span className="blue-text">Secret (Private) View Key</span> can be used to view all transactions of the given
                   address.
                 </p>
               </ReactTooltip>
@@ -717,17 +747,15 @@ export default class Modal extends Component {
                   <ReactTooltip id="paymentid-tooptip">
                     <p>Payment ID is additional reference number</p>
                     <p>attached to the transaction.</p>
-                    <p>It is given by exchanges and web shops to</p>
-                    <p>
-                      differentiate and track particular deposits and purchases.
-                    </p>
+                    <p>It is given by exchanges and web</p>
+                    <p>shops to differentiate and track</p>
+                    <p>particular deposits and purchases.</p>
                     <p>It is not required for regular user transactions.</p>
-                    <p>
-                      Payment ID format should be 16 or 64 Hex character string.
-                    </p>
+                    <p>Payment ID format should be </p>
+                    <p>16 or 64 Hex character string.</p>
                     <p>To generate your own random hex, visit:</p>
                     <p>
-                      <span className="link">
+                      <span className="blue-text">
                         https://www.browserling.com/tools/random-hex
                       </span>
                     </p>
@@ -830,7 +858,7 @@ export default class Modal extends Component {
                   <p>Transaction ID format is 64 Hex character string.</p>
                   <p>It can be used to track each individual</p>
                   <p>transaction on Safex Blockchain Explorer.</p>
-                  <p className="link">http://explore.safex.io/</p>
+                  <p className="blue-text">http://explore.safex.io/</p>
                 </ReactTooltip>
               </div>
             ) : (

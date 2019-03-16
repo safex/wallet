@@ -116,7 +116,7 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenAddressModal = () => {
-    this.setOpenModal("address_modal", "", false, null, "modal-70", true);
+    this.setOpenModal("address_modal", "", false, null, "modal-80", true);
     setTimeout(() => {
       this.setState({
         remove_transition: false
@@ -591,6 +591,7 @@ export default class CashWallet extends React.Component {
               setOpenAlert={this.setOpenAlert}
               alertText={this.state.alert_text}
               alertCloseDisabled={this.state.alert_close_disabled}
+              onCopy={this.onCopy}
               rescanBalance={this.rescanBalance}
               removeTransition={this.state.remove_transition}
               modalWidth={this.state.modal_width}

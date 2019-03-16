@@ -106,20 +106,14 @@ export default class CreateFromKeys extends Component {
           <span>?</span>
         </div>
         <ReactTooltip id="create-from-keys-tooptip">
-          <p>
-            If you already have Safex Wallet Address, you can recreate it here.
-          </p>
+          <p>If you already have Safex Wallet Address, you can recreate it here.</p>
           <p>Your Safex Address should start with Safex:</p>
           <p>Safex5...3rnQjJmQ2K</p>
-          <p>
-            Your Secret View Key and Secret Spend Key should be a 64 digit Hex.
-            Example:
-          </p>
-          <p>
-            45b9ad1abb6564141793d809c8284e25c5c22d29b7d313c0be62387b1f2df8c3
-          </p>
-          <p>This will create 2 files on your file system.</p>
-          <p>ExampleWallet and ExampleWallet.keys</p>
+          <p>Your Secret View Key and Secret Spend Key</p>
+          <p>should be a 64 digit Hex. Example:</p>
+          <p className="blue-text">45b9ad1abb6564141793d809c8284e25c5c22d29b7d313c0be62387b1f2df8c3</p>
+          <p>This will create <span className="blue-text">2</span> files on your file system.</p>
+          <p><span className="blue-text">ExampleWallet</span> and <span className="blue-text">ExampleWallet.keys</span></p>
           <p>Always use only the file without the extension.</p>
         </ReactTooltip>
         <div className="group-wrap">

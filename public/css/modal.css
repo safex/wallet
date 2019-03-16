@@ -50,6 +50,9 @@
 .modal-50 {
   width: 50%;
 }
+.modal-55 {
+  width: 55%;
+}
 .modal-60 {
   width: 60%;
 }
@@ -117,6 +120,8 @@
 }
 .modal .label-wrap {
   text-align: center;
+  position: relative;
+  margin-bottom: 3px;
 }
 .modal label {
   width: 100%;
@@ -133,7 +138,7 @@
   right: 0;
   width: 32px;
   height: 32px;
-  border: 1px solid #327a9b;
+  border: 1px solid #8ffdfd;
   border-radius: 50%;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
@@ -148,6 +153,35 @@
 .modal label .question-wrap span {
   position: relative;
   top: -12px;
+  font-size: 19px;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.modal .label-wrap .question-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #8ffdfd;
+  border-radius: 50%;
+  text-align: center;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.modal .label-wrap .question-wrap:hover {
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  cursor: pointer;
+}
+.modal .label-wrap .question-wrap span {
+  position: relative;
+  top: -7px;
+  left: -.5px;
   font-size: 19px;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
@@ -411,7 +445,7 @@
 .sendModal .available-wrap {
   position: absolute;
   left: 20px;
-  top: 13px;
+  top: 18px;
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -419,8 +453,8 @@
 .sendModal .available-wrap span {
   text-transform: capitalize;
   line-height: 1.2;
-  font-size: 22px;
-  letter-spacing: 0.7px;
+  font-size: 16px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModalBackdrop {
   z-index: 10001;
@@ -441,8 +475,10 @@
 }
 .loadingModal label {
   text-transform: initial;
-  font-size: 23px;
+  font-size: 19px;
   margin-bottom: 8px;
+  letter-spacing: 0px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .loadingModal input {
   margin: 0 0 10px !important;
@@ -465,19 +501,19 @@
 .addressModal label {
   text-transform: initial !important;
   font-weight: 400 !important;
-  margin-bottom: 0px !important;
   font-size: 23px !important;
+  display: inline;
 }
 .addressModal input,
 .addressModal textarea {
-  font-size: 20px;
-  letter-spacing: 0.3px;
-  padding: 5px !important;
+  font-size: 16px;
+  padding: 7px 5px 3px !important;
   border-bottom: 1px solid #8ffdfd;
   border-radius: 0;
   text-align: center;
   line-height: 1.2;
   background: transparent;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .addressModal .pass-input {
   border-radius: 5px;
@@ -499,17 +535,17 @@
 .addressModal .copy-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   height: 28px;
-  padding: 0px 12px 3px;
+  padding: 0px 12px 2px;
   position: absolute;
-  right: 15px;
+  right: 0;
   font-size: 15px;
 }
 .addressModal .button-wrap p {
   text-align: left;
-  font-size: 19px;
+  font-size: 16px;
   padding-right: 15px;
   line-height: 1.2;
-  letter-spacing: 0.4px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .addressModal .rescan {
   background: url(../images/login-bg.png) no-repeat top left / cover;
@@ -552,7 +588,7 @@
 }
 .historyModal #pagination {
   position: absolute;
-  bottom: 12px;
+  bottom: 19px;
   width: 100%;
   left: 0;
   display: flex;
@@ -591,7 +627,7 @@
   padding: 5.5px 12px;
 }
 .historyModal #history-wrap .history-item {
-  margin-bottom: 40px;
+  margin-bottom: 35px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 .historyModal #history-wrap .history-item .item-section {
@@ -641,7 +677,7 @@
   left: 15px;
   width: 32px;
   height: 32px;
-  border: 1px solid rgba(34, 34, 34, 0.6);
+  border: 1px solid #8ffdfd;
   border-radius: 50%;
   text-align: center;
   transition: all ease 0.3s;
