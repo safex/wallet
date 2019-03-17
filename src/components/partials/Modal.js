@@ -706,9 +706,9 @@ export default class Modal extends Component {
                 <label htmlFor="send_to">Destination</label>
                 <textarea
                   name="send_to"
-                  placeholder="Enter Destination Address"
                   rows="2"
                   value={this.state.address}
+                  placeholder="Example: Safex5zqJ2k17WGHpmZKBVj67xEafDbFTXMBuCjmk75JhoodPJ9MQFaRPGeMnXQSSVZCZ7hNrRZ4USrdZTrzDaUSGgwNNiyVmWa5K"
                   onChange={this.inputOnChange.bind(this, "address")}
                 />
                 <label htmlFor="amount">
@@ -763,8 +763,8 @@ export default class Modal extends Component {
                 </label>
                 <input
                   name="paymentid"
-                  placeholder="(Optional) Payment ID"
                   value={this.state.payment_id}
+                  placeholder="Example: ed6ecd78c221e8df"
                   onChange={this.inputOnChange.bind(this, "payment_id")}
                 />
                 <button
@@ -854,10 +854,10 @@ export default class Modal extends Component {
                   <span>?</span>
                 </div>
                 <ReactTooltip id="tx-id-tooptip">
-                  <p>Each tranasction has a unique Transaction ID.</p>
-                  <p>Transaction ID format is 64 Hex character string.</p>
+                  <p>Each tranasction has a unique <span className="blue-text">Transaction ID.</span></p>
+                  <p><span className="blue-text">Transaction ID</span> format is 64 Hex character string.</p>
                   <p>It can be used to track each individual</p>
-                  <p>transaction on Safex Blockchain Explorer.</p>
+                  <p>transaction on <span className="blue-text">Safex Blockchain Explorer.</span></p>
                   <p className="blue-text">http://explore.safex.io/</p>
                 </ReactTooltip>
               </div>

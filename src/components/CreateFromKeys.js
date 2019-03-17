@@ -107,9 +107,9 @@ export default class CreateFromKeys extends Component {
         </div>
         <ReactTooltip id="create-from-keys-tooptip">
           <p>If you already have Safex Wallet Address, you can recreate it here.</p>
-          <p>Your Safex Address should start with Safex:</p>
-          <p>Safex5...3rnQjJmQ2K</p>
-          <p>Your Secret View Key and Secret Spend Key</p>
+          <p>Your <span className="blue-text">Safex Address</span> should start with Safex:</p>
+          <p className="blue-text">Safex5...3rnQjJmQ2K</p>
+          <p>Your <span className="blue-text">Secret View Key</span> and <span className="blue-text">Secret Spend Key</span></p>
           <p>should be a 64 digit Hex. Example:</p>
           <p className="blue-text">45b9ad1abb6564141793d809c8284e25c5c22d29b7d313c0be62387b1f2df8c3</p>
           <p>This will create <span className="blue-text">2</span> files on your file system.</p>

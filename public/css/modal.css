@@ -181,7 +181,7 @@
 .modal .label-wrap .question-wrap span {
   position: relative;
   top: -7px;
-  left: -.5px;
+  left: -.7px;
   font-size: 19px;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
@@ -223,38 +223,44 @@
 .modal textarea::-webkit-input-placeholder,
 .modal input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  opacity: 1;
+  opacity: .7;
   color: #fff;
   font-size: 22px !important;
   letter-spacing: 0.7px;
   text-align: left;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
+  line-height: 1.2;
+  word-break: break-all;
 }
 .modal textarea::-moz-placeholder,
 .modal input::-moz-placeholder {
   /* Firefox 19+ */
-  opacity: 1;
+  opacity: .7;
   color: #fff;
   font-size: 22px !important;
   letter-spacing: 0.7px;
   text-align: left;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
 }
 .modal textarea:-moz-placeholder,
 .modal input:-moz-placeholder {
   /* Firefox 18- */
-  opacity: 1;
+  opacity: .7;
   color: #fff;
   font-size: 22px !important;
   letter-spacing: 0.7px;
   text-align: left;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
 }
 .modal textarea:-ms-input-placeholder,
 .modal input:-ms-input-placeholder {
   /* IE 10+ */
-  opacity: 1;
+  opacity: .7;
   color: #fff;
   font-size: 22px !important;
   letter-spacing: 0.7px;
   text-align: left;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
 }
 .modal input {
   display: inline-block;
@@ -418,16 +424,18 @@
   border-radius: 0px;
   text-align: left;
   border-bottom: 1px solid #8ffdfd;
-  font-size: 22px;
-  letter-spacing: 0.3px;
+  font-size: 18px;
+  letter-spacing: -.3px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal input {
   padding: 5px 10px 6px;
   border-bottom: 1px solid #8ffdfd;
-  font-size: 22px;
-  letter-spacing: 0.3px;
+  font-size: 18px;
   border-radius: 0px;
   background: transparent;
+  letter-spacing: -.3px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal .btn {
   margin-top: 5px;
@@ -628,7 +636,7 @@
 }
 .historyModal #history-wrap .history-item {
   margin-bottom: 35px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid #8ffdfd;
 }
 .historyModal #history-wrap .history-item .item-section {
   padding: 0;
@@ -688,6 +696,7 @@
 .historyModal .question-wrap span {
   position: relative;
   top: -6px;
+  left: -.7px;
   font-size: 18px;
   color: #fff;
 }
