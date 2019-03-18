@@ -70,14 +70,15 @@
 .mixinModal h4 {
   text-transform: initial;
   margin: 0 0 5px;
-  letter-spacing: 0.5px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-size: 16px;
 }
 .mixinModal p {
   margin-bottom: 10px;
-  font-size: 20px;
-  letter-spacing: 0.2px;
+  font-size: 18px;
   text-align: left;
   padding-right: 15px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .mixinModal label {
   font-size: 21px;

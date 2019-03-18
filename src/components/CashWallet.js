@@ -129,7 +129,7 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenSendModal = cash_or_token => {
-    this.setOpenModal("send_modal", "", false, cash_or_token, "modal-60");
+    this.setOpenModal("send_modal", "", false, cash_or_token, "modal-70");
     this.cash_or_token = cash_or_token;
     this.setState({
       button_disabled: true,
@@ -144,8 +144,9 @@ export default class CashWallet extends React.Component {
     setTimeout(() => {
       this.setState({
         send_modal: false,
+        mixinModal: false,
         remove_transition: false,
-        modal_width: "modal-60"
+        modal_width: "modal-70"
       });
     }, 300);
     setTimeout(() => {
@@ -175,7 +176,7 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenMixinModal = (alert, disabled) => {
-    this.setOpenModal("mixin_modal", alert, disabled, null, "modal-60");
+    this.setOpenModal("mixin_modal", alert, disabled, null, "modal-70");
   };
 
   goToPage = page => {

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { addClass } from "../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -10,7 +11,9 @@ export default class Wallet extends React.Component {
     this.state = {
       wallet: null,
       alert_close_disabled: false,
-      tx_being_sent: false
+      tx_being_sent: false,
+      sfx_price: 0,
+      sft_price: 0
     };
   }
 
@@ -21,19 +24,69 @@ export default class Wallet extends React.Component {
     wallet.on("refreshed", this.props.refreshCallback);
     this.props.closeAlert();
     this.mounted = true;
+    // this.fetchPrice();
     if (!localStorage.getItem("wallet")) {
       localStorage.setItem("wallet", JSON.stringify(this.props.wallet));
     }
+  };
+
+  fetchPrice = () => {
+    // let promises = [];
+    // promises.push(
+    //   fetch("https://api.coingecko.com/api/v3/coins/safex-cash")
+    //     .then(resp => resp.text())
+    //     .then(resp => {
+    //       return resp;
+    //     })
+    // );
+    // Promise.all(promises)
+    //   .then(values => {
+    //     var sfx_price = JSON.parse(values[0]);
+    //     console.log(sfx_price);
+    //     this.setState({
+    //       sfx_price: values[0].market_data.current_price.bmd
+    //     });
+    //   })
+    //   .catch(e => {
+    //     console.log(e);
+    //     this.props.setOpenAlert("Unable to fetch prices ");
+    //   });
+
+    axios({
+      method: "get",
+      url: "https://api.coingecko.com/api/v3/coins/safex-cash"
+    })
+      .then(res => {
+        var sfx_price = JSON.parse(res[0]);
+        console.log(sfx_price);
+        // this.setState({
+        //   sfx_price: res[0].market_data.current_price.bmd
+        // });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    // axios({
+    //   method: "get",
+    //   url: "https://api.coingecko.com/api/v3/coins/safex-token"
+    // })
+    //   .then(res => {
+    //     var sft_price = JSON.parse(res[0]);
+    //     console.log(sfx_price);
+    //     this.setState({
+    //       sfx_price: res[0].market_data.current_price.bmd
+    //     });
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
   };
 
   componentWillUnmount() {
     this.mounted = false;
     this.props.walletMeta.off();
   }
-
-  connectionError = () => {
-    this.props.setOpenAlert("Daemon connection error, please try again later ");
-  };
 
   onCopy = () => {
     this.setState({ copied: true });
@@ -72,7 +125,7 @@ export default class Wallet extends React.Component {
             </span>
           </div>
           <div className="blockheight block">
-            <img src="images/blocks-green.png" alt="blocks" />
+            <img src="images/blocks-white.png" alt="blocks" />
             <span>Blockchain height: &nbsp;</span>
             <span className="green-text">
               {this.props.wallet.blockchain_height}

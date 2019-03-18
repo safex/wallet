@@ -270,29 +270,29 @@ export default class Modal extends Component {
       let paymentid = e.target.paymentid.value;
       let mixin = this.mixin;
       if (sendingAddress === "") {
-        this.props.setOpenAlert("Fill out all the fields", false, "modal-60");
+        this.props.setOpenAlert("Fill out all the fields", false, "modal-70");
         return false;
       }
       if (amount === "") {
-        this.props.setOpenAlert("Enter amount", false, "modal-60");
+        this.props.setOpenAlert("Enter amount", false, "modal-70");
         return false;
       }
       if (isNaN(amount)) {
-        this.props.setOpenAlert("Enter valid amount", false, "modal-60");
+        this.props.setOpenAlert("Enter valid amount", false, "modal-70");
         return false;
       }
       if (
         process.env.NODE_ENV !== "development" &&
         !safex.addressValid(sendingAddress, "mainnet")
       ) {
-        this.props.setOpenAlert("Enter valid Safex address", false, "modal-60");
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
         return false;
       }
       if (
         process.env.NODE_ENV === "development" &&
         !safex.addressValid(sendingAddress, "testnet")
       ) {
-        this.props.setOpenAlert("Enter valid Safex address", false, "modal-60");
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
         return false;
       }
       if (
@@ -304,7 +304,7 @@ export default class Modal extends Component {
         this.props.setOpenAlert(
           "Not enough available safex cash to complete the transaction",
           false,
-          "modal-60"
+          "modal-70"
         );
         return false;
       }
@@ -342,28 +342,32 @@ export default class Modal extends Component {
         console.log(args);
         tx.commit()
           .then(() => {
-            this.closeMyModal();
+            if (this.props.mixinModal) {
+              this.props.closeModal();
+            } else {
+              this.closeMyModal();
+            }
             if (!txId) {
               this.props.setOpenAlert(
                 "Unable to create transaction id ",
                 false,
-                "modal-60"
+                "modal-70"
               );
               return false;
             }
             if (this.props.cash_or_token === 0) {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your cash transaction ID is: " +
-                txId,
+                  txId,
                 false,
-                "modal-60"
+                "modal-70"
               );
             } else {
               this.props.setOpenAlert(
                 "Transaction commited successfully, Your token transaction ID is: " +
-                txId,
+                  txId,
                 false,
-                "modal-60"
+                "modal-70"
               );
             }
             this.setState(() => ({
@@ -379,7 +383,11 @@ export default class Modal extends Component {
             this.setState(() => ({
               tx_being_sent: false
             }));
-            this.props.setOpenAlert("Error on commiting transaction: " + e);
+            this.props.setOpenAlert(
+              "Error on commiting transaction: " + e,
+              false,
+              "modal-70"
+            );
           });
       })
       .catch(e => {
@@ -387,14 +395,17 @@ export default class Modal extends Component {
           tx_being_sent: false
         }));
         if (e.startsWith("not enough outputs for specified ring size")) {
-          this.props.setOpenMixinModal("Couldn't create transaction: " + e);
+          this.props.setOpenMixinModal(
+            "Couldn't create transaction: " + e,
+            false
+          );
           localStorage.setItem("args", JSON.stringify(args));
           console.log(JSON.parse(localStorage.getItem("args")));
         } else {
           this.props.setOpenAlert(
             "Couldn't create transaction: " + e,
             false,
-            "modal-60"
+            "modal-70"
           );
         }
       });
@@ -415,12 +426,11 @@ export default class Modal extends Component {
         paymentId: args.paymentId ? args.paymentId : "",
         mixin: this.mixin
       });
-      this.props.closeModal();
       setTimeout(() => {
         localStorage.removeItem(args);
       }, 2000);
     } catch (err) {
-      this.props.setOpenAlert(`${err}`);
+      this.props.setOpenAlert(`${err}`, false, "modal-70");
     }
   };
 
@@ -497,19 +507,45 @@ export default class Modal extends Component {
             X
           </span>
 
+          <div
+            data-tip
+            data-for="keys-tooptip"
+            className="button-shine question-wrap"
+          >
+            <span>?</span>
+          </div>
+          <ReactTooltip id="keys-tooptip">
+            <p>
+              <span className="blue-text">Mnemonic seed</span> can be used to
+              recover your wallet in case your file gets lost or corrupted.
+            </p>
+            <p className="red-text">
+              Sharing it can and will result in total loss of your Safex Cash
+              and Safex Tokens.
+            </p>
+            <p className="blue-text">
+              Write it down and keep is safe at all times.
+            </p>
+            <p>
+              <span className="blue-text">Public Spend Key</span> and{" "}
+              <span className="blue-text">Public View Key</span> are made to
+              generate your address.
+            </p>
+            <p>
+              <span className="blue-text">Secret (Private) Spend Key</span> is
+              used to sign your transactions.
+            </p>
+            <p>
+              <span className="blue-text">Secret (Private) View Key</span> can
+              be used to view all transactions of the given address.
+            </p>
+          </ReactTooltip>
+
           <div>
             <h3>Seed and Keys</h3>
 
             <div className="label-wrap">
-              <div 
-                data-tip
-                data-for="mnemonic-tooptip" 
-                className="button-shine question-wrap">
-                <span>?</span>
-              </div>
-              <label
-                className={this.props.wallet.mnemonic ? "" : "hidden"}
-              >
+              <label className={this.props.wallet.mnemonic ? "" : "hidden"}>
                 Wallet Mnemonic Seed
               </label>
               <CopyToClipboard
@@ -519,17 +555,6 @@ export default class Modal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <ReactTooltip place="right" id="mnemonic-tooptip">
-                <p>
-                  Mnemonic seed can be used to recover your wallet in case your
-                  file gets lost or corrupted.
-                </p>
-                <p className="red-text">
-                  Sharing this can and will result in total loss of your Safex
-                  Cash and Safex Tokens.
-                </p>
-                <p className="blue-text">Write it down and keep is safe at all times.</p>
-              </ReactTooltip>
             </div>
             <textarea
               name="mnemonic"
@@ -540,15 +565,7 @@ export default class Modal extends Component {
             />
 
             <div className="label-wrap">
-              <div
-                data-tip
-                data-for="pub-spend-tooptip"
-                className="button-shine question-wrap">
-                <span>?</span>
-              </div>
-              <label htmlFor="spend_key">
-                Public Spend Key
-              </label>
+              <label htmlFor="spend_key">Public Spend Key</label>
               <CopyToClipboard
                 text={this.props.wallet.pub_spend}
                 onCopy={this.props.onCopy}
@@ -556,11 +573,6 @@ export default class Modal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <ReactTooltip place="right" id="pub-spend-tooptip">
-                <p>
-                  <span className="blue-text">Public Spend Key</span> and <span className="blue-text">Public View Key</span> are made to generate your address.
-                </p>
-              </ReactTooltip>
             </div>
 
             <input
@@ -571,15 +583,7 @@ export default class Modal extends Component {
             />
 
             <div className="label-wrap">
-              <div
-                data-tip
-                data-for="sec-spend-tooptip"
-                className="button-shine question-wrap">
-                <span>?</span>
-              </div>
-              <label htmlFor="spend_key">
-                Secret (Private) Spend Key
-              </label>
+              <label htmlFor="spend_key">Secret (Private) Spend Key</label>
               <CopyToClipboard
                 text={this.props.wallet.spend_key}
                 onCopy={this.props.onCopy}
@@ -587,9 +591,6 @@ export default class Modal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <ReactTooltip place="right" id="sec-spend-tooptip">
-                <p><span className="blue-text">Secret (Private) Spend Key</span> is used to sign your transactions.</p>
-              </ReactTooltip>
             </div>
             <input
               type="text"
@@ -599,15 +600,7 @@ export default class Modal extends Component {
             />
 
             <div className="label-wrap">
-              <div
-                data-tip
-                data-for="pub-view-tooptip"
-                className="button-shine question-wrap">
-                <span>?</span>
-              </div>
-              <label htmlFor="pub_view">
-                Public View Key
-              </label>
+              <label htmlFor="pub_view">Public View Key</label>
               <CopyToClipboard
                 text={this.props.wallet.pub_view}
                 onCopy={this.props.onCopy}
@@ -615,11 +608,6 @@ export default class Modal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <ReactTooltip place="right" id="pub-view-tooptip">
-                <p>
-                  <span className="blue-text">Public Spend Key</span> and <span className="blue-text">Public View Key</span> are made to generate your address.
-                </p>
-              </ReactTooltip>
             </div>
             <input
               type="text"
@@ -629,15 +617,7 @@ export default class Modal extends Component {
             />
 
             <div className="label-wrap">
-              <div
-                data-tip
-                data-for="sec-view-tooptip"
-                className="button-shine question-wrap">
-                <span>?</span>
-              </div>
-              <label htmlFor="view_key">
-                Secret (Private) View Key
-              </label>
+              <label htmlFor="view_key">Secret (Private) View Key</label>
               <CopyToClipboard
                 text={this.props.wallet.view_key}
                 onCopy={this.props.onCopy}
@@ -645,12 +625,6 @@ export default class Modal extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <ReactTooltip place="right" id="sec-view-tooptip">
-                <p>
-                  <span className="blue-text">Secret (Private) View Key</span> can be used to view all transactions of the given
-                  address.
-                </p>
-              </ReactTooltip>
             </div>
             <input
               type="text"
@@ -754,10 +728,8 @@ export default class Modal extends Component {
                     <p>Payment ID format should be </p>
                     <p>16 or 64 Hex character string.</p>
                     <p>To generate your own random hex, visit:</p>
-                    <p>
-                      <span className="blue-text">
-                        https://www.browserling.com/tools/random-hex
-                      </span>
+                    <p className="blue-text">
+                      https://www.browserling.com/tools/random-hex
                     </p>
                   </ReactTooltip>
                 </label>
@@ -854,10 +826,21 @@ export default class Modal extends Component {
                   <span>?</span>
                 </div>
                 <ReactTooltip id="tx-id-tooptip">
-                  <p>Each tranasction has a unique <span className="blue-text">Transaction ID.</span></p>
-                  <p><span className="blue-text">Transaction ID</span> format is 64 Hex character string.</p>
+                  <p>
+                    Each tranasction has a unique{" "}
+                    <span className="blue-text">Transaction ID.</span>
+                  </p>
+                  <p>
+                    <span className="blue-text">Transaction ID</span> format is
+                    64 Hex character string.
+                  </p>
                   <p>It can be used to track each individual</p>
-                  <p>transaction on <span className="blue-text">Safex Blockchain Explorer.</span></p>
+                  <p>
+                    transaction on{" "}
+                    <span className="blue-text">
+                      Safex Blockchain Explorer.
+                    </span>
+                  </p>
                   <p className="blue-text">http://explore.safex.io/</p>
                 </ReactTooltip>
               </div>
@@ -924,7 +907,8 @@ export default class Modal extends Component {
           {modal}
         </div>
 
-        {this.props.sendModal && this.props.alert === false ? (
+        {(this.props.sendModal && this.props.alert === false) ||
+        this.props.mixinModal ? (
           <div
             className={"backdrop" + addClass(this.props.modal, "active")}
             onClick={this.closeMyModal}
