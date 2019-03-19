@@ -75,8 +75,9 @@ function openModal(
 function closeModal(target) {
   if (
     (target.state.loading_modal && target.state.alert) ||
-    (target.state.address_modal && target.state.alert) ||
+    (target.state.keys_modal && target.state.alert) ||
     (target.state.send_modal && target.state.alert) ||
+    (target.state.address_modal && target.state.alert) ||
     target.state.mixin_modal
   ) {
     target.setState({
@@ -92,10 +93,11 @@ function closeModal(target) {
       target.setState({
         loading_modal: false,
         alert: false,
-        address_modal: false,
+        keys_modal: false,
         send_modal: false,
         mixin_modal: false,
         history_modal: false,
+        address_modal: false,
         modal_width: "",
         remove_transition: false
       });

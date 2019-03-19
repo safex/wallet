@@ -32,10 +32,11 @@
   text-align: center;
   background: url(../images/login-bg.png) no-repeat top left / cover;
   border: 2px solid #54bcd9;
-  padding: 7px 14px 8px 12px;
+  padding: 7px 13px 8px 12px;
   margin-right: 10px;
   float: left;
   display: flex;
+  width: 48px;
   justify-content: center;
   -webkit-app-region: no-drag;
 }
@@ -90,11 +91,25 @@
   -webkit-filter: none;
   filter: none;
 }
+.wallet-inner-wrap .block {
+  display: inline-block;
+  margin-left: 15px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.wallet-inner-wrap .block:first-of-type {
+  margin-left: 0;
+}
 .wallet-inner-wrap .block img {
   position: relative;
   top: 0px;
   margin-right: 8px;
   max-height: 22px;
+}
+.wallet-inner-wrap .block span {
+  color: #fff;
+  font-size: 16px;
+  position: relative;
+  top: 2px;
 }
 .wallet-inner-wrap .signal p {
   display: inline-block;
@@ -109,9 +124,7 @@
   padding: 0;
   min-width: 75px;
   text-align: left;
-  margin-left: 15px;
   background: transparent;
-  display: inline-block;
   -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap .blockheight:hover {
@@ -121,14 +134,6 @@
 .wallet-inner-wrap .blockheight img {
   -webkit-filter: grayscale(0);
   filter: grayscale(0);
-}
-.wallet-inner-wrap .blockheight span,
-.wallet-inner-wrap .signal span {
-  color: #fff;
-  font-size: 16px;
-  position: relative;
-  top: 2px;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .wallet-inner-wrap span.green-text {
   color: rgba(14, 200, 193, 1) !important;

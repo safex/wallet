@@ -500,20 +500,20 @@
   margin: 0 0 0 5px;
 }
 
-.addressModal {
+.keysModal {
   text-align: center;
 }
-.addressModal h3 {
+.keysModal h3 {
   font-size: 24px;
 }
-.addressModal label {
+.keysModal label {
   text-transform: initial !important;
   font-weight: 400 !important;
   font-size: 23px !important;
   display: inline;
 }
-.addressModal input,
-.addressModal textarea {
+.keysModal input,
+.keysModal textarea {
   font-size: 16px;
   padding: 7px 5px 3px !important;
   border-bottom: 1px solid #8ffdfd;
@@ -523,24 +523,24 @@
   background: transparent;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
-.addressModal .pass-input {
+.keysModal .pass-input {
   border-radius: 5px;
   text-align: left !important;
   padding: 5px 10px !important;
   background: tra;
 }
-.addressModal .login-input {
+.keysModal .login-input {
   margin: 10px 0 12px !important;
   background: rgba(0, 0, 0, 0.4);
   border-bottom: 0px;
 }
-.addressModal .button-wrap {
+.keysModal .button-wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 5px;
 }
-.addressModal .copy-btn {
+.keysModal .copy-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   height: 28px;
   padding: 0px 12px 2px;
@@ -548,14 +548,14 @@
   right: 0;
   font-size: 15px;
 }
-.addressModal .button-wrap p {
+.keysModal .button-wrap p {
   text-align: left;
   font-size: 16px;
   padding-right: 15px;
   line-height: 1.2;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
-.addressModal .rescan {
+.keysModal .rescan {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   text-align: center;
   border: 2px solid #54bcd9;
@@ -563,10 +563,10 @@
   display: flex;
   font-size: 16px;
 }
-.addressModal .rescan img {
+.keysModal .rescan img {
   max-height: 18px;
 }
-.addressModal .address-inner-wrap .label-wrap label {
+.keysModal .address-inner-wrap .label-wrap label {
   text-indent: 52px;
   display: inline;
 }
@@ -680,7 +680,7 @@
   box-shadow: none !important;
 }
 .historyModal .question-wrap,
-.addressModal .question-wrap {
+.keysModal .question-wrap {
   position: absolute;
   top: 15px;
   left: 15px;
@@ -695,10 +695,41 @@
   -webkit-transition: all ease 0.3s;
 }
 .historyModal .question-wrap span,
-.addressModal .question-wrap span {
+.keysModal .question-wrap span {
   position: relative;
   top: -6px;
   left: -0.5px;
   font-size: 18px;
   color: #fff;
+}
+
+.addressModal #show-contacts {
+  text-align: center;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 2px solid #54bcd9;
+  padding: 7px 13px 8px 14px;
+  display: flex;
+  width: 48px;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  justify-content: center;
+}
+.addressModal #show-contacts img {
+  max-height: 18px;
+}
+.addressModal input,
+.addressModal textarea {
+  font-size: 16px;
+  padding: 5px 10px 6px;
+  border-bottom: 1px solid #8ffdfd;
+  border-radius: 0;
+  text-align: left;
+  background: transparent;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.addressModal .btn {
+  margin-top: 5px;
+  padding: 4px 18px 5px;
+  font-size: 18px !important;
 }

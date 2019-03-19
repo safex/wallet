@@ -34,17 +34,19 @@ export default class CashWallet extends React.Component {
       alert: false,
       alert_text: "",
       alert_close_disabled: false,
-      address_modal: false,
+      keys_modal: false,
       loading_modal: false,
       send_modal: false,
       send_disabled: false,
       mixin_modal: false,
       history_modal: false,
+      address_modal: false,
       value: "",
       copied: false,
       remove_transition: false,
       modal_width: "",
-      history: []
+      history: [],
+      address_book: []
     };
 
     this.wallet_meta = null;
@@ -115,8 +117,8 @@ export default class CashWallet extends React.Component {
     this.setOpenModal("loading_modal", "", false, null, "modal-50");
   };
 
-  setOpenAddressModal = () => {
-    this.setOpenModal("address_modal", "", false, null, "modal-80", true);
+  setOpenKeysModal = () => {
+    this.setOpenModal("keys_modal", "", false, null, "modal-80", true);
     setTimeout(() => {
       this.setState({
         remove_transition: false
@@ -179,12 +181,16 @@ export default class CashWallet extends React.Component {
     this.setOpenModal("mixin_modal", alert, disabled, null, "modal-70");
   };
 
+  setOpenAddressModal = () => {
+    this.setOpenModal("address_modal", alert, false, null, "modal-70");
+  };
+
   goToPage = page => {
     if (this.state.page !== "wallet") {
       this.setState({ page: page, button_disabled: false });
     } else {
       this.setOpenAlert("Logging out...", true);
-      this.setState({ address_modal: false });
+      this.setState({ keys_modal: false });
       localStorage.clear();
       setTimeout(() => {
         this.setState({ page });
@@ -200,6 +206,27 @@ export default class CashWallet extends React.Component {
       safex[createWalletFunctionType](args)
         .then(wallet => {
           this.wallet_meta = wallet;
+          // console.log(wallet.addressBook_GetAll());
+          // console.log(
+          //   wallet.addressBook_AddRow(
+          //     "SFXtzT73mu21A2j3jYjwt15YXPQxgGXm2Edy18JGAGaHaaBeCZmiENLEoExHKAfqPrW1Cvh3xgim7Po2iDWMiYqb9BMc8BbTFNo",
+          //     "ec1f6d9581bb3c5ea7d5c6fd665617328cbf43b420820eb16a23d729905d1f4b",
+          //     "duckaj ga"
+          //   )
+          // );
+          // console.log(wallet.addressBook_DeleteRow(0));
+          // console.log(
+          //   wallet.addressBook_LookupPID(
+          //     "ec1f6d9581bb3c5ea7d5c6fd665617328cbf43b420820eb16a23d729905d1f4b"
+          //   )
+          // );
+          // console.log(
+          //   wallet.addressBook_LookupPID(
+          //     "ec1f6d9581bb3c5ea7d5c6fd665617328cbf43b420820eb16a23d729905d1f4a"
+          //   )
+          // );
+          // console.log(wallet.addressBook_ErrorString());
+          // console.log(wallet.addressBook_GetAll());
           if (createWalletFunctionType === "openWallet") {
             this.refreshProgressInterval(100);
           } else {
@@ -258,6 +285,7 @@ export default class CashWallet extends React.Component {
     let wallet = this.wallet_meta;
     wallet.setSeedLanguage("English");
     this.setWalletData();
+    console.log(this.state.address_book);
     this.setState({
       page: "wallet",
       loading_modal: false
@@ -290,7 +318,8 @@ export default class CashWallet extends React.Component {
           daemonAddress: this.env.ADDRESS
         }
       },
-      history: wallet.history().reverse()
+      history: wallet.history().reverse(),
+      address_book: wallet.addressBook_GetAll()
     });
   };
 
@@ -345,7 +374,7 @@ export default class CashWallet extends React.Component {
         this.setOpenAlert("Wallet rescan completed.");
         this.setState({
           loading_modal: false,
-          address_modal: false,
+          keys_modal: false,
           button_disabled: false
         });
         wallet
@@ -391,7 +420,7 @@ export default class CashWallet extends React.Component {
           loadingModal={this.state.loading_modal}
           createWallet={this.createWallet}
           closeModal={this.setCloseModal}
-          addressModal={this.state.address_modal}
+          keysModal={this.state.keys_modal}
           history={this.state.history}
           historyModal={this.state.history_modal}
           sendModal={this.state.send_modal}
@@ -407,8 +436,8 @@ export default class CashWallet extends React.Component {
           cash_or_token={this.cash_or_token}
           mixinModal={this.state.mixin_modal}
           setOpenMixinModal={this.setOpenMixinModal}
-          setOpenAddressModal={this.setOpenAddressModal}
-          openModal={this.setOpenModal}
+          setOpenKeysModal={this.setOpenKeysModal}
+          addressModal={this.state.address_modal}
           alert={this.state.alert}
           closeAlert={this.setCloseAlert}
           setOpenAlert={this.setOpenAlert}
@@ -418,6 +447,7 @@ export default class CashWallet extends React.Component {
           rescanBalance={this.rescanBalance}
           removeTransition={this.state.remove_transition}
           modalWidth={this.state.modal_width}
+          addressBook={this.state.address_book}
         />
       </div>
     );
@@ -448,6 +478,7 @@ export default class CashWallet extends React.Component {
             setOpenLoadingModal={this.setOpenLoadingModal}
             setOpenSendModal={this.setOpenSendModal}
             setOpenHistoryModal={this.setOpenHistoryModal}
+            setOpenAddressModal={this.setOpenAddressModal}
             setCloseModal={this.setCloseModal}
             closeAlert={this.setCloseAlert}
             onCopy={this.onCopy}
@@ -569,7 +600,7 @@ export default class CashWallet extends React.Component {
               loadingModal={this.state.loading_modal}
               createWallet={this.createWallet}
               closeModal={this.setCloseModal}
-              addressModal={this.state.address_modal}
+              keysModal={this.state.keys_modal}
               history={this.state.history}
               historyModal={this.state.history_modal}
               sendModal={this.state.send_modal}
@@ -585,8 +616,8 @@ export default class CashWallet extends React.Component {
               cash_or_token={this.cash_or_token}
               mixinModal={this.state.mixin_modal}
               setOpenMixinModal={this.setOpenMixinModal}
-              setOpenAddressModal={this.setOpenAddressModal}
-              openModal={this.setOpenModal}
+              setOpenKeysModal={this.setOpenKeysModal}
+              addressModal={this.state.address_modal}
               alert={this.state.alert}
               closeAlert={this.setCloseAlert}
               setOpenAlert={this.setOpenAlert}
@@ -596,6 +627,7 @@ export default class CashWallet extends React.Component {
               rescanBalance={this.rescanBalance}
               removeTransition={this.state.remove_transition}
               modalWidth={this.state.modal_width}
+              addressBook={this.state.address_book}
             />
           </div>
         );

@@ -24,63 +24,26 @@ export default class Wallet extends React.Component {
     wallet.on("refreshed", this.props.refreshCallback);
     this.props.closeAlert();
     this.mounted = true;
-    // this.fetchPrice();
+    this.fetchPrice();
     if (!localStorage.getItem("wallet")) {
       localStorage.setItem("wallet", JSON.stringify(this.props.wallet));
     }
   };
 
   fetchPrice = () => {
-    // let promises = [];
-    // promises.push(
-    //   fetch("https://api.coingecko.com/api/v3/coins/safex-cash")
-    //     .then(resp => resp.text())
-    //     .then(resp => {
-    //       return resp;
-    //     })
-    // );
-    // Promise.all(promises)
-    //   .then(values => {
-    //     var sfx_price = JSON.parse(values[0]);
-    //     console.log(sfx_price);
-    //     this.setState({
-    //       sfx_price: values[0].market_data.current_price.bmd
-    //     });
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //     this.props.setOpenAlert("Unable to fetch prices ");
-    //   });
-
     axios({
       method: "get",
       url: "https://api.coingecko.com/api/v3/coins/safex-cash"
     })
       .then(res => {
-        var sfx_price = JSON.parse(res[0]);
-        console.log(sfx_price);
-        // this.setState({
-        //   sfx_price: res[0].market_data.current_price.bmd
-        // });
+        var sfx_price = parseFloat(
+          res.data.market_data.current_price.usd
+        ).toFixed(8);
+        this.setState({ sfx_price });
       })
       .catch(function(error) {
         console.log(error);
       });
-
-    // axios({
-    //   method: "get",
-    //   url: "https://api.coingecko.com/api/v3/coins/safex-token"
-    // })
-    //   .then(res => {
-    //     var sft_price = JSON.parse(res[0]);
-    //     console.log(sfx_price);
-    //     this.setState({
-    //       sfx_price: res[0].market_data.current_price.bmd
-    //     });
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
   };
 
   componentWillUnmount() {
@@ -125,25 +88,42 @@ export default class Wallet extends React.Component {
             </span>
           </div>
           <div className="blockheight block">
-            <img src="images/blocks-white.png" alt="blocks" />
+            <img src="images/blocks-blue.png" alt="blocks" />
             <span>Blockchain height: &nbsp;</span>
-            <span className="green-text">
+            <span className="blue-text">
               {this.props.wallet.blockchain_height}
             </span>
+          </div>
+
+          <div className="sfx block">
+            <img src="images/sfx.png" alt="safex-cash" />
+            <span>Safex Cash: &nbsp;</span>
+            <span className="green-text">{this.state.sfx_price} $</span>
           </div>
 
           <div className="btns-right-wrap">
             <button
               className={
                 this.props.buttonDisabled
+                  ? "button-shine address-btn disabled"
+                  : "button-shine address-btn"
+              }
+              onClick={this.props.setOpenAddressModal}
+              data-tip
+              data-for="address-tooptip"
+            >
+              <img src="images/address-book.png" alt="address-book" />
+            </button>
+            <ReactTooltip id="address-tooptip">
+              <p>Address Book</p>
+            </ReactTooltip>
+            <button
+              className={
+                this.props.buttonDisabled
                   ? "button-shine tx-history disabled"
                   : "button-shine tx-history"
               }
-              onClick={
-                this.props.wallet.wallet_connected
-                  ? this.props.setOpenHistoryModal
-                  : this.connectionError
-              }
+              onClick={this.props.setOpenHistoryModal}
               data-tip
               data-for="history-tooptip"
             >
@@ -160,11 +140,11 @@ export default class Wallet extends React.Component {
               }
               onClick={this.props.setOpenLoadingModal}
               data-tip
-              data-for="address-tooptip"
+              data-for="keys-tooptip"
             >
               <img src="images/key.png" alt="rescan" />
             </button>
-            <ReactTooltip id="address-tooptip">
+            <ReactTooltip id="keys-tooptip">
               <p>Seed and Keys</p>
             </ReactTooltip>
           </div>

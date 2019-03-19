@@ -10,27 +10,29 @@ class Transactions extends Component {
   constructor(props) {
     super(props);
     this.state = { tx_page: 0 };
-    this.totalPages = Math.ceil(this.props.history.length / props.itemsPerPage);
+    this.totalTxPages = Math.ceil(
+      this.props.history.length / props.itemsPerPage
+    );
   }
 
-  firstPage = () => {
+  firstTxPage = () => {
     this.setState({ tx_page: 0 });
   };
 
-  previousPage = () => {
+  previousTxPage = () => {
     if (this.state.tx_page >= 1) {
       this.setState(prevState => ({ tx_page: prevState.tx_page - 1 }));
     }
   };
 
-  nextPage = () => {
-    if (this.state.tx_page < this.totalPages - 1) {
+  nextTxPage = () => {
+    if (this.state.tx_page < this.totalTxPages - 1) {
       this.setState(prevState => ({ tx_page: prevState.tx_page + 1 }));
     }
   };
 
-  lastPage = () => {
-    this.setState({ tx_page: this.totalPages - 1 });
+  lastTxPage = () => {
+    this.setState({ tx_page: this.totalTxPages - 1 });
   };
 
   externalLink = txid => {
@@ -145,27 +147,125 @@ class Transactions extends Component {
               data-tip
               data-for="first-tooptip"
               className="first-page button-shine"
-              onClick={this.firstPage}
+              onClick={this.firstTxPage}
             >
               <span>{"<<"}</span>
             </button>
             <ReactTooltip id="first-tooptip">
               <p>First Page</p>
             </ReactTooltip>
-            <button className="button-shine" onClick={this.previousPage}>
+            <button className="button-shine" onClick={this.previousTxPage}>
               previus
             </button>
             <strong>
-              page: {tx_page + 1} / {this.totalPages}
+              page: {tx_page + 1} / {this.totalTxPages}
             </strong>{" "}
-            <button className="button-shine" onClick={this.nextPage}>
+            <button className="button-shine" onClick={this.nextTxPage}>
               next
             </button>
             <button
               data-tip
               data-for="last-tooptip"
               className="last-page button-shine"
-              onClick={this.lastPage}
+              onClick={this.lastTxPage}
+            >
+              <span>{">>"}</span>
+            </button>
+            <ReactTooltip id="last-tooptip">
+              <p>Last Page</p>
+            </ReactTooltip>
+          </div>
+        ) : (
+          <div className="hidden" />
+        )}
+      </div>
+    );
+  }
+}
+
+class Contacts extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { contact_page: 0 };
+    this.totalContactPages = Math.ceil(
+      this.props.addressBook.length / props.itemsPerContactPage
+    );
+  }
+
+  firstContactPage = () => {
+    this.setState({ contact_page: 0 });
+  };
+
+  previousContactPage = () => {
+    if (this.state.contact_page >= 1) {
+      this.setState(prevState => ({
+        contact_page: prevState.contact_page - 1
+      }));
+    }
+  };
+
+  nextContactPage = () => {
+    if (this.state.contact_page < this.totalContactPages - 1) {
+      this.setState(prevState => ({
+        contact_page: prevState.contact_page + 1
+      }));
+    }
+  };
+
+  lastContactPage = () => {
+    this.setState({ contact_page: this.totalContactPages - 1 });
+  };
+
+  render() {
+    const { contact_page } = this.state;
+    const { itemsPerContactPage, contacts } = this.props;
+
+    return (
+      <div>
+        {this.props.addressBook.length ? (
+          contacts
+            .slice(
+              contact_page * itemsPerContactPage,
+              contact_page * itemsPerContactPage + itemsPerContactPage
+            )
+            .map((contact, i) => {
+              return (
+                <div className="contact-item" key={i}>
+                  <p>Name: {contact.description}</p>
+                </div>
+              );
+            })
+        ) : (
+          <h5>No Contacts</h5>
+        )}
+
+        {this.props.addressBook.length ? (
+          <div id="pagination">
+            <button
+              data-tip
+              data-for="first-tooptip"
+              className="first-page button-shine"
+              onClick={this.firstContactPage}
+            >
+              <span>{"<<"}</span>
+            </button>
+            <ReactTooltip id="first-tooptip">
+              <p>First Page</p>
+            </ReactTooltip>
+            <button className="button-shine" onClick={this.previousContactPage}>
+              previus
+            </button>
+            <strong>
+              page: {contact_page + 1} / {this.totalContactPages}
+            </strong>{" "}
+            <button className="button-shine" onClick={this.nextContactPage}>
+              next
+            </button>
+            <button
+              data-tip
+              data-for="last-tooptip"
+              className="last-page button-shine"
+              onClick={this.lastContactPage}
             >
               <span>{">>"}</span>
             </button>
@@ -192,7 +292,11 @@ export default class Modal extends Component {
       payment_id: "",
       tx_being_sent: false,
       add_transition: false,
-      remove_transition: false
+      remove_transition: false,
+      show_contacts: false,
+      new_address: "",
+      new_payment_id: "",
+      description: ""
     };
     this.mixin = 6;
   }
@@ -222,7 +326,7 @@ export default class Modal extends Component {
   };
 
   closeMyModal = () => {
-    if (this.props.addressModal) {
+    if (this.props.keysModal) {
       this.props.closeModal();
     } else if (this.state.tx_being_sent) {
       this.props.setCloseSendModal();
@@ -252,7 +356,7 @@ export default class Modal extends Component {
       return false;
     }
 
-    this.props.setOpenAddressModal();
+    this.props.setOpenKeysModal();
   };
 
   inputOnChange = (target, e) => {
@@ -450,6 +554,51 @@ export default class Modal extends Component {
     }, 600);
   };
 
+  showContacts = () => {
+    this.setState({
+      show_contacts: !this.state.show_contacts
+    });
+  };
+
+  addContact = e => {
+    e.preventDefault();
+    let wallet = this.props.walletMeta;
+    let address = e.target.address.value;
+    let paymentid = e.target.paymentid.value;
+    let description = e.target.description.value;
+
+    if (address === "" || paymentid === "" || description === "") {
+      this.props.setOpenAlert("Fill out all the fields", false, "modal-70");
+      return false;
+    }
+    if (
+      process.env.NODE_ENV !== "development" &&
+      !safex.addressValid(address, "mainnet")
+    ) {
+      this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
+      return false;
+    }
+    if (
+      process.env.NODE_ENV === "development" &&
+      !safex.addressValid(address, "testnet")
+    ) {
+      this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
+      return false;
+    }
+
+    this.props.setOpenAlert("New contact added", false, "modal-70");
+    wallet.addressBook_AddRow(address, paymentid, description);
+    setTimeout(() => {
+      this.setState({
+        new_address: "",
+        new_payment_id: "",
+        description: ""
+      });
+    }, 100);
+    console.log(wallet.addressBook_GetAll());
+    console.log(wallet.addressBook_LookupPID(paymentid));
+  };
+
   render() {
     let modal;
     let mixin = [];
@@ -496,13 +645,9 @@ export default class Modal extends Component {
         </div>
       );
     }
-    if (this.props.addressModal) {
+    if (this.props.keysModal) {
       modal = (
-        <div
-          className={
-            "addressModal" + addClass(this.props.addressModal, "active")
-          }
-        >
+        <div className={"keysModal" + addClass(this.props.keysModal, "active")}>
           <span className="close" onClick={this.closeMyModal}>
             X
           </span>
@@ -851,6 +996,88 @@ export default class Modal extends Component {
             <h3>Transaction History</h3>
             <div id="history-wrap">
               <Transactions history={this.props.history} itemsPerPage={3} />
+            </div>
+          </div>
+        </div>
+      );
+    }
+    if (this.props.addressModal) {
+      modal = (
+        <div
+          className={
+            "addressModal" + addClass(this.props.addressModal, "active")
+          }
+        >
+          {this.props.alertCloseDisabled ? (
+            <span className="hidden" />
+          ) : (
+            <span className="close" onClick={this.props.closeModal}>
+              X
+            </span>
+          )}
+          <div className="mainAlertPopupInner">
+            <h3>Address Book</h3>
+
+            <button
+              id="show-contacts"
+              onClick={this.showContacts}
+              data-tip
+              data-for="show-tooptip"
+              className="button-shine"
+            >
+              <img src="images/address-book.png" alt="address-book" />
+            </button>
+            <ReactTooltip place="right" id="show-tooptip">
+              <p>
+                {this.state.show_contacts ? "Add Contact" : "Show Contacts"}
+              </p>
+            </ReactTooltip>
+            <form
+              className={this.state.show_contacts ? "hidden" : ""}
+              onSubmit={this.addContact}
+            >
+              <h3>Add Contact</h3>
+              <label htmlFor="address">Address</label>
+              <textarea
+                name="address"
+                rows="2"
+                value={this.state.new_address}
+                placeholder="Enter Address"
+                onChange={this.inputOnChange.bind(this, "new_address")}
+              />
+
+              <label
+                htmlFor="paymentid"
+                value={this.state.new_payment_id}
+                onChange={this.inputOnChange.bind(this, "new_payment_id")}
+              >
+                Payment ID
+              </label>
+              <input
+                name="paymentid"
+                placeholder="Enter Payment ID"
+                value={this.state.description}
+                onChange={this.inputOnChange.bind(this, "description")}
+              />
+
+              <label htmlFor="description">Description</label>
+              <input name="description" placeholder="Enter Description" />
+
+              <button className="btn button-shine" type="submit">
+                Add
+              </button>
+            </form>
+
+            <div
+              className={
+                this.state.show_contacts ? "show-contacts-wrap" : "hidden"
+              }
+            >
+              <h3>Contacts</h3>
+              {/* <Contacts
+                contacts={this.props.addressBook}
+                itemsPerContactPage={3}
+              /> */}
             </div>
           </div>
         </div>
