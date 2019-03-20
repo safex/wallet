@@ -121,7 +121,7 @@ class Transactions extends Component {
                   </div>
 
                   <div className="tx-id-wrap">
-                    <span>Transaction ID :</span>
+                    <span>Transaction ID:</span>
                     <button
                       data-tip
                       data-for="link-tooptip"
@@ -188,7 +188,7 @@ class Contacts extends Component {
     super(props);
     this.state = { contact_page: 0 };
     this.totalContactPages = Math.ceil(
-      this.props.addressBook.length / props.itemsPerContactPage
+      this.props.contacts.length / props.itemsPerContactPage
     );
   }
 
@@ -216,13 +216,20 @@ class Contacts extends Component {
     this.setState({ contact_page: this.totalContactPages - 1 });
   };
 
+  removeContact = rowID => {
+    let wallet = this.props.walletMeta;
+    console.log(wallet);
+    // wallet.addressBook_DeleteRow(rowID);
+    // this.props.setOpenAlert("Contact removed", false, "modal-80");
+  };
+
   render() {
     const { contact_page } = this.state;
     const { itemsPerContactPage, contacts } = this.props;
 
     return (
       <div>
-        {this.props.addressBook.length ? (
+        {this.props.contacts.length ? (
           contacts
             .slice(
               contact_page * itemsPerContactPage,
@@ -231,7 +238,43 @@ class Contacts extends Component {
             .map((contact, i) => {
               return (
                 <div className="contact-item" key={i}>
-                  <p>Name: {contact.description}</p>
+                  <div className="contact-left">
+                    <p className="name">{contact.description}</p>
+                    <p className="payment-id">Payment ID:</p>
+                  </div>
+
+                  <div className="contact-center">
+                    <p className="address">{contact.address}</p>
+                    <p className="payment-id">{contact.paymentId}</p>
+                  </div>
+
+                  <div className="contact-right">
+                    <CopyToClipboard
+                      text={contact.address}
+                      onCopy={this.props.onCopy}
+                      data-tip
+                      data-for="copy-tooptip"
+                      className="button-shine copy-btn"
+                    >
+                      <button>
+                        <img src="images/copy.png" alt="copy" />
+                      </button>
+                    </CopyToClipboard>
+                    <ReactTooltip id="copy-tooptip">
+                      <p>Copy</p>
+                    </ReactTooltip>
+                    <button
+                      onClick={this.removeContact.bind(this, contact.rowID)}
+                      data-tip
+                      data-for="remove-tooptip"
+                      className="button-shine"
+                    >
+                      <img src="images/trash.png" alt="trash" />
+                    </button>
+                    <ReactTooltip id="remove-tooptip">
+                      <p>Remove Contact</p>
+                    </ReactTooltip>
+                  </div>
                 </div>
               );
             })
@@ -239,7 +282,7 @@ class Contacts extends Component {
           <h5>No Contacts</h5>
         )}
 
-        {this.props.addressBook.length ? (
+        {this.props.contacts.length ? (
           <div id="pagination">
             <button
               data-tip
@@ -281,7 +324,7 @@ class Contacts extends Component {
   }
 }
 
-export default class Modal extends Component {
+export default class Modal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -568,25 +611,25 @@ export default class Modal extends Component {
     let description = e.target.description.value;
 
     if (address === "" || paymentid === "" || description === "") {
-      this.props.setOpenAlert("Fill out all the fields", false, "modal-70");
+      this.props.setOpenAlert("Fill out all the fields", false, "modal-80");
       return false;
     }
     if (
       process.env.NODE_ENV !== "development" &&
       !safex.addressValid(address, "mainnet")
     ) {
-      this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
+      this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
       return false;
     }
     if (
       process.env.NODE_ENV === "development" &&
       !safex.addressValid(address, "testnet")
     ) {
-      this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
+      this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
       return false;
     }
 
-    this.props.setOpenAlert("New contact added", false, "modal-70");
+    this.props.setOpenAlert("New contact added", false, "modal-80");
     wallet.addressBook_AddRow(address, paymentid, description);
     setTimeout(() => {
       this.setState({
@@ -594,9 +637,8 @@ export default class Modal extends Component {
         new_payment_id: "",
         description: ""
       });
+      this.props.setWalletData();
     }, 100);
-    console.log(wallet.addressBook_GetAll());
-    console.log(wallet.addressBook_LookupPID(paymentid));
   };
 
   render() {
@@ -1025,7 +1067,14 @@ export default class Modal extends Component {
               data-for="show-tooptip"
               className="button-shine"
             >
-              <img src="images/address-book.png" alt="address-book" />
+              <img
+                src={
+                  this.state.show_contacts
+                    ? "images/new-contact.png"
+                    : "images/address-book.png"
+                }
+                alt="address-book"
+              />
             </button>
             <ReactTooltip place="right" id="show-tooptip">
               <p>
@@ -1074,10 +1123,10 @@ export default class Modal extends Component {
               }
             >
               <h3>Contacts</h3>
-              {/* <Contacts
+              <Contacts
                 contacts={this.props.addressBook}
                 itemsPerContactPage={3}
-              /> */}
+              />
             </div>
           </div>
         </div>

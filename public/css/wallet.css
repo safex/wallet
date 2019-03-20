@@ -50,6 +50,9 @@
 .wallet-inner-wrap .btns-right-wrap button img {
   max-height: 18px;
 }
+.wallet-inner-wrap .btns-right-wrap button:hover {
+  cursor: pointer;
+}
 .__react_component_tooltip {
   padding: 10px 21px 7px;
 }
@@ -95,6 +98,7 @@
   display: inline-block;
   margin-left: 15px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap .block:first-of-type {
   margin-left: 0;
@@ -125,7 +129,6 @@
   min-width: 75px;
   text-align: left;
   background: transparent;
-  -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap .blockheight:hover {
   box-shadow: none !important;

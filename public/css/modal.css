@@ -376,6 +376,7 @@
   margin: 0 0 20px;
   font-size: 22px;
   text-transform: initial;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
 }
 .modal h5 {
   margin-top: 0;
@@ -594,15 +595,18 @@
   letter-spacing: -0.3px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
-.historyModal #pagination {
+.historyModal #pagination,
+.addressModal #pagination {
   position: absolute;
   bottom: 19px;
   width: 100%;
   left: 0;
   display: flex;
   justify-content: center;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
-.historyModal #pagination strong {
+.historyModal #pagination strong,
+.addressModal #pagination strong {
   margin: 0 10px;
   position: relative;
   top: 4px;
@@ -610,19 +614,23 @@
   display: inline-block;
   text-transform: capitalize;
 }
-.historyModal #pagination button {
+.historyModal #pagination button,
+.addressModal #pagination button {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   padding: 6px 12px 5px;
   visibility: visible;
   opacity: 1;
   height: 30px;
 }
-.historyModal #pagination button.first-page {
+.historyModal #pagination button.first-page,
+.addressModal #pagination button.first-page {
   margin-right: 8px;
   padding: 5.5px 12px;
 }
 .historyModal #pagination button.first-page span,
-.historyModal #pagination button.last-page span {
+.historyModal #pagination button.last-page span,
+.addressModal #pagination button.first-page span,
+.addressModal #pagination button.last-page span {
   font-weight: 400;
   font-size: 23px;
   letter-spacing: 1px;
@@ -630,7 +638,8 @@
   position: relative;
   top: -7px;
 }
-.historyModal #pagination button.last-page {
+.historyModal #pagination button.last-page,
+.addressModal #pagination button.last-page {
   margin-left: 8px;
   padding: 5.5px 12px;
 }
@@ -703,6 +712,9 @@
   color: #fff;
 }
 
+.addressModal {
+  height: 420px;
+}
 .addressModal #show-contacts {
   text-align: center;
   background: url(../images/login-bg.png) no-repeat top left / cover;
@@ -732,4 +744,50 @@
   margin-top: 5px;
   padding: 4px 18px 5px;
   font-size: 18px !important;
+}
+.addressModal .btn:focus,
+.addressModal .btn:active {
+  outline: none;
+  color: #fff;
+}
+.addressModal .show-contacts-wrap {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.addressModal .show-contacts-wrap .contact-item {
+  display: flex;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #8ffdfd;
+}
+.addressModal .show-contacts-wrap .contact-item .name {
+  min-height: 52px;
+}
+.addressModal .show-contacts-wrap .contact-item p {
+  text-align: left;
+  font-size: 16px;
+}
+.addressModal .show-contacts-wrap .contact-item .address {
+  word-break: break-all;
+  text-align: left;
+  margin-bottom: 8px;
+}
+.addressModal .show-contacts-wrap .contact-item .payment-id {
+  font-size: 13.5px;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-left {
+  width: 140px;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-center {
+  width: 545px;
+  padding-right: 10px;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-right button {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  padding: 4px 8px 6px;
+  visibility: visible;
+  opacity: 1;
+  height: 32px;
+  margin-right: 5px;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-right button img {
+  max-height: 18px;
 }

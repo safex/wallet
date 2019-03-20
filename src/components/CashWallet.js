@@ -182,7 +182,7 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenAddressModal = () => {
-    this.setOpenModal("address_modal", alert, false, null, "modal-70");
+    this.setOpenModal("address_modal", alert, false, null, "modal-80");
   };
 
   goToPage = page => {
