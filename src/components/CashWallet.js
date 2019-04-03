@@ -41,6 +41,7 @@ export default class CashWallet extends React.Component {
       mixin_modal: false,
       history_modal: false,
       address_modal: false,
+      confirm_modal: false,
       value: "",
       copied: false,
       remove_transition: false,
@@ -182,7 +183,18 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenAddressModal = () => {
-    this.setOpenModal("address_modal", alert, false, null, "modal-80");
+    this.setOpenModal("address_modal", "", false, null, "modal-80");
+  };
+
+  setOpenConfirmModal = (alert, disabled, remove_transition = false) => {
+    this.setOpenModal(
+      "confirm_modal",
+      alert,
+      disabled,
+      null,
+      "modal-70",
+      remove_transition
+    );
   };
 
   goToPage = page => {
@@ -285,7 +297,6 @@ export default class CashWallet extends React.Component {
     let wallet = this.wallet_meta;
     wallet.setSeedLanguage("English");
     this.setWalletData();
-    console.log(this.state.address_book);
     this.setState({
       page: "wallet",
       loading_modal: false
@@ -438,6 +449,8 @@ export default class CashWallet extends React.Component {
           setOpenMixinModal={this.setOpenMixinModal}
           setOpenKeysModal={this.setOpenKeysModal}
           addressModal={this.state.address_modal}
+          setOpenConfirmModal={this.setOpenConfirmModal}
+          confirmModal={this.state.confirm_modal}
           alert={this.state.alert}
           closeAlert={this.setCloseAlert}
           setOpenAlert={this.setOpenAlert}
@@ -618,6 +631,8 @@ export default class CashWallet extends React.Component {
               setOpenMixinModal={this.setOpenMixinModal}
               setOpenKeysModal={this.setOpenKeysModal}
               addressModal={this.state.address_modal}
+              setOpenConfirmModal={this.setOpenConfirmModal}
+              confirmModal={this.state.confirm_modal}
               alert={this.state.alert}
               closeAlert={this.setCloseAlert}
               setOpenAlert={this.setOpenAlert}

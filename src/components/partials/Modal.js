@@ -455,6 +455,12 @@ export default class Modal extends React.Component {
         );
         return false;
       }
+      // this.props.setOpenAlert(
+      //   "Not enough available safex cash to complete the transaction",
+      //   false,
+      //   "modal-70"
+      // );
+
       if (paymentid !== "") {
         this.setState(() => ({
           tx_being_sent: true
@@ -503,14 +509,14 @@ export default class Modal extends React.Component {
               return false;
             }
             if (this.props.cash_or_token === 0) {
-              this.props.setOpenAlert(
+              this.props.setOpenConfirmModal(
                 "Transaction commited successfully, Your cash transaction ID is: " +
                   txId,
                 false,
                 "modal-70"
               );
             } else {
-              this.props.setOpenAlert(
+              this.props.setOpenConfirmModal(
                 "Transaction commited successfully, Your token transaction ID is: " +
                   txId,
                 false,
@@ -1128,6 +1134,26 @@ export default class Modal extends React.Component {
                 itemsPerContactPage={3}
               />
             </div>
+          </div>
+        </div>
+      );
+    }
+    if (this.props.confirmModal) {
+      modal = (
+        <div
+          className={
+            "confirmModal" + addClass(this.props.confirmModal, "active")
+          }
+        >
+          {this.props.alertCloseDisabled ? (
+            <span className="hidden" />
+          ) : (
+            <span className="close" onClick={this.props.closeModal}>
+              X
+            </span>
+          )}
+          <div className="mainAlertPopupInner">
+            <p>{this.props.alertText}</p>
           </div>
         </div>
       );

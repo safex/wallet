@@ -774,11 +774,16 @@
   font-size: 13.5px;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-left {
-  width: 140px;
+  width: 130px;
+  padding-right: 10px;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-center {
   width: 545px;
   padding-right: 10px;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-right {
+  width: 114px;
+  display: flex;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-right button {
   background: url(../images/login-bg.png) no-repeat top left / cover;
@@ -790,4 +795,18 @@
 }
 .addressModal .show-contacts-wrap .contact-item .contact-right button img {
   max-height: 18px;
+}
+
+.confirmModal .mainAlertPopupInner p {
+  background: transparent;
+  border: 0px none;
+  margin-right: 0;
+  padding-right: 20px;
+  font-size: 18px;
+  margin-bottom: 0;
+  text-transform: initial;
+  line-height: 1.2;
+  text-align: left;
+  word-break: break-word;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
