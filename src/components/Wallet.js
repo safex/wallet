@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { addClass } from "../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -11,9 +10,7 @@ export default class Wallet extends React.Component {
     this.state = {
       wallet: null,
       alert_close_disabled: false,
-      tx_being_sent: false,
-      sfx_price: 0,
-      sft_price: 0
+      tx_being_sent: false
     };
   }
 
@@ -24,26 +21,9 @@ export default class Wallet extends React.Component {
     wallet.on("refreshed", this.props.refreshCallback);
     this.props.closeAlert();
     this.mounted = true;
-    this.fetchPrice();
     if (!localStorage.getItem("wallet")) {
       localStorage.setItem("wallet", JSON.stringify(this.props.wallet));
     }
-  };
-
-  fetchPrice = () => {
-    axios({
-      method: "get",
-      url: "https://api.coingecko.com/api/v3/coins/safex-cash"
-    })
-      .then(res => {
-        var sfx_price = parseFloat(
-          res.data.market_data.current_price.usd
-        ).toFixed(8);
-        this.setState({ sfx_price });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   };
 
   componentWillUnmount() {
@@ -97,8 +77,8 @@ export default class Wallet extends React.Component {
 
           <div className="sfx block">
             <img src="images/sfx.png" alt="safex-cash" />
-            <span>Safex Cash: &nbsp;</span>
-            <span className="green-text">{this.state.sfx_price} $</span>
+            <span>Safex Cash: </span>
+            <span className="green-text">{this.props.sfxPrice} $</span>
           </div>
 
           <div className="btns-right-wrap">

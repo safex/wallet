@@ -223,6 +223,11 @@ class Contacts extends Component {
     // this.props.setOpenAlert("Contact removed", false, "modal-80");
   };
 
+  sendToContact = (rowID) => {
+    let wallet = this.props.walletMeta;
+    console.log(wallet);
+  }
+
   render() {
     const { contact_page } = this.state;
     const { itemsPerContactPage, contacts } = this.props;
@@ -273,6 +278,17 @@ class Contacts extends Component {
                     </button>
                     <ReactTooltip id="remove-tooptip">
                       <p>Remove Contact</p>
+                    </ReactTooltip>
+                    <button
+                      onClick={this.sendToContact.bind(this, contact.rowID)}
+                      data-tip
+                      data-for="send-tooptip"
+                      className="button-shine"
+                    >
+                      <img src="images/arrow-right.png" alt="arrow-right" />
+                    </button>
+                    <ReactTooltip id="send-tooptip">
+                      <p>Send To</p>
                     </ReactTooltip>
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import CreateNew from "./CreateNew";
 import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
@@ -27,6 +28,8 @@ export default class CashWallet extends React.Component {
       page: null,
       network: true,
       mixin: 6,
+      sfx_price: 0,
+      sft_price: 0,
 
       //UI variables
       button_disabled: false,
@@ -332,6 +335,7 @@ export default class CashWallet extends React.Component {
       history: wallet.history().reverse(),
       address_book: wallet.addressBook_GetAll()
     });
+    this.fetchPrice();
   };
 
   onCopy = () => {
@@ -399,6 +403,22 @@ export default class CashWallet extends React.Component {
         wallet.on("refreshed", this.refreshCallback);
       }, 1000);
     }, 1000);
+  };
+
+  fetchPrice = () => {
+    axios({
+      method: "get",
+      url: "https://api.coingecko.com/api/v3/coins/safex-cash"
+    })
+      .then(res => {
+        var sfx_price = parseFloat(
+          res.data.market_data.current_price.usd
+        ).toFixed(8);
+        this.setState({ sfx_price });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   renderPageWrapper = (title, version, page, page_type, icon) => {
@@ -496,6 +516,7 @@ export default class CashWallet extends React.Component {
             closeAlert={this.setCloseAlert}
             onCopy={this.onCopy}
             refreshCallback={this.refreshCallback}
+            sfxPrice={this.state.sfx_price}
           />
         );
         break;
