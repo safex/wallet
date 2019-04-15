@@ -180,6 +180,7 @@ export default class CashWallet extends React.Component {
       this.setState({
         send_modal: false,
         address_modal: false,
+        confirm_modal: false,
         remove_transition: false,
         modal_width: ""
       });
@@ -189,6 +190,7 @@ export default class CashWallet extends React.Component {
         button_disabled: false
       });
     }, 1000);
+    console.log("setCloseMyModal checkpoint");
   };
 
   setOpenMixinModal = (alert, disabled) => {
