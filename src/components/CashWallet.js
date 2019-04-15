@@ -48,6 +48,7 @@ export default class CashWallet extends React.Component {
       history_modal: false,
       address_modal: false,
       confirm_modal: false,
+      delete_modal: false,
       value: "",
       copied: false,
       remove_transition: false,
@@ -181,6 +182,7 @@ export default class CashWallet extends React.Component {
         send_modal: false,
         address_modal: false,
         confirm_modal: false,
+        delete_modal: false,
         remove_transition: false,
         modal_width: ""
       });
@@ -190,7 +192,6 @@ export default class CashWallet extends React.Component {
         button_disabled: false
       });
     }, 1000);
-    console.log("setCloseMyModal checkpoint");
   };
 
   setOpenMixinModal = (alert, disabled) => {
@@ -210,6 +211,10 @@ export default class CashWallet extends React.Component {
       "modal-80",
       remove_transition
     );
+  };
+
+  setOpenDeleteModal = () => {
+    this.setOpenModal("delete_modal", "", false, null, "modal-80");
   };
 
   goToPage = page => {
@@ -233,27 +238,6 @@ export default class CashWallet extends React.Component {
       safex[createWalletFunctionType](args)
         .then(wallet => {
           this.wallet_meta = wallet;
-          // console.log(wallet.addressBook_GetAll());
-          // console.log(
-          //   wallet.addressBook_AddRow(
-          //     "SFXtzT73mu21A2j3jYjwt15YXPQxgGXm2Edy18JGAGaHaaBeCZmiENLEoExHKAfqPrW1Cvh3xgim7Po2iDWMiYqb9BMc8BbTFNo",
-          //     "ec1f6d9581bb3c5ea7d5c6fd665617328cbf43b420820eb16a23d729905d1f4b",
-          //     "duckaj ga"
-          //   )
-          // );
-          // console.log(wallet.addressBook_DeleteRow(0));
-          // console.log(
-          //   wallet.addressBook_LookupPID(
-          //     "ec1f6d9581bb3c5ea7d5c6fd665617328cbf43b420820eb16a23d729905d1f4b"
-          //   )
-          // );
-          // console.log(
-          //   wallet.addressBook_LookupPID(
-          //     "ec1f6d9581bb3c5ea7d5c6fd665617328cbf43b420820eb16a23d729905d1f4a"
-          //   )
-          // );
-          // console.log(wallet.addressBook_ErrorString());
-          // console.log(wallet.addressBook_GetAll());
           if (createWalletFunctionType === "openWallet") {
             this.refreshProgressInterval(100);
           } else {
@@ -497,6 +481,8 @@ export default class CashWallet extends React.Component {
           removeTransition={this.state.remove_transition}
           modalWidth={this.state.modal_width}
           addressBook={this.state.address_book}
+          deleteModal={this.state.delete_modal}
+          setOpenDeleteModal={this.setOpenDeleteModal}
         />
       </div>
     );
@@ -684,6 +670,8 @@ export default class CashWallet extends React.Component {
               removeTransition={this.state.remove_transition}
               modalWidth={this.state.modal_width}
               addressBook={this.state.address_book}
+              deleteModal={this.state.delete_modal}
+              setOpenDeleteModal={this.setOpenDeleteModal}
             />
           </div>
         );

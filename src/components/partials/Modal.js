@@ -222,11 +222,8 @@ class Contacts extends Component {
   };
 
   removeContact = rowID => {
-    let wallet = this.props.walletMeta;
-    console.log(wallet);
-    wallet.addressBook_DeleteRow(rowID);
-    this.props.setWalletData();
-    this.props.setOpenAlert("Contact removed", false, "modal-80");
+    this.props.setOpenDeleteModal();
+    localStorage.setItem("rowID", rowID);
   };
 
   render() {
@@ -295,7 +292,7 @@ class Contacts extends Component {
                       <img src="images/send-cash.png" alt="send-cash" />
                     </button>
                     <ReactTooltip id="send-cash-tooltip">
-                      <p>Send Cash To This Address</p>
+                      <p>Send Safex Cash To This Address</p>
                     </ReactTooltip>
                     <button
                       onClick={this.props.setOpenSendModal.bind(
@@ -312,7 +309,7 @@ class Contacts extends Component {
                       <img src="images/send-token.png" alt="send-token" />
                     </button>
                     <ReactTooltip id="send-token-tooltip">
-                      <p>Send Token To This Address</p>
+                      <p>Send Safex Token To This Address</p>
                     </ReactTooltip>
                   </div>
                 </div>
@@ -379,7 +376,7 @@ export default class Modal extends React.Component {
       show_contacts: false,
       new_address: "",
       new_payment_id: "",
-      description: ""
+      name: ""
     };
     this.mixin = 6;
   }
@@ -409,7 +406,7 @@ export default class Modal extends React.Component {
   };
 
   closeMyModal = () => {
-    if (this.props.keysModal) {
+    if (this.props.keysModal || this.props.deleteModal) {
       this.props.closeModal();
     } else if (this.state.tx_being_sent) {
       this.props.setCloseSendModal();
@@ -426,7 +423,7 @@ export default class Modal extends React.Component {
         payment_id: "",
         new_address: "",
         new_payment_id: "",
-        description: "",
+        name: "",
         add_transition: false
       });
     }, 300);
@@ -651,9 +648,9 @@ export default class Modal extends React.Component {
     let wallet = this.props.walletMeta;
     let address = e.target.address.value;
     let paymentid = e.target.paymentid.value;
-    let description = e.target.description.value;
+    let name = e.target.name.value;
 
-    if (address === "" || paymentid === "" || description === "") {
+    if (address === "" || paymentid === "" || name === "") {
       this.props.setOpenAlert("Fill out all the fields", false, "modal-80");
       return false;
     }
@@ -673,15 +670,27 @@ export default class Modal extends React.Component {
     }
 
     this.props.setOpenAlert("New contact added", false, "modal-80");
-    wallet.addressBook_AddRow(address, paymentid, description);
+    wallet.addressBook_AddRow(address, paymentid, name);
     setTimeout(() => {
       this.setState({
         new_address: "",
         new_payment_id: "",
-        description: ""
+        name: ""
       });
       this.props.setWalletData();
     }, 100);
+  };
+
+  removeContact = e => {
+    e.preventDefault();
+    let rowID = parseFloat(localStorage.getItem("rowID"));
+    let wallet = this.props.walletMeta;
+    console.log(wallet);
+    wallet.addressBook_DeleteRow(rowID);
+    wallet.store();
+    this.props.setWalletData();
+    localStorage.removeItem("rowID");
+    this.props.setOpenAlert("Contact removed", false, "modal-80");
   };
 
   render() {
@@ -1034,7 +1043,30 @@ export default class Modal extends React.Component {
                 onChange={this.inputOnChange.bind(this, "new_address")}
               />
 
-              <label htmlFor="paymentid">Payment ID</label>
+              <label htmlFor="paymentid">
+                Payment ID
+                <div
+                  data-tip
+                  data-for="paymentid-tooptip"
+                  className="button-shine question-wrap"
+                >
+                  <span>?</span>
+                </div>
+                <ReactTooltip id="paymentid-tooptip">
+                  <p>Payment ID is additional reference number</p>
+                  <p>attached to the transaction.</p>
+                  <p>It is given by exchanges and web</p>
+                  <p>shops to differentiate and track</p>
+                  <p>particular deposits and purchases.</p>
+                  <p>It is not required for regular user transactions.</p>
+                  <p>Payment ID format should be </p>
+                  <p>16 or 64 Hex character string.</p>
+                  <p>To generate your own random hex, visit:</p>
+                  <p className="blue-text">
+                    https://www.browserling.com/tools/random-hex
+                  </p>
+                </ReactTooltip>
+              </label>
               <input
                 name="paymentid"
                 placeholder="Enter Payment ID"
@@ -1042,12 +1074,12 @@ export default class Modal extends React.Component {
                 onChange={this.inputOnChange.bind(this, "new_payment_id")}
               />
 
-              <label htmlFor="description">Description</label>
+              <label htmlFor="name">Name</label>
               <input
-                name="description"
-                placeholder="Enter Description"
-                value={this.state.description}
-                onChange={this.inputOnChange.bind(this, "description")}
+                name="name"
+                placeholder="Enter Name"
+                value={this.state.name}
+                onChange={this.inputOnChange.bind(this, "name")}
               />
 
               <button className="btn button-shine" type="submit">
@@ -1069,6 +1101,7 @@ export default class Modal extends React.Component {
                 onCopy={this.props.onCopy}
                 setWalletData={this.props.setWalletData}
                 setOpenSendModal={this.props.setOpenSendModal}
+                setOpenDeleteModal={this.props.setOpenDeleteModal}
               />
             </div>
           </div>
@@ -1216,6 +1249,37 @@ export default class Modal extends React.Component {
         </div>
       );
     }
+    if (this.props.deleteModal) {
+      modal = (
+        <div
+          className={"deleteModal" + addClass(this.props.deleteModal, "active")}
+        >
+          {this.props.alertCloseDisabled ? (
+            <span className="hidden" />
+          ) : (
+            <span className="close" onClick={this.props.closeModal}>
+              X
+            </span>
+          )}
+          <div className="mainAlertPopupInner">
+            <p>Are you sure you want to delete this contact?</p>
+
+            <form onSubmit={this.removeContact}>
+              <button
+                type="button"
+                className="cancel-btn button-shine"
+                onClick={this.props.closeModal}
+              >
+                Cancel
+              </button>
+              <button type="submit" className="confirm-btn button-shine">
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+    }
     if (this.props.alert) {
       modal = (
         <div className={"alert" + addClass(this.props.alert, "active")}>
@@ -1269,7 +1333,8 @@ export default class Modal extends React.Component {
 
         {(this.props.sendModal && this.props.alert === false) ||
         (this.props.addressModal && this.props.alert === false) ||
-        this.props.mixinModal ? (
+        this.props.mixinModal ||
+        this.props.deleteModal ? (
           <div
             className={"backdrop" + addClass(this.props.modal, "active")}
             onClick={this.closeMyModal}

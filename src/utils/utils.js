@@ -79,12 +79,14 @@ function closeModal(target) {
     (target.state.send_modal && target.state.alert) ||
     (target.state.address_modal && target.state.alert) ||
     (target.state.send_modal && target.state.confirm_modal) ||
-    target.state.mixin_modal
+    target.state.mixin_modal ||
+    target.state.delete_modal
   ) {
     target.setState({
       alert: false,
       confirm_modal: false,
-      mixin_modal: false
+      mixin_modal: false,
+      delete_modal: false
     });
   } else {
     target.setState({
@@ -101,6 +103,7 @@ function closeModal(target) {
         history_modal: false,
         address_modal: false,
         confirm_modal: false,
+        delete_modal: false,
         modal_width: "",
         remove_transition: false
       });
