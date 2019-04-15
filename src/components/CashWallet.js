@@ -30,6 +30,9 @@ export default class CashWallet extends React.Component {
       mixin: 6,
       sfx_price: 0,
       sft_price: 0,
+      sendTo: "",
+      destination: "",
+      paymentID: "",
 
       //UI variables
       button_disabled: false,
@@ -134,12 +137,15 @@ export default class CashWallet extends React.Component {
     this.setOpenModal("history_modal", "", false, null, "modal-80");
   };
 
-  setOpenSendModal = cash_or_token => {
-    this.setOpenModal("send_modal", "", false, cash_or_token, "modal-70");
+  setOpenSendModal = (cash_or_token, destination, paymentID, sendTo) => {
+    this.setOpenModal("send_modal", "", false, cash_or_token, "modal-80");
     this.cash_or_token = cash_or_token;
     this.setState({
       button_disabled: true,
-      send_disabled: false
+      send_disabled: false,
+      sendTo: sendTo,
+      destination: destination,
+      paymentID: paymentID
     });
   };
 
@@ -152,7 +158,10 @@ export default class CashWallet extends React.Component {
         send_modal: false,
         mixinModal: false,
         remove_transition: false,
-        modal_width: "modal-70"
+        modal_width: "modal-80",
+        sendTo: "",
+        destination: "",
+        paymentID: ""
       });
     }, 300);
     setTimeout(() => {
@@ -170,6 +179,7 @@ export default class CashWallet extends React.Component {
     setTimeout(() => {
       this.setState({
         send_modal: false,
+        address_modal: false,
         remove_transition: false,
         modal_width: ""
       });
@@ -182,7 +192,7 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenMixinModal = (alert, disabled) => {
-    this.setOpenModal("mixin_modal", alert, disabled, null, "modal-70");
+    this.setOpenModal("mixin_modal", alert, disabled, null, "modal-80");
   };
 
   setOpenAddressModal = () => {
@@ -195,7 +205,7 @@ export default class CashWallet extends React.Component {
       alert,
       disabled,
       null,
-      "modal-70",
+      "modal-80",
       remove_transition
     );
   };
@@ -416,7 +426,7 @@ export default class CashWallet extends React.Component {
         ).toFixed(8);
         this.setState({ sfx_price });
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
   };
@@ -455,6 +465,10 @@ export default class CashWallet extends React.Component {
           history={this.state.history}
           historyModal={this.state.history_modal}
           sendModal={this.state.send_modal}
+          setOpenSendModal={this.setOpenSendModal}
+          sendTo={this.state.sendTo}
+          destination={this.state.destination}
+          paymentID={this.state.paymentID}
           sendDisabled={this.state.send_disabled}
           setCloseSendModal={this.setCloseSendModal}
           setCloseMyModal={this.setCloseMyModal}
@@ -638,6 +652,10 @@ export default class CashWallet extends React.Component {
               history={this.state.history}
               historyModal={this.state.history_modal}
               sendModal={this.state.send_modal}
+              setOpenSendModal={this.setOpenSendModal}
+              sendTo={this.state.sendTo}
+              destination={this.state.destination}
+              paymentID={this.state.paymentID}
               setCloseSendModal={this.setCloseSendModal}
               sendDisabled={this.state.send_disabled}
               setCloseMyModal={this.setCloseMyModal}

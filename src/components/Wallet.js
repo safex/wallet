@@ -176,7 +176,7 @@ export default class Wallet extends React.Component {
               }
               onClick={
                 this.props.wallet.wallet_connected
-                  ? this.props.setOpenSendModal.bind(this, 0)
+                  ? this.props.setOpenSendModal.bind(this, 0, "", "", "")
                   : this.connectionError
               }
             >
@@ -203,7 +203,7 @@ export default class Wallet extends React.Component {
               }
               onClick={
                 this.props.wallet.wallet_connected
-                  ? this.props.setOpenSendModal.bind(this, 1)
+                  ? this.props.setOpenSendModal.bind(this, 1, "", "", "")
                   : this.connectionError
               }
             >

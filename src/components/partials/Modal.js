@@ -192,6 +192,11 @@ class Contacts extends Component {
     );
   }
 
+  componentDidMount() {
+    let wallet = this.props.walletMeta;
+    console.log(wallet);
+  }
+
   firstContactPage = () => {
     this.setState({ contact_page: 0 });
   };
@@ -219,14 +224,10 @@ class Contacts extends Component {
   removeContact = rowID => {
     let wallet = this.props.walletMeta;
     console.log(wallet);
-    // wallet.addressBook_DeleteRow(rowID);
-    // this.props.setOpenAlert("Contact removed", false, "modal-80");
+    wallet.addressBook_DeleteRow(rowID);
+    this.props.setWalletData();
+    this.props.setOpenAlert("Contact removed", false, "modal-80");
   };
-
-  sendToContact = (rowID) => {
-    let wallet = this.props.walletMeta;
-    console.log(wallet);
-  }
 
   render() {
     const { contact_page } = this.state;
@@ -280,15 +281,38 @@ class Contacts extends Component {
                       <p>Remove Contact</p>
                     </ReactTooltip>
                     <button
-                      onClick={this.sendToContact.bind(this, contact.rowID)}
+                      onClick={this.props.setOpenSendModal.bind(
+                        this,
+                        0,
+                        contact.address,
+                        contact.paymentId,
+                        contact.description
+                      )}
                       data-tip
-                      data-for="send-tooptip"
+                      data-for="send-cash-tooltip"
                       className="button-shine"
                     >
-                      <img src="images/arrow-right.png" alt="arrow-right" />
+                      <img src="images/send-cash.png" alt="send-cash" />
                     </button>
-                    <ReactTooltip id="send-tooptip">
-                      <p>Send To</p>
+                    <ReactTooltip id="send-cash-tooltip">
+                      <p>Send Cash To This Address</p>
+                    </ReactTooltip>
+                    <button
+                      onClick={this.props.setOpenSendModal.bind(
+                        this,
+                        1,
+                        contact.address,
+                        contact.paymentId,
+                        contact.description
+                      )}
+                      data-tip
+                      data-for="send-token-tooltip"
+                      className="button-shine"
+                    >
+                      <img src="images/send-token.png" alt="send-token" />
+                    </button>
+                    <ReactTooltip id="send-token-tooltip">
+                      <p>Send Token To This Address</p>
                     </ReactTooltip>
                   </div>
                 </div>
@@ -400,6 +424,9 @@ export default class Modal extends React.Component {
         address: "",
         amount: "",
         payment_id: "",
+        new_address: "",
+        new_payment_id: "",
+        description: "",
         add_transition: false
       });
     }, 300);
@@ -433,29 +460,29 @@ export default class Modal extends React.Component {
       let paymentid = e.target.paymentid.value;
       let mixin = this.mixin;
       if (sendingAddress === "") {
-        this.props.setOpenAlert("Fill out all the fields", false, "modal-70");
+        this.props.setOpenAlert("Fill out all the fields", false, "modal-80");
         return false;
       }
       if (amount === "") {
-        this.props.setOpenAlert("Enter amount", false, "modal-70");
+        this.props.setOpenAlert("Enter amount", false, "modal-80");
         return false;
       }
       if (isNaN(amount)) {
-        this.props.setOpenAlert("Enter valid amount", false, "modal-70");
+        this.props.setOpenAlert("Enter valid amount", false, "modal-80");
         return false;
       }
       if (
         process.env.NODE_ENV !== "development" &&
         !safex.addressValid(sendingAddress, "mainnet")
       ) {
-        this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
         return false;
       }
       if (
         process.env.NODE_ENV === "development" &&
         !safex.addressValid(sendingAddress, "testnet")
       ) {
-        this.props.setOpenAlert("Enter valid Safex address", false, "modal-70");
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
         return false;
       }
       if (
@@ -467,16 +494,10 @@ export default class Modal extends React.Component {
         this.props.setOpenAlert(
           "Not enough available safex cash to complete the transaction",
           false,
-          "modal-70"
+          "modal-80"
         );
         return false;
       }
-      // this.props.setOpenAlert(
-      //   "Not enough available safex cash to complete the transaction",
-      //   false,
-      //   "modal-70"
-      // );
-
       if (paymentid !== "") {
         this.setState(() => ({
           tx_being_sent: true
@@ -520,7 +541,7 @@ export default class Modal extends React.Component {
               this.props.setOpenAlert(
                 "Unable to create transaction id ",
                 false,
-                "modal-70"
+                "modal-80"
               );
               return false;
             }
@@ -529,14 +550,14 @@ export default class Modal extends React.Component {
                 "Transaction commited successfully, Your cash transaction ID is: " +
                   txId,
                 false,
-                "modal-70"
+                "modal-80"
               );
             } else {
               this.props.setOpenConfirmModal(
                 "Transaction commited successfully, Your token transaction ID is: " +
                   txId,
                 false,
-                "modal-70"
+                "modal-80"
               );
             }
             this.setState(() => ({
@@ -555,7 +576,7 @@ export default class Modal extends React.Component {
             this.props.setOpenAlert(
               "Error on commiting transaction: " + e,
               false,
-              "modal-70"
+              "modal-80"
             );
           });
       })
@@ -574,7 +595,7 @@ export default class Modal extends React.Component {
           this.props.setOpenAlert(
             "Couldn't create transaction: " + e,
             false,
-            "modal-70"
+            "modal-80"
           );
         }
       });
@@ -599,7 +620,7 @@ export default class Modal extends React.Component {
         localStorage.removeItem(args);
       }, 2000);
     } catch (err) {
-      this.props.setOpenAlert(`${err}`, false, "modal-70");
+      this.props.setOpenAlert(`${err}`, false, "modal-80");
     }
   };
 
@@ -861,110 +882,6 @@ export default class Modal extends React.Component {
         </div>
       );
     }
-    if (this.props.sendModal) {
-      modal = (
-        <div className={"sendModal" + addClass(this.props.sendModal, "active")}>
-          <div className="sendModalInner">
-            <span className="close" onClick={this.closeMyModal}>
-              X
-            </span>
-            <div>
-              {this.props.cash_or_token === 0 ? (
-                <div className="available-wrap">
-                  <span>Available Safex Cash: {this.props.availableCash} </span>
-                </div>
-              ) : (
-                <div className="available-wrap">
-                  <span>
-                    Available Safex Tokens: {this.props.availableTokens}{" "}
-                  </span>
-                </div>
-              )}
-              {this.props.cash_or_token === 0 ? (
-                <h3>Send Cash</h3>
-              ) : (
-                <h3>Send Tokens</h3>
-              )}
-              <form onSubmit={this.sendCashOrToken(this.props.cash_or_token)}>
-                <label htmlFor="send_to">Destination</label>
-                <textarea
-                  name="send_to"
-                  rows="2"
-                  value={this.state.address}
-                  placeholder="Example: Safex5zqJ2k17WGHpmZKBVj67xEafDbFTXMBuCjmk75JhoodPJ9MQFaRPGeMnXQSSVZCZ7hNrRZ4USrdZTrzDaUSGgwNNiyVmWa5K"
-                  onChange={this.inputOnChange.bind(this, "address")}
-                />
-                <label htmlFor="amount">
-                  Amount
-                  {this.props.cash_or_token === 1 ? (
-                    <div
-                      data-tip
-                      data-for="amount-tooptip"
-                      className="button-shine question-wrap"
-                    >
-                      <span>?</span>
-                    </div>
-                  ) : (
-                    <div className="hidden" />
-                  )}
-                  <ReactTooltip id="amount-tooptip">
-                    <p>Token transaction does not accept decimal values.</p>
-                  </ReactTooltip>
-                </label>
-                <input
-                  type="number"
-                  name="amount"
-                  placeholder="Enter Amount"
-                  value={this.state.amount}
-                  onChange={this.inputOnChange.bind(this, "amount")}
-                />
-                <label htmlFor="paymentid">
-                  (Optional) Payment ID
-                  <div
-                    data-tip
-                    data-for="paymentid-tooptip"
-                    className="button-shine question-wrap"
-                  >
-                    <span>?</span>
-                  </div>
-                  <ReactTooltip id="paymentid-tooptip">
-                    <p>Payment ID is additional reference number</p>
-                    <p>attached to the transaction.</p>
-                    <p>It is given by exchanges and web</p>
-                    <p>shops to differentiate and track</p>
-                    <p>particular deposits and purchases.</p>
-                    <p>It is not required for regular user transactions.</p>
-                    <p>Payment ID format should be </p>
-                    <p>16 or 64 Hex character string.</p>
-                    <p>To generate your own random hex, visit:</p>
-                    <p className="blue-text">
-                      https://www.browserling.com/tools/random-hex
-                    </p>
-                  </ReactTooltip>
-                </label>
-                <input
-                  name="paymentid"
-                  value={this.state.payment_id}
-                  placeholder="Example: ed6ecd78c221e8df"
-                  onChange={this.inputOnChange.bind(this, "payment_id")}
-                />
-                <button
-                  className="btn button-shine"
-                  type="submit"
-                  disabled={
-                    this.state.tx_being_sent || this.props.sendDisabled
-                      ? "disabled"
-                      : ""
-                  }
-                >
-                  Send
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      );
-    }
     if (this.props.mixinModal) {
       modal = (
         <div className={"mixinModal" + addClass(this.props.alert, "active")}>
@@ -1117,22 +1034,21 @@ export default class Modal extends React.Component {
                 onChange={this.inputOnChange.bind(this, "new_address")}
               />
 
-              <label
-                htmlFor="paymentid"
-                value={this.state.new_payment_id}
-                onChange={this.inputOnChange.bind(this, "new_payment_id")}
-              >
-                Payment ID
-              </label>
+              <label htmlFor="paymentid">Payment ID</label>
               <input
                 name="paymentid"
                 placeholder="Enter Payment ID"
-                value={this.state.description}
-                onChange={this.inputOnChange.bind(this, "description")}
+                value={this.state.new_payment_id}
+                onChange={this.inputOnChange.bind(this, "new_payment_id")}
               />
 
               <label htmlFor="description">Description</label>
-              <input name="description" placeholder="Enter Description" />
+              <input
+                name="description"
+                placeholder="Enter Description"
+                value={this.state.description}
+                onChange={this.inputOnChange.bind(this, "description")}
+              />
 
               <button className="btn button-shine" type="submit">
                 Add
@@ -1146,9 +1062,135 @@ export default class Modal extends React.Component {
             >
               <h3>Contacts</h3>
               <Contacts
+                walletMeta={this.props.walletMeta}
                 contacts={this.props.addressBook}
                 itemsPerContactPage={3}
+                setOpenAlert={this.props.setOpenAlert}
+                onCopy={this.props.onCopy}
+                setWalletData={this.props.setWalletData}
+                setOpenSendModal={this.props.setOpenSendModal}
               />
+            </div>
+          </div>
+        </div>
+      );
+    }
+    if (this.props.sendModal) {
+      modal = (
+        <div className={"sendModal" + addClass(this.props.sendModal, "active")}>
+          <div className="sendModalInner">
+            <span className="close" onClick={this.closeMyModal}>
+              X
+            </span>
+            <div>
+              {this.props.cash_or_token === 0 ? (
+                <div className="available-wrap">
+                  <span>Available Safex Cash: {this.props.availableCash} </span>
+                </div>
+              ) : (
+                <div className="available-wrap">
+                  <span>
+                    Available Safex Tokens: {this.props.availableTokens}{" "}
+                  </span>
+                </div>
+              )}
+              {this.props.cash_or_token === 0 ? (
+                <h3>Send Cash</h3>
+              ) : (
+                <h3>Send Tokens</h3>
+              )}
+              {this.props.sendTo ? (
+                <h6>
+                  Sending To <span>{this.props.sendTo}</span>
+                </h6>
+              ) : (
+                <h6 className="hidden">{""}</h6>
+              )}
+              <form onSubmit={this.sendCashOrToken(this.props.cash_or_token)}>
+                <label htmlFor="send_to">Destination</label>
+                <textarea
+                  name="send_to"
+                  rows="2"
+                  value={
+                    this.props.destination
+                      ? this.props.destination
+                      : this.state.address
+                  }
+                  placeholder="Example: Safex5zqJ2k17WGHpmZKBVj67xEafDbFTXMBuCjmk75JhoodPJ9MQFaRPGeMnXQSSVZCZ7hNrRZ4USrdZTrzDaUSGgwNNiyVmWa5K"
+                  onChange={this.inputOnChange.bind(this, "address")}
+                  disabled={this.props.destination ? "disabled" : ""}
+                />
+                <label htmlFor="amount">
+                  Amount
+                  {this.props.cash_or_token === 1 ? (
+                    <div
+                      data-tip
+                      data-for="amount-tooptip"
+                      className="button-shine question-wrap"
+                    >
+                      <span>?</span>
+                    </div>
+                  ) : (
+                    <div className="hidden" />
+                  )}
+                  <ReactTooltip id="amount-tooptip">
+                    <p>Token transaction does not accept decimal values.</p>
+                  </ReactTooltip>
+                </label>
+                <input
+                  type="number"
+                  name="amount"
+                  placeholder="Enter Amount"
+                  value={this.state.amount}
+                  onChange={this.inputOnChange.bind(this, "amount")}
+                />
+                <label htmlFor="paymentid">
+                  (Optional) Payment ID
+                  <div
+                    data-tip
+                    data-for="paymentid-tooptip"
+                    className="button-shine question-wrap"
+                  >
+                    <span>?</span>
+                  </div>
+                  <ReactTooltip id="paymentid-tooptip">
+                    <p>Payment ID is additional reference number</p>
+                    <p>attached to the transaction.</p>
+                    <p>It is given by exchanges and web</p>
+                    <p>shops to differentiate and track</p>
+                    <p>particular deposits and purchases.</p>
+                    <p>It is not required for regular user transactions.</p>
+                    <p>Payment ID format should be </p>
+                    <p>16 or 64 Hex character string.</p>
+                    <p>To generate your own random hex, visit:</p>
+                    <p className="blue-text">
+                      https://www.browserling.com/tools/random-hex
+                    </p>
+                  </ReactTooltip>
+                </label>
+                <input
+                  name="paymentid"
+                  value={
+                    this.props.paymentID
+                      ? this.props.paymentID
+                      : this.state.payment_id
+                  }
+                  placeholder="Example: ed6ecd78c221e8df"
+                  onChange={this.inputOnChange.bind(this, "payment_id")}
+                  disabled={this.props.paymentID ? "disabled" : ""}
+                />
+                <button
+                  className="btn button-shine"
+                  type="submit"
+                  disabled={
+                    this.state.tx_being_sent || this.props.sendDisabled
+                      ? "disabled"
+                      : ""
+                  }
+                >
+                  Send
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -1226,6 +1268,7 @@ export default class Modal extends React.Component {
         </div>
 
         {(this.props.sendModal && this.props.alert === false) ||
+        (this.props.addressModal && this.props.alert === false) ||
         this.props.mixinModal ? (
           <div
             className={"backdrop" + addClass(this.props.modal, "active")}
