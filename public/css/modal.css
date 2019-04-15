@@ -161,6 +161,7 @@
 .modal label .question-wrap span {
   position: relative;
   top: -12px;
+  left: -.5px;
   font-size: 19px;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
@@ -788,11 +789,16 @@
   padding-right: 10px;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-center {
-  width: 535px;
-  padding-right: 10px;
+  width: calc(100% - 254px);
+  padding-right: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-right {
-  width: 105px;
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px
 }
 .addressModal .show-contacts-wrap .contact-item .contact-right button {
   background: url(../images/login-bg.png) no-repeat top left / cover;
@@ -803,6 +809,7 @@
   margin-left: 5px;
   margin-bottom: 5px;
   width: calc(50% - 5px);
+  max-width: 52px;
   display: inline-block;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-right button:hover {

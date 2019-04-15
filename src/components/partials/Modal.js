@@ -408,7 +408,7 @@ export default class Modal extends React.Component {
   closeMyModal = () => {
     if (this.props.keysModal || this.props.deleteModal) {
       this.props.closeModal();
-    } else if (this.state.tx_being_sent) {
+    } else if (this.state.tx_being_sent || (this.props.sendModal && this.props.addressModal)) {
       this.props.setCloseSendModal();
     } else {
       this.props.setCloseMyModal();
@@ -1034,12 +1034,21 @@ export default class Modal extends React.Component {
               onSubmit={this.addContact}
             >
               <h3>Add Contact</h3>
+
+              <label htmlFor="name">Name</label>
+              <input
+                name="name"
+                placeholder="Enter Contact Name"
+                value={this.state.name}
+                onChange={this.inputOnChange.bind(this, "name")}
+              />
+
               <label htmlFor="address">Address</label>
               <textarea
                 name="address"
                 rows="2"
                 value={this.state.new_address}
-                placeholder="Enter Address"
+                placeholder="Enter Contact Address"
                 onChange={this.inputOnChange.bind(this, "new_address")}
               />
 
@@ -1047,18 +1056,16 @@ export default class Modal extends React.Component {
                 Payment ID
                 <div
                   data-tip
-                  data-for="paymentid-tooptip"
+                  data-for="paymentid-contact-tooptip"
                   className="button-shine question-wrap"
                 >
                   <span>?</span>
                 </div>
-                <ReactTooltip id="paymentid-tooptip">
-                  <p>Payment ID is additional reference number</p>
-                  <p>attached to the transaction.</p>
+                <ReactTooltip id="paymentid-contact-tooptip">
+                  <p>Payment ID is additional reference number.</p>
                   <p>It is given by exchanges and web</p>
                   <p>shops to differentiate and track</p>
                   <p>particular deposits and purchases.</p>
-                  <p>It is not required for regular user transactions.</p>
                   <p>Payment ID format should be </p>
                   <p>16 or 64 Hex character string.</p>
                   <p>To generate your own random hex, visit:</p>
@@ -1069,17 +1076,9 @@ export default class Modal extends React.Component {
               </label>
               <input
                 name="paymentid"
-                placeholder="Enter Payment ID"
+                placeholder="Enter Contact Payment ID"
                 value={this.state.new_payment_id}
                 onChange={this.inputOnChange.bind(this, "new_payment_id")}
-              />
-
-              <label htmlFor="name">Name</label>
-              <input
-                name="name"
-                placeholder="Enter Name"
-                value={this.state.name}
-                onChange={this.inputOnChange.bind(this, "name")}
               />
 
               <button className="btn button-shine" type="submit">
@@ -1333,6 +1332,7 @@ export default class Modal extends React.Component {
 
         {(this.props.sendModal && this.props.alert === false) ||
         (this.props.addressModal && this.props.alert === false) ||
+        (this.props.addressModal && this.props.sendModal && this.props.alert === false) ||
         this.props.mixinModal ||
         this.props.deleteModal ? (
           <div

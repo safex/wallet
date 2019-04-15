@@ -151,25 +151,36 @@ export default class CashWallet extends React.Component {
   };
 
   setCloseSendModal = () => {
-    this.setState({
-      modal: false
-    });
-    setTimeout(() => {
+    if (this.state.address_modal && this.state.send_modal) {
       this.setState({
         send_modal: false,
-        mixinModal: false,
         remove_transition: false,
         modal_width: "modal-80",
         sendTo: "",
         destination: "",
         paymentID: ""
       });
-    }, 300);
-    setTimeout(() => {
+    } else {
       this.setState({
-        button_disabled: false
+        modal: false
       });
-    }, 1000);
+      setTimeout(() => {
+        this.setState({
+          send_modal: false,
+          mixinModal: false,
+          remove_transition: false,
+          modal_width: "modal-80",
+          sendTo: "",
+          destination: "",
+          paymentID: ""
+        });
+      }, 300);
+      setTimeout(() => {
+        this.setState({
+          button_disabled: false
+        });
+      }, 1000);
+    }
   };
 
   setCloseMyModal = () => {
@@ -182,7 +193,6 @@ export default class CashWallet extends React.Component {
         send_modal: false,
         address_modal: false,
         confirm_modal: false,
-        delete_modal: false,
         remove_transition: false,
         modal_width: ""
       });

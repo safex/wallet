@@ -65,7 +65,7 @@ export default class CreateNew extends Component {
           <p>If you don't already have <span className="blue-text">Safex Wallet</span>, </p>
           <p>you can always generate new one here.</p>
           <p>Enter your password, click create, </p>
-          <p>choose your Wallet File name and save it.</p>
+          <p>choose your <span className="blue-text">Wallet File name</span> and save it.</p>
           <p>This will create <span className="blue-text">2</span> files on your file system.</p>
           <p><span className="blue-text">ExampleWallet</span> and <span className="blue-text">ExampleWallet.keys</span></p>
           <p>Always use only the file without the extension.</p>
