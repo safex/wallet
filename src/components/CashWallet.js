@@ -431,11 +431,9 @@ export default class CashWallet extends React.Component {
     return (
       <div className={"item-wrap " + page_type}>
         <Header
-          walletMeta={this.wallet_meta ? this.wallet_meta : ""}
           page={this.state.page}
           goToPage={this.goToPage}
           alertCloseDisabled={this.state.alert_close_disabled}
-          setOpenAlert={this.setOpenAlert}
         />
         <div className="item-inner">
           <img src={icon} className="item-pic" alt={icon} />
@@ -602,11 +600,9 @@ export default class CashWallet extends React.Component {
         return (
           <div className="intro-page-wrap">
             <Header
-              walletMeta={this.wallet_meta ? this.wallet_meta : ""}
               page={this.state.page}
               goToPage={this.goToPage}
               alertCloseDisabled={this.state.alert_close_disabled}
-              setOpenAlert={this.setOpenAlert}
             />
             <div className="options-wrap">
               <div className="options-inner">
