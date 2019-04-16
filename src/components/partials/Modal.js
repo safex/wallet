@@ -671,7 +671,7 @@ export default class Modal extends React.Component {
 
     this.props.setOpenAlert("New contact added", false, "modal-80");
     wallet.addressBook_AddRow(addressInput, paymentidInput, name);
-    wallet.strore();
+    wallet.store();
     setTimeout(() => {
       this.setState({
         new_address: "",
@@ -689,7 +689,7 @@ export default class Modal extends React.Component {
     console.log(wallet);
     wallet.addressBook_DeleteRow(rowID);
     this.props.setWalletData();
-    wallet.strore();
+    wallet.store();
     localStorage.removeItem("rowID");
     this.props.setOpenAlert("Contact removed", false, "modal-80");
   };
