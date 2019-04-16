@@ -192,11 +192,6 @@ class Contacts extends Component {
     );
   }
 
-  componentDidMount() {
-    let wallet = this.props.walletMeta;
-    console.log(wallet);
-  }
-
   firstContactPage = () => {
     this.setState({ contact_page: 0 });
   };
@@ -417,7 +412,7 @@ export default class Modal extends React.Component {
       this.props.setCloseMyModal();
     }
     this.mixin = 6;
-    console.log("reset mixin " + this.mixin);
+    console.log("reset mixin. Current mixin: " + this.mixin);
     setTimeout(() => {
       this.setState({
         loaded: false,

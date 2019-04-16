@@ -257,7 +257,15 @@ export default class CashWallet extends React.Component {
             this.setState({ progress: false });
             clearTimeout(this.progress_timeout_id);
             console.log("Wallet File synchronized initially");
-            this.startBalanceCheck();
+            wallet
+              .store()
+              .then(() => {
+                console.log("Wallet stored");
+              })
+              .catch(e => {
+                console.log("Unable to store wallet: " + e);
+                return false;
+              });
           });
         })
         .catch(err => {
@@ -355,6 +363,16 @@ export default class CashWallet extends React.Component {
         this.setWalletData();
       }
     }
+
+    wallet
+      .store()
+      .then(() => {
+        console.log("Wallet stored");
+      })
+      .catch(e => {
+        this.setOpenAlert("Unable to store wallet: " + e);
+        console.log("Unable to store wallet: " + e);
+      });
   };
 
   rescanBalance = () => {
@@ -379,6 +397,14 @@ export default class CashWallet extends React.Component {
           keys_modal: false,
           button_disabled: false
         });
+        wallet
+          .store()
+          .then(() => {
+            console.log("Wallet stored");
+          })
+          .catch(e => {
+            console.log("Unable to store wallet: " + e);
+          });
         wallet.on("refreshed", this.refreshCallback);
       }, 1000);
     }, 1000);
