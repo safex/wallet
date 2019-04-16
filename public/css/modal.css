@@ -161,7 +161,7 @@
 .modal label .question-wrap span {
   position: relative;
   top: -12px;
-  left: -.5px;
+  left: -0.5px;
   font-size: 19px;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
@@ -355,8 +355,6 @@
   margin: 0 0 0 5px;
   font-size: 17px;
   padding: 5px 12px;
-  position: relative;
-  top: -0.8px;
 }
 .modal .save-btn {
   background: rgba(200, 14, 75, 0.5);
@@ -798,7 +796,7 @@
 .addressModal .show-contacts-wrap .contact-item .contact-right {
   width: 110px;
   min-width: 110px;
-  max-width: 110px
+  max-width: 110px;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-right button {
   background: url(../images/login-bg.png) no-repeat top left / cover;
@@ -839,8 +837,4 @@
   margin-bottom: 8px;
   letter-spacing: 0px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-}
-.deleteModal .confirm-btn {
-  position: relative;
-  top: 0px;
 }
