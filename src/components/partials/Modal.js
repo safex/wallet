@@ -650,30 +650,32 @@ export default class Modal extends React.Component {
     e.preventDefault();
     let wallet = this.props.walletMeta;
     let address = e.target.address.value;
+    let addressInput = address.replace(/\s+/g, "");
     let paymentid = e.target.paymentid.value;
+    let paymentidInput = paymentid.replace(/\s+/g, "");
     let name = e.target.name.value;
 
-    if (address === "" || paymentid === "" || name === "") {
+    if (addressInput === "" || paymentidInput === "" || name === "") {
       this.props.setOpenAlert("Fill out all the fields", false, "modal-80");
       return false;
     }
     if (
       process.env.NODE_ENV !== "development" &&
-      !safex.addressValid(address, "mainnet")
+      !safex.addressValid(addressInput, "mainnet")
     ) {
       this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
       return false;
     }
     if (
       process.env.NODE_ENV === "development" &&
-      !safex.addressValid(address, "testnet")
+      !safex.addressValid(addressInput, "testnet")
     ) {
       this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
       return false;
     }
 
     this.props.setOpenAlert("New contact added", false, "modal-80");
-    wallet.addressBook_AddRow(address, paymentid, name);
+    wallet.addressBook_AddRow(addressInput, paymentidInput, name);
     setTimeout(() => {
       this.setState({
         new_address: "",
