@@ -261,6 +261,7 @@ export default class CashWallet extends React.Component {
               .store()
               .then(() => {
                 console.log("Wallet stored");
+                this.startBalanceCheck();
               })
               .catch(e => {
                 console.log("Unable to store wallet: " + e);
