@@ -408,7 +408,10 @@ export default class Modal extends React.Component {
   closeMyModal = () => {
     if (this.props.keysModal || this.props.deleteModal) {
       this.props.closeModal();
-    } else if (this.state.tx_being_sent || (this.props.sendModal && this.props.addressModal)) {
+    } else if (
+      this.state.tx_being_sent ||
+      (this.props.sendModal && this.props.addressModal)
+    ) {
       this.props.setCloseSendModal();
     } else {
       this.props.setCloseMyModal();
@@ -679,6 +682,7 @@ export default class Modal extends React.Component {
       });
       this.props.setWalletData();
     }, 100);
+    wallet.store();
   };
 
   removeContact = e => {
@@ -1332,7 +1336,9 @@ export default class Modal extends React.Component {
 
         {(this.props.sendModal && this.props.alert === false) ||
         (this.props.addressModal && this.props.alert === false) ||
-        (this.props.addressModal && this.props.sendModal && this.props.alert === false) ||
+        (this.props.addressModal &&
+          this.props.sendModal &&
+          this.props.alert === false) ||
         this.props.mixinModal ||
         this.props.deleteModal ? (
           <div
