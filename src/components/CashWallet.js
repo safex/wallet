@@ -257,16 +257,7 @@ export default class CashWallet extends React.Component {
             this.setState({ progress: false });
             clearTimeout(this.progress_timeout_id);
             console.log("Wallet File synchronized initially");
-            wallet
-              .store()
-              .then(() => {
-                console.log("Wallet stored");
-                this.startBalanceCheck();
-              })
-              .catch(e => {
-                console.log("Unable to store wallet: " + e);
-                return false;
-              });
+            this.startBalanceCheck();
           });
         })
         .catch(err => {
@@ -364,16 +355,6 @@ export default class CashWallet extends React.Component {
         this.setWalletData();
       }
     }
-
-    wallet
-      .store()
-      .then(() => {
-        console.log("Wallet stored");
-      })
-      .catch(e => {
-        this.setOpenAlert("Unable to store wallet: " + e);
-        console.log("Unable to store wallet: " + e);
-      });
   };
 
   rescanBalance = () => {
@@ -398,14 +379,6 @@ export default class CashWallet extends React.Component {
           keys_modal: false,
           button_disabled: false
         });
-        wallet
-          .store()
-          .then(() => {
-            console.log("Wallet stored");
-          })
-          .catch(e => {
-            console.log("Unable to store wallet: " + e);
-          });
         wallet.on("refreshed", this.refreshCallback);
       }, 1000);
     }, 1000);
@@ -431,9 +404,11 @@ export default class CashWallet extends React.Component {
     return (
       <div className={"item-wrap " + page_type}>
         <Header
+          walletMeta={this.wallet_meta ? this.wallet_meta : ""}
           page={this.state.page}
           goToPage={this.goToPage}
           alertCloseDisabled={this.state.alert_close_disabled}
+          setOpenAlert={this.setOpenAlert}
         />
         <div className="item-inner">
           <img src={icon} className="item-pic" alt={icon} />
@@ -599,7 +574,13 @@ export default class CashWallet extends React.Component {
       default:
         return (
           <div className="intro-page-wrap">
-            <Header />
+            <Header
+              walletMeta={this.wallet_meta ? this.wallet_meta : ""}
+              page={this.state.page}
+              goToPage={this.goToPage}
+              alertCloseDisabled={this.state.alert_close_disabled}
+              setOpenAlert={this.setOpenAlert}
+            />
             <div className="options-wrap">
               <div className="options-inner">
                 <div

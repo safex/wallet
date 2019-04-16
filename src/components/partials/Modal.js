@@ -684,7 +684,6 @@ export default class Modal extends React.Component {
       });
       this.props.setWalletData();
     }, 100);
-    wallet.store();
   };
 
   removeContact = e => {
@@ -693,7 +692,6 @@ export default class Modal extends React.Component {
     let wallet = this.props.walletMeta;
     console.log(wallet);
     wallet.addressBook_DeleteRow(rowID);
-    wallet.store();
     this.props.setWalletData();
     localStorage.removeItem("rowID");
     this.props.setOpenAlert("Contact removed", false, "modal-80");

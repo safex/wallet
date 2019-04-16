@@ -21,7 +21,26 @@ export default class Header extends Component {
   };
 
   setCloseApp = () => {
-    closeApp(this);
+    let wallet = this.props.walletMeta;
+    if (this.props.page === "wallet") {
+      this.props.setOpenAlert("Closing...");
+      try {
+        wallet
+          .store()
+          .then(() => {
+            console.log("Wallet stored");
+            closeApp(this);
+          })
+          .catch(e => {
+            console.log("Unable to store wallet: " + e);
+            return false;
+          });
+      } catch (e) {
+        this.props.setOpenAlert("" + e);
+      }
+    } else {
+      closeApp(this);
+    }
   };
 
   render() {
