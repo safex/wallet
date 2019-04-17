@@ -678,22 +678,18 @@ export default class Modal extends React.Component {
       this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
       return false;
     }
-    if (paymentidInput.length !== 64) {
+    if (
+      wallet.addressBook_AddRow(addressInput, paymentidInput, name) === false
+    ) {
+      console.log(wallet);
       this.props.setOpenAlert(
-        "Payment ID should contain 64 characters",
+        "" + wallet.addressBook_ErrorString(),
         false,
         "modal-80"
       );
       return false;
     }
-    try {
-      wallet.addressBook_AddRow(addressInput, paymentidInput, name);
-      wallet.store();
-    } catch (error) {
-      this.props.setOpenAlert("" + e, false, "modal-80");
-      return false;
-    }
-
+    wallet.store();
     this.props.setOpenAlert("New contact added", false, "modal-80");
     setTimeout(() => {
       this.setState({
@@ -1009,7 +1005,6 @@ export default class Modal extends React.Component {
                       Safex Blockchain Explorer.
                     </span>
                   </p>
-                  <p className="blue-text">http://explore.safex.io/</p>
                 </ReactTooltip>
               </div>
             ) : (
@@ -1095,12 +1090,20 @@ export default class Modal extends React.Component {
                   <span>?</span>
                 </div>
                 <ReactTooltip id="paymentid-contact-tooptip">
-                  <p>Payment ID is additional reference number.</p>
+                  <p>
+                    <span className="blue-text">Payment ID</span> is additional
+                    reference number.
+                  </p>
                   <p>It is given by exchanges and web</p>
                   <p>shops to differentiate and track</p>
                   <p>particular deposits and purchases.</p>
-                  <p>Payment ID format should be </p>
-                  <p>64 Hex character string.</p>
+                  <p>
+                    <span className="blue-text">Payment ID</span> format should
+                    be{" "}
+                  </p>
+                  <p>
+                    <span className="blue-text">64 Hex</span> character string.
+                  </p>
                 </ReactTooltip>
               </label>
               <input
@@ -1223,14 +1226,23 @@ export default class Modal extends React.Component {
                     <span>?</span>
                   </div>
                   <ReactTooltip id="paymentid-tooptip">
-                    <p>Payment ID is additional reference number</p>
+                    <p>
+                      <span className="blue-text">Payment ID</span> is
+                      additional reference number
+                    </p>
                     <p>attached to the transaction.</p>
                     <p>It is given by exchanges and web</p>
                     <p>shops to differentiate and track</p>
                     <p>particular deposits and purchases.</p>
                     <p>It is not required for regular user transactions.</p>
-                    <p>Payment ID format should be </p>
-                    <p>16 or 64 Hex character string.</p>
+                    <p>
+                      <span className="blue-text">Payment ID</span> format
+                      should be{" "}
+                    </p>
+                    <p>
+                      <span className="blue-text">16 or 64 Hex</span> character
+                      string.
+                    </p>
                   </ReactTooltip>
                 </label>
                 <input

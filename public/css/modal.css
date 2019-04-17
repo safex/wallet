@@ -691,9 +691,12 @@
   display: inline-block;
   letter-spacing: 0;
   margin-bottom: 0;
+  color: #54bcd9;
+  width: calc(100% - 200px);
+  text-align: left;
+  white-space: nowrap;
 }
 .historyModal #history-wrap .history-item .tx-id:hover {
-  color: #54bcd9;
   box-shadow: none !important;
 }
 .historyModal .question-wrap,
