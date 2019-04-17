@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { addClass, roundAmount } from "../../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import * as crypto from "crypto";
 
 const { shell } = window.require("electron");
 const safex = window.require("safex-nodejs-libwallet");
@@ -453,6 +454,7 @@ export default class Modal extends React.Component {
       let sendingAddress = sendingAddressInput.replace(/\s+/g, "");
       let amount = parseFloat(e.target.amount.value) * 10000000000;
       let paymentid = e.target.paymentid.value;
+      let paymentidInput = paymentid.replace(/\s+/g, "");
       let mixin = this.mixin;
       if (sendingAddress === "") {
         this.props.setOpenAlert("Fill out all the fields", false, "modal-80");
@@ -493,14 +495,22 @@ export default class Modal extends React.Component {
         );
         return false;
       }
-      if (paymentid !== "") {
+      if (paymentidInput.length !== 64) {
+        this.props.setOpenAlert(
+          "Payment ID should contain 64 characters",
+          false,
+          "modal-80"
+        );
+        return false;
+      }
+      if (paymentidInput !== "") {
         this.setState(() => ({
           tx_being_sent: true
         }));
         this.sendTransaction({
           address: sendingAddress,
           amount: amount,
-          paymentId: paymentid,
+          paymentId: paymentidInput,
           tx_type: cash_or_token,
           mixin: mixin
         });
@@ -668,13 +678,27 @@ export default class Modal extends React.Component {
       this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
       return false;
     }
+    if (paymentidInput.length !== 64) {
+      this.props.setOpenAlert(
+        "Payment ID should contain 64 characters",
+        false,
+        "modal-80"
+      );
+      return false;
+    }
+    try {
+      wallet.addressBook_AddRow(addressInput, paymentidInput, name);
+      wallet.store();
+    } catch (error) {
+      this.props.setOpenAlert("" + e, false, "modal-80");
+      return false;
+    }
 
     this.props.setOpenAlert("New contact added", false, "modal-80");
-    wallet.addressBook_AddRow(addressInput, paymentidInput, name);
-    wallet.store();
     setTimeout(() => {
       this.setState({
         new_address: "",
+        payment_id: "",
         new_payment_id: "",
         name: ""
       });
@@ -682,11 +706,19 @@ export default class Modal extends React.Component {
     }, 100);
   };
 
+  genPaymentId = () => {
+    let paymentID = crypto.randomBytes(32).toString("hex");
+
+    this.setState({
+      payment_id: paymentID,
+      new_payment_id: paymentID
+    });
+  };
+
   removeContact = e => {
     e.preventDefault();
     let rowID = parseFloat(localStorage.getItem("rowID"));
     let wallet = this.props.walletMeta;
-    console.log(wallet);
     wallet.addressBook_DeleteRow(rowID);
     this.props.setWalletData();
     wallet.store();
@@ -1068,11 +1100,7 @@ export default class Modal extends React.Component {
                   <p>shops to differentiate and track</p>
                   <p>particular deposits and purchases.</p>
                   <p>Payment ID format should be </p>
-                  <p>16 or 64 Hex character string.</p>
-                  <p>To generate your own random hex, visit:</p>
-                  <p className="blue-text">
-                    https://www.browserling.com/tools/random-hex
-                  </p>
+                  <p>64 Hex character string.</p>
                 </ReactTooltip>
               </label>
               <input
@@ -1082,8 +1110,16 @@ export default class Modal extends React.Component {
                 onChange={this.inputOnChange.bind(this, "new_payment_id")}
               />
 
+              <button
+                className="btn button-shine"
+                type="button"
+                onClick={this.genPaymentId}
+              >
+                Generate Payment ID
+              </button>
+
               <button className="btn button-shine" type="submit">
-                Add
+                Add Contact
               </button>
             </form>
 
@@ -1195,10 +1231,6 @@ export default class Modal extends React.Component {
                     <p>It is not required for regular user transactions.</p>
                     <p>Payment ID format should be </p>
                     <p>16 or 64 Hex character string.</p>
-                    <p>To generate your own random hex, visit:</p>
-                    <p className="blue-text">
-                      https://www.browserling.com/tools/random-hex
-                    </p>
                   </ReactTooltip>
                 </label>
                 <input
@@ -1208,10 +1240,19 @@ export default class Modal extends React.Component {
                       ? this.props.paymentID
                       : this.state.payment_id
                   }
-                  placeholder="Example: ed6ecd78c221e8df"
+                  placeholder="Enter Payment ID"
                   onChange={this.inputOnChange.bind(this, "payment_id")}
                   disabled={this.props.paymentID ? "disabled" : ""}
                 />
+                <button
+                  className={
+                    this.props.paymentID ? "hidden" : "btn button-shine"
+                  }
+                  type="button"
+                  onClick={this.genPaymentId}
+                >
+                  Generate Payment ID
+                </button>
                 <button
                   className="btn button-shine"
                   type="submit"

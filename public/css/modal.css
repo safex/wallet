@@ -447,7 +447,7 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal .btn {
-  margin-top: 5px;
+  margin: 5px;
   padding: 4px 18px 5px;
   font-size: 18px !important;
 }
@@ -749,7 +749,7 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .addressModal .btn {
-  margin-top: 5px;
+  margin: 5px;
   padding: 4px 18px 5px;
   font-size: 18px !important;
 }
@@ -770,6 +770,9 @@
 .addressModal .show-contacts-wrap .contact-item .name {
   min-height: 52px;
   font-size: 17px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .addressModal .show-contacts-wrap .contact-item p {
   text-align: left;
@@ -781,14 +784,13 @@
   margin-bottom: 8px;
 }
 .addressModal .show-contacts-wrap .contact-item .payment-id {
-  font-size: 13.5px;
+  font-size: 14px;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-left {
-  width: 130px;
-  padding-right: 10px;
+  width: 160px;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-center {
-  width: calc(100% - 254px);
+  width: calc(100% - 284px);
   padding-right: 5px;
   display: flex;
   flex-direction: column;
