@@ -694,7 +694,6 @@ export default class Modal extends React.Component {
     setTimeout(() => {
       this.setState({
         new_address: "",
-        payment_id: "",
         new_payment_id: "",
         name: ""
       });
@@ -706,7 +705,6 @@ export default class Modal extends React.Component {
     let paymentID = crypto.randomBytes(32).toString("hex");
 
     this.setState({
-      payment_id: paymentID,
       new_payment_id: paymentID
     });
   };
@@ -812,6 +810,15 @@ export default class Modal extends React.Component {
           <div>
             <h3>Seed and Keys</h3>
 
+            <label htmlFor="filepath">Wallet File Path</label>
+            <input
+              type="text"
+              name="filepath"
+              defaultValue={this.props.wallet.filepath}
+              placeholder="filepath"
+              readOnly
+            />
+
             <div className="label-wrap">
               <label className={this.props.wallet.mnemonic ? "" : "hidden"}>
                 Wallet Mnemonic Seed
@@ -830,6 +837,61 @@ export default class Modal extends React.Component {
               placeholder="mnemonic seed for your wallet"
               className={this.props.wallet.mnemonic ? "" : "hidden"}
               rows="2"
+              readOnly
+            />
+
+            <div className="label-wrap">
+              <label htmlFor="spend_key">Secret (Private) Spend Key</label>
+              <CopyToClipboard
+                text={this.props.wallet.spend_key}
+                onCopy={this.props.onCopy}
+                className="button-shine copy-btn"
+              >
+                <button>Copy</button>
+              </CopyToClipboard>
+            </div>
+            <input
+              type="text"
+              name="spend_key"
+              defaultValue={this.props.wallet.spend_key}
+              placeholder="secret (private) spend key"
+              readOnly
+            />
+
+            <div className="label-wrap">
+              <label htmlFor="pub_view">Public View Key</label>
+              <CopyToClipboard
+                text={this.props.wallet.pub_view}
+                onCopy={this.props.onCopy}
+                className="button-shine copy-btn"
+              >
+                <button>Copy</button>
+              </CopyToClipboard>
+            </div>
+            <input
+              type="text"
+              name="pub_view"
+              defaultValue={this.props.wallet.pub_view}
+              placeholder="public view key"
+              readOnly
+            />
+
+            <div className="label-wrap">
+              <label htmlFor="view_key">Secret (Private) View Key</label>
+              <CopyToClipboard
+                text={this.props.wallet.view_key}
+                onCopy={this.props.onCopy}
+                className="button-shine copy-btn"
+              >
+                <button>Copy</button>
+              </CopyToClipboard>
+            </div>
+            <input
+              type="text"
+              name="view_key"
+              defaultValue={this.props.wallet.view_key}
+              placeholder="secret (private) view key"
+              readOnly
             />
 
             <div className="label-wrap">
@@ -848,57 +910,7 @@ export default class Modal extends React.Component {
               name="pub_spend"
               defaultValue={this.props.wallet.pub_spend}
               placeholder="public spend key"
-            />
-
-            <div className="label-wrap">
-              <label htmlFor="spend_key">Secret (Private) Spend Key</label>
-              <CopyToClipboard
-                text={this.props.wallet.spend_key}
-                onCopy={this.props.onCopy}
-                className="button-shine copy-btn"
-              >
-                <button>Copy</button>
-              </CopyToClipboard>
-            </div>
-            <input
-              type="text"
-              name="spend_key"
-              defaultValue={this.props.wallet.spend_key}
-              placeholder="secret (private) spend key"
-            />
-
-            <div className="label-wrap">
-              <label htmlFor="pub_view">Public View Key</label>
-              <CopyToClipboard
-                text={this.props.wallet.pub_view}
-                onCopy={this.props.onCopy}
-                className="button-shine copy-btn"
-              >
-                <button>Copy</button>
-              </CopyToClipboard>
-            </div>
-            <input
-              type="text"
-              name="pub_view"
-              defaultValue={this.props.wallet.pub_view}
-              placeholder="public view key"
-            />
-
-            <div className="label-wrap">
-              <label htmlFor="view_key">Secret (Private) View Key</label>
-              <CopyToClipboard
-                text={this.props.wallet.view_key}
-                onCopy={this.props.onCopy}
-                className="button-shine copy-btn"
-              >
-                <button>Copy</button>
-              </CopyToClipboard>
-            </div>
-            <input
-              type="text"
-              name="view_key"
-              defaultValue={this.props.wallet.view_key}
-              placeholder="secret (private) view key"
+              readOnly
             />
 
             <div className="button-wrap">
@@ -912,6 +924,7 @@ export default class Modal extends React.Component {
                 className="button-shine rescan"
                 onClick={this.setRescanBalance}
                 disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
+                readOnly
               >
                 Rescan
               </button>
@@ -1256,15 +1269,6 @@ export default class Modal extends React.Component {
                   onChange={this.inputOnChange.bind(this, "payment_id")}
                   disabled={this.props.paymentID ? "disabled" : ""}
                 />
-                <button
-                  className={
-                    this.props.paymentID ? "hidden" : "btn button-shine"
-                  }
-                  type="button"
-                  onClick={this.genPaymentId}
-                >
-                  Generate Payment ID
-                </button>
                 <button
                   className="btn button-shine"
                   type="submit"

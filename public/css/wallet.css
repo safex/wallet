@@ -1,7 +1,7 @@
 /* Wallet File Wrap */
 .wallet-inner-wrap {
   border-radius: 5px;
-  padding: 50px 0 0 !important;
+  padding: 80px 0 0;
   width: 94%;
   left: 3%;
 }

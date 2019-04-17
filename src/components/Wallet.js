@@ -70,15 +70,13 @@ export default class Wallet extends React.Component {
           <div className="blockheight block">
             <img src="images/blocks-blue.png" alt="blocks" />
             <span>Blockchain height: &nbsp;</span>
-            <span className="blue-text">
-              {this.props.wallet.blockchain_height}
-            </span>
+            <span>{this.props.wallet.blockchain_height}</span>
           </div>
 
           <div className="sfx block">
             <img src="images/sfx.png" alt="safex-cash" />
             <span>Safex Cash: </span>
-            <span className="green-text">
+            <span>
               {this.props.sfxPrice ? this.props.sfxPrice + " $" : "Loading..."}{" "}
             </span>
           </div>
@@ -150,23 +148,14 @@ export default class Wallet extends React.Component {
           readOnly
         />
 
-        <label htmlFor="filepath">Wallet File Path</label>
-        <input
-          type="text"
-          name="filepath"
-          defaultValue={this.props.wallet.filepath}
-          placeholder="filepath"
-          readOnly
-        />
-
         <div className="group-wrap">
           <div className="group">
-            <label htmlFor="balance">Pending Safex Cash</label>
+            <label htmlFor="balance">Pending Cash</label>
             <p className="display-value yellow-field">
               {this.props.wallet.pending_balance}
             </p>
 
-            <label htmlFor="unlocked_balance">Available Safex Cash</label>
+            <label htmlFor="unlocked_balance">Available Cash</label>
             <p className="display-value green-field">
               {this.props.wallet.unlocked_balance}
             </p>
@@ -187,12 +176,12 @@ export default class Wallet extends React.Component {
           </div>
 
           <div className="group">
-            <label htmlFor="tokens">Pending Safex Tokens</label>
+            <label htmlFor="tokens">Pending Tokens</label>
             <p className="display-value yellow-field">
               {this.props.wallet.pending_tokens}
             </p>
 
-            <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
+            <label htmlFor="unlocked_tokens">Available Tokens</label>
             <p className="display-value green-field">
               {this.props.wallet.unlocked_tokens}
             </p>
