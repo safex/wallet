@@ -314,6 +314,12 @@ export default class CashWallet extends React.Component {
 
   setWalletData = () => {
     let wallet = this.wallet_meta;
+    let history = wallet.history();
+
+    history.sort(function (a, b) {
+      return parseFloat(b.timestamp) - parseFloat(a.timestamp);
+    });
+
     this.setState({
       wallet: {
         filepath: localStorage.getItem("wallet_path"),
@@ -338,7 +344,7 @@ export default class CashWallet extends React.Component {
           daemonAddress: this.env.ADDRESS
         }
       },
-      history: wallet.history().reverse(),
+      history: history,
       address_book: wallet.addressBook_GetAll()
     });
     this.fetchPrice();
