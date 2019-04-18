@@ -489,21 +489,21 @@ export default class Modal extends React.Component {
         this.props.availableCash < parseFloat(0.1)
       ) {
         this.props.setOpenAlert(
-          "Not enough available safex cash to complete the transaction",
-          false,
-          "modal-80"
-        );
-        return false;
-      }
-      if (paymentidInput.length !== 64) {
-        this.props.setOpenAlert(
-          "Payment ID should contain 64 characters",
+          "You need Safex Cash to pay transaction fee. Not enough available Safex Cash to complete the transaction",
           false,
           "modal-80"
         );
         return false;
       }
       if (paymentidInput !== "") {
+        if (paymentidInput.length !== 64) {
+          this.props.setOpenAlert(
+            "Payment ID should contain 64 characters",
+            false,
+            "modal-80"
+          );
+          return false;
+        }
         this.setState(() => ({
           tx_being_sent: true
         }));

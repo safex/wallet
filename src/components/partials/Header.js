@@ -30,7 +30,13 @@ export default class Header extends Component {
         <button
           onClick={this.props.goToPage}
           className={
-            this.props.goToPage ? "go-back-btn button-shine" : "hidden"
+            this.props.page === "wallet" ||
+            this.props.page === "create-new" ||
+            this.props.page === "create-from-keys" ||
+            this.props.page === "open-file" ||
+            this.props.page === "recover-from-mnemonic"
+              ? "go-back-btn button-shine"
+              : "hidden"
           }
           disabled={this.props.alertCloseDisabled ? "disabled" : ""}
         >
