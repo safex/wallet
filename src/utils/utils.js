@@ -79,7 +79,6 @@ function closeModal(target) {
     (target.state.send_modal && target.state.alert) ||
     (target.state.send_modal && target.state.fee_modal) ||
     (target.state.address_modal && target.state.alert) ||
-    (target.state.send_modal && target.state.confirm_modal) ||
     target.state.mixin_modal ||
     target.state.delete_modal
   ) {

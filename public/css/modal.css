@@ -674,6 +674,10 @@
   font-size: 17px;
   margin-bottom: 8px;
 }
+.historyModal #history-wrap .history-item p span {
+  position: relative;
+  top: 2px;
+}
 .historyModal #history-wrap .history-item .arrow-img {
   max-height: 18px;
   margin-right: 10px;

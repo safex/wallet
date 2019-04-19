@@ -406,7 +406,6 @@ export default class Modal extends React.Component {
   closeMyModal = () => {
     if (this.props.keysModal || this.props.deleteModal || this.props.feeModal) {
       this.props.closeModal();
-      console.log("checkpoint 1");
       return false;
     } else if (
       this.props.sendModal &&
@@ -414,10 +413,8 @@ export default class Modal extends React.Component {
       this.props.confirmModal === false
     ) {
       this.props.setCloseSendModal();
-      console.log("checkpoint 2");
     } else {
       this.props.setCloseMyModal();
-      console.log("checkpoint 3");
     }
     this.mixin = 6;
     localStorage.removeItem("tx");
@@ -499,7 +496,7 @@ export default class Modal extends React.Component {
         this.props.availableCash < parseFloat(0.1)
       ) {
         this.props.setOpenAlert(
-          "You need Safex Cash to pay transaction fee. Not enough available Safex Cash to complete the transaction",
+          "Not enough available Safex Cash to complete the transaction",
           false,
           "modal-80"
         );
@@ -1321,7 +1318,7 @@ export default class Modal extends React.Component {
           {this.props.alertCloseDisabled ? (
             <span className="hidden" />
           ) : (
-            <span className="close" onClick={this.props.closeModal}>
+            <span className="close" onClick={this.props.setCloseMyModal}>
               X
             </span>
           )}
