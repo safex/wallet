@@ -346,7 +346,7 @@
   border: 2px solid #ff004e;
   margin: 0 5px 0 0;
   padding: 5px 12px;
-  font-size: 17px;
+  font-size: 19px;
 }
 .modal .cancel-btn:hover {
   -webkit-box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
@@ -355,7 +355,7 @@
 .modal .confirm-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 0 0 0 5px;
-  font-size: 17px;
+  font-size: 19px;
   padding: 5px 12px;
 }
 .modal .save-btn {
@@ -461,7 +461,7 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 5px;
   padding: 4px 18px 5px;
-  font-size: 18px !important;
+  font-size: 19px !important;
 }
 .sendModal .btn.disabled {
   pointer-events: none;
@@ -618,7 +618,7 @@
 .historyModal #pagination,
 .addressModal #pagination {
   position: absolute;
-  bottom: 19px;
+  bottom: 22px;
   width: 100%;
   left: 0;
   display: flex;
@@ -771,6 +771,9 @@
   bottom: 0;
   margin: 0;
 }
+.addressModal form {
+  margin-top: 65px;
+}
 .addressModal input,
 .addressModal textarea {
   font-size: 16px;
@@ -786,7 +789,7 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 5px;
   padding: 4px 18px 5px;
-  font-size: 18px !important;
+  font-size: 19px !important;
 }
 .addressModal .btn:focus,
 .addressModal .btn:active {
@@ -794,6 +797,7 @@
   color: #fff;
 }
 .addressModal .show-contacts-wrap {
+  margin-top: 55px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .addressModal .show-contacts-wrap .contact-item {
@@ -801,13 +805,6 @@
   justify-content: space-between;
   margin-bottom: 30px;
   border-bottom: 1px solid #8ffdfd;
-}
-.addressModal .show-contacts-wrap .contact-item .name {
-  min-height: 52px;
-  font-size: 19px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .addressModal .show-contacts-wrap .contact-item p {
   text-align: left;
@@ -823,6 +820,14 @@
 }
 .addressModal .show-contacts-wrap .contact-item .contact-left {
   width: 160px;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-left .name {
+  overflow: hidden;
+  position: relative;
+  line-height: 1.2em;
+  min-height: 52px;
+  font-size: 19px;
+  text-align: left;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-center {
   width: calc(100% - 284px);
@@ -876,15 +881,20 @@
 .feeModal p {
   text-transform: initial;
   font-size: 19px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   letter-spacing: 0px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
+.feeModal form {
+  margin: 20px 0 25px;
+}
 .feeModal h6 {
   text-transform: initial;
-  font-size: 16px;
+  font-size: 15px;
   margin-bottom: 8px;
   letter-spacing: 0px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   margin: 20px 0 0;
+  text-align: left;
+  padding: 0 30px;
 }

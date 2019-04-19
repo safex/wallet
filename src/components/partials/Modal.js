@@ -423,6 +423,7 @@ export default class Modal extends React.Component {
     console.log("reset mixin. Current mixin: " + this.mixin);
     setTimeout(() => {
       this.setState({
+        show_contacts: true,
         loaded: false,
         address: "",
         amount: "",
@@ -1091,13 +1092,12 @@ export default class Modal extends React.Component {
               className={this.state.show_contacts ? "hidden" : ""}
               onSubmit={this.addContact}
             >
-              <h3>Add Contact</h3>
-
               <input
                 name="name"
                 placeholder="* Enter Contact Name"
                 value={this.state.name}
                 onChange={this.inputOnChange.bind(this, "name")}
+                maxLength="30"
               />
 
               <textarea
@@ -1165,7 +1165,6 @@ export default class Modal extends React.Component {
                 this.state.show_contacts ? "show-contacts-wrap" : "hidden"
               }
             >
-              <h3>Contacts</h3>
               <Contacts
                 walletMeta={this.props.walletMeta}
                 contacts={this.props.addressBook}
