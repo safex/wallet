@@ -1357,6 +1357,11 @@ export default class Modal extends React.Component {
                 type="button"
                 className="cancel-btn button-shine"
                 onClick={this.props.closeModal}
+                disabled={
+                  this.state.tx_being_sent || this.props.sendDisabled
+                    ? "disabled"
+                    : ""
+                }
               >
                 Cancel
               </button>
