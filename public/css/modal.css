@@ -463,7 +463,7 @@
   padding: 4px 18px 5px;
   font-size: 19px !important;
 }
-.sendModal .btn.disabled {
+.sendModal .btn[disabled] {
   pointer-events: none;
 }
 .sendModal .btn:focus,
@@ -897,4 +897,8 @@
   margin: 20px 0 0;
   text-align: left;
   padding: 0 30px;
+}
+.feeModal .btn[disabled] {
+  pointer-events: none;
+  opacity: .65;
 }

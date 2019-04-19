@@ -74,8 +74,8 @@ class Transactions extends Component {
                         <img
                           src={
                             txInfo.direction === "in"
-                              ? "images/arrow-up.png"
-                              : "images/arrow-down.png"
+                              ? "images/arrow-down.png"
+                              : "images/arrow-up.png"
                           }
                           className="arrow-img"
                           alt="arrow-img"
@@ -366,6 +366,7 @@ export default class Modal extends React.Component {
       address: "",
       amount: "",
       payment_id: "",
+      send_tx_disabled: false,
       tx_being_sent: false,
       add_transition: false,
       remove_transition: false,
@@ -431,7 +432,8 @@ export default class Modal extends React.Component {
         new_address: "",
         new_payment_id: "",
         name: "",
-        add_transition: false
+        add_transition: false,
+        send_tx_disabled: false
       });
     }, 300);
   };
@@ -512,6 +514,9 @@ export default class Modal extends React.Component {
           );
           return false;
         }
+        this.setState({
+          send_tx_disabled: true
+        })
         this.sendTransaction({
           address: sendingAddress,
           amount: amount,
@@ -520,6 +525,9 @@ export default class Modal extends React.Component {
           mixin: mixin
         });
       } else {
+        this.setState({
+          send_tx_disabled: true
+        })
         this.sendTransaction({
           address: sendingAddress,
           amount: amount,
@@ -537,7 +545,10 @@ export default class Modal extends React.Component {
       .then(tx => {
         let fee = roundAmount(tx.fee());
         console.log(args);
-        this.setState(() => ({ fee }));
+        this.setState(() => ({ 
+          fee: fee, 
+          send_tx_disabled: false 
+        }));
         this.testTx = tx;
         this.props.setOpenFeeModal();
       })
@@ -563,12 +574,11 @@ export default class Modal extends React.Component {
     e.preventDefault();
     let tx = this.testTx;
     let txId = tx.transactionsIds();
-
+    this.setState(() => ({
+      tx_being_sent: true
+    }));
     tx.commit()
       .then(() => {
-        this.setState(() => ({
-          tx_being_sent: true
-        }));
         if (this.props.mixinModal) {
           this.props.closeModal();
         } else {
@@ -1294,12 +1304,13 @@ export default class Modal extends React.Component {
                   className="btn button-shine"
                   type="submit"
                   disabled={
-                    this.state.tx_being_sent || this.props.sendDisabled
+                    this.state.send_tx_disabled
                       ? "disabled"
                       : ""
                   }
                 >
-                  Send
+                  {this.state.send_tx_disabled ? 'Wait' : 'Send'}
+                  
                 </button>
               </form>
             </div>
@@ -1351,7 +1362,7 @@ export default class Modal extends React.Component {
               </button>
               <button
                 type="submit"
-                className="confirm-btn button-shine"
+                className="confirm-btn btn button-shine"
                 disabled={
                   this.state.tx_being_sent || this.props.sendDisabled
                     ? "disabled"
