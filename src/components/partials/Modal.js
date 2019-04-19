@@ -1355,7 +1355,7 @@ export default class Modal extends React.Component {
             <form onSubmit={this.commitTx}>
               <button
                 type="button"
-                className="cancel-btn button-shine"
+                className="cancel-btn btn button-shine"
                 onClick={this.props.closeModal}
                 disabled={
                   this.state.tx_being_sent || this.props.sendDisabled
