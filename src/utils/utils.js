@@ -77,6 +77,7 @@ function closeModal(target) {
     (target.state.loading_modal && target.state.alert) ||
     (target.state.keys_modal && target.state.alert) ||
     (target.state.send_modal && target.state.alert) ||
+    (target.state.send_modal && target.state.fee_modal) ||
     (target.state.address_modal && target.state.alert) ||
     (target.state.send_modal && target.state.confirm_modal) ||
     target.state.mixin_modal ||
@@ -86,7 +87,8 @@ function closeModal(target) {
       alert: false,
       confirm_modal: false,
       mixin_modal: false,
-      delete_modal: false
+      delete_modal: false,
+      fee_modal: false
     });
   } else {
     target.setState({
@@ -104,6 +106,7 @@ function closeModal(target) {
         address_modal: false,
         confirm_modal: false,
         delete_modal: false,
+        fee_modal: false,
         modal_width: "",
         remove_transition: false
       });

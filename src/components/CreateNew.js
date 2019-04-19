@@ -62,13 +62,37 @@ export default class CreateNew extends Component {
           <span>?</span>
         </div>
         <ReactTooltip id="create-new-tooptip">
-          <p>If you don't already have <span className="blue-text">Safex Wallet</span>, </p>
-          <p>you can always generate new one here.</p>
-          <p>Enter your password, click create, </p>
-          <p>choose your <span className="blue-text">Wallet File name</span> and save it.</p>
-          <p>This will create <span className="blue-text">2</span> files on your file system.</p>
-          <p><span className="blue-text">ExampleWallet</span> and <span className="blue-text">ExampleWallet.keys</span></p>
-          <p>Always use only the file without the extension.</p>
+          <p>
+            If you don't already have{" "}
+            <span className="blue-text">Safex Wallet</span>,{" "}
+          </p>
+          <p>you can generate a new one here.</p>
+          <p>Enter the password for your new wallet and click create.</p>
+          <p>
+            You will then be asked to set a{" "}
+            <span className="blue-text">name</span> for the
+          </p>
+          <p>
+            wallet file - enter one and click{" "}
+            <span className="blue-text">save.</span>
+          </p>
+          <p>
+            This will create <span className="blue-text">2</span> files on your
+            file system.
+          </p>
+          <p>
+            <span className="blue-text">ExampleWallet</span> and{" "}
+            <span className="blue-text">ExampleWallet.keys</span>
+          </p>
+          <p>
+            In the future, when you want to{" "}
+            <span className="blue-text">load</span> wallet,{" "}
+          </p>
+          <p>make sure you select the file without the .keys extension.</p>
+          <p>
+            Make sure you <span className="blue-text">back up</span> these files
+            for future wallet recovery.
+          </p>
         </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">
@@ -78,7 +102,11 @@ export default class CreateNew extends Component {
         </div>
         <button
           type="submit"
-          className={this.props.buttonDisabled ? "submit btn button-shine disabled" : "submit btn button-shine"}
+          className={
+            this.props.buttonDisabled
+              ? "submit btn button-shine disabled"
+              : "submit btn button-shine"
+          }
         >
           <span>Create</span>
         </button>

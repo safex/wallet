@@ -103,7 +103,7 @@
   font-weight: 600;
   line-height: 1.2;
   text-transform: capitalize;
-  letter-spacing: 0.9px;
+  letter-spacing: 0.5px;
 }
 .item-wrap .login-wrap form input {
   width: 100%;
@@ -127,12 +127,19 @@
   border-bottom: 1px solid #8ffdfd;
   resize: none;
 }
-.item-wrap .login-wrap form input::-webkit-input-placeholder,
+.item-wrap .login-wrap form input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  opacity: 1;
+  color: #fff;
+  font-size: 30px;
+}
 .item-wrap .login-wrap form textarea::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   opacity: 1;
   color: #fff;
   font-size: 30px;
+  line-height: 1;
+  text-indent: 10px;
 }
 .item-wrap .login-wrap form input::-moz-placeholder,
 .item-wrap .login-wrap form textarea::-moz-placeholder {
@@ -211,6 +218,9 @@
 }
 .open-file-wrap .login-wrap form input:last-of-type {
   margin-bottom: 0;
+}
+.open-file-wrap #filepath {
+  border-bottom: 0px;
 }
 .open-file-wrap .browse-btn {
   width: 100%;

@@ -138,8 +138,9 @@
   font-size: 24px;
   font-weight: 400;
   letter-spacing: 0.6px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
   position: relative;
+  z-index: 2;
 }
 .modal label .question-wrap {
   position: absolute;
@@ -428,6 +429,13 @@
   color: rgba(255, 0, 78, 0.75);
   letter-spacing: 0.5px;
 }
+.sendModal form {
+  margin-top: 30px;
+}
+.sendModal label {
+  bottom: -12px;
+  right: 10px;
+}
 .sendModal textarea {
   padding: 4px 10px 5px;
   border-radius: 0px;
@@ -435,18 +443,22 @@
   border-bottom: 1px solid #8ffdfd;
   font-size: 18px;
   letter-spacing: -0.3px;
+  margin-bottom: 22px !important;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal input {
-  padding: 5px 10px 6px;
+  padding: 13px 60px 10px 10px;
   border-bottom: 1px solid #8ffdfd;
   font-size: 18px;
   border-radius: 0px;
   background: transparent;
   letter-spacing: -0.3px;
+  margin-bottom: 25px !important;
+  line-height: 1;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal .btn {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 5px;
   padding: 4px 18px 5px;
   font-size: 18px !important;
@@ -741,17 +753,33 @@
 .addressModal #show-contacts img {
   max-height: 18px;
 }
+.addressModal label {
+  bottom: -21px;
+  right: 10px;
+}
+.addressModal #genPayIdWrap {
+  position: relative;
+  margin: 0 0 10px;
+}
+.addressModal #genPayIdWrap #genPayId {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+}
 .addressModal input,
 .addressModal textarea {
   font-size: 16px;
-  padding: 5px 10px 6px;
+  padding: 13px 60px 10px 10px;
   border-bottom: 1px solid #8ffdfd;
   border-radius: 0;
   text-align: left;
   background: transparent;
+  margin-bottom: 25px !important;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .addressModal .btn {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 5px;
   padding: 4px 18px 5px;
   font-size: 18px !important;
@@ -772,7 +800,7 @@
 }
 .addressModal .show-contacts-wrap .contact-item .name {
   min-height: 52px;
-  font-size: 17px;
+  font-size: 19px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -787,7 +815,7 @@
   margin-bottom: 8px;
 }
 .addressModal .show-contacts-wrap .contact-item .payment-id {
-  font-size: 14px;
+  font-size: 15px;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-left {
   width: 160px;
@@ -798,6 +826,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-center .payment-id {
+  font-size: 14px;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-right {
   width: 110px;
@@ -837,10 +868,19 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 
-.deleteModal p {
+.deleteModal p,
+.feeModal p {
   text-transform: initial;
   font-size: 19px;
   margin-bottom: 8px;
   letter-spacing: 0px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.feeModal h6 {
+  text-transform: initial;
+  font-size: 16px;
+  margin-bottom: 8px;
+  letter-spacing: 0px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  margin: 20px 0 0;
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 import CreateNew from "./CreateNew";
-import CreateFromKeys from "./CreateFromKeys";
 import OpenFile from "./OpenFile";
+import RecoverFromKeys from "./RecoverFromKeys";
 import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import Modal from "./partials/Modal";
 import Header from "./partials/Header";
@@ -49,6 +49,7 @@ export default class CashWallet extends React.Component {
       address_modal: false,
       confirm_modal: false,
       delete_modal: false,
+      fee_modal: false,
       value: "",
       copied: false,
       remove_transition: false,
@@ -168,6 +169,7 @@ export default class CashWallet extends React.Component {
         this.setState({
           send_modal: false,
           mixinModal: false,
+          confirm_modal: false,
           remove_transition: false,
           modal_width: "modal-80",
           sendTo: "",
@@ -193,6 +195,7 @@ export default class CashWallet extends React.Component {
         send_modal: false,
         address_modal: false,
         confirm_modal: false,
+        fee_modal: false,
         remove_transition: false,
         modal_width: ""
       });
@@ -225,6 +228,10 @@ export default class CashWallet extends React.Component {
 
   setOpenDeleteModal = () => {
     this.setOpenModal("delete_modal", "", false, null, "modal-80");
+  };
+
+  setOpenFeeModal = () => {
+    this.setOpenModal("fee_modal", "", false, null, "modal-80");
   };
 
   goToPage = page => {
@@ -316,7 +323,7 @@ export default class CashWallet extends React.Component {
     let wallet = this.wallet_meta;
     let history = wallet.history();
 
-    history.sort(function (a, b) {
+    history.sort(function(a, b) {
       return parseFloat(b.timestamp) - parseFloat(a.timestamp);
     });
 
@@ -425,7 +432,7 @@ export default class CashWallet extends React.Component {
       .then(res => {
         var sfx_price = parseFloat(
           res.data.market_data.current_price.usd
-        ).toFixed(8);
+        ).toFixed(4);
         this.setState({ sfx_price });
       })
       .catch(function(error) {
@@ -499,6 +506,8 @@ export default class CashWallet extends React.Component {
           addressBook={this.state.address_book}
           deleteModal={this.state.delete_modal}
           setOpenDeleteModal={this.setOpenDeleteModal}
+          feeModal={this.state.fee_modal}
+          setOpenFeeModal={this.setOpenFeeModal}
         />
       </div>
     );
@@ -555,11 +564,11 @@ export default class CashWallet extends React.Component {
         );
         break;
       case "create-from-keys":
-        title = "Create New Wallet From Keys";
+        title = "Recover Wallet With Keys";
         icon = "images/new-from-keys.png";
         page_type = "create-from-keys-wrap";
         page = (
-          <CreateFromKeys
+          <RecoverFromKeys
             env={this.env}
             goToPage={this.goToPage}
             createWallet={this.createWallet}
@@ -587,7 +596,7 @@ export default class CashWallet extends React.Component {
         );
         break;
       case "recover-from-mnemonic":
-        title = "Recover Wallet From Mnemonic Seed";
+        title = "Recover Wallet With Seed Phrase";
         icon = "images/mnemonic.png";
         page_type = "mnemonic-wrap";
         page = (
@@ -621,13 +630,6 @@ export default class CashWallet extends React.Component {
                 </div>
                 <div
                   className="item animated fadeInDownSmall"
-                  onClick={() => this.goToPage("create-from-keys")}
-                >
-                  <img src="images/new-from-keys.png" alt="new-from-keys" />
-                  <h3>New Wallet From Keys</h3>
-                </div>
-                <div
-                  className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("open-file")}
                 >
                   <img
@@ -638,10 +640,21 @@ export default class CashWallet extends React.Component {
                 </div>
                 <div
                   className="item animated fadeInDownSmall"
+                  onClick={() => this.goToPage("create-from-keys")}
+                >
+                  <img src="images/new-from-keys.png" alt="new-from-keys" />
+                  <h3>
+                    Recover Wallet <br /> with Keys
+                  </h3>
+                </div>
+                <div
+                  className="item animated fadeInDownSmall"
                   onClick={() => this.goToPage("recover-from-mnemonic")}
                 >
                   <img src="images/mnemonic.png" alt="mnemonic" />
-                  <h3>Recover Wallet</h3>
+                  <h3>
+                    Recover Wallet <br /> with Seed Phrase
+                  </h3>
                 </div>
               </div>
             </div>
@@ -692,6 +705,8 @@ export default class CashWallet extends React.Component {
               addressBook={this.state.address_book}
               deleteModal={this.state.delete_modal}
               setOpenDeleteModal={this.setOpenDeleteModal}
+              feeModal={this.state.fee_modal}
+              setOpenFeeModal={this.setOpenFeeModal}
             />
           </div>
         );

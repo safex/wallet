@@ -369,12 +369,14 @@ export default class Modal extends React.Component {
       tx_being_sent: false,
       add_transition: false,
       remove_transition: false,
-      show_contacts: false,
+      show_contacts: true,
       new_address: "",
       new_payment_id: "",
-      name: ""
+      name: "",
+      fee: 0
     };
     this.mixin = 6;
+    this.testTx = null;
   }
 
   loadPreviousWallet = e => {
@@ -402,17 +404,25 @@ export default class Modal extends React.Component {
   };
 
   closeMyModal = () => {
-    if (this.props.keysModal || this.props.deleteModal) {
+    if (this.props.keysModal || this.props.deleteModal || this.props.feeModal) {
       this.props.closeModal();
+      console.log("checkpoint 1");
+      return false;
     } else if (
-      this.state.tx_being_sent ||
-      (this.props.sendModal && this.props.addressModal)
+      this.props.sendModal &&
+      this.props.addressModal &&
+      this.props.confirmModal === false
     ) {
       this.props.setCloseSendModal();
+      console.log("checkpoint 2");
     } else {
       this.props.setCloseMyModal();
+      console.log("checkpoint 3");
     }
     this.mixin = 6;
+    localStorage.removeItem("tx");
+    localStorage.removeItem("txId");
+    localStorage.removeItem("paymentId");
     console.log("reset mixin. Current mixin: " + this.mixin);
     setTimeout(() => {
       this.setState({
@@ -504,20 +514,14 @@ export default class Modal extends React.Component {
           );
           return false;
         }
-        this.setState(() => ({
-          tx_being_sent: true
-        }));
         this.sendTransaction({
           address: sendingAddress,
           amount: amount,
-          paymentId: paymentidInput,
           tx_type: cash_or_token,
+          paymentId: paymentidInput,
           mixin: mixin
         });
       } else {
-        this.setState(() => ({
-          tx_being_sent: true
-        }));
         this.sendTransaction({
           address: sendingAddress,
           amount: amount,
@@ -533,62 +537,13 @@ export default class Modal extends React.Component {
     wallet
       .createTransaction(args)
       .then(tx => {
-        let txId = tx.transactionsIds();
+        let fee = roundAmount(tx.fee());
         console.log(args);
-        tx.commit()
-          .then(() => {
-            if (this.props.mixinModal) {
-              this.props.closeModal();
-            } else {
-              this.closeMyModal();
-            }
-            if (!txId) {
-              this.props.setOpenAlert(
-                "Unable to create transaction id ",
-                false,
-                "modal-80"
-              );
-              return false;
-            }
-            if (this.props.cash_or_token === 0) {
-              this.props.setOpenConfirmModal(
-                "Transaction commited successfully, Your cash transaction ID is: " +
-                  txId,
-                false,
-                "modal-80"
-              );
-            } else {
-              this.props.setOpenConfirmModal(
-                "Transaction commited successfully, Your token transaction ID is: " +
-                  txId,
-                false,
-                "modal-80"
-              );
-            }
-            this.setState(() => ({
-              tx_being_sent: false
-            }));
-            setTimeout(() => {
-              this.props.setWalletData();
-              this.mixin = 6;
-              console.log("reset mixin " + this.mixin);
-            }, 300);
-          })
-          .catch(e => {
-            this.setState(() => ({
-              tx_being_sent: false
-            }));
-            this.props.setOpenAlert(
-              "Error on commiting transaction: " + e,
-              false,
-              "modal-80"
-            );
-          });
+        this.setState(() => ({ fee }));
+        this.testTx = tx;
+        this.props.setOpenFeeModal();
       })
       .catch(e => {
-        this.setState(() => ({
-          tx_being_sent: false
-        }));
         if (e.startsWith("not enough outputs for specified ring size")) {
           this.props.setOpenMixinModal(
             "Couldn't create transaction: " + e,
@@ -603,6 +558,71 @@ export default class Modal extends React.Component {
             "modal-80"
           );
         }
+      });
+  };
+
+  commitTx = e => {
+    e.preventDefault();
+    let tx = this.testTx;
+    let txId = tx.transactionsIds();
+
+    tx.commit()
+      .then(() => {
+        this.setState(() => ({
+          tx_being_sent: true
+        }));
+        if (this.props.mixinModal) {
+          this.props.closeModal();
+        } else {
+          this.closeMyModal();
+        }
+        if (!txId) {
+          this.props.setOpenAlert(
+            "Unable to create transaction id ",
+            false,
+            "modal-80",
+            true
+          );
+          return false;
+        }
+        if (this.props.cash_or_token === 0) {
+          this.props.setOpenConfirmModal(
+            "Transaction commited successfully, Your cash transaction ID is: " +
+              txId,
+            false,
+            "modal-80",
+            true
+          );
+          this.testTx = null;
+        } else {
+          this.props.setOpenConfirmModal(
+            "Transaction commited successfully, Your token transaction ID is: " +
+              txId,
+            false,
+            "modal-80",
+            true
+          );
+          this.testTx = null;
+        }
+        this.setState(() => ({
+          tx_being_sent: false
+        }));
+        setTimeout(() => {
+          this.props.setWalletData();
+          this.mixin = 6;
+          console.log("reset mixin " + this.mixin);
+        }, 300);
+      })
+      .catch(e => {
+        this.setState(() => ({
+          tx_being_sent: false
+        }));
+        this.props.setOpenAlert(
+          "Error on commiting transaction: " + e,
+          false,
+          "modal-80",
+          true
+        );
       });
   };
 
@@ -1008,8 +1028,8 @@ export default class Modal extends React.Component {
                     <span className="blue-text">Transaction ID.</span>
                   </p>
                   <p>
-                    <span className="blue-text">Transaction ID</span> format is
-                    64 Hex character string.
+                    Transaction ID format is{" "}
+                    <span className="blue-text">64 Hex</span> character string.
                   </p>
                   <p>It can be used to track each individual</p>
                   <p>
@@ -1076,25 +1096,22 @@ export default class Modal extends React.Component {
             >
               <h3>Add Contact</h3>
 
-              <label htmlFor="name">Name</label>
               <input
                 name="name"
-                placeholder="Enter Contact Name"
+                placeholder="* Enter Contact Name"
                 value={this.state.name}
                 onChange={this.inputOnChange.bind(this, "name")}
               />
 
-              <label htmlFor="address">Address</label>
               <textarea
                 name="address"
                 rows="2"
                 value={this.state.new_address}
-                placeholder="Enter Contact Address"
+                placeholder="* Enter Contact Address"
                 onChange={this.inputOnChange.bind(this, "new_address")}
               />
 
               <label htmlFor="paymentid">
-                Payment ID
                 <div
                   data-tip
                   data-for="paymentid-contact-tooptip"
@@ -1117,25 +1134,32 @@ export default class Modal extends React.Component {
                   <p>
                     <span className="blue-text">64 Hex</span> character string.
                   </p>
+                  <p>
+                    Payment ID is <span className="blue-text">required</span>{" "}
+                    for each contact.
+                  </p>
                 </ReactTooltip>
               </label>
+              <div id="genPayIdWrap">
+                <button
+                  className="btn button-shine"
+                  id="genPayId"
+                  type="button"
+                  onClick={this.genPaymentId}
+                >
+                  Generate Payment ID
+                </button>
+              </div>
+
               <input
                 name="paymentid"
-                placeholder="Enter Contact Payment ID"
+                placeholder="* Enter Contact Payment ID"
                 value={this.state.new_payment_id}
                 onChange={this.inputOnChange.bind(this, "new_payment_id")}
               />
 
-              <button
-                className="btn button-shine"
-                type="button"
-                onClick={this.genPaymentId}
-              >
-                Generate Payment ID
-              </button>
-
               <button className="btn button-shine" type="submit">
-                Add Contact
+                Save Contact
               </button>
             </form>
 
@@ -1192,7 +1216,6 @@ export default class Modal extends React.Component {
                 <h6 className="hidden">{""}</h6>
               )}
               <form onSubmit={this.sendCashOrToken(this.props.cash_or_token)}>
-                <label htmlFor="send_to">Destination</label>
                 <textarea
                   name="send_to"
                   rows="2"
@@ -1201,12 +1224,11 @@ export default class Modal extends React.Component {
                       ? this.props.destination
                       : this.state.address
                   }
-                  placeholder="Example: Safex5zqJ2k17WGHpmZKBVj67xEafDbFTXMBuCjmk75JhoodPJ9MQFaRPGeMnXQSSVZCZ7hNrRZ4USrdZTrzDaUSGgwNNiyVmWa5K"
+                  placeholder="* Enter Address"
                   onChange={this.inputOnChange.bind(this, "address")}
                   disabled={this.props.destination ? "disabled" : ""}
                 />
                 <label htmlFor="amount">
-                  Amount
                   {this.props.cash_or_token === 1 ? (
                     <div
                       data-tip
@@ -1220,17 +1242,20 @@ export default class Modal extends React.Component {
                   )}
                   <ReactTooltip id="amount-tooptip">
                     <p>Token transaction does not accept decimal values.</p>
+                    <p>
+                      Token transaction requires{" "}
+                      <span className="blue-text">Safex Cash</span> fee.
+                    </p>
                   </ReactTooltip>
                 </label>
                 <input
                   type="number"
                   name="amount"
-                  placeholder="Enter Amount"
+                  placeholder="* Enter Amount"
                   value={this.state.amount}
                   onChange={this.inputOnChange.bind(this, "amount")}
                 />
                 <label htmlFor="paymentid">
-                  (Optional) Payment ID
                   <div
                     data-tip
                     data-for="paymentid-tooptip"
@@ -1247,7 +1272,6 @@ export default class Modal extends React.Component {
                     <p>It is given by exchanges and web</p>
                     <p>shops to differentiate and track</p>
                     <p>particular deposits and purchases.</p>
-                    <p>It is not required for regular user transactions.</p>
                     <p>
                       <span className="blue-text">Payment ID</span> format
                       should be{" "}
@@ -1256,6 +1280,7 @@ export default class Modal extends React.Component {
                       <span className="blue-text">16 or 64 Hex</span> character
                       string.
                     </p>
+                    <p>It is not required for regular user transactions.</p>
                   </ReactTooltip>
                 </label>
                 <input
@@ -1265,7 +1290,7 @@ export default class Modal extends React.Component {
                       ? this.props.paymentID
                       : this.state.payment_id
                   }
-                  placeholder="Enter Payment ID"
+                  placeholder="Enter Payment ID (Optional)"
                   onChange={this.inputOnChange.bind(this, "payment_id")}
                   disabled={this.props.paymentID ? "disabled" : ""}
                 />
@@ -1302,6 +1327,50 @@ export default class Modal extends React.Component {
           )}
           <div className="mainAlertPopupInner">
             <p>{this.props.alertText}</p>
+          </div>
+        </div>
+      );
+    }
+    if (this.props.feeModal) {
+      modal = (
+        <div className={"feeModal" + addClass(this.props.feeModal, "active")}>
+          {this.props.alertCloseDisabled ? (
+            <span className="hidden" />
+          ) : (
+            <span className="close" onClick={this.props.closeModal}>
+              X
+            </span>
+          )}
+          <div className="mainAlertPopupInner">
+            <p>Your approximate transaction fee is: {this.state.fee} SFX</p>
+            <p>Are you sure you want to proceed with this transaction?</p>
+
+            <form onSubmit={this.commitTx}>
+              <button
+                type="button"
+                className="cancel-btn button-shine"
+                onClick={this.props.closeModal}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="confirm-btn button-shine"
+                disabled={
+                  this.state.tx_being_sent || this.props.sendDisabled
+                    ? "disabled"
+                    : ""
+                }
+              >
+                Send
+              </button>
+            </form>
+            <h6>
+              Due to the way Safex blockchain works, part or all of your
+              remaining balance after a transaction may go into pending status
+              for a short period of time. This is normal and status will become
+              available after 10 blocks.
+            </h6>
           </div>
         </div>
       );
@@ -1389,6 +1458,9 @@ export default class Modal extends React.Component {
         </div>
 
         {(this.props.sendModal && this.props.alert === false) ||
+        (this.props.sendModal &&
+          this.props.confirmModal &&
+          this.props.feeModal === false) ||
         (this.props.addressModal && this.props.alert === false) ||
         (this.props.addressModal &&
           this.props.sendModal &&

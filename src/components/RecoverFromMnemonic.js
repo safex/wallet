@@ -91,15 +91,31 @@ export default class NewFromMnemonic extends Component {
         </div>
         <ReactTooltip place="left" id="mnemonic-tooptip">
           <p>You can recover your Wallet with Mnemonic Seed.</p>
-          <p>Mnemonic Seed should contain 24 or 25 words and no numbers. Example:</p>
+          <p>
+            Mnemonic Seed should contain 24 or 25 words and no numbers. Example:
+          </p>
           <p className="blue-text">
             fizzle gyrate arsenic click wives bacon apology richly long <br />
             inkling avidly gimmick biweekly frying nephew union umpire <br />
             sack tasked idiom budget lazy getting heels nephew
           </p>
-          <p>This will create <span className="blue-text">2</span> files on your file system.</p>
-          <p><span className="blue-text">ExampleWallet</span> and <span className="blue-text">ExampleWallet.keys</span></p>
-          <p>Always use only the file without the extension.</p>
+          <p>
+            This will create <span className="blue-text">2</span> files on your
+            file system.
+          </p>
+          <p>
+            <span className="blue-text">ExampleWallet</span> and{" "}
+            <span className="blue-text">ExampleWallet.keys</span>
+          </p>
+          <p>
+            In the future, when you want to{" "}
+            <span className="blue-text">load</span> wallet,{" "}
+          </p>
+          <p>make sure you select the file without the .keys extension.</p>
+          <p>
+            Make sure you <span className="blue-text">back up</span> these files
+            for future wallet recovery.
+          </p>
         </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">
@@ -108,8 +124,15 @@ export default class NewFromMnemonic extends Component {
             <textarea name="mnemonic" placeholder="mnemonic seed" rows="3" />
           </div>
         </div>
-        <button type="submit" className={this.props.buttonDisabled ? "submit btn button-shine disabled" : "submit btn button-shine"}>
-          Create
+        <button
+          type="submit"
+          className={
+            this.props.buttonDisabled
+              ? "submit btn button-shine disabled"
+              : "submit btn button-shine"
+          }
+        >
+          Recover
         </button>
       </form>
     );

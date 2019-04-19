@@ -4,7 +4,7 @@ import ReactTooltip from "react-tooltip";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
-export default class CreateFromKeys extends Component {
+export default class RecoverFromKeys extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -106,15 +106,39 @@ export default class CreateFromKeys extends Component {
           <span>?</span>
         </div>
         <ReactTooltip id="create-from-keys-tooptip">
-          <p>If you already have Safex Wallet Address, you can recreate it here.</p>
-          <p>Your <span className="blue-text">Safex Address</span> should start with Safex:</p>
+          <p>
+            If you already have Safex Wallet Address, you can recreate it here.
+          </p>
+          <p>
+            Your <span className="blue-text">Safex Address</span> should start
+            with Safex:
+          </p>
           <p className="blue-text">Safex5...3rnQjJmQ2K</p>
-          <p>Your <span className="blue-text">Secret View Key</span> and <span className="blue-text">Secret Spend Key</span></p>
+          <p>
+            Your <span className="blue-text">Secret View Key</span> and{" "}
+            <span className="blue-text">Secret Spend Key</span>
+          </p>
           <p>should be a 64 digit Hex. Example:</p>
-          <p className="blue-text">45b9ad1abb6564141793d809c8284e25c5c22d29b7d313c0be62387b1f2df8c3</p>
-          <p>This will create <span className="blue-text">2</span> files on your file system.</p>
-          <p><span className="blue-text">ExampleWallet</span> and <span className="blue-text">ExampleWallet.keys</span></p>
-          <p>Always use only the file without the extension.</p>
+          <p className="blue-text">
+            45b9ad1abb6564141793d809c8284e25c5c22d29b7d313c0be62387b1f2df8c3
+          </p>
+          <p>
+            This will create <span className="blue-text">2</span> files on your
+            file system.
+          </p>
+          <p>
+            <span className="blue-text">ExampleWallet</span> and{" "}
+            <span className="blue-text">ExampleWallet.keys</span>
+          </p>
+          <p>
+            In the future, when you want to{" "}
+            <span className="blue-text">load</span> wallet,{" "}
+          </p>
+          <p>make sure you select the file without the .keys extension.</p>
+          <p>
+            Make sure you <span className="blue-text">back up</span> these files
+            for future wallet recovery.
+          </p>
         </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">
@@ -125,8 +149,15 @@ export default class CreateFromKeys extends Component {
             <input type="password" name="pass2" placeholder="repeat password" />
           </div>
         </div>
-        <button type="submit" className={this.props.buttonDisabled ? "submit btn button-shine disabled" : "submit btn button-shine"}>
-          Create
+        <button
+          type="submit"
+          className={
+            this.props.buttonDisabled
+              ? "submit btn button-shine disabled"
+              : "submit btn button-shine"
+          }
+        >
+          Recover
         </button>
       </form>
     );
