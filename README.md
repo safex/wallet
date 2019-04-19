@@ -1,6 +1,6 @@
 # SAFEX CASH WALLET
 
-Official repository for consolidated lightweight Safex Cash wallet.
+Official repository for consolidated lightweight Safex Cash Wallet.
 
 ## Releases
 
@@ -10,7 +10,7 @@ Available for Mac, Windows (64, 32) and Linux.
 
 ## Development
 
-Electron app consists of main (backend) and renderer (frontend) processes. Frontend is based on [create-react-app](https://github.com/facebook/create-react-app). You'll want to start both in development mode at the same time.
+Electron app consists of main (backend) and renderer (frontend) processes. Frontend is based on [create-react-app](https://github.com/facebook/create-react-app). You'll want to start both in development mode at the same time. Node v10.13.0 is required when installing dependencies. For easily switching between Node versions, we suggest using [nvm](https://github.com/creationix/nvm)
 
 #### Backend:
 
@@ -40,9 +40,12 @@ $ npm run dev
 
 #### MacOS
 
+Install Developer Tools v10.1
+https://download.developer.apple.com/Developer_Tools/Command_Line_Tools_macOS_10.13_for_Xcode_10.1/Command_Line_Tools_macOS_10.13_for_Xcode_10.1.dmg
+
 ```
-$ brew install boost
-$ brew install openssl
+$ brew tap jmuncaster/homebrew-header-only
+$ brew install cmake boost zmq czmq zeromq jmuncaster/header-only/cppzmq openssl pkg-config
 $ npm install
 $ ./node_modules/.bin/electron-rebuild
 $ npm run dev
@@ -53,20 +56,12 @@ $ npm run dev
 Run
 
 ```
-npm run make-all-installers
-```
-
-to make all installer. This will work only on Mac because of Mac.
-
-You can also run
-
-```
 npm run make-win-installer
 npm run make-mac-installer
 npm run make-linux-installer
 ```
 
-separately.
+separately, depending which OS you are using.
 
 For linux builds, you will need to have `rpmbuild` available on system (`apt-get install rpm`).
 
