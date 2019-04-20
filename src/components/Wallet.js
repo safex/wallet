@@ -75,9 +75,17 @@ export default class Wallet extends React.Component {
 
           <div className="sfx block">
             <img src="images/sfx.png" alt="safex-cash" />
-            <span>Safex Cash: </span>
+            <span>Cash: </span>
             <span>
               {this.props.sfxPrice ? this.props.sfxPrice + " $" : "Loading..."}{" "}
+            </span>
+          </div>
+
+          <div className="sft block">
+            <img src="images/sft.png" alt="safex-token" />
+            <span>Token: </span>
+            <span>
+              {this.props.sftPrice ? this.props.sftPrice + " $" : "Loading..."}{" "}
             </span>
           </div>
 

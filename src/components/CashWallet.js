@@ -438,6 +438,20 @@ export default class CashWallet extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
+    
+    axios({
+      method: "get",
+      url: "https://api.coinpaprika.com/v1/coins/sft-safex-token/ohlcv/latest/"
+    })
+      .then(res => {
+        var sft_price = parseFloat(
+          res.data[0].high
+        ).toFixed(4);
+        this.setState({ sft_price });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   renderPageWrapper = (title, version, page, page_type, icon) => {
@@ -544,6 +558,7 @@ export default class CashWallet extends React.Component {
             onCopy={this.onCopy}
             refreshCallback={this.refreshCallback}
             sfxPrice={this.state.sfx_price}
+            sftPrice={this.state.sft_price}
           />
         );
         break;
