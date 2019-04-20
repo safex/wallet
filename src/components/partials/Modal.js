@@ -575,7 +575,8 @@ export default class Modal extends React.Component {
     let tx = this.testTx;
     let txId = tx.transactionsIds();
     this.setState(() => ({
-      tx_being_sent: true
+      tx_being_sent: true,
+      alert_close_disabled: true
     }));
     tx.commit()
       .then(() => {
@@ -1235,22 +1236,34 @@ export default class Modal extends React.Component {
                   disabled={this.props.destination ? "disabled" : ""}
                 />
                 <label htmlFor="amount">
-                  {this.props.cash_or_token === 1 ? (
+                  {this.props.cash_or_token === 0 ? (
                     <div
                       data-tip
-                      data-for="amount-tooptip"
+                      data-for="cash-amount-tooptip"
                       className="button-shine question-wrap"
                     >
                       <span>?</span>
                     </div>
                   ) : (
-                    <div className="hidden" />
+                    <div
+                      data-tip
+                      data-for="token-amount-tooptip"
+                      className="button-shine question-wrap"
+                    >
+                      <span>?</span>
+                    </div>
                   )}
-                  <ReactTooltip id="amount-tooptip">
+                  <ReactTooltip id="cash-amount-tooptip">
+                    <p>
+                      <span className="blue-text">Safex Cash fee</span>{" "}
+                      will be added to sending amount.
+                    </p>
+                  </ReactTooltip>
+                  <ReactTooltip id="token-amount-tooptip">
                     <p>Token transaction does not accept decimal values.</p>
                     <p>
                       Token transaction requires{" "}
-                      <span className="blue-text">Safex Cash</span> fee.
+                      <span className="blue-text">Safex Cash fee.</span>
                     </p>
                   </ReactTooltip>
                 </label>

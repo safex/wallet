@@ -92,7 +92,7 @@ export default class NewFromMnemonic extends Component {
         <ReactTooltip place="left" id="mnemonic-tooptip">
           <p>You can recover your Wallet with Mnemonic Seed.</p>
           <p>
-            Mnemonic Seed should contain 24 or 25 words and no numbers. Example:
+            Mnemonic Seed should contain <span className="blue-text">24</span> or <span className="blue-text">25</span> words and no numbers. Example:
           </p>
           <p className="blue-text">
             fizzle gyrate arsenic click wives bacon apology richly long <br />

@@ -130,16 +130,29 @@ export default class Wallet extends React.Component {
           </div>
         </div>
 
-        <label htmlFor="address">
-          Wallet Address{" "}
+        <div className="label-wrap">
+          <label>Wallet Address</label>
+          <div
+            data-tip
+            data-for="pub-address-tooptip"
+            className="button-shine question-wrap"
+          >
+            <span>?</span>
+          </div>
+          <ReactTooltip id="pub-address-tooptip">
+            <p>This is <span className="blue-text">Public Address</span> of your wallet.</p>
+            <p>This is address where you can receive <span className="blue-text">Safex Cash</span> or <span className="blue-text">Safex Token.</span></p>
+            <p>It is generated using your <span className="blue-text">Public Spend Key</span> and <span className="blue-text">Public View Key.</span></p>
+          </ReactTooltip>
           <CopyToClipboard
             text={this.props.wallet.wallet_address}
             onCopy={this.props.onCopy}
-            className="button-shine"
+            className="button-shine copy-btn"
           >
             <button>Copy</button>
           </CopyToClipboard>
-        </label>
+        </div>
+
         <textarea
           name="address"
           defaultValue={this.props.wallet.wallet_address}

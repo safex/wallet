@@ -352,11 +352,19 @@
   -webkit-box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
   box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
 }
+.modal .cancel-btn:active,
+.modal .cancel-btn:focus {
+  outline: none;
+}
 .modal .confirm-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 0 0 0 5px;
   font-size: 19px;
   padding: 5px 12px;
+}
+.modal .confirm-btn:active,
+.modal .confirm-btn:focus {
+  outline: none;
 }
 .modal .save-btn {
   background: rgba(200, 14, 75, 0.5);
