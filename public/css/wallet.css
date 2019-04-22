@@ -156,6 +156,7 @@
 }
 .wallet-inner-wrap .group {
   width: calc(50% - 5px);
+  text-align: center;
 }
 .wallet-file-wrap .group input:last-of-type {
   margin-bottom: 5px;

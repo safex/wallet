@@ -77,7 +77,7 @@ export default class Wallet extends React.Component {
             <img src="images/sfx.png" alt="safex-cash" />
             <span>Cash: </span>
             <span>
-              {this.props.sfxPrice ? this.props.sfxPrice + " $" : "Loading..."}{" "}
+              {this.props.sfxPrice ? this.props.sfxPrice + " $" : "Loading..."}
             </span>
           </div>
 
@@ -85,7 +85,7 @@ export default class Wallet extends React.Component {
             <img src="images/sft.png" alt="safex-token" />
             <span>Token: </span>
             <span>
-              {this.props.sftPrice ? this.props.sftPrice + " $" : "Loading..."}{" "}
+              {this.props.sftPrice ? this.props.sftPrice + " $" : "Loading..."}
             </span>
           </div>
 
@@ -141,9 +141,9 @@ export default class Wallet extends React.Component {
         <div className="label-wrap">
           <label>Wallet Address</label>
           <div
+            className="button-shine question-wrap"
             data-tip
             data-for="pub-address-tooptip"
-            className="button-shine question-wrap"
           >
             <span>?</span>
           </div>

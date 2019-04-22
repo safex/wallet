@@ -156,7 +156,7 @@ class Transactions extends Component {
               <p>First Page</p>
             </ReactTooltip>
             <button className="button-shine" onClick={this.previousTxPage}>
-              previus
+              previous
             </button>
             <strong>
               page: {tx_page + 1} / {this.totalTxPages}
@@ -329,7 +329,7 @@ class Contacts extends Component {
               <p>First Page</p>
             </ReactTooltip>
             <button className="button-shine" onClick={this.previousContactPage}>
-              previus
+              previous
             </button>
             <strong>
               page: {contact_page + 1} / {this.totalContactPages}
@@ -1038,7 +1038,7 @@ export default class Modal extends React.Component {
                   </p>
                   <p>
                     Transaction ID format is{" "}
-                    <span className="blue-text">64 Hex</span> character string.
+                    <span className="blue-text">64 digit Hex</span> character string.
                   </p>
                   <p>It can be used to track each individual</p>
                   <p>
@@ -1140,7 +1140,7 @@ export default class Modal extends React.Component {
                     be{" "}
                   </p>
                   <p>
-                    <span className="blue-text">64 Hex</span> character string.
+                    <span className="blue-text">64 digit Hex</span> character string.
                   </p>
                   <p>
                     Payment ID is <span className="blue-text">required</span>{" "}
@@ -1201,12 +1201,12 @@ export default class Modal extends React.Component {
             <div>
               {this.props.cash_or_token === 0 ? (
                 <div className="available-wrap">
-                  <span>Available Safex Cash: {this.props.availableCash} </span>
+                  <span>Available Cash: {this.props.availableCash} </span>
                 </div>
               ) : (
                 <div className="available-wrap">
                   <span>
-                    Available Safex Tokens: {this.props.availableTokens}{" "}
+                    Available Tokens: {this.props.availableTokens}{" "}
                   </span>
                 </div>
               )}
@@ -1296,7 +1296,7 @@ export default class Modal extends React.Component {
                       should be{" "}
                     </p>
                     <p>
-                      <span className="blue-text">16 or 64 Hex</span> character
+                      <span className="blue-text">16 or 64 digit Hex</span> character
                       string.
                     </p>
                     <p>It is not required for regular user transactions.</p>
