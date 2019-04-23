@@ -405,7 +405,10 @@ export default class Modal extends React.Component {
   };
 
   closeMyModal = () => {
-    if (this.props.keysModal || this.props.deleteModal || this.props.feeModal) {
+    if (this.props.keysModal || this.props.deleteModal || this.props.feeModal || (this.props.sendModal && this.props.alert)) {
+      this.setState({
+        send_tx_disabled: false
+      })
       this.props.closeModal();
       return false;
     } else if (
@@ -432,8 +435,7 @@ export default class Modal extends React.Component {
         new_address: "",
         new_payment_id: "",
         name: "",
-        add_transition: false,
-        send_tx_disabled: false
+        add_transition: false
       });
     }, 300);
   };
@@ -495,7 +497,7 @@ export default class Modal extends React.Component {
       if (
         (this.props.cash_or_token === 0 &&
           parseFloat(e.target.amount.value) + parseFloat(0.1) >
-            this.props.availableCash) ||
+          this.props.availableCash) ||
         this.props.availableCash < parseFloat(0.1)
       ) {
         this.props.setOpenAlert(
@@ -555,14 +557,14 @@ export default class Modal extends React.Component {
       .catch(e => {
         if (e.startsWith("not enough outputs for specified ring size")) {
           this.props.setOpenMixinModal(
-            "Couldn't create transaction: " + e,
+            "" + e,
             false
           );
           localStorage.setItem("args", JSON.stringify(args));
           console.log(JSON.parse(localStorage.getItem("args")));
         } else {
           this.props.setOpenAlert(
-            "Couldn't create transaction: " + e,
+            "" + e,
             false,
             "modal-80"
           );
@@ -627,7 +629,7 @@ export default class Modal extends React.Component {
           tx_being_sent: false
         }));
         this.props.setOpenAlert(
-          "Error on commiting transaction: " + e,
+          "" + e,
           false,
           "modal-80",
           true
@@ -1482,8 +1484,8 @@ export default class Modal extends React.Component {
           {modal}
         </div>
 
-        {(this.props.sendModal && this.props.alert === false) ||
-        (this.props.sendModal &&
+        {(this.props.sendModal && this.props.alert) ||
+          (this.props.sendModal &&
           this.props.confirmModal &&
           this.props.feeModal === false) ||
         (this.props.addressModal && this.props.alert === false) ||

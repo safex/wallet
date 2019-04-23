@@ -5,18 +5,30 @@ import ReactTooltip from "react-tooltip";
 const remote = window.require("electron").remote;
 
 export default class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      window: ''
+    };
+
+    this.window = remote.getCurrentWindow();
+  }
+
   minimizeApp = () => {
-    let window = remote.getCurrentWindow();
-    window.minimize();
+    this.window.minimize();
   };
 
   maximizeApp = () => {
-    let window = remote.getCurrentWindow();
-
-    if (window.isMaximized()) {
-      window.unmaximize();
+    if (this.window.isMaximized()) {
+      this.setState({
+        window: 'unmaximized'
+      })
+      this.window.unmaximize();
     } else {
-      window.maximize();
+      this.setState({
+        window: 'maximized'
+      })
+      this.window.maximize();
     }
   };
 
@@ -67,7 +79,13 @@ export default class Header extends Component {
             <span />
           </button>
           <ReactTooltip place="bottom" id="maximize-tooptip">
-            <p>Maximize</p>
+            {
+              this.state.window === 'maximized'
+              ?
+                <p>Restore</p>
+              :
+                <p>Maximize</p>
+            }
           </ReactTooltip>
           <button
             onClick={this.setCloseApp}

@@ -169,7 +169,7 @@
   margin-bottom: 5px;
 }
 .wallet-inner-wrap label {
-  width: 100%;
+  width: initial !important;
   text-align: center;
   font-size: 20px;
   color: rgba(255, 255, 255, 1);
@@ -214,6 +214,7 @@
   text-align: center;
   position: relative;
   margin-bottom: 3px;
+  z-index: 3;
 }
 .wallet-inner-wrap .label-wrap .question-wrap {
   position: absolute;
@@ -224,6 +225,7 @@
   border: 1px solid #8ffdfd;
   border-radius: 50%;
   text-align: center;
+  z-index: 4;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
@@ -237,7 +239,7 @@
 .wallet-inner-wrap .label-wrap .question-wrap span {
   position: relative;
   top: -7px;
-  left: -0.7px;
+  left: -0px;
   font-size: 19px;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
@@ -249,6 +251,7 @@
   height: 28px;
   padding: 0px 12px 2px;
   position: absolute;
+  z-index: 4;
   right: 0;
   font-size: 15px;
   border: 2px solid #54bcd9;

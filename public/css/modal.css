@@ -95,6 +95,8 @@
   transition: all 0.2s ease-in;
 }
 .modal h3 {
+  width: initial;
+  display: inline-block;
   background: transparent;
   border: 0px none;
   margin-right: 0;
@@ -780,7 +782,7 @@
   margin: 0;
 }
 .addressModal form {
-  margin-top: 65px;
+  margin-top: 45px;
 }
 .addressModal input,
 .addressModal textarea {
@@ -805,7 +807,7 @@
   color: #fff;
 }
 .addressModal .show-contacts-wrap {
-  margin-top: 55px;
+  margin-top: 35px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .addressModal .show-contacts-wrap .contact-item {
@@ -836,6 +838,7 @@
   min-height: 52px;
   font-size: 19px;
   text-align: left;
+  word-break: break-all;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-center {
   width: calc(100% - 284px);

@@ -271,17 +271,17 @@ export default class CashWallet extends React.Component {
                 this.startBalanceCheck();
               })
               .catch(e => {
-                console.log("Unable to store wallet: " + e);
+                console.log("" + e);
                 return false;
               });
           });
         })
         .catch(err => {
-          this.setOpenAlert("Error with the creation of the wallet " + err);
+          this.setOpenAlert("" + err);
           return callback;
         });
     } catch (e) {
-      this.setOpenAlert("Error with the creation of the wallet " + e);
+      this.setOpenAlert("" + e);
       return callback;
     }
   };
@@ -384,8 +384,7 @@ export default class CashWallet extends React.Component {
         console.log("Wallet stored");
       })
       .catch(e => {
-        this.setOpenAlert("Unable to store wallet: " + e);
-        console.log("Unable to store wallet: " + e);
+        this.setOpenAlert("" + e);
       });
   };
 
@@ -417,7 +416,7 @@ export default class CashWallet extends React.Component {
             console.log("Wallet stored");
           })
           .catch(e => {
-            console.log("Unable to store wallet: " + e);
+            console.log("" + e);
           });
         wallet.on("refreshed", this.refreshCallback);
       }, 1000);
