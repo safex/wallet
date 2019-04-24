@@ -811,7 +811,7 @@ export default class Modal extends React.Component {
           >
             <span>?</span>
           </div>
-          <ReactTooltip id="keys-tooptip">
+          <ReactTooltip place="right" id="keys-tooptip">
             <p>
               <span className="blue-text">Mnemonic seed</span> can be used to
               recover your wallet in case your file gets lost or corrupted.

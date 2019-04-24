@@ -147,7 +147,7 @@ export default class Wallet extends React.Component {
           >
             <span>?</span>
           </div>
-          <ReactTooltip id="pub-address-tooptip">
+          <ReactTooltip place="right" id="pub-address-tooptip">
             <p>This is <span className="blue-text">Public Address</span> of your wallet.</p>
             <p>This is address where you can receive <span className="blue-text">Safex Cash</span> or <span className="blue-text">Safex Token.</span></p>
             <p>It is generated using your <span className="blue-text">Public Spend Key</span> and <span className="blue-text">Public View Key.</span></p>
