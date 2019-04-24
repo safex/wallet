@@ -56,7 +56,7 @@ export default class NewFromMnemonic extends Component {
         alert_close_disabled: true
       }));
       this.props.setOpenAlert(
-        "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
+        "Please wait while your wallet file is being created. Don't close the application until the process is complete. This may take a while, please be patient.",
         true
       );
       console.log("wallet doesn't exist. creating new one: " + filepath);

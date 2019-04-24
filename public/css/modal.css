@@ -453,7 +453,7 @@
   border-bottom: 1px solid #8ffdfd;
   font-size: 18px;
   letter-spacing: -0.3px;
-  margin-bottom: 22px !important;
+  margin-bottom: 20px !important;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal input {
@@ -463,13 +463,13 @@
   border-radius: 0px;
   background: transparent;
   letter-spacing: -0.3px;
-  margin-bottom: 25px !important;
+  margin-bottom: 23px !important;
   line-height: 1;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal .btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  margin: 5px;
+  margin: 0px 5px 5px;
   padding: 4px 18px 5px;
   font-size: 19px !important;
 }
@@ -541,7 +541,7 @@
   text-transform: initial !important;
   font-weight: 400 !important;
   font-size: 23px !important;
-  display: inline;
+  display: inline-block;
 }
 .keysModal input,
 .keysModal textarea {
@@ -576,6 +576,7 @@
   height: 28px;
   padding: 0px 12px 2px;
   position: absolute;
+  z-index: 2;
   right: 0;
   font-size: 15px;
 }
@@ -687,6 +688,10 @@
 .historyModal #history-wrap .history-item p span {
   position: relative;
   top: 2px;
+}
+.historyModal #history-wrap .history-item .amount {
+  display: inline-block;
+  margin-bottom: 8px;
 }
 .historyModal #history-wrap .history-item .arrow-img {
   max-height: 18px;

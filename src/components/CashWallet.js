@@ -140,15 +140,19 @@ export default class CashWallet extends React.Component {
   };
 
   setOpenSendModal = (cash_or_token, destination, paymentID, sendTo) => {
-    this.setOpenModal("send_modal", "", false, cash_or_token, "modal-80");
-    this.cash_or_token = cash_or_token;
-    this.setState({
-      button_disabled: true,
-      send_disabled: false,
-      sendTo: sendTo,
-      destination: destination,
-      paymentID: paymentID
-    });
+    if (this.state.wallet.wallet_connected) {
+      this.setOpenModal("send_modal", "", false, cash_or_token, "modal-80");
+      this.cash_or_token = cash_or_token;
+      this.setState({
+        button_disabled: true,
+        send_disabled: false,
+        sendTo: sendTo,
+        destination: destination,
+        paymentID: paymentID
+      });
+    } else {
+      this.setOpenAlert("No connection to daemon", false, "modal-80");
+    }
   };
 
   setCloseSendModal = () => {
@@ -389,38 +393,46 @@ export default class CashWallet extends React.Component {
   };
 
   rescanBalance = () => {
-    let wallet = this.wallet_meta;
-    console.log(wallet);
-    this.setOpenAlert(
-      "Please wait while blockchain is being rescanned. Don't close the application until the process is complete. This can take a while, please be patient.",
-      true
-    );
-    wallet.off("updated");
-    wallet.off("refreshed");
-    setTimeout(() => {
-      console.log("Starting blockchain rescan sync...");
-      wallet.rescanBlockchain();
-      console.log("Blockchain rescan executed...");
+    if (this.state.wallet.wallet_connected) {
+      let wallet = this.wallet_meta;
+      console.log(wallet);
+      this.setOpenAlert(
+        "Please wait while blockchain is being rescanned. Don't close the application until the process is complete. This may take a while, please be patient.",
+        true
+      );
+      wallet.off("updated");
+      wallet.off("refreshed");
       setTimeout(() => {
-        console.log("Rescan setting callbacks");
-        this.setWalletData();
-        this.setOpenAlert("Wallet rescan completed.");
-        this.setState({
-          loading_modal: false,
-          keys_modal: false,
-          button_disabled: false
-        });
-        wallet
-          .store()
-          .then(() => {
-            console.log("Wallet stored");
-          })
-          .catch(e => {
-            console.log("" + e);
+        console.log("Starting blockchain rescan sync...");
+        wallet.rescanBlockchain();
+        console.log("Blockchain rescan executed...");
+        setTimeout(() => {
+          console.log("Rescan setting callbacks");
+          this.setWalletData();
+          this.setOpenAlert("Wallet rescan completed.");
+          this.setState({
+            loading_modal: false,
+            keys_modal: false,
+            button_disabled: false
           });
-        wallet.on("refreshed", this.refreshCallback);
+          wallet
+            .store()
+            .then(() => {
+              console.log("Wallet stored");
+            })
+            .catch(e => {
+              console.log("" + e);
+            });
+          wallet.on("refreshed", this.refreshCallback);
+        }, 1000);
       }, 1000);
-    }, 1000);
+    } else {
+      this.setOpenAlert(
+        "No connection to daemon",
+        false,
+        "modal-80"
+      );
+    }
   };
 
   fetchPrice = () => {

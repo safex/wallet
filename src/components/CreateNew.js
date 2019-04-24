@@ -42,7 +42,7 @@ export default class CreateNew extends Component {
       localStorage.setItem("password", JSON.stringify(pass1));
       localStorage.setItem("filename", filepath.split("/").pop());
       this.props.setOpenAlert(
-        "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
+        "Please wait while your wallet file is being created. Don't close the application until the process is complete. This may take a while, please be patient.",
         true
       );
     });

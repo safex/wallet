@@ -54,7 +54,7 @@ export default class OpenFile extends Component {
     localStorage.setItem("password", JSON.stringify(pass));
     localStorage.setItem("filename", filepath.split("/").pop());
     this.props.setOpenAlert(
-      "Please wait while your wallet file is loaded. Don't close the application until the process is complete. This can take a while, please be patient.",
+      "Please wait while your wallet file is loaded. Don't close the application until the process is complete. This may take a while, please be patient.",
       true
     );
   };

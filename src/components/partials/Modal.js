@@ -94,7 +94,7 @@ class Transactions extends Component {
                       {roundAmount(txInfo.tokenAmount) === 0 ? (
                         <span
                           className={
-                            txInfo.direction === "in" ? "green-text" : ""
+                            txInfo.direction === "in" ? "green-text amount" : "amount"
                           }
                         >
                           {roundAmount(txInfo.amount)} SFX
@@ -102,7 +102,7 @@ class Transactions extends Component {
                       ) : (
                         <span
                           className={
-                            txInfo.direction === "in" ? "green-text" : ""
+                              txInfo.direction === "in" ? "green-text amount" : "amount"
                           }
                         >
                           {roundAmount(txInfo.tokenAmount)} SFT
@@ -117,7 +117,7 @@ class Transactions extends Component {
                             options
                           )}
                       </p>
-                      <p>Fee: {roundAmount(txInfo.fee)}</p>
+                      <p className={txInfo.direction === "in" ? "hidden" : ""}>Fee: {roundAmount(txInfo.fee)}</p>
                     </div>
                   </div>
 
@@ -954,7 +954,6 @@ export default class Modal extends React.Component {
               <button
                 className="button-shine rescan"
                 onClick={this.setRescanBalance}
-                disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
                 readOnly
               >
                 Rescan
@@ -1033,7 +1032,7 @@ export default class Modal extends React.Component {
                 >
                   <span>?</span>
                 </div>
-                <ReactTooltip id="tx-id-tooptip">
+                <ReactTooltip place="right" id="tx-id-tooptip">
                   <p>
                     Each tranasction has a unique{" "}
                     <span className="blue-text">Transaction ID.</span>

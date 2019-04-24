@@ -186,11 +186,7 @@ export default class Wallet extends React.Component {
                   ? "btn button-shine disabled"
                   : "btn button-shine"
               }
-              onClick={
-                this.props.wallet.wallet_connected
-                  ? this.props.setOpenSendModal.bind(this, 0, "", "", "")
-                  : this.connectionError
-              }
+              onClick={this.props.setOpenSendModal.bind(this, 0, "", "", "")}
             >
               {this.props.buttonDisabled ? "Please Wait" : "Send Cash"}
             </button>
@@ -213,11 +209,7 @@ export default class Wallet extends React.Component {
                   ? "btn button-shine disabled"
                   : "btn button-shine"
               }
-              onClick={
-                this.props.wallet.wallet_connected
-                  ? this.props.setOpenSendModal.bind(this, 1, "", "", "")
-                  : this.connectionError
-              }
+              onClick={this.props.setOpenSendModal.bind(this, 1, "", "", "")}
             >
               {this.props.buttonDisabled ? "Please Wait" : "Send Tokens"}
             </button>
