@@ -405,7 +405,11 @@ export default class Modal extends React.Component {
   };
 
   closeMyModal = () => {
-    if (this.props.keysModal || this.props.deleteModal || this.props.feeModal || (this.props.sendModal && this.props.alert)) {
+    if (this.props.keysModal || 
+      this.props.deleteModal || 
+      this.props.feeModal || 
+      (this.props.sendModal && this.props.alert) || 
+      (this.props.addressModal && this.props.alert)) {
       this.setState({
         send_tx_disabled: false
       })
@@ -1109,7 +1113,7 @@ export default class Modal extends React.Component {
                 placeholder="* Enter Contact Name"
                 value={this.state.name}
                 onChange={this.inputOnChange.bind(this, "name")}
-                maxLength="30"
+                maxLength="40"
               />
 
               <textarea
@@ -1458,7 +1462,7 @@ export default class Modal extends React.Component {
             {this.props.alertCloseDisabled ? (
               <span className="hidden" />
             ) : (
-              <span className="close" onClick={this.props.closeModal}>
+              <span className="close" onClick={this.closeMyModal}>
                 X
               </span>
             )}

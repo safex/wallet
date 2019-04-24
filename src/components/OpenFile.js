@@ -29,7 +29,7 @@ export default class OpenFile extends Component {
 
     console.log(filepath);
 
-    if (filepath === "") {
+    if (filepath === "N/A") {
       this.props.setOpenAlert("Choose the wallet file");
       return false;
     }
