@@ -412,7 +412,8 @@ export default class Modal extends React.Component {
       this.props.deleteModal || 
       this.props.feeModal || 
       (this.props.sendModal && this.props.alert) || 
-      (this.props.addressModal && this.props.alert)) {
+      (this.props.addressModal && this.props.alert) ||
+      (this.props.loadingModal && this.props.alert)) {
       this.setState({
         send_tx_disabled: false
       })
@@ -1526,6 +1527,7 @@ export default class Modal extends React.Component {
           (this.props.sendModal &&
           this.props.confirmModal &&
           this.props.feeModal === false) ||
+          (this.props.loadingModal && this.props.alert) ||
         (this.props.addressModal && this.props.alert === false) ||
         (this.props.addressModal &&
           this.props.sendModal &&

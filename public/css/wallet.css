@@ -334,7 +334,6 @@
   font-size: 18px;
   padding: 5px 0 0;
   margin: 0px 0 15px;
-  letter-spacing: 0.8px;
   border-bottom: 1px solid #8ffdfd;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-app-region: no-drag;
@@ -348,7 +347,7 @@
 }
 .wallet-inner-wrap .display-value span:last-of-type {
   margin-right: 0;
-  background: rgba(255, 255, 255, .2);
+  background: rgba(255, 255, 255, .25);
   color: rgba(255, 255, 255, .8);
   font-family: "Avenir Light", sans-serif;
   text-align: left;
@@ -370,13 +369,13 @@
   text-transform: uppercase;
   border: 0px;
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  border-bottom: 5px solid #54bcd9;
+  border-bottom: 5px solid #55ebff;
   border-radius: 0px;
   margin-top: 3px;
 }
 .wallet-inner-wrap .btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  border-bottom: 5px solid #54bcd9 !important;
+  border-bottom: 5px solid #55ebff !important;
   margin-top: 0 !important;
   -webkit-app-region: no-drag;
 }
