@@ -1108,7 +1108,7 @@ export default class Modal extends React.Component {
           {this.props.alertCloseDisabled ? (
             <span className="hidden" />
           ) : (
-            <span className="close" onClick={this.props.closeModal}>
+            <span className="close" onClick={this.closeMyModal}>
               X
             </span>
           )}

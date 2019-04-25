@@ -97,13 +97,14 @@
 .item-wrap .login-wrap label {
   width: 100%;
   text-align: center;
-  font-size: 22px;
+  font-size: 18px;
   color: rgba(255, 255, 255, 1);
   margin-bottom: 0;
   font-weight: 600;
   line-height: 1.2;
   text-transform: capitalize;
-  letter-spacing: 0.5px;
+  letter-spacing: 0;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .item-wrap .login-wrap form input {
   width: 100%;
@@ -222,6 +223,8 @@
 }
 .open-file-wrap #filepath {
   border-bottom: 0px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-size: 18px;
 }
 .open-file-wrap .browse-btn {
   width: 100%;

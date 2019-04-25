@@ -177,7 +177,6 @@
   font-weight: 600;
   line-height: 1.2;
   position: relative;
-  letter-spacing: 0.9px !important;
 }
 .wallet-inner-wrap label button {
   border-radius: 4px;
@@ -293,7 +292,7 @@
   font-size: 16px;
   padding: 0 0 3px;
   border-bottom: 1px solid #8ffdfd;
-  margin: 10px 0 15px;
+  margin: 12px 0 15px;
   resize: none;
   text-align: center;
   white-space: nowrap;
@@ -332,7 +331,7 @@
   border: 0px none;
   color: #fff;
   font-size: 18px;
-  padding: 5px 0 0;
+  padding: 10px 0 0;
   margin: 0px 0 15px;
   border-bottom: 1px solid #8ffdfd;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
