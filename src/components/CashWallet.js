@@ -363,7 +363,10 @@ export default class CashWallet extends React.Component {
   };
 
   onCopy = (infoText) => {
-    this.setState({ copied: true, info_text: infoText });
+    this.setState({ 
+      copied: true,
+      info_text: infoText 
+    });
     setTimeout(() => {
       this.setState({ copied: false });
     }, 3000);

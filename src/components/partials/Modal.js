@@ -253,7 +253,7 @@ class Contacts extends Component {
                   <div className="contact-right">
                     <CopyToClipboard
                       text={contact.address}
-                      onCopy={this.props.onCopy}
+                      onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
                       data-tip
                       data-for="copy-tooptip"
                       className="button-shine copy-btn"
@@ -1403,7 +1403,7 @@ export default class Modal extends React.Component {
             </span>
           )}
           <div className="mainAlertPopupInner">
-            <p>Your approximate transaction fee is: {this.state.fee} SFX</p>
+            <p>Your approximate transaction fee is: {this.state.fee} SFX (${parseFloat(this.state.fee * this.props.sfxPrice).toFixed(4)})</p>
             <p>Are you sure you want to proceed with this transaction?</p>
 
             <form onSubmit={this.commitTx}>
