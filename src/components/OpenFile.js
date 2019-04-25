@@ -27,7 +27,7 @@ export default class OpenFile extends Component {
     let filepath = e.target.filepath.value;
     const pass = e.target.pass.value;
 
-    console.log(filepath);
+    console.log("File path: " + filepath);
 
     if (filepath === "N/A") {
       this.props.setOpenAlert("Choose the wallet file");

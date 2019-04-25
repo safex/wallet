@@ -169,6 +169,7 @@
   text-transform: uppercase;
   border-radius: 5px;
   margin-top: 5px;
+  letter-spacing: 1px;
 }
 .item-wrap .login-wrap .btn.disabled {
   pointer-events: none;
@@ -231,6 +232,7 @@
   margin: 0 0 5px;
   /* background: rgba(143, 253, 253, 0.62);
   border-bottom: 5px solid #8ffdfd; */
+  letter-spacing: 1px;
   background: url(../images/login-bg.png) no-repeat top left / cover;
   border-bottom: 5px solid #54bcd9 !important;
 }

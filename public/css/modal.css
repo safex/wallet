@@ -10,7 +10,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(15, 29, 54, .97);
   z-index: 10003;
   opacity: 0;
   visibility: hidden;
@@ -69,8 +69,6 @@
 }
 .modal:hover {
   outline: 0px none;
-  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
-  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
 }
 .remove_transition {
   transition: none;
@@ -113,7 +111,7 @@
   text-transform: initial;
 }
 .modal h6 span {
-  color: #54bcd9;
+  color: #5ce1f3;
 }
 .modal button:hover {
   box-shadow: 0 0 30px 0 rgba(0, 199, 236, 0.5) !important;
@@ -471,7 +469,8 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 0px 5px 5px;
   padding: 4px 18px 5px;
-  font-size: 19px !important;
+  letter-spacing: 1.5px;
+  font-size: 20px !important;
 }
 .sendModal .btn[disabled] {
   pointer-events: none;
@@ -809,7 +808,8 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 5px;
   padding: 4px 18px 5px;
-  font-size: 19px !important;
+  letter-spacing: 1.5px;
+  font-size: 20px !important;
 }
 .addressModal .btn:focus,
 .addressModal .btn:active {

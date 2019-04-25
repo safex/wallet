@@ -177,6 +177,7 @@
   font-weight: 600;
   line-height: 1.2;
   position: relative;
+  letter-spacing: 0.9px !important;
 }
 .wallet-inner-wrap label button {
   border-radius: 4px;
@@ -324,33 +325,42 @@
   font-size: 30px;
 }
 .wallet-inner-wrap .display-value {
+  position: relative;
   width: 100%;
   background: transparent;
   text-align: center;
   border: 0px none;
   color: #fff;
-  font-size: 22px;
-  padding: 0px;
+  font-size: 18px;
+  padding: 5px 0 0;
   margin: 0px 0 15px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   border-bottom: 1px solid #8ffdfd;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap .display-value span {
-  margin-right: 12px;
+  margin-right: 0;
   display: inline-block;
-  width: 200px;
   text-align: right;
+  width: 50%;
+  padding: 4px 10px 1px;
 }
 .wallet-inner-wrap .display-value span:last-of-type {
-  margin-right: 30px;
+  margin-right: 0;
+  background: rgba(255, 255, 255, .2);
+  color: rgba(255, 255, 255, .8);
+  font-family: "Avenir Light", sans-serif;
   text-align: left;
 }
 .wallet-inner-wrap .green-field {
-  color: rgba(14, 200, 193, 1);
+  color: #53e9b7;
 }
 .wallet-inner-wrap .yellow-field {
   color: #e9d70b;
+}
+.wallet-inner-wrap .blue-field {
+  color: #5ce1f3;
 }
 .login-wrap .btn {
   font-size: 25px;
@@ -376,6 +386,14 @@
 .wallet-inner-wrap .btn:focus,
 .wallet-inner-wrap .btn:active {
   outline: none;
+}
+.wallet-inner-wrap #send-cash-btn {
+  background: #37869b;
+  border-bottom: 5px solid #53e9b7 !important;
+}
+.wallet-inner-wrap #send-cash-btn:hover {
+  -webkit-box-shadow: 0 0 15px 0 rgba(83, 233, 183, 1);
+  box-shadow: 0 0 15px 0 rgba(83, 233, 183, 1);
 }
 
 @media (min-width: 1200px) {

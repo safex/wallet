@@ -98,8 +98,7 @@ class Transactions extends Component {
                             txInfo.direction === "in" ? "green-text amount" : "amount"
                           }
                         >
-                          {roundAmount(txInfo.amount)} SFX&nbsp;
-                          {this.props.sfxPrice ? " $" + parseFloat(roundAmount(txInfo.amount) * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}
+                          SFX {roundAmount(txInfo.amount)} 
                         </span>
                       ) : (
                         <span
@@ -107,8 +106,7 @@ class Transactions extends Component {
                             txInfo.direction === "in" ? "green-text amount" : "amount"
                           }
                         >
-                          {roundAmount(txInfo.tokenAmount)} SFT&nbsp;
-                          {this.props.sfxPrice ? " $" + parseFloat(roundAmount(txInfo.tokenAmount) * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}
+                            SFT {roundAmount(txInfo.tokenAmount)} 
                         </span>
                       )}
                     </div>
@@ -121,8 +119,7 @@ class Transactions extends Component {
                           )}
                       </p>
                       <p className={txInfo.direction === "in" ? "hidden" : ""}>
-                        Fee: {roundAmount(txInfo.fee)}&nbsp;
-                        {this.props.sfxPrice ? " $" + parseFloat(roundAmount(txInfo.fee) * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}
+                        Fee: SFX {roundAmount(txInfo.fee)}
                       </p>
                     </div>
                   </div>
@@ -1093,9 +1090,7 @@ export default class Modal extends React.Component {
             <div id="history-wrap">
               <Transactions 
                 history={this.props.history} 
-                itemsPerPage={3} 
-                sfxPrice={this.props.sfxPrice}
-                sftPrice={this.props.sftPrice} 
+                itemsPerPage={3}
               />
             </div>
           </div>
@@ -1244,14 +1239,14 @@ export default class Modal extends React.Component {
                 <div className="available-wrap">
                   <span>
                     Available Cash: &nbsp;SFX {this.props.availableCash} &nbsp;
-                    {this.props.sfxPrice ? "$" + parseFloat(this.props.availableCash * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}
+                    {this.props.sfxPrice ? "$" + parseFloat(this.props.availableCash * this.props.sfxPrice).toFixed(2) : "Loading"}
                   </span>
                 </div>
               ) : (
                 <div className="available-wrap">
                   <span>
                     Available Tokens: &nbsp;SFT {this.props.availableTokens} &nbsp;
-                    {this.props.sftPrice ? "$" + parseFloat(this.props.availableTokens * this.props.sftPrice).toFixed(2) + " USD" : "Loading"}
+                    {this.props.sftPrice ? "$" + parseFloat(this.props.availableTokens * this.props.sftPrice).toFixed(2) : "Loading"}
                   </span>
                 </div>
               )}

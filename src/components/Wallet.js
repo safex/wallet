@@ -77,7 +77,7 @@ export default class Wallet extends React.Component {
             <img src="images/sfx.png" alt="safex-cash" />
             <span>Cash: </span>
             <span>
-              {this.props.sfxPrice ? "$" + this.props.sfxPrice + " USD": "Loading..."}
+              {this.props.sfxPrice ? "$" + this.props.sfxPrice: "Loading..."}
             </span>
           </div>
 
@@ -85,7 +85,7 @@ export default class Wallet extends React.Component {
             <img src="images/sft.png" alt="safex-token" />
             <span>Token: </span>
             <span>
-              {this.props.sftPrice ? "$" + this.props.sftPrice + " USD" : "Loading..."}
+              {this.props.sftPrice ? "$" + this.props.sftPrice : "Loading..."}
             </span>
           </div>
 
@@ -172,15 +172,16 @@ export default class Wallet extends React.Component {
         <div className="group-wrap">
           <div className="group">
             <label htmlFor="balance">Pending Cash</label>
-            <p className="display-value yellow-field">
-              <span>SFX {this.props.wallet.pending_balance}</span>
-              <span>{this.props.sftPrice ? "$" + parseFloat(this.props.wallet.pending_balance * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}</span>
+            <p className="display-value green-field">
+              SFX {this.props.wallet.pending_balance}
             </p>
 
             <label htmlFor="unlocked_balance">Available Cash</label>
             <p className="display-value green-field">
               <span>SFX {this.props.wallet.unlocked_balance}</span>
-              <span>{this.props.sftPrice ? "$" + parseFloat(this.props.wallet.unlocked_balance * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}</span>
+              <span className="value">
+                {this.props.sftPrice ? "$" + parseFloat(this.props.wallet.unlocked_balance * this.props.sfxPrice).toFixed(2) : "Loading"}
+              </span>
             </p>
             <button
               className={
@@ -188,6 +189,7 @@ export default class Wallet extends React.Component {
                   ? "btn button-shine disabled"
                   : "btn button-shine"
               }
+              id="send-cash-btn"
               onClick={this.props.setOpenSendModal.bind(this, 0, "", "", "")}
             >
               Send Cash
@@ -196,15 +198,16 @@ export default class Wallet extends React.Component {
 
           <div className="group">
             <label htmlFor="tokens">Pending Tokens</label>
-            <p className="display-value yellow-field">
-              <span>SFT {this.props.wallet.pending_tokens}</span>
-              <span>{this.props.sftPrice ? "$" + parseFloat(this.props.wallet.pending_tokens * this.props.sftPrice).toFixed(2) + " USD" : "Loading"}</span>
+            <p className="display-value blue-field">
+              SFT {this.props.wallet.pending_tokens}
             </p>
 
             <label htmlFor="unlocked_tokens">Available Tokens</label>
-            <p className="display-value green-field">
+            <p className="display-value blue-field">
               <span>SFT {this.props.wallet.unlocked_tokens}</span>
-              <span>{this.props.sftPrice ? "$" + parseFloat(this.props.wallet.unlocked_tokens * this.props.sftPrice).toFixed(2) + " USD" : "Loading"}</span>
+              <span className="value">
+                {this.props.sftPrice ? "$" + parseFloat(this.props.wallet.unlocked_tokens * this.props.sftPrice).toFixed(2) : "Loading"}
+              </span>
             </p>
 
             <button
