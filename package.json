@@ -1,7 +1,7 @@
 {
   "name": "safexcashwallet",
   "description": "Safex Cash Wallet",
-  "version": "v0.1.0",
+  "version": "v1.0.0",
   "homepage": ".",
   "repository": {
     "type": "git",
