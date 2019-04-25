@@ -52,6 +52,7 @@ export default class CashWallet extends React.Component {
       fee_modal: false,
       value: "",
       copied: false,
+      info_text: '',
       remove_transition: false,
       modal_width: "",
       history: [],
@@ -361,8 +362,8 @@ export default class CashWallet extends React.Component {
     this.fetchPrice();
   };
 
-  onCopy = () => {
-    this.setState({ copied: true });
+  onCopy = (infoText) => {
+    this.setState({ copied: true, info_text: infoText });
     setTimeout(() => {
       this.setState({ copied: false });
     }, 3000);
@@ -482,7 +483,7 @@ export default class CashWallet extends React.Component {
           <div className="login-wrap">{page}</div>
         </div>
         <p className={this.state.copied ? "copied-text active" : "copied-text"}>
-          Copied to clipboard
+          <span>{this.state.info_text}</span>
         </p>
         <Modal
           page={this.state.page}
@@ -533,6 +534,8 @@ export default class CashWallet extends React.Component {
           setOpenDeleteModal={this.setOpenDeleteModal}
           feeModal={this.state.fee_modal}
           setOpenFeeModal={this.setOpenFeeModal}
+          sfxPrice={this.state.sfx_price ? this.state.sfx_price : ''}
+          sftPrice={this.state.sft_price ? this.state.sft_price : ''}
         />
       </div>
     );
@@ -733,6 +736,8 @@ export default class CashWallet extends React.Component {
               setOpenDeleteModal={this.setOpenDeleteModal}
               feeModal={this.state.fee_modal}
               setOpenFeeModal={this.setOpenFeeModal}
+              sfxPrice={this.state.sfx_price ? this.state.sfx_price : ''}
+              sftPrice={this.state.sft_price ? this.state.sft_price : ''}
             />
           </div>
         );

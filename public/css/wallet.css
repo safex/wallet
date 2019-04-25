@@ -336,6 +336,16 @@
   border-bottom: 1px solid #8ffdfd;
   -webkit-app-region: no-drag;
 }
+.wallet-inner-wrap .display-value span {
+  margin-right: 12px;
+  display: inline-block;
+  width: 200px;
+  text-align: right;
+}
+.wallet-inner-wrap .display-value span:last-of-type {
+  margin-right: 30px;
+  text-align: left;
+}
 .wallet-inner-wrap .green-field {
   color: rgba(14, 200, 193, 1);
 }

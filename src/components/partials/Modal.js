@@ -6,6 +6,7 @@ import * as crypto from "crypto";
 
 const { shell } = window.require("electron");
 const safex = window.require("safex-nodejs-libwallet");
+const fileDownload = require("react-file-download");
 
 class Transactions extends Component {
   constructor(props) {
@@ -97,15 +98,17 @@ class Transactions extends Component {
                             txInfo.direction === "in" ? "green-text amount" : "amount"
                           }
                         >
-                          {roundAmount(txInfo.amount)} SFX
+                          {roundAmount(txInfo.amount)} SFX&nbsp;
+                          {this.props.sfxPrice ? " $" + parseFloat(roundAmount(txInfo.amount) * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}
                         </span>
                       ) : (
                         <span
                           className={
-                              txInfo.direction === "in" ? "green-text amount" : "amount"
+                            txInfo.direction === "in" ? "green-text amount" : "amount"
                           }
                         >
-                          {roundAmount(txInfo.tokenAmount)} SFT
+                          {roundAmount(txInfo.tokenAmount)} SFT&nbsp;
+                          {this.props.sfxPrice ? " $" + parseFloat(roundAmount(txInfo.tokenAmount) * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}
                         </span>
                       )}
                     </div>
@@ -117,7 +120,10 @@ class Transactions extends Component {
                             options
                           )}
                       </p>
-                      <p className={txInfo.direction === "in" ? "hidden" : ""}>Fee: {roundAmount(txInfo.fee)}</p>
+                      <p className={txInfo.direction === "in" ? "hidden" : ""}>
+                        Fee: {roundAmount(txInfo.fee)}&nbsp;
+                        {this.props.sfxPrice ? " $" + parseFloat(roundAmount(txInfo.fee) * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}
+                      </p>
                     </div>
                   </div>
 
@@ -755,6 +761,20 @@ export default class Modal extends React.Component {
     this.props.setOpenAlert("Contact removed", false, "modal-80");
   };
 
+  exportWallet = () => {
+    var file_obj = "";
+
+    file_obj += "Mnemonic Seed Phrase: " + this.props.wallet.mnemonic + "\n";
+    file_obj += "Secret (Private) View Key: " + this.props.wallet.view_key + "\n";
+    file_obj += "Public View Key: " + this.props.wallet.pub_view + "\n";
+    file_obj += "Secret (Private) Spend Key: " + this.props.wallet.spend_key + "\n";
+    file_obj += "Public Spend Key: " + this.props.wallet.pub_spend + "\n";
+    file_obj += "Public Address: " + this.props.wallet.wallet_address + "\n";
+
+    var date = Date.now();
+    fileDownload(file_obj, date + 'unsafe-sfxsft.txt')
+  }
+
   render() {
     let modal;
     let mixin = [];
@@ -860,7 +880,7 @@ export default class Modal extends React.Component {
               </label>
               <CopyToClipboard
                 text={this.props.wallet.mnemonic}
-                onCopy={this.props.onCopy}
+                onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
                 className="button-shine copy-btn"
               >
                 <button>Copy</button>
@@ -876,46 +896,10 @@ export default class Modal extends React.Component {
             />
 
             <div className="label-wrap">
-              <label htmlFor="spend_key">Secret (Private) Spend Key</label>
-              <CopyToClipboard
-                text={this.props.wallet.spend_key}
-                onCopy={this.props.onCopy}
-                className="button-shine copy-btn"
-              >
-                <button>Copy</button>
-              </CopyToClipboard>
-            </div>
-            <input
-              type="text"
-              name="spend_key"
-              defaultValue={this.props.wallet.spend_key}
-              placeholder="secret (private) spend key"
-              readOnly
-            />
-
-            <div className="label-wrap">
-              <label htmlFor="pub_view">Public View Key</label>
-              <CopyToClipboard
-                text={this.props.wallet.pub_view}
-                onCopy={this.props.onCopy}
-                className="button-shine copy-btn"
-              >
-                <button>Copy</button>
-              </CopyToClipboard>
-            </div>
-            <input
-              type="text"
-              name="pub_view"
-              defaultValue={this.props.wallet.pub_view}
-              placeholder="public view key"
-              readOnly
-            />
-
-            <div className="label-wrap">
               <label htmlFor="view_key">Secret (Private) View Key</label>
               <CopyToClipboard
                 text={this.props.wallet.view_key}
-                onCopy={this.props.onCopy}
+                onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
                 className="button-shine copy-btn"
               >
                 <button>Copy</button>
@@ -930,16 +914,51 @@ export default class Modal extends React.Component {
             />
 
             <div className="label-wrap">
-              <label htmlFor="spend_key">Public Spend Key</label>
+              <label htmlFor="pub_view">Public View Key</label>
               <CopyToClipboard
-                text={this.props.wallet.pub_spend}
-                onCopy={this.props.onCopy}
+                text={this.props.wallet.pub_view}
+                onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
                 className="button-shine copy-btn"
               >
                 <button>Copy</button>
               </CopyToClipboard>
             </div>
+            <input
+              type="text"
+              name="pub_view"
+              defaultValue={this.props.wallet.pub_view}
+              placeholder="public view key"
+              readOnly
+            />
 
+            <div className="label-wrap">
+              <label htmlFor="spend_key">Secret (Private) Spend Key</label>
+              <CopyToClipboard
+                text={this.props.wallet.spend_key}
+                onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
+                className="button-shine copy-btn"
+              >
+                <button>Copy</button>
+              </CopyToClipboard>
+            </div>
+            <input
+              type="text"
+              name="spend_key"
+              defaultValue={this.props.wallet.spend_key}
+              placeholder="secret (private) spend key"
+              readOnly
+            />
+
+            <div className="label-wrap">
+              <label htmlFor="spend_key">Public Spend Key</label>
+              <CopyToClipboard
+                text={this.props.wallet.pub_spend}
+                onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
+                className="button-shine copy-btn"
+              >
+                <button>Copy</button>
+              </CopyToClipboard>
+            </div>
             <input
               type="text"
               name="pub_spend"
@@ -961,6 +980,18 @@ export default class Modal extends React.Component {
                 readOnly
               >
                 Rescan
+              </button>
+            </div>
+            <div className="button-wrap">
+              <p>
+                Export All Wallet Keys to .txt file
+              </p>
+              <button
+                className="button-shine rescan"
+                onClick={this.exportWallet}
+                readOnly
+              >
+                Export
               </button>
             </div>
           </div>
@@ -1060,7 +1091,12 @@ export default class Modal extends React.Component {
 
             <h3>Transaction History</h3>
             <div id="history-wrap">
-              <Transactions history={this.props.history} itemsPerPage={3} />
+              <Transactions 
+                history={this.props.history} 
+                itemsPerPage={3} 
+                sfxPrice={this.props.sfxPrice}
+                sftPrice={this.props.sftPrice} 
+              />
             </div>
           </div>
         </div>
@@ -1206,12 +1242,16 @@ export default class Modal extends React.Component {
             <div>
               {this.props.cash_or_token === 0 ? (
                 <div className="available-wrap">
-                  <span>Available Cash: {this.props.availableCash} </span>
+                  <span>
+                    Available Cash: &nbsp;SFX {this.props.availableCash} &nbsp;
+                    {this.props.sfxPrice ? "$" + parseFloat(this.props.availableCash * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}
+                  </span>
                 </div>
               ) : (
                 <div className="available-wrap">
                   <span>
-                    Available Tokens: {this.props.availableTokens}{" "}
+                    Available Tokens: &nbsp;SFT {this.props.availableTokens} &nbsp;
+                    {this.props.sftPrice ? "$" + parseFloat(this.props.availableTokens * this.props.sftPrice).toFixed(2) + " USD" : "Loading"}
                   </span>
                 </div>
               )}
@@ -1275,7 +1315,7 @@ export default class Modal extends React.Component {
                 <input
                   type="number"
                   name="amount"
-                  placeholder="* Enter Amount"
+                  placeholder={this.props.cash_or_token === 0 ? "* Enter Amount (SFX)" : "* Enter Amount (SFT)"}
                   value={this.state.amount}
                   onChange={this.inputOnChange.bind(this, "amount")}
                 />

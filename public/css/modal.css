@@ -542,6 +542,7 @@
   font-weight: 400 !important;
   font-size: 23px !important;
   display: inline-block;
+  line-height: 1;
 }
 .keysModal input,
 .keysModal textarea {
@@ -553,6 +554,7 @@
   line-height: 1.2;
   background: transparent;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
+  margin: 0 0 10px !important;
 }
 .keysModal .pass-input {
   border-radius: 5px;
@@ -569,7 +571,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 .keysModal .copy-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
@@ -581,11 +583,14 @@
   font-size: 15px;
 }
 .keysModal .button-wrap p {
-  text-align: left;
+  text-align: right;
   font-size: 16px;
+  padding-top: 2px;
   padding-right: 15px;
+  padding-bottom: 0px;
   line-height: 1.2;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
+  width: calc(100% - 75px);
 }
 .keysModal .rescan {
   background: url(../images/login-bg.png) no-repeat top left / cover;

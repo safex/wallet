@@ -77,7 +77,7 @@ export default class Wallet extends React.Component {
             <img src="images/sfx.png" alt="safex-cash" />
             <span>Cash: </span>
             <span>
-              {this.props.sfxPrice ? this.props.sfxPrice + " $" : "Loading..."}
+              {this.props.sfxPrice ? "$" + this.props.sfxPrice + " USD": "Loading..."}
             </span>
           </div>
 
@@ -85,7 +85,7 @@ export default class Wallet extends React.Component {
             <img src="images/sft.png" alt="safex-token" />
             <span>Token: </span>
             <span>
-              {this.props.sftPrice ? this.props.sftPrice + " $" : "Loading..."}
+              {this.props.sftPrice ? "$" + this.props.sftPrice + " USD" : "Loading..."}
             </span>
           </div>
 
@@ -154,7 +154,7 @@ export default class Wallet extends React.Component {
           </ReactTooltip>
           <CopyToClipboard
             text={this.props.wallet.wallet_address}
-            onCopy={this.props.onCopy}
+            onCopy={this.props.onCopy.bind(this, 'Copied to clipboard')}
             className="button-shine copy-btn"
           >
             <button>Copy</button>
@@ -173,12 +173,14 @@ export default class Wallet extends React.Component {
           <div className="group">
             <label htmlFor="balance">Pending Cash</label>
             <p className="display-value yellow-field">
-              {this.props.wallet.pending_balance}
+              <span>SFX {this.props.wallet.pending_balance}</span>
+              <span>{this.props.sftPrice ? "$" + parseFloat(this.props.wallet.pending_balance * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}</span>
             </p>
 
             <label htmlFor="unlocked_balance">Available Cash</label>
             <p className="display-value green-field">
-              {this.props.wallet.unlocked_balance}
+              <span>SFX {this.props.wallet.unlocked_balance}</span>
+              <span>{this.props.sftPrice ? "$" + parseFloat(this.props.wallet.unlocked_balance * this.props.sfxPrice).toFixed(2) + " USD" : "Loading"}</span>
             </p>
             <button
               className={
@@ -188,19 +190,21 @@ export default class Wallet extends React.Component {
               }
               onClick={this.props.setOpenSendModal.bind(this, 0, "", "", "")}
             >
-              {this.props.buttonDisabled ? "Please Wait" : "Send Cash"}
+              Send Cash
             </button>
           </div>
 
           <div className="group">
             <label htmlFor="tokens">Pending Tokens</label>
             <p className="display-value yellow-field">
-              {this.props.wallet.pending_tokens}
+              <span>SFT {this.props.wallet.pending_tokens}</span>
+              <span>{this.props.sftPrice ? "$" + parseFloat(this.props.wallet.pending_tokens * this.props.sftPrice).toFixed(2) + " USD" : "Loading"}</span>
             </p>
 
             <label htmlFor="unlocked_tokens">Available Tokens</label>
             <p className="display-value green-field">
-              {this.props.wallet.unlocked_tokens}
+              <span>SFT {this.props.wallet.unlocked_tokens}</span>
+              <span>{this.props.sftPrice ? "$" + parseFloat(this.props.wallet.unlocked_tokens * this.props.sftPrice).toFixed(2) + " USD" : "Loading"}</span>
             </p>
 
             <button
@@ -211,7 +215,7 @@ export default class Wallet extends React.Component {
               }
               onClick={this.props.setOpenSendModal.bind(this, 1, "", "", "")}
             >
-              {this.props.buttonDisabled ? "Please Wait" : "Send Tokens"}
+              Send Tokens
             </button>
           </div>
         </div>
