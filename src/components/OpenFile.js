@@ -1,33 +1,35 @@
-import React from "react";
+import React, { Component } from "react";
+import ReactTooltip from "react-tooltip";
 const { dialog } = window.require("electron").remote;
 
-export default class OpenFile extends React.Component {
+export default class OpenFile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       wallet_path: "",
+      filename: "",
       alert_close_disabled: false
     };
   }
 
   browseFile = () => {
-    let filename = "";
-    filename = dialog.showOpenDialog({});
+    let filepath = dialog.showOpenDialog({});
 
-    if (filename !== undefined) {
+    if (filepath !== undefined) {
       this.setState(() => ({
-        wallet_path: filename
+        wallet_path: filepath[0]
       }));
-      console.log("filename " + filename);
     }
   };
 
   openFile = e => {
     e.preventDefault();
-    let filename = e.target.filepath.value;
+    let filepath = e.target.filepath.value;
     const pass = e.target.pass.value;
 
-    if (filename === "") {
+    console.log("File path: " + filepath);
+
+    if (filepath === "N/A") {
       this.props.setOpenAlert("Choose the wallet file");
       return false;
     }
@@ -35,9 +37,6 @@ export default class OpenFile extends React.Component {
       this.props.setOpenAlert("Enter password for your wallet file");
       return false;
     }
-    this.setState({
-      alert_close_disabled: true
-    });
     this.props.createWallet(
       "openWallet",
       {
@@ -53,8 +52,9 @@ export default class OpenFile extends React.Component {
     );
     localStorage.setItem("wallet_path", this.state.wallet_path);
     localStorage.setItem("password", JSON.stringify(pass));
+    localStorage.setItem("filename", filepath.split("/").pop());
     this.props.setOpenAlert(
-      "Please wait while your wallet file is loaded. Don't close the application until the process is complete. This can take a while, please be patient.",
+      "Please wait while your wallet file is loaded. Don't close the application until the process is complete. This may take a while, please be patient.",
       true
     );
   };
@@ -66,24 +66,62 @@ export default class OpenFile extends React.Component {
 
   render() {
     return (
-      <div className="open-file-wrap">
+      <div className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3 open-file-wrap">
         <button className="browse-btn button-shine" onClick={this.browseFile}>
           Browse
         </button>
         <form onSubmit={this.openFile}>
+          <div
+            data-tip
+            data-for="open-tooptip"
+            className="button-shine question-wrap"
+          >
+            <span>?</span>
+          </div>
+          <ReactTooltip id="open-tooptip">
+            <p>
+              To open your <span className="blue-text">Safex Wallet</span>,
+              click browse.
+            </p>
+            <p>
+              This will open a <span className="blue-text">dialog window.</span>
+            </p>
+            <p>
+              Choose the <span className="blue-text">Wallet File</span> from
+              your file system.
+            </p>
+            <p>
+              In the future, when you want to{" "}
+              <span className="blue-text">load</span> wallet,{" "}
+            </p>
+            <p>make sure you select the file without the .keys extension.</p>
+            <p>
+              Enter password for your{" "}
+              <span className="blue-text">Wallet File</span> and click open.
+            </p>
+          </ReactTooltip>
           <div className="group-wrap">
             <div className="form-group">
+              <label htmlFor="filepath">Selected file:</label>
               <input
                 name="filepath"
-                value={this.state.wallet_path}
+                value={this.state.wallet_path ? this.state.wallet_path : "N/A"}
                 onChange={this.setWalletPath}
                 placeholder="wallet file path"
+                id="filepath"
                 readOnly
               />
               <input type="password" name="pass" placeholder="password" />
             </div>
           </div>
-          <button type="submit" className="submit btn button-shine">
+          <button
+            type="submit"
+            className={
+              this.props.buttonDisabled
+                ? "submit btn button-shine disabled"
+                : "submit btn button-shine"
+            }
+          >
             Open
           </button>
         </form>

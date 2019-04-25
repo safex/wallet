@@ -22,6 +22,7 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
+    backgroundColor: "#243782",
     width: 1024,
     height: 650,
     minWidth: 1024,

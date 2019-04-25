@@ -1,14 +1,19 @@
 /* Wallet File Wrap */
 .wallet-inner-wrap {
-  background: url(../images/login-bg.png) no-repeat top left / cover;
-  background-size: 100% 370px;
-  padding: 50px 20px 20px !important;
+  border-radius: 5px;
+  padding: 80px 0 0;
+  width: 94%;
+  left: 3%;
 }
 .wallet-inner-wrap.no-mnemonic {
   padding: 40px 20px 20px;
 }
 .wallet-wrap .item-pic {
   right: 17px;
+  opacity: 0.4;
+}
+.wallet-wrap h2 {
+  margin: 40px 0 30px;
 }
 .wallet-inner-wrap .btn-wrap {
   position: absolute;
@@ -16,6 +21,7 @@
   left: 0;
   z-index: 2;
   width: 100%;
+  padding-top: 5px;
 }
 .wallet-inner-wrap .btns-right-wrap {
   position: absolute;
@@ -23,32 +29,58 @@
   top: 0;
 }
 .wallet-inner-wrap .btns-right-wrap button {
-  background: transparent;
-  border: 0px none;
   text-align: center;
-  background: rgba(143, 253, 253, 0.62);
-  border: 0px none;
-  padding: 4px 12px 7px;
-  border-radius: 0px;
-  float: left;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 2px solid #54bcd9;
+  padding: 7px 13px 8px 12px;
   margin-right: 10px;
-  min-width: 42px;
+  float: left;
+  display: flex;
+  width: 48px;
+  justify-content: center;
+  -webkit-app-region: no-drag;
+}
+.wallet-inner-wrap .btns-right-wrap button.disabled {
+  pointer-events: none;
+  opacity: 0.65;
+}
+.wallet-inner-wrap .btns-right-wrap button:last-of-type {
+  margin-right: 0;
 }
 .wallet-inner-wrap .btns-right-wrap button img {
   max-height: 18px;
 }
-.wallet-inner-wrap .btns-right-wrap button.rescan {
-  margin-right: 0;
+.wallet-inner-wrap .btns-right-wrap button:hover {
+  cursor: pointer;
+}
+.__react_component_tooltip {
+  padding: 10px 21px 7px;
+}
+.__react_component_tooltip.show {
+  opacity: 1;
+}
+.__react_component_tooltip p {
+  margin-bottom: 0px !important;
+  text-align: center;
+  line-height: 1.2;
+  font-size: 16px;
+  font-family: "Avenir", "Atrament", Arial, sans-serif;
+}
+.__react_component_tooltip .blue-text {
+  color: #54bcd9;
+}
+.__react_component_tooltip .green-text {
+  color: rgba(14, 200, 193, 1);
+}
+.__react_component_tooltip .red-text {
+  color: rgba(221, 18, 99, 0.8);
 }
 .wallet-inner-wrap .signal {
   border: 0px none;
   padding: 0;
   background: transparent;
-  margin-left: 10px;
   display: inline-block;
-}
-.wallet-inner-wrap .signal {
-  margin-bottom: 5px;
+  -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap .signal:hover {
   box-shadow: none !important;
@@ -57,15 +89,31 @@
 .wallet-inner-wrap .signal img {
   -webkit-filter: invert(0.2);
   filter: invert(0.2);
-  max-height: 23px;
-  margin-right: 8px;
-  -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
 }
 .wallet-inner-wrap .signal.connected img {
   -webkit-filter: none;
   filter: none;
+}
+.wallet-inner-wrap .block {
+  display: inline-block;
+  margin-left: 15px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-app-region: no-drag;
+}
+.wallet-inner-wrap .block:first-of-type {
+  margin-left: 0;
+}
+.wallet-inner-wrap .block img {
+  position: relative;
+  top: 0px;
+  margin-right: 8px;
+  max-height: 22px;
+}
+.wallet-inner-wrap .block span {
+  color: #fff;
+  font-size: 16px;
+  position: relative;
+  top: 3px;
 }
 .wallet-inner-wrap .signal p {
   display: inline-block;
@@ -78,11 +126,9 @@
 .wallet-inner-wrap .blockheight {
   border: 0px none;
   padding: 0;
-  margin-left: 10px;
   min-width: 75px;
   text-align: left;
   background: transparent;
-  display: inline-block;
 }
 .wallet-inner-wrap .blockheight:hover {
   box-shadow: none !important;
@@ -91,19 +137,15 @@
 .wallet-inner-wrap .blockheight img {
   -webkit-filter: grayscale(0);
   filter: grayscale(0);
-  margin-right: 8px;
-  max-height: 22px;
 }
-.wallet-inner-wrap .blockheight span,
-.wallet-inner-wrap .signal span {
-  letter-spacing: 0px;
-  color: #fff;
-  font-size: 19px;
-  position: relative;
-  top: 4px;
+.wallet-inner-wrap span.green-text {
+  color: rgba(14, 200, 193, 1) !important;
 }
-.wallet-inner-wrap .blockheight:hover span {
-  color: #fff;
+.wallet-inner-wrap span.red-text {
+  color: #871744 !important;
+}
+.wallet-inner-wrap span.blue-text {
+  color: #54bcd9;
 }
 .wallet-inner-wrap .group-wrap {
   display: flex;
@@ -114,6 +156,7 @@
 }
 .wallet-inner-wrap .group {
   width: calc(50% - 5px);
+  text-align: center;
 }
 .wallet-file-wrap .group input:last-of-type {
   margin-bottom: 5px;
@@ -126,13 +169,34 @@
   margin-bottom: 5px;
 }
 .wallet-inner-wrap label {
-  width: 100%;
+  width: initial !important;
   text-align: center;
   font-size: 20px;
   color: rgba(255, 255, 255, 1);
   margin-bottom: 0;
   font-weight: 600;
   line-height: 1.2;
+  position: relative;
+  letter-spacing: 0.9px !important;
+}
+.wallet-inner-wrap label button {
+  border-radius: 4px;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 2px solid #54bcd9;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.26px;
+  line-height: 1.2;
+  position: absolute;
+  right: 0;
+  top: -3px;
+  padding: 4px 10px;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+  -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap .open-file-btn {
   width: auto;
@@ -147,17 +211,75 @@
   top: 0;
   left: 0;
 }
+.wallet-inner-wrap .label-wrap {
+  text-align: center;
+  position: relative;
+  margin-bottom: 3px;
+  z-index: 3;
+}
+.wallet-inner-wrap .label-wrap .question-wrap {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #8ffdfd;
+  border-radius: 50%;
+  text-align: center;
+  z-index: 4;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+  -webkit-app-region: no-drag;
+}
+.wallet-inner-wrap .label-wrap .question-wrap:hover {
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  cursor: pointer;
+}
+.wallet-inner-wrap .label-wrap .question-wrap span {
+  position: relative;
+  top: -7px;
+  left: -0px;
+  font-size: 19px;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.wallet-inner-wrap .label-wrap .copy-btn {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  height: 28px;
+  padding: 0px 12px 2px;
+  position: absolute;
+  z-index: 4;
+  right: 0;
+  font-size: 15px;
+  border: 2px solid #54bcd9;
+  border-radius: 7px;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.26px;
+  line-height: 1.2;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+  -webkit-app-region: no-drag;
+}
 .wallet-inner-wrap input {
   width: 100%;
   background: transparent;
   text-align: center;
   border: 0px none;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 20px;
-  padding: 0px;
+  font-size: 17px;
   border-bottom: 1px solid #8ffdfd;
-  margin-bottom: 10px;
+  margin: 10px 0 15px;
   border-radius: 0px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap .btn {
   font-size: 24px !important;
@@ -165,15 +287,18 @@
 .wallet-inner-wrap textarea {
   width: 100%;
   background: transparent;
-  text-align: center;
   border: 0px none;
   border-radius: 0px;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 20px;
-  padding: 0px;
+  font-size: 16px;
+  padding: 0 0 3px;
   border-bottom: 1px solid #8ffdfd;
-  margin-bottom: 7px;
+  margin: 10px 0 15px;
   resize: none;
+  text-align: center;
+  white-space: nowrap;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
@@ -200,38 +325,80 @@
   font-size: 30px;
 }
 .wallet-inner-wrap .display-value {
+  position: relative;
   width: 100%;
   background: transparent;
   text-align: center;
   border: 0px none;
   color: #fff;
-  font-size: 20px;
-  padding: 0px;
+  font-size: 18px;
+  padding: 5px 0 0;
+  margin: 0px 0 15px;
+  letter-spacing: 0.8px;
   border-bottom: 1px solid #8ffdfd;
-  margin-bottom: 7px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-app-region: no-drag;
+}
+.wallet-inner-wrap .display-value span {
+  margin-right: 0;
+  display: inline-block;
+  text-align: right;
+  width: 50%;
+  padding: 4px 10px 1px;
+}
+.wallet-inner-wrap .display-value span:last-of-type {
+  margin-right: 0;
+  background: rgba(255, 255, 255, .2);
+  color: rgba(255, 255, 255, .8);
+  font-family: "Avenir Light", sans-serif;
+  text-align: left;
 }
 .wallet-inner-wrap .green-field {
-  color: rgba(14, 200, 193, 1);
+  color: #53e9b7;
 }
 .wallet-inner-wrap .yellow-field {
-  color: #dfc983;
+  color: #e9d70b;
+}
+.wallet-inner-wrap .blue-field {
+  color: #5ce1f3;
 }
 .login-wrap .btn {
   font-size: 25px;
   padding: 6px 12px 4px;
   width: 100%;
-  background: rgba(143, 253, 253, 0.62);
   color: #fff;
   text-transform: uppercase;
   border: 0px;
-  border-bottom: 5px solid #8ffdfd;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border-bottom: 5px solid #54bcd9;
   border-radius: 0px;
   margin-top: 3px;
 }
 .wallet-inner-wrap .btn {
-  background: rgba(143, 253, 253, 0.7) !important;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border-bottom: 5px solid #54bcd9 !important;
+  margin-top: 0 !important;
+  -webkit-app-region: no-drag;
+}
+.wallet-inner-wrap .btn.disabled {
+  pointer-events: none;
 }
 .wallet-inner-wrap .btn:focus,
 .wallet-inner-wrap .btn:active {
   outline: none;
+}
+.wallet-inner-wrap #send-cash-btn {
+  background: #37869b;
+  border-bottom: 5px solid #53e9b7 !important;
+}
+.wallet-inner-wrap #send-cash-btn:hover {
+  -webkit-box-shadow: 0 0 15px 0 rgba(83, 233, 183, 1);
+  box-shadow: 0 0 15px 0 rgba(83, 233, 183, 1);
+}
+
+@media (min-width: 1200px) {
+  .wallet-inner-wrap {
+    width: 80%;
+    left: 10%;
+  }
 }

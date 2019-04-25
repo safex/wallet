@@ -48,14 +48,24 @@ const addClass = (condition, className) => (condition ? ` ${className} ` : "");
  * @param alert
  * @param disabled
  * @param send_cash_or_token
+ * @param modal_width
  */
-function openModal(target, modal_type, alert, disabled, cash_or_token) {
+function openModal(
+  target,
+  modal_type,
+  alert,
+  disabled,
+  cash_or_token,
+  modal_width,
+  remove_transition
+) {
   target.setState({
     modal: true,
     [modal_type]: true,
     alert_text: alert,
-    cash_or_token: cash_or_token,
-    alert_close_disabled: disabled
+    alert_close_disabled: disabled,
+    remove_transition: remove_transition,
+    button_disabled: true
   });
 }
 
@@ -65,13 +75,19 @@ function openModal(target, modal_type, alert, disabled, cash_or_token) {
 function closeModal(target) {
   if (
     (target.state.loading_modal && target.state.alert) ||
-    (target.state.address_modal && target.state.alert) ||
+    (target.state.keys_modal && target.state.alert) ||
     (target.state.send_modal && target.state.alert) ||
-    target.state.mixin_modal
+    (target.state.send_modal && target.state.fee_modal) ||
+    (target.state.address_modal && target.state.alert) ||
+    target.state.mixin_modal ||
+    target.state.delete_modal
   ) {
     target.setState({
       alert: false,
-      mixin_modal: false
+      confirm_modal: false,
+      mixin_modal: false,
+      delete_modal: false,
+      fee_modal: false
     });
   } else {
     target.setState({
@@ -82,25 +98,40 @@ function closeModal(target) {
       target.setState({
         loading_modal: false,
         alert: false,
-        address_modal: false,
+        keys_modal: false,
         send_modal: false,
-        mixin_modal: false
+        mixin_modal: false,
+        history_modal: false,
+        address_modal: false,
+        confirm_modal: false,
+        delete_modal: false,
+        fee_modal: false,
+        modal_width: "",
+        remove_transition: false
       });
     }, 300);
+    setTimeout(() => {
+      target.setState({
+        button_disabled: false
+      });
+    }, 1000);
   }
 }
 
 /**
- * Close Modal
+ * Close Alert
  */
 function closeAlert(target) {
   target.setState({
-    modal: false,
-    alert_close_disabled: false
+    modal: false
   });
   setTimeout(() => {
     target.setState({
-      alert: false
+      alert: false,
+      alert_close_disabled: false,
+      button_disabled: false,
+      modal_width: "",
+      remove_transition: false
     });
   }, 300);
 }

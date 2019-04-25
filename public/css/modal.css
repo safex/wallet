@@ -10,7 +10,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(15, 29, 54, .97);
   z-index: 10003;
   opacity: 0;
   visibility: hidden;
@@ -18,29 +18,21 @@
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
-  -webkit-app-region: no-drag;
 }
 .backdrop.active {
   visibility: visible;
   opacity: 1;
 }
 .modal {
-  background: rgba(0, 0, 0, 0.7);
-  background-size: 100% 100%;
-  background-repeat: repeat-y;
-  border: 1px solid #327a9b;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
   border-radius: 5px;
   color: #fff;
   text-transform: uppercase;
   font-size: 17px;
   padding: 15px;
-  width: 510px;
+  max-width: 820px;
   visibility: hidden;
   opacity: 0;
-  transition: all ease 0.3s;
-  -o-transition: all ease 0.3s;
-  -moz-transition: all ease 0.3s;
-  -webkit-transition: all ease 0.3s;
   text-align: center;
   display: table;
   margin: auto;
@@ -50,7 +42,26 @@
   bottom: 0;
   right: 0;
   z-index: 100004;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
   -webkit-app-region: no-drag;
+}
+.modal-50 {
+  width: 50%;
+}
+.modal-55 {
+  width: 55%;
+}
+.modal-60 {
+  width: 60%;
+}
+.modal-70 {
+  width: 70%;
+}
+.modal-80 {
+  width: 80%;
 }
 .modal.active {
   visibility: visible;
@@ -58,13 +69,16 @@
 }
 .modal:hover {
   outline: 0px none;
-  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
-  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.5);
-  border: 1px solid #00e7ff;
+}
+.remove_transition {
+  transition: none;
+  -o-transition: none;
+  -moz-transition: none;
+  -webkit-transition: none;
 }
 .modal button {
   border-radius: 7px;
-  background-color: rgba(18, 190, 221, 0.45);
+  background-color: rgba(18, 190, 221, 0.3);
   color: #fff;
   font-size: 13px;
   font-weight: 700;
@@ -73,21 +87,31 @@
   line-height: 1.2;
   position: relative;
   border: 2px solid #54bcd9;
-  padding: 6px 12px 5px;
+  padding: 5px 12px;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
 }
 .modal h3 {
+  width: initial;
+  display: inline-block;
   background: transparent;
   border: 0px none;
   margin-right: 0;
-  font-size: 20px;
+  font-size: 24px;
   letter-spacing: 0.8px;
   margin-bottom: 0;
   text-transform: initial;
   line-height: 1;
   text-align: center;
+}
+.modal h6 {
+  margin: 10px 0 15px;
+  font-size: 24px;
+  text-transform: initial;
+}
+.modal h6 span {
+  color: #5ce1f3;
 }
 .modal button:hover {
   box-shadow: 0 0 30px 0 rgba(0, 199, 236, 0.5) !important;
@@ -103,13 +127,82 @@
   margin-bottom: 0;
   margin-top: 5px;
 }
+.modal .label-wrap {
+  text-align: center;
+  position: relative;
+  margin-bottom: 3px;
+}
 .modal label {
   width: 100%;
   text-transform: capitalize;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 400;
   letter-spacing: 0.6px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
+  position: relative;
+  z-index: 2;
+}
+.modal label .question-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #8ffdfd;
+  border-radius: 50%;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.modal label .question-wrap:hover {
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  cursor: pointer;
+}
+.modal label .question-wrap span {
+  position: relative;
+  top: -12px;
+  left: -0.5px;
+  font-size: 19px;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.modal .label-wrap .question-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #8ffdfd;
+  border-radius: 50%;
+  text-align: center;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.modal .label-wrap .question-wrap:hover {
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  cursor: pointer;
+}
+.modal .label-wrap .question-wrap span {
+  position: relative;
+  top: -7px;
+  left: -0.7px;
+  font-size: 19px;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.modal label button {
+  position: absolute;
+  right: 0;
+  padding: 5px 12px;
 }
 .modal textarea {
   text-align: left;
@@ -141,34 +234,44 @@
 .modal textarea::-webkit-input-placeholder,
 .modal input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  opacity: 1;
+  opacity: 0.7;
   color: #fff;
-  font-size: 20px !important;
+  font-size: 22px !important;
+  letter-spacing: 0.7px;
   text-align: left;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
+  line-height: 1.2;
+  word-break: break-all;
 }
 .modal textarea::-moz-placeholder,
 .modal input::-moz-placeholder {
   /* Firefox 19+ */
-  opacity: 1;
+  opacity: 0.7;
   color: #fff;
-  font-size: 20px !important;
+  font-size: 22px !important;
+  letter-spacing: 0.7px;
   text-align: left;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
 }
 .modal textarea:-moz-placeholder,
 .modal input:-moz-placeholder {
   /* Firefox 18- */
-  opacity: 1;
+  opacity: 0.7;
   color: #fff;
-  font-size: 20px !important;
+  font-size: 22px !important;
+  letter-spacing: 0.7px;
   text-align: left;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
 }
 .modal textarea:-ms-input-placeholder,
 .modal input:-ms-input-placeholder {
   /* IE 10+ */
-  opacity: 1;
+  opacity: 0.7;
   color: #fff;
-  font-size: 20px !important;
+  font-size: 22px !important;
+  letter-spacing: 0.7px;
   text-align: left;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
 }
 .modal input {
   display: inline-block;
@@ -177,8 +280,7 @@
   padding: 5px 10px;
   margin: 0 0 7px !important;
   font-size: 14px;
-  background: url(../images/input-bg.png) repeat-y top left;
-  background-size: 100% 100%;
+  background: rgba(0, 0, 0, 0.4);
   color: #fff !important;
   width: 100%;
   max-height: 90px;
@@ -210,6 +312,7 @@
   color: #fff;
   opacity: 1;
   font-size: 19px;
+  z-index: 1;
   font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
   -o-transition: all ease 0.2s;
   -webkit-transition: all ease 0.2s;
@@ -243,18 +346,25 @@
   border: 2px solid #ff004e;
   margin: 0 5px 0 0;
   padding: 5px 12px;
-  font-size: 14px;
+  font-size: 19px;
 }
 .modal .cancel-btn:hover {
   -webkit-box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
   box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
 }
+.modal .cancel-btn:active,
+.modal .cancel-btn:focus {
+  outline: none;
+}
 .modal .confirm-btn {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 0 0 0 5px;
-  font-size: 14px;
+  font-size: 19px;
   padding: 5px 12px;
-  position: relative;
-  top: -0.8px;
+}
+.modal .confirm-btn:active,
+.modal .confirm-btn:focus {
+  outline: none;
 }
 .modal .save-btn {
   background: rgba(200, 14, 75, 0.5);
@@ -274,20 +384,16 @@
 .modal .save-btn.green:hover {
   box-shadow: 0 0 30px 0 rgba(14, 200, 193, 0.5) !important;
 }
-.modal .copy-btn {
-  margin-top: 0;
-  font-size: 11.5px;
-  padding: 7px 12px 4px;
-}
 .modal .save-btn {
   margin-top: 5px;
   font-size: 11.5px;
   padding: 7px 12px 4px;
 }
 .modal h3 {
-  margin: 0 0 15px;
-  font-size: 20px;
+  margin: 0 0 20px;
+  font-size: 22px;
   text-transform: initial;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
 }
 .modal h5 {
   margin-top: 0;
@@ -322,8 +428,8 @@
 .sendModal:hover {
   border: 0px;
 }
-.sendModal h3 {
-  margin: 0 0 20px !important;
+.sendModal .sendModalInner {
+  width: 100%;
 }
 .sendModal h4 {
   text-transform: initial;
@@ -331,23 +437,43 @@
   color: rgba(255, 0, 78, 0.75);
   letter-spacing: 0.5px;
 }
+.sendModal form {
+  margin-top: 30px;
+}
+.sendModal label {
+  bottom: -12px;
+  right: 10px;
+}
 .sendModal textarea {
   padding: 4px 10px 5px;
   border-radius: 0px;
   text-align: left;
   border-bottom: 1px solid #8ffdfd;
   font-size: 18px;
+  letter-spacing: -0.3px;
+  margin-bottom: 20px !important;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal input {
-  padding: 7px 10px 6px;
+  padding: 13px 60px 10px 10px;
   border-bottom: 1px solid #8ffdfd;
   font-size: 18px;
   border-radius: 0px;
+  background: transparent;
+  letter-spacing: -0.3px;
+  margin-bottom: 23px !important;
+  line-height: 1;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal .btn {
-  margin-top: 5px;
-  padding: 4px 12px 4.4px;
-  font-size: 16px !important;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  margin: 0px 5px 5px;
+  padding: 4px 18px 5px;
+  letter-spacing: 1.5px;
+  font-size: 20px !important;
+}
+.sendModal .btn[disabled] {
+  pointer-events: none;
 }
 .sendModal .btn:focus,
 .sendModal .btn:active {
@@ -357,7 +483,7 @@
 .sendModal .available-wrap {
   position: absolute;
   left: 20px;
-  top: 15px;
+  top: 18px;
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -365,7 +491,8 @@
 .sendModal .available-wrap span {
   text-transform: capitalize;
   line-height: 1.2;
-  font-size: 18px;
+  font-size: 17px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModalBackdrop {
   z-index: 10001;
@@ -386,12 +513,15 @@
 }
 .loadingModal label {
   text-transform: initial;
-  font-size: 21px;
+  font-size: 19px;
   margin-bottom: 8px;
+  letter-spacing: 0px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .loadingModal input {
-  border: 1px solid #327a9b;
   margin: 0 0 10px !important;
+  font-size: 22px;
+  padding: 1px 10px;
 }
 .loadingModal p {
   font-size: 20px;
@@ -400,29 +530,83 @@
   margin: 0 0 0 5px;
 }
 
-.addressModal h3 {
-  font-size: 21px;
+.keysModal {
+  text-align: center;
 }
-.addressModal label {
+.keysModal h3 {
+  font-size: 24px;
+}
+.keysModal label {
   text-transform: initial !important;
   font-weight: 400 !important;
-  margin-bottom: 5px !important;
-  font-size: 19px !important;
+  font-size: 23px !important;
+  display: inline-block;
+  line-height: 1;
 }
-.addressModal input,
-.addressModal textarea {
-  font-size: 19px !important;
-  padding: 5px !important;
+.keysModal input,
+.keysModal textarea {
+  font-size: 16px;
+  padding: 7px 5px 3px !important;
   border-bottom: 1px solid #8ffdfd;
   border-radius: 0;
   text-align: center;
+  line-height: 1.2;
+  background: transparent;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  margin: 0 0 10px !important;
 }
-.addressModal .pass-input {
+.keysModal .pass-input {
   border-radius: 5px;
-  border: 1px solid #327a9b !important;
   text-align: left !important;
   padding: 5px 10px !important;
+  background: tra;
 }
+.keysModal .login-input {
+  margin: 10px 0 12px !important;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 0px;
+}
+.keysModal .button-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.keysModal .copy-btn {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  height: 28px;
+  padding: 0px 12px 2px;
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  font-size: 15px;
+}
+.keysModal .button-wrap p {
+  text-align: right;
+  font-size: 16px;
+  padding-top: 2px;
+  padding-right: 15px;
+  padding-bottom: 0px;
+  line-height: 1.2;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  width: calc(100% - 75px);
+}
+.keysModal .rescan {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  text-align: center;
+  border: 2px solid #54bcd9;
+  padding: 5px 14px 7px;
+  display: flex;
+  font-size: 16px;
+}
+.keysModal .rescan img {
+  max-height: 18px;
+}
+.keysModal .address-inner-wrap .label-wrap label {
+  text-indent: 52px;
+  display: inline;
+}
+
 .ringSizeModal .pass-input {
   border-radius: 5px;
   border: 1px solid #327a9b;
@@ -432,4 +616,310 @@
 .ringSizeModal .ring-size-wrap .pass-input {
   text-align: center;
   font-size: 18px;
+}
+
+.historyModal {
+  height: 450px;
+}
+.historyModal h3 {
+  margin-bottom: 35px;
+}
+.historyModal #history-wrap {
+  overflow: auto;
+  height: 400px;
+  letter-spacing: -0.3px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.historyModal #pagination,
+.addressModal #pagination {
+  position: absolute;
+  bottom: 22px;
+  width: 100%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.historyModal #pagination strong,
+.addressModal #pagination strong {
+  margin: 0 10px;
+  position: relative;
+  top: 4px;
+  min-width: 110px;
+  display: inline-block;
+  text-transform: capitalize;
+}
+.historyModal #pagination button,
+.addressModal #pagination button {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  padding: 6px 12px 5px;
+  visibility: visible;
+  opacity: 1;
+  height: 30px;
+}
+.historyModal #pagination button.first-page,
+.addressModal #pagination button.first-page {
+  margin-right: 8px;
+  padding: 5.5px 12px;
+}
+.historyModal #pagination button.first-page span,
+.historyModal #pagination button.last-page span,
+.addressModal #pagination button.first-page span,
+.addressModal #pagination button.last-page span {
+  font-weight: 400;
+  font-size: 23px;
+  letter-spacing: 1px;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
+  position: relative;
+  top: -7px;
+}
+.historyModal #pagination button.last-page,
+.addressModal #pagination button.last-page {
+  margin-left: 8px;
+  padding: 5.5px 12px;
+}
+.historyModal #history-wrap .history-item {
+  margin-bottom: 35px;
+  border-bottom: 1px solid #8ffdfd;
+}
+.historyModal #history-wrap .history-item .item-section {
+  padding: 0;
+}
+.historyModal #history-wrap .history-item p {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+.historyModal #history-wrap .history-item p span {
+  position: relative;
+  top: 2px;
+}
+.historyModal #history-wrap .history-item .amount {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.historyModal #history-wrap .history-item .arrow-img {
+  max-height: 18px;
+  margin-right: 10px;
+}
+.historyModal #history-wrap .history-item .green-text {
+  color: rgba(14, 200, 193, 1);
+}
+.historyModal #history-wrap .history-item .yellow-text {
+  color: #e9d70b;
+}
+.historyModal #history-wrap .history-item .tx-id-wrap {
+  display: flex;
+  justify-content: center;
+}
+.historyModal #history-wrap .history-item .tx-id-wrap span {
+  display: inline-block;
+  text-transform: initial;
+  text-align: left;
+  padding: 0 15px;
+}
+.historyModal #history-wrap .history-item .tx-id {
+  background: transparent;
+  border: none;
+  text-transform: initial;
+  font-size: 16px;
+  padding: 0;
+  display: inline-block;
+  letter-spacing: 0;
+  margin-bottom: 0;
+  color: #54bcd9;
+  width: calc(100% - 200px);
+  text-align: left;
+  white-space: nowrap;
+}
+.historyModal #history-wrap .history-item .tx-id:hover {
+  box-shadow: none !important;
+}
+.historyModal .question-wrap,
+.keysModal .question-wrap {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #8ffdfd;
+  border-radius: 50%;
+  text-align: center;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.historyModal .question-wrap span,
+.keysModal .question-wrap span {
+  position: relative;
+  top: -6px;
+  left: -0.5px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.addressModal {
+  height: 420px;
+}
+.addressModal #show-contacts {
+  text-align: center;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 2px solid #54bcd9;
+  padding: 7px 13px 8px 14px;
+  display: flex;
+  width: 48px;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  justify-content: center;
+}
+.addressModal #show-contacts img {
+  max-height: 18px;
+}
+.addressModal label {
+  bottom: -21px;
+  right: 10px;
+}
+.addressModal #genPayIdWrap {
+  position: relative;
+  margin: 0 0 10px;
+}
+.addressModal #genPayIdWrap #genPayId {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+}
+.addressModal form {
+  margin-top: 45px;
+}
+.addressModal input,
+.addressModal textarea {
+  font-size: 16px;
+  padding: 13px 60px 10px 10px;
+  border-bottom: 1px solid #8ffdfd;
+  border-radius: 0;
+  text-align: left;
+  background: transparent;
+  margin-bottom: 25px !important;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.addressModal .btn {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  margin: 5px;
+  padding: 4px 18px 5px;
+  letter-spacing: 1.5px;
+  font-size: 20px !important;
+}
+.addressModal .btn:focus,
+.addressModal .btn:active {
+  outline: none;
+  color: #fff;
+}
+.addressModal .show-contacts-wrap {
+  margin-top: 35px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.addressModal .show-contacts-wrap .contact-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #8ffdfd;
+}
+.addressModal .show-contacts-wrap .contact-item p {
+  text-align: left;
+  font-size: 16px;
+}
+.addressModal .show-contacts-wrap .contact-item .address {
+  word-break: break-all;
+  text-align: left;
+  margin-bottom: 8px;
+}
+.addressModal .show-contacts-wrap .contact-item .payment-id {
+  font-size: 15px;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-left {
+  width: 160px;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-left .name {
+  overflow: hidden;
+  position: relative;
+  line-height: 1.2em;
+  min-height: 52px;
+  font-size: 19px;
+  text-align: left;
+  word-break: break-all;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-center {
+  width: calc(100% - 284px);
+  padding-right: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-center .payment-id {
+  font-size: 14px;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-right {
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-right button {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  padding: 4px 8px 6px;
+  visibility: visible;
+  opacity: 1;
+  height: 32px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  width: calc(50% - 5px);
+  max-width: 52px;
+  display: inline-block;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-right button:hover {
+  cursor: pointer;
+}
+.addressModal .show-contacts-wrap .contact-item .contact-right button img {
+  max-height: 18px;
+}
+
+.confirmModal .mainAlertPopupInner p {
+  background: transparent;
+  border: 0px none;
+  margin-right: 0;
+  padding-right: 20px;
+  font-size: 18px;
+  margin-bottom: 0;
+  text-transform: initial;
+  line-height: 1.2;
+  text-align: left;
+  word-break: break-word;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+
+.deleteModal p,
+.feeModal p {
+  text-transform: initial;
+  font-size: 19px;
+  margin-bottom: 10px;
+  letter-spacing: 0px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.feeModal form {
+  margin: 20px 0 25px;
+}
+.feeModal h6 {
+  text-transform: initial;
+  font-size: 15px;
+  margin-bottom: 8px;
+  letter-spacing: 0px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  margin: 20px 0 0;
+  text-align: left;
+  padding: 0 30px;
+}
+.feeModal .btn[disabled] {
+  pointer-events: none;
+  opacity: .65;
 }

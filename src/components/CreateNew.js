@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
+import ReactTooltip from "react-tooltip";
 
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
-export default class CreateNew extends React.Component {
+export default class CreateNew extends Component {
   createNew = e => {
     e.preventDefault();
 
@@ -39,8 +40,9 @@ export default class CreateNew extends React.Component {
       });
       localStorage.setItem("wallet_path", filepath);
       localStorage.setItem("password", JSON.stringify(pass1));
+      localStorage.setItem("filename", filepath.split("/").pop());
       this.props.setOpenAlert(
-        "Please wait while your wallet file is being created. Don't close the application until the process is complete.",
+        "Please wait while your wallet file is being created. Don't close the application until the process is complete. This may take a while, please be patient.",
         true
       );
     });
@@ -48,14 +50,64 @@ export default class CreateNew extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.createNew}>
+      <form
+        className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3"
+        onSubmit={this.createNew}
+      >
+        <div
+          data-tip
+          data-for="create-new-tooptip"
+          className="button-shine question-wrap"
+        >
+          <span>?</span>
+        </div>
+        <ReactTooltip id="create-new-tooptip">
+          <p>
+            If you don't already have{" "}
+            <span className="blue-text">Safex Wallet</span>,{" "}
+          </p>
+          <p>you can generate a new one here.</p>
+          <p>Enter the password for your new wallet and click create.</p>
+          <p>
+            You will then be asked to set a{" "}
+            <span className="blue-text">name</span> for the
+          </p>
+          <p>
+            wallet file - enter one and click{" "}
+            <span className="blue-text">save.</span>
+          </p>
+          <p>
+            This will create <span className="blue-text">2</span> files on your
+            file system.
+          </p>
+          <p>
+            <span className="blue-text">ExampleWallet</span> and{" "}
+            <span className="blue-text">ExampleWallet.keys</span>
+          </p>
+          <p>
+            In the future, when you want to{" "}
+            <span className="blue-text">load</span> wallet,{" "}
+          </p>
+          <p>make sure you select the file without the .keys extension.</p>
+          <p>
+            Make sure you <span className="blue-text">back up</span> these files
+            for future wallet recovery.
+          </p>
+        </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">
             <input type="password" name="pass1" placeholder="password" />
             <input type="password" name="pass2" placeholder="repeat password" />
           </div>
         </div>
-        <button type="submit" className="submit btn button-shine">
+        <button
+          type="submit"
+          className={
+            this.props.buttonDisabled
+              ? "submit btn button-shine disabled"
+              : "submit btn button-shine"
+          }
+        >
           <span>Create</span>
         </button>
       </form>

@@ -1,5 +1,7 @@
 import React from "react";
 import { addClass } from "../utils/utils.js";
+import ReactTooltip from "react-tooltip";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default class Wallet extends React.Component {
   constructor(props) {
@@ -15,8 +17,8 @@ export default class Wallet extends React.Component {
   componentDidMount = () => {
     let wallet = this.props.walletMeta;
     wallet.off("refreshed");
-    this.refreshCallback();
-    wallet.on("refreshed", this.refreshCallback);
+    this.props.refreshCallback();
+    wallet.on("refreshed", this.props.refreshCallback);
     this.props.closeAlert();
     this.mounted = true;
     if (!localStorage.getItem("wallet")) {
@@ -29,166 +31,192 @@ export default class Wallet extends React.Component {
     this.props.walletMeta.off();
   }
 
-  refreshCallback = () => {
-    console.log("Wallet refreshed");
-    let wallet = this.props.walletMeta;
-
-    let syncedHeight =
-      wallet.daemonBlockchainHeight() - wallet.blockchainHeight() < 10;
-    if (syncedHeight) {
-      console.log("syncedHeight up to date...");
-      if (wallet.synchronized()) {
-        console.log("refreshCallback wallet synchronized, setting state...");
-        this.props.setWalletData();
-      }
-    }
-
-    wallet
-      .store()
-      .then(() => {
-        console.log("Wallet stored");
-      })
-      .catch(e => {
-        this.props.setOpenAlert("Unable to store wallet: " + e);
-        console.log("Unable to store wallet: " + e);
-      });
-  };
-
-  rescanBalance = () => {
-    var wallet = this.props.walletMeta;
-    console.log(wallet);
-    this.props.setOpenAlert(
-      "Please wait while blockchain is being rescanned. Don't close the application until the process is complete. This can take a while, please be patient.",
-      true
-    );
-    wallet.off("updated");
-    wallet.off("refreshed");
+  onCopy = () => {
+    this.setState({ copied: true });
     setTimeout(() => {
-      console.log("Starting blockchain rescan sync...");
-      wallet.rescanBlockchain();
-      console.log("Blockchain rescan executed...");
-      setTimeout(() => {
-        console.log("Rescan setting callbacks");
-        this.props.setWalletData();
-        this.props.closeModal();
-        wallet
-          .store()
-          .then(() => {
-            console.log("Wallet stored");
-          })
-          .catch(e => {
-            console.log("Unable to store wallet: " + e);
-          });
-        wallet.on("refreshed", this.refreshCallback);
-      }, 1000);
-    }, 1000);
-  };
-
-  connectionError = () => {
-    this.props.setOpenAlert("Daemon connection error, please try again later ");
+      this.setState({ copied: false });
+    }, 2000);
   };
 
   render() {
     return (
-      <div className="wallet-inner-wrap">
+      <div className="col-xs-12 wallet-inner-wrap">
         <div className="btn-wrap">
           <div
             className={
-              "signal" +
+              "signal block" +
               addClass(this.props.wallet.wallet_connected, "connected")
             }
           >
-            <img src="images/connected-white.png" alt="connected" />
+            <img
+              src={
+                this.props.wallet.wallet_connected
+                  ? "images/connected-green.png"
+                  : "images/connected-red.png"
+              }
+              alt="connected"
+            />
             <span>Status: &nbsp;</span>
-            <span>
+            <span
+              className={
+                this.props.wallet.wallet_connected ? "green-text" : "red-text"
+              }
+            >
               {this.props.wallet.wallet_connected
                 ? "Connected"
                 : "Connection error"}
             </span>
           </div>
-          <div className="blockheight">
-            <img src="images/blocks.png" alt="blocks" />
+          <div className="blockheight block">
+            <img src="images/blocks-blue.png" alt="blocks" />
             <span>Blockchain height: &nbsp;</span>
             <span>{this.props.wallet.blockchain_height}</span>
           </div>
+
+          <div className="sfx block">
+            <img src="images/sfx.png" alt="safex-cash" />
+            <span>Cash: </span>
+            <span>
+              {this.props.sfxPrice ? "$" + this.props.sfxPrice: "Loading..."}
+            </span>
+          </div>
+
+          <div className="sft block">
+            <img src="images/sft.png" alt="safex-token" />
+            <span>Token: </span>
+            <span>
+              {this.props.sftPrice ? "$" + this.props.sftPrice : "Loading..."}
+            </span>
+          </div>
+
           <div className="btns-right-wrap">
             <button
-              className="button-shine address-info"
+              className={
+                this.props.buttonDisabled
+                  ? "button-shine address-btn disabled"
+                  : "button-shine address-btn"
+              }
               onClick={this.props.setOpenAddressModal}
-              title="Address Info"
+              data-tip
+              data-for="address-tooptip"
+            >
+              <img src="images/address-book.png" alt="address-book" />
+            </button>
+            <ReactTooltip id="address-tooptip">
+              <p>Address Book</p>
+            </ReactTooltip>
+            <button
+              className={
+                this.props.buttonDisabled
+                  ? "button-shine tx-history disabled"
+                  : "button-shine tx-history"
+              }
+              onClick={this.props.setOpenHistoryModal}
+              data-tip
+              data-for="history-tooptip"
+            >
+              <img src="images/history.png" alt="transaction-history" />
+            </button>
+            <ReactTooltip id="history-tooptip">
+              <p>Transaction History</p>
+            </ReactTooltip>
+            <button
+              className={
+                this.props.buttonDisabled
+                  ? "button-shine address-info disabled"
+                  : "button-shine address-info"
+              }
+              onClick={this.props.setOpenLoadingModal}
+              data-tip
+              data-for="keys-tooptip"
             >
               <img src="images/key.png" alt="rescan" />
             </button>
-            <button
-              className="button-shine rescan"
-              onClick={this.rescanBalance}
-              title="Rescan"
-              disabled={this.props.wallet.wallet_connected ? "" : "disabled"}
-            >
-              <img src="images/rescan.png" alt="rescan" />
-            </button>
+            <ReactTooltip id="keys-tooptip">
+              <p>Seed and Keys</p>
+            </ReactTooltip>
           </div>
         </div>
 
-        <label htmlFor="filename">Wallet File Name</label>
-        <input
-          type="text"
-          name="filename"
-          defaultValue={this.props.wallet.filename}
-          placeholder="filename"
-          readOnly
-        />
+        <div className="label-wrap">
+          <label>Wallet Address</label>
+          <div
+            className="button-shine question-wrap"
+            data-tip
+            data-for="pub-address-tooptip"
+          >
+            <span>?</span>
+          </div>
+          <ReactTooltip place="right" id="pub-address-tooptip">
+            <p>This is <span className="blue-text">Public Address</span> of your wallet.</p>
+            <p>This is address where you can receive <span className="blue-text">Safex Cash</span> or <span className="blue-text">Safex Token.</span></p>
+            <p>It is generated using your <span className="blue-text">Public Spend Key</span> and <span className="blue-text">Public View Key.</span></p>
+          </ReactTooltip>
+          <CopyToClipboard
+            text={this.props.wallet.wallet_address}
+            onCopy={this.props.onCopy.bind(this, 'Copied to clipboard')}
+            className="button-shine copy-btn"
+          >
+            <button>Copy</button>
+          </CopyToClipboard>
+        </div>
 
-        <label htmlFor="address">Wallet Address</label>
-        <input
-          type="text"
+        <textarea
           name="address"
           defaultValue={this.props.wallet.wallet_address}
           placeholder="address"
+          rows="1"
           readOnly
         />
 
         <div className="group-wrap">
           <div className="group">
-            <label htmlFor="balance">Pending Safex Cash</label>
-            <p className="display-value yellow-field">
-              {this.props.wallet.pending_balance}
+            <label htmlFor="balance">Pending Cash</label>
+            <p className="display-value green-field">
+              SFX {this.props.wallet.pending_balance}
             </p>
 
-            <label htmlFor="unlocked_balance">Available Safex Cash</label>
+            <label htmlFor="unlocked_balance">Available Cash</label>
             <p className="display-value green-field">
-              {this.props.wallet.unlocked_balance}
+              <span>SFX {this.props.wallet.unlocked_balance}</span>
+              <span className="value">
+                {this.props.sftPrice ? "$" + parseFloat(this.props.wallet.unlocked_balance * this.props.sfxPrice).toFixed(2) : "Loading"}
+              </span>
             </p>
             <button
-              className="btn button-shine"
-              onClick={
-                this.props.wallet.wallet_connected
-                  ? this.props.setOpenSendModal.bind(this, 0)
-                  : this.connectionError
+              className={
+                this.props.buttonDisabled
+                  ? "btn button-shine disabled"
+                  : "btn button-shine"
               }
+              id="send-cash-btn"
+              onClick={this.props.setOpenSendModal.bind(this, 0, "", "", "")}
             >
               Send Cash
             </button>
           </div>
 
           <div className="group">
-            <label htmlFor="tokens">Pending Safex Tokens</label>
-            <p className="display-value yellow-field">
-              {this.props.wallet.pending_tokens}
+            <label htmlFor="tokens">Pending Tokens</label>
+            <p className="display-value blue-field">
+              SFT {this.props.wallet.pending_tokens}
             </p>
 
-            <label htmlFor="unlocked_tokens">Available Safex Tokens</label>
-            <p className="display-value green-field">
-              {this.props.wallet.unlocked_tokens}
+            <label htmlFor="unlocked_tokens">Available Tokens</label>
+            <p className="display-value blue-field">
+              <span>SFT {this.props.wallet.unlocked_tokens}</span>
+              <span className="value">
+                {this.props.sftPrice ? "$" + parseFloat(this.props.wallet.unlocked_tokens * this.props.sftPrice).toFixed(2) : "Loading"}
+              </span>
             </p>
 
             <button
-              className="btn button-shine"
-              onClick={
-                this.props.wallet.wallet_connected
-                  ? this.props.setOpenSendModal.bind(this, 1)
-                  : this.connectionError
+              className={
+                this.props.buttonDisabled
+                  ? "btn button-shine disabled"
+                  : "btn button-shine"
               }
+              onClick={this.props.setOpenSendModal.bind(this, 1, "", "", "")}
             >
               Send Tokens
             </button>

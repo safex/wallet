@@ -1,7 +1,7 @@
 {
   "name": "safexcashwallet",
   "description": "Safex Cash Wallet",
-  "version": "v0.0.1",
+  "version": "v1.0.0",
   "homepage": ".",
   "repository": {
     "type": "git",
@@ -40,12 +40,14 @@
     "react-scripts": "^2.1.3"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.18.0",
     "electron-context-menu": "^0.9.1",
     "js-file-download": "^0.4.4",
     "react": "^15.6.2",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^15.6.2",
+    "react-file-download": "^0.3.5",
+    "react-tooltip": "^3.9.2",
     "safex-addressjs": "git+https://github.com/safex/safex_addressjs.git",
     "safex-nodejs-libwallet": "git+https://github.com/safex/safex-nodejs-libwallet.git"
   },
@@ -101,7 +103,7 @@
         "rpm"
       ],
       "category": "Utility",
-      "icon": "public/images/icons/"
+      "icon": "public/images/icons/icon3.png"
     }
   },
   "browserslist": [

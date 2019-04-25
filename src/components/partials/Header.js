@@ -1,21 +1,34 @@
-import React from "react";
+import React, { Component } from "react";
 import { closeApp } from "../../utils/utils.js";
+import ReactTooltip from "react-tooltip";
 
 const remote = window.require("electron").remote;
 
-export default class Header extends React.Component {
+export default class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      window: ''
+    };
+
+    this.window = remote.getCurrentWindow();
+  }
+
   minimizeApp = () => {
-    let window = remote.getCurrentWindow();
-    window.minimize();
+    this.window.minimize();
   };
 
   maximizeApp = () => {
-    let window = remote.getCurrentWindow();
-
-    if (window.isMaximized()) {
-      window.unmaximize();
+    if (this.window.isMaximized()) {
+      this.setState({
+        window: 'unmaximized'
+      })
+      this.window.unmaximize();
     } else {
-      window.maximize();
+      this.setState({
+        window: 'maximized'
+      })
+      this.window.maximize();
     }
   };
 
@@ -29,39 +42,63 @@ export default class Header extends React.Component {
         <button
           onClick={this.props.goToPage}
           className={
-            this.props.goToPage ? "go-back-btn button-shine" : "hidden"
+            this.props.page === "wallet" ||
+            this.props.page === "create-new" ||
+            this.props.page === "create-from-keys" ||
+            this.props.page === "open-file" ||
+            this.props.page === "recover-from-mnemonic"
+              ? "go-back-btn button-shine"
+              : "hidden"
           }
           disabled={this.props.alertCloseDisabled ? "disabled" : ""}
         >
           {this.props.page === "wallet" ? "Log out" : "Back"}
         </button>
+
         <img src="images/logo.png" className="logo" alt="Logo" />
-        <p id="version">{remote.app.getVersion()}</p>
         <div className="buttons-wrap">
           <button
             onClick={this.minimizeApp}
+            data-tip
+            data-for="minimize-tooptip"
             className="minimize-app-btn button-shine"
-            title="Minimize"
             disabled={this.props.alertCloseDisabled ? "disabled" : ""}
           >
             _
           </button>
+          <ReactTooltip place="bottom" id="minimize-tooptip">
+            <p>Minimize</p>
+          </ReactTooltip>
           <button
             onClick={this.maximizeApp}
+            data-tip
+            data-for="maximize-tooptip"
             className="maximize-app-btn button-shine"
-            title="Maximize"
             disabled={this.props.alertCloseDisabled ? "disabled" : ""}
           >
             <span />
           </button>
+          <ReactTooltip place="bottom" id="maximize-tooptip">
+            {
+              this.state.window === 'maximized'
+              ?
+                <p>Restore</p>
+              :
+                <p>Maximize</p>
+            }
+          </ReactTooltip>
           <button
             onClick={this.setCloseApp}
+            data-tip
+            data-for="exit-tooptip"
             className="close-app-btn button-shine"
-            title="Exit"
             disabled={this.props.alertCloseDisabled ? "disabled" : ""}
           >
             X
           </button>
+          <ReactTooltip place="bottom" id="exit-tooptip">
+            <p>Exit</p>
+          </ReactTooltip>
         </div>
       </header>
     );

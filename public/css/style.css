@@ -1,4 +1,22 @@
 @font-face {
+  font-family: "Avenir";
+  src: url("../fonts/AvenirLTStd-Roman.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Avenir Light";
+  src: url("../fonts/AvenirNextLTPro-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Avenir Bold";
+  src: url("../fonts/AvenirNextLTPro-Bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
   font-family: "Brandon Grotesque";
   src: url("../fonts/BrandonGrotesque-Regular.eot");
   src: url("../fonts/BrandonGrotesque-Regular.eot?#iefix")
@@ -72,8 +90,7 @@ img {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
-button,
-.toggle-wrap {
+button {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -85,32 +102,6 @@ p:hover {
   cursor: initial;
 }
 
-.toggle-wrap {
-  padding: 0 0 5px;
-  text-align: center;
-}
-.toggle-wrap label {
-  display: inline;
-  margin-right: 10px;
-}
-.toggle-wrap span {
-  display: inline;
-  text-align: left;
-  font-size: 20px;
-  color: rgba(255, 255, 255, 1);
-  font-weight: 600;
-  line-height: 1.2;
-  text-transform: capitalize;
-}
-.toggle-wrap .react-switch {
-  margin: 0 3px;
-  top: 7px;
-}
-.toggle-wrap .react-switch-handle {
-  height: 25px !important;
-  width: 25px !important;
-  top: 2px !important;
-}
 .progress {
   margin: 15px 0 0;
 }
@@ -127,12 +118,14 @@ p:hover {
   transition: all 0.2s ease-in;
 }
 .button-shine:hover {
-  cursor: pointer;
+  cursor: pointer !important;
   color: white;
-  box-shadow: 0 0 25px 0 rgba(255, 214, 22, 0.8);
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
+  -webkit-box-shadow: 0 0 30px 0 rgba(0, 199, 236, 0.5) !important;
+  -moz-box-shadow: 0 0 30px 0 rgba(0, 199, 236, 0.5) !important;
+  box-shadow: 0 0 30px 0 rgba(0, 199, 236, 0.5) !important;
 }
 .button-shine:hover:before {
   -webkit-animation: shine 0.5s 0s linear;
@@ -140,7 +133,7 @@ p:hover {
   animation: shine 0.5s 0s linear;
 }
 .button-shine:active {
-  box-shadow: 0 0 0 0 transparent;
+  box-shadow: 0 0 0 0 transparent !important;
   -webkit-transition: box-shadow 0.2s ease-in;
   -moz-transition: box-shadow 0.2s ease-in;
   transition: box-shadow 0.2s ease-in;

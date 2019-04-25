@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import { hasNumber, countWords } from "../utils/utils.js";
+import ReactTooltip from "react-tooltip";
 const safex = window.require("safex-nodejs-libwallet");
 const { dialog } = window.require("electron").remote;
 
-export default class NewFromMnemonic extends React.Component {
+export default class NewFromMnemonic extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,8 +17,7 @@ export default class NewFromMnemonic extends React.Component {
 
     const pass1 = e.target.pass1.value;
     const pass2 = e.target.pass2.value;
-    const mnemonicValue = e.target.mnemonic.value;
-    const mnemonic = mnemonicValue.replace(/\s+/g, " ");
+    const mnemonic = e.target.mnemonic.value;
 
     if (pass1 === "" || pass2 === "") {
       this.props.setOpenAlert("Fill out all the fields");
@@ -33,13 +33,13 @@ export default class NewFromMnemonic extends React.Component {
     }
     if (countWords(mnemonic) < 24 || countWords(mnemonic) > 25) {
       this.props.setOpenAlert("Mnemonic seed must contain 24 or 25 words");
+      console.log("word count " + countWords(mnemonic));
       return false;
     }
     if (hasNumber(mnemonic)) {
       this.props.setOpenAlert("Mnemonic seed must not contain a number");
       return false;
     }
-    console.log("word count " + countWords(mnemonic));
     dialog.showSaveDialog(filepath => {
       if (!filepath) {
         return false;
@@ -56,7 +56,7 @@ export default class NewFromMnemonic extends React.Component {
         alert_close_disabled: true
       }));
       this.props.setOpenAlert(
-        "Please wait while your wallet file is being created. Don't close the application until the process is complete. This can take a while, please be patient.",
+        "Please wait while your wallet file is being created. Don't close the application until the process is complete. This may take a while, please be patient.",
         true
       );
       console.log("wallet doesn't exist. creating new one: " + filepath);
@@ -71,23 +71,68 @@ export default class NewFromMnemonic extends React.Component {
       });
       localStorage.setItem("wallet_path", filepath);
       localStorage.setItem("password", JSON.stringify(pass1));
+      localStorage.setItem("filename", filepath.split("/").pop());
       console.log("Recover wallet from mnemonic performed!");
     });
   };
 
   render() {
     return (
-      <form onSubmit={this.createNewFromMnemonic}>
+      <form
+        className="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3"
+        onSubmit={this.createNewFromMnemonic}
+      >
+        <div
+          data-tip
+          data-for="mnemonic-tooptip"
+          className="button-shine question-wrap"
+        >
+          <span>?</span>
+        </div>
+        <ReactTooltip place="left" id="mnemonic-tooptip">
+          <p>You can recover your Wallet with Mnemonic Seed.</p>
+          <p>
+            Mnemonic Seed should contain <span className="blue-text">24</span> or <span className="blue-text">25</span> words and no numbers. Example:
+          </p>
+          <p className="blue-text">
+            fizzle gyrate arsenic click wives bacon apology richly long <br />
+            inkling avidly gimmick biweekly frying nephew union umpire <br />
+            sack tasked idiom budget lazy getting heels nephew
+          </p>
+          <p>
+            This will create <span className="blue-text">2</span> files on your
+            file system.
+          </p>
+          <p>
+            <span className="blue-text">ExampleWallet</span> and{" "}
+            <span className="blue-text">ExampleWallet.keys</span>
+          </p>
+          <p>
+            In the future, when you want to{" "}
+            <span className="blue-text">load</span> wallet,{" "}
+          </p>
+          <p>make sure you select the file without the .keys extension.</p>
+          <p>
+            Make sure you <span className="blue-text">back up</span> these files
+            for future wallet recovery.
+          </p>
+        </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">
             <input type="password" name="pass1" placeholder="password" />
             <input type="password" name="pass2" placeholder="repeat password" />
-            <label>Mnemonic Seed for your Wallet</label>
             <textarea name="mnemonic" placeholder="mnemonic seed" rows="3" />
           </div>
         </div>
-        <button type="submit" className="submit btn button-shine">
-          Create
+        <button
+          type="submit"
+          className={
+            this.props.buttonDisabled
+              ? "submit btn button-shine disabled"
+              : "submit btn button-shine"
+          }
+        >
+          Recover
         </button>
       </form>
     );
