@@ -106,39 +106,20 @@ export default class RecoverFromKeys extends Component {
           <span>?</span>
         </div>
         <ReactTooltip id="create-from-keys-tooptip">
-          <p>
-            If you already have Safex Wallet Address, you can recreate it here.
-          </p>
-          <p>
-            Your <span className="blue-text">Safex Address</span> should start
-            with Safex:
-          </p>
-          <p className="blue-text">Safex5...3rnQjJmQ2K</p>
-          <p>
-            Your <span className="blue-text">Secret View Key</span> and{" "}
-            <span className="blue-text">Secret Spend Key</span>
-          </p>
+          <p className="mb-10">If you already have Safex Wallet Address, you can recreate it here.</p>
+          <p>Your <span className="blue-text">Safex Address</span> should start with Safex and</p>
+          <p>contain between <span className="blue-text">95 and 105</span> characters. Example:</p>
+          <p className="blue-text mb-10">Safex5...3rnQjJmQ2K</p>
+          <p>Your <span className="blue-text">Secret View Key</span> and <span className="blue-text">Secret Spend Key</span></p>
           <p>should be a 64 digit Hex. Example:</p>
-          <p className="blue-text">
-            45b9ad1abb6564141793d809c8284e25c5c22d29b7d313c0be62387b1f2df8c3
-          </p>
-          <p>
-            This will create <span className="blue-text">2</span> files on your
-            file system.
-          </p>
-          <p>
-            <span className="blue-text">ExampleWallet</span> and{" "}
-            <span className="blue-text">ExampleWallet.keys</span>
-          </p>
-          <p>
-            In the future, when you want to{" "}
-            <span className="blue-text">load</span> wallet,{" "}
-          </p>
-          <p>make sure you select the file without the .keys extension.</p>
-          <p>
-            Make sure you <span className="blue-text">back up</span> these files
-            for future wallet recovery.
-          </p>
+          <p className="blue-text mb-10">45b9ad1abb6564141793d809c8284e25c5c22d29b7d313c0be62387b1f2df8c3</p>
+          <p>When asked for a file name, enter the file</p>
+          <p>name <span className="blue-text">without</span> the extension and click <span className="blue-text">save</span>.</p>
+          <p>This will create <span className="blue-text">2</span> files on your file system.</p>
+          <p className="mb-10"><span className="blue-text">ExampleWallet</span> and <span className="blue-text">ExampleWallet.keys</span>.</p>
+          <p>In the future, when you want to <span className="blue-text">load</span> wallet, make</p>
+          <p className="mb-10">sure you select the file <span className="blue-text">without</span> the .keys extension.</p>
+          <p>Remember to <span className="blue-text">back up your keys</span> for future wallet recovery.</p>
         </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">

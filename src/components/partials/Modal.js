@@ -135,7 +135,7 @@ class Transactions extends Component {
                       {txInfo.id}
                     </button>
                     <ReactTooltip id="link-tooptip">
-                      <p>Show this transaction on Safex Blockchain Explorer</p>
+                      <p>Show this transaction on <span className="blue-text">Safex Blockchain Explorer</span></p>
                     </ReactTooltip>
                   </div>
                 </div>
@@ -253,7 +253,7 @@ class Contacts extends Component {
                   <div className="contact-right">
                     <CopyToClipboard
                       text={contact.address}
-                      onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
+                      onCopy={this.props.onCopy.bind(this, "Copied to clipboard", 3000)}
                       data-tip
                       data-for="copy-tooptip"
                       className="button-shine copy-btn"
@@ -408,16 +408,22 @@ export default class Modal extends React.Component {
   };
 
   closeMyModal = () => {
-    if (this.props.keysModal || 
+    this.setState(() => ({
+      send_tx_disabled: true
+    }));
+    if (this.props.keysModal ||
+      this.props.mixinModal ||
       this.props.deleteModal || 
-      this.props.feeModal || 
+      this.props.historyModal ||
+      this.props.feeModal ||
+      this.props.loadingModal ||
       (this.props.sendModal && this.props.alert) || 
       (this.props.addressModal && this.props.alert) ||
       (this.props.loadingModal && this.props.alert)) {
+      this.props.closeModal();
       this.setState({
         send_tx_disabled: false
-      })
-      this.props.closeModal();
+      });
       return false;
     } else if (
       this.props.sendModal &&
@@ -443,7 +449,8 @@ export default class Modal extends React.Component {
         new_address: "",
         new_payment_id: "",
         name: "",
-        add_transition: false
+        add_transition: false,
+        send_tx_disabled: false
       });
     }, 300);
   };
@@ -564,10 +571,7 @@ export default class Modal extends React.Component {
       })
       .catch(e => {
         if (e.startsWith("not enough outputs for specified ring size")) {
-          this.props.setOpenMixinModal(
-            "" + e,
-            false
-          );
+          this.props.setOpenMixinModal(false);
           localStorage.setItem("args", JSON.stringify(args));
           console.log(JSON.parse(localStorage.getItem("args")));
         } else {
@@ -826,40 +830,6 @@ export default class Modal extends React.Component {
             X
           </span>
 
-          <div
-            data-tip
-            data-for="keys-tooptip"
-            className="button-shine question-wrap"
-          >
-            <span>?</span>
-          </div>
-          <ReactTooltip place="right" id="keys-tooptip">
-            <p>
-              <span className="blue-text">Mnemonic seed</span> can be used to
-              recover your wallet in case your file gets lost or corrupted.
-            </p>
-            <p className="red-text">
-              Sharing it can and will result in total loss of your Safex Cash
-              and Safex Tokens.
-            </p>
-            <p className="blue-text">
-              Write it down and keep is safe at all times.
-            </p>
-            <p>
-              <span className="blue-text">Public Spend Key</span> and{" "}
-              <span className="blue-text">Public View Key</span> are made to
-              generate your address.
-            </p>
-            <p>
-              <span className="blue-text">Secret (Private) Spend Key</span> is
-              used to sign your transactions.
-            </p>
-            <p>
-              <span className="blue-text">Secret (Private) View Key</span> can
-              be used to view all transactions of the given address.
-            </p>
-          </ReactTooltip>
-
           <div>
             <h3>Seed and Keys</h3>
 
@@ -876,9 +846,24 @@ export default class Modal extends React.Component {
               <label className={this.props.wallet.mnemonic ? "" : "hidden"}>
                 Wallet Mnemonic Seed
               </label>
+              <div
+                data-tip
+                data-for="mnemonic-tooptip"
+                className="button-shine question-wrap"
+              >
+                <span>?</span>
+              </div>
+              <ReactTooltip place="right" id="mnemonic-tooptip">
+                <p><span className="blue-text">Mnemonic seed</span> can be used to recover your </p>
+                <p>wallet in case your file gets lost or corrupted.</p>
+                <p className="mb-10">It contains <span className="blue-text">24 or 25</span> words and no numbers.</p>
+                <p className="red-text">Sharing it can and will result in total loss of</p>
+                <p className="red-text mb-10">your Safex Cash (SFX) and Safex Tokens (SFT).</p>
+                <p className="blue-text">Write it down and keep is safe at all times.</p>
+              </ReactTooltip>
               <CopyToClipboard
                 text={this.props.wallet.mnemonic}
-                onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
+                onCopy={this.props.onCopy.bind(this, "Copied to clipboard", 3000)}
                 className="button-shine copy-btn"
               >
                 <button>Copy</button>
@@ -895,9 +880,25 @@ export default class Modal extends React.Component {
 
             <div className="label-wrap">
               <label htmlFor="view_key">Secret (Private) View Key</label>
+              <div
+                data-tip
+                data-for="private-view-tooptip"
+                className="button-shine question-wrap"
+              >
+                <span>?</span>
+              </div>
+              <ReactTooltip place="right" id="private-view-tooptip">
+                <p>
+                  All Wallet Keys should be a <span className="blue-text">64 digit Hex</span>.
+                </p>
+                <p>
+                  <span className="blue-text">Secret (Private) View Key</span> can
+                  be used to view all transactions of the given address.
+                </p>
+              </ReactTooltip>
               <CopyToClipboard
                 text={this.props.wallet.view_key}
-                onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
+                onCopy={this.props.onCopy.bind(this, "Copied to clipboard", 3000)}
                 className="button-shine copy-btn"
               >
                 <button>Copy</button>
@@ -913,9 +914,23 @@ export default class Modal extends React.Component {
 
             <div className="label-wrap">
               <label htmlFor="pub_view">Public View Key</label>
+              <div
+                data-tip
+                data-for="public-view-tooptip"
+                className="button-shine question-wrap"
+              >
+                <span>?</span>
+              </div>
+              <ReactTooltip place="right" id="public-view-tooptip">
+                <p>
+                  <span className="blue-text">Public Spend Key</span> and{" "}
+                  <span className="blue-text">Public View Key</span> are made to
+                  generate your address.
+                </p>
+              </ReactTooltip>
               <CopyToClipboard
                 text={this.props.wallet.pub_view}
-                onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
+                onCopy={this.props.onCopy.bind(this, "Copied to clipboard", 3000)}
                 className="button-shine copy-btn"
               >
                 <button>Copy</button>
@@ -931,9 +946,19 @@ export default class Modal extends React.Component {
 
             <div className="label-wrap">
               <label htmlFor="spend_key">Secret (Private) Spend Key</label>
+              <div
+                data-tip
+                data-for="secret-spend-tooptip"
+                className="button-shine question-wrap"
+              >
+                <span>?</span>
+              </div>
+              <ReactTooltip place="right" id="secret-spend-tooptip">
+                <p><span className="blue-text">Secret (Private) Spend Key</span> is used to sign your transactions.</p>
+              </ReactTooltip>
               <CopyToClipboard
                 text={this.props.wallet.spend_key}
-                onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
+                onCopy={this.props.onCopy.bind(this, "Copied to clipboard", 3000)}
                 className="button-shine copy-btn"
               >
                 <button>Copy</button>
@@ -949,9 +974,23 @@ export default class Modal extends React.Component {
 
             <div className="label-wrap">
               <label htmlFor="spend_key">Public Spend Key</label>
+              <div
+                data-tip
+                data-for="public-spend-tooptip"
+                className="button-shine question-wrap"
+              >
+                <span>?</span>
+              </div>
+              <ReactTooltip place="right" id="public-spend-tooptip">
+                <p>
+                  <span className="blue-text">Public Spend Key</span> and{" "}
+                  <span className="blue-text">Public View Key</span> are made to
+                  generate your address.
+                </p>
+              </ReactTooltip>
               <CopyToClipboard
                 text={this.props.wallet.pub_spend}
-                onCopy={this.props.onCopy.bind(this, "Copied to clipboard")}
+                onCopy={this.props.onCopy.bind(this, "Copied to clipboard", 3000)}
                 className="button-shine copy-btn"
               >
                 <button>Copy</button>
@@ -982,7 +1021,9 @@ export default class Modal extends React.Component {
             </div>
             <div className="button-wrap">
               <p>
-                Export All Wallet Keys to .txt file
+                Back up all keys to an unencrypted .txt file. This file is not for importing. 
+                Sharing this file can and will result in total loss of your Cash and Tokens.
+                It is a very sensitive file, keep it safe at all times.
               </p>
               <button
                 className="button-shine rescan"
@@ -992,51 +1033,6 @@ export default class Modal extends React.Component {
                 Export
               </button>
             </div>
-          </div>
-        </div>
-      );
-    }
-    if (this.props.mixinModal) {
-      modal = (
-        <div className={"mixinModal" + addClass(this.props.alert, "active")}>
-          <div className="mainAlertPopupInner">
-            <p>
-              There was a problem with transaction creation, there are not
-              enough outputs in network history to create privacy ring
-              signature.
-            </p>
-            <p>
-              Please lower your transaction mixin to proceed with transaction
-              execution (default network mixin value is {this.mixin}).
-            </p>
-            <form onSubmit={this.changeDefaultMixin}>
-              <label htmlFor="mixin">Set Transaction Mixin (0-8)</label>
-              <select
-                className="button-shine"
-                name="mixin"
-                defaultValue={this.mixin}
-              >
-                {mixin}
-              </select>
-              <button
-                type="button"
-                className="cancel-btn button-shine"
-                onClick={this.props.closeModal}
-              >
-                Cancel
-              </button>
-              <button type="submit" className="confirm-btn button-shine">
-                Send
-              </button>
-            </form>
-            <h4>*Lowering your transaction mixin may harm your privacy</h4>
-            {this.props.alertCloseDisabled ? (
-              <span className="hidden" />
-            ) : (
-              <span className="close" onClick={this.props.closeModal}>
-                X
-              </span>
-            )}
           </div>
         </div>
       );
@@ -1066,21 +1062,10 @@ export default class Modal extends React.Component {
                   <span>?</span>
                 </div>
                 <ReactTooltip place="right" id="tx-id-tooptip">
-                  <p>
-                    Each tranasction has a unique{" "}
-                    <span className="blue-text">Transaction ID.</span>
-                  </p>
-                  <p>
-                    Transaction ID format is{" "}
-                    <span className="blue-text">64 digit Hex</span> character string.
-                  </p>
+                  <p>Each tranasction has a unique <span className="blue-text">Transaction ID</span>.</p>
+                  <p className="mb-10">Transaction ID format is <span className="blue-text">64 digit Hex</span> character string.</p>
                   <p>It can be used to track each individual</p>
-                  <p>
-                    transaction on{" "}
-                    <span className="blue-text">
-                      Safex Blockchain Explorer.
-                    </span>
-                  </p>
+                  <p>transaction on <span className="blue-text">Safex Blockchain Explorer</span>.</p>
                 </ReactTooltip>
               </div>
             ) : (
@@ -1132,9 +1117,7 @@ export default class Modal extends React.Component {
               />
             </button>
             <ReactTooltip place="right" id="show-tooptip">
-              <p>
-                {this.state.show_contacts ? "Add Contact" : "Show Contacts"}
-              </p>
+              <p>{this.state.show_contacts ? "Add Contact" : "Show Contacts"}</p>
             </ReactTooltip>
             <form
               className={this.state.show_contacts ? "hidden" : ""}
@@ -1147,7 +1130,6 @@ export default class Modal extends React.Component {
                 onChange={this.inputOnChange.bind(this, "name")}
                 maxLength="40"
               />
-
               <textarea
                 name="address"
                 rows="2"
@@ -1155,7 +1137,6 @@ export default class Modal extends React.Component {
                 placeholder="* Enter Contact Address"
                 onChange={this.inputOnChange.bind(this, "new_address")}
               />
-
               <label htmlFor="paymentid">
                 <div
                   data-tip
@@ -1165,24 +1146,13 @@ export default class Modal extends React.Component {
                   <span>?</span>
                 </div>
                 <ReactTooltip id="paymentid-contact-tooptip">
-                  <p>
-                    <span className="blue-text">Payment ID</span> is additional
-                    reference number.
-                  </p>
+                  <p><span className="blue-text">Payment ID</span> is additional reference number.</p>
                   <p>It is given by exchanges and web</p>
                   <p>shops to differentiate and track</p>
-                  <p>particular deposits and purchases.</p>
-                  <p>
-                    <span className="blue-text">Payment ID</span> format should
-                    be{" "}
-                  </p>
-                  <p>
-                    <span className="blue-text">64 digit Hex</span> character string.
-                  </p>
-                  <p>
-                    Payment ID is <span className="blue-text">required</span>{" "}
-                    for each contact.
-                  </p>
+                  <p className="mb-10">particular deposits and purchases.</p>
+                  <p><span className="blue-text">Payment ID</span> format should be</p>
+                  <p className="mb-10"><span className="blue-text">64 digit Hex</span> character string.</p>
+                  <p>Payment ID is <span className="blue-text">required</span> for each contact.</p>
                 </ReactTooltip>
               </label>
               <div id="genPayIdWrap">
@@ -1324,23 +1294,14 @@ export default class Modal extends React.Component {
                     <span>?</span>
                   </div>
                   <ReactTooltip id="paymentid-tooptip">
-                    <p>
-                      <span className="blue-text">Payment ID</span> is
-                      additional reference number
-                    </p>
+                    <p><span className="blue-text">Payment ID</span> is additional reference number</p>
                     <p>attached to the transaction.</p>
                     <p>It is given by exchanges and web</p>
                     <p>shops to differentiate and track</p>
-                    <p>particular deposits and purchases.</p>
-                    <p>
-                      <span className="blue-text">Payment ID</span> format
-                      should be{" "}
-                    </p>
-                    <p>
-                      <span className="blue-text">16 or 64 digit Hex</span> character
-                      string.
-                    </p>
-                    <p>It is not required for regular user transactions.</p>
+                    <p className="mb-10">particular deposits and purchases.</p>
+                    <p><span className="blue-text">Payment ID</span> format should be</p>
+                    <p className="mb-10"><span className="blue-text">16 or 64 digit Hex</span> character string.</p>
+                    <p>It is <span className="blue-text">not required</span> for regular user transactions.</p>
                   </ReactTooltip>
                 </label>
                 <input
@@ -1364,10 +1325,54 @@ export default class Modal extends React.Component {
                   }
                 >
                   {this.state.send_tx_disabled ? 'Wait' : 'Send'}
-                  
                 </button>
               </form>
             </div>
+          </div>
+        </div>
+      );
+    }
+    if (this.props.mixinModal) {
+      modal = (
+        <div className={"mixinModal" + addClass(this.props.alert, "active")}>
+          <div className="mainAlertPopupInner">
+            <p>
+              There was a problem with transaction creation, there are not
+              enough outputs in network history to create privacy ring
+              signature.
+            </p>
+            <p>
+              Please lower your transaction mixin to proceed with transaction
+              execution (default network mixin value is {this.mixin}).
+            </p>
+            <form onSubmit={this.changeDefaultMixin}>
+              <label htmlFor="mixin">Set Transaction Mixin (0-8)</label>
+              <select
+                className="button-shine"
+                name="mixin"
+                defaultValue={this.mixin}
+              >
+                {mixin}
+              </select>
+              <button
+                type="button"
+                className="cancel-btn button-shine"
+                onClick={this.props.closeModal}
+              >
+                Cancel
+              </button>
+              <button type="submit" className="confirm-btn button-shine">
+                Send
+              </button>
+            </form>
+            <h4>*Lowering your transaction mixin may harm your privacy</h4>
+            {this.props.alertCloseDisabled ? (
+              <span className="hidden" />
+            ) : (
+                <span className="close" onClick={this.props.closeModal}>
+                  X
+              </span>
+              )}
           </div>
         </div>
       );
@@ -1522,28 +1527,11 @@ export default class Modal extends React.Component {
         >
           {modal}
         </div>
-
-        {(this.props.sendModal && this.props.alert) ||
-          (this.props.sendModal &&
-          this.props.confirmModal &&
-          this.props.feeModal === false) ||
-          (this.props.loadingModal && this.props.alert) ||
-        (this.props.addressModal && this.props.alert === false) ||
-        (this.props.addressModal &&
-          this.props.sendModal &&
-          this.props.alert === false) ||
-        this.props.mixinModal ||
-        this.props.deleteModal ? (
-          <div
-            className={"backdrop" + addClass(this.props.modal, "active")}
-            onClick={this.closeMyModal}
-          />
-        ) : (
-          <div
-            className={"backdrop" + addClass(this.props.modal, "active")}
-            onClick={this.props.alertCloseDisabled ? "" : this.props.closeModal}
-          />
-        )}
+        
+        <div
+          className={"backdrop" + addClass(this.props.modal, "active")}
+          onClick={this.props.alertCloseDisabled ? "" : this.closeMyModal}
+        />
       </div>
     );
   }

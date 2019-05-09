@@ -6,7 +6,6 @@ header {
   width: 100%;
   padding: 10px 0 0;
   text-align: center;
-  -webkit-app-region: drag;
 }
 header .logo {
   width: 134px;
@@ -24,8 +23,7 @@ header .logo {
   font-size: 20px;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
-  border-top-right-radius: 0px;
-  -webkit-app-region: no-drag;
+  border-top-right-radius: 0px
 }
 .go-back-btn:hover {
   cursor: pointer;
@@ -34,7 +32,6 @@ header .logo {
   position: absolute;
   right: 10px;
   top: 10px;
-  -webkit-app-region: no-drag;
 }
 .buttons-wrap button {
   -webkit-touch-callout: none; /* iOS Safari */

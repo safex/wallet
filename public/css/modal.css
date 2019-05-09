@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(15, 29, 54, .97);
+  /* background: rgba(0, 0, 0, .9); */
   z-index: 10003;
   opacity: 0;
   visibility: hidden;
@@ -46,7 +47,6 @@
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
-  -webkit-app-region: no-drag;
 }
 .modal-50 {
   width: 50%;
@@ -138,7 +138,7 @@
   text-transform: capitalize;
   font-size: 18px;
   font-weight: 400;
-  margin-bottom: 0px;
+  margin: 10px 0 0;
   position: relative;
   z-index: 2;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -181,6 +181,7 @@
   border: 1px solid #8ffdfd;
   border-radius: 50%;
   text-align: center;
+  z-index: 3;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
@@ -194,7 +195,6 @@
 .modal .label-wrap .question-wrap span {
   position: relative;
   top: -7px;
-  left: -0.7px;
   font-size: 19px;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
@@ -211,7 +211,7 @@
   display: inline-block;
   border: 0px none;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 5px 10px !important;
   margin: 0;
   font-size: 14px;
   background: url(../images/input-bg.png) repeat-y top left;
@@ -224,14 +224,6 @@
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
   resize: none;
-}
-.modal textarea:hover,
-.modal textarea:active,
-.modal textarea:focus,
-.modal input:hover,
-.modal input:active,
-.modal input:focus {
-  box-shadow: 0 0 30px 0 rgba(0, 199, 236, 0.5) !important;
 }
 .modal textarea::-webkit-input-placeholder,
 .modal input::-webkit-input-placeholder {
@@ -362,7 +354,7 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 0 0 0 5px;
   font-size: 19px;
-  padding: 5px 12px;
+  padding: 4px 12px 6px;
 }
 .modal .confirm-btn:active,
 .modal .confirm-btn:focus {
@@ -446,7 +438,7 @@
 }
 .sendModal label {
   bottom: -12px;
-  right: 10px;
+  right: 0;
 }
 .sendModal textarea {
   padding: 4px 10px 5px;
@@ -455,7 +447,7 @@
   border-bottom: 1px solid #8ffdfd;
   font-size: 18px;
   letter-spacing: -0.3px;
-  margin-bottom: 22px !important;
+  margin-bottom: 21px !important;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal input {
@@ -472,7 +464,7 @@
 .sendModal .btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 0px 5px 5px;
-  padding: 4px 18px 5px;
+  padding: 4px 18px 6px;
   letter-spacing: 1.5px;
   font-size: 19px !important;
 }
@@ -518,7 +510,7 @@
 .loadingModal label {
   text-transform: initial;
   font-size: 19px;
-  margin-bottom: 8px;
+  margin: 0 0 10px;
   letter-spacing: 0px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
@@ -537,15 +529,11 @@
 .keysModal {
   text-align: center;
 }
-.keysModal h3 {
-  /* font-size: 24px; */
-}
 .keysModal label {
   text-transform: initial !important;
-  /* font-weight: 400 !important; */
-  /* font-size: 19px !important; */
   display: inline-block;
   line-height: 1;
+  margin: 5px 0 0;
 }
 .keysModal input,
 .keysModal textarea {
@@ -557,7 +545,7 @@
   line-height: 1.2;
   background: transparent;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-  margin: 0 0 10px !important;
+  margin: 0 0 5px !important;
 }
 .keysModal .pass-input {
   border-radius: 5px;
@@ -582,11 +570,12 @@
   padding: 0px 12px 2px;
   position: absolute;
   z-index: 2;
+  top: 3px;
   right: 0;
   font-size: 15px;
 }
 .keysModal .button-wrap p {
-  text-align: right;
+  text-align: left;
   font-size: 16px;
   padding-top: 2px;
   padding-right: 15px;
@@ -697,6 +686,9 @@
   position: relative;
   top: 2px;
 }
+.historyModal #history-wrap .history-item p .blue-text {
+  padding: 0 !important;
+}
 .historyModal #history-wrap .history-item .amount {
   display: inline-block;
   margin-bottom: 8px;
@@ -738,8 +730,7 @@
 .historyModal #history-wrap .history-item .tx-id:hover {
   box-shadow: none !important;
 }
-.historyModal .question-wrap,
-.keysModal .question-wrap {
+.historyModal .question-wrap {
   position: absolute;
   top: 15px;
   left: 15px;
@@ -752,12 +743,21 @@
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+.keysModal .question-wrap {
+  top: 3px !important;
 }
 .historyModal .question-wrap span,
 .keysModal .question-wrap span {
   position: relative;
   top: -6px;
-  left: -0.5px;
+  left: -.5px;
   font-size: 18px;
   color: #fff;
 }
@@ -782,7 +782,7 @@
 }
 .addressModal label {
   bottom: -21px;
-  right: 10px;
+  right: 0;
 }
 .addressModal #genPayIdWrap {
   position: relative;
@@ -855,7 +855,7 @@
   word-break: break-all;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-center {
-  width: calc(100% - 284px);
+  width: calc(100% - 300px);
   padding-right: 5px;
   display: flex;
   flex-direction: column;

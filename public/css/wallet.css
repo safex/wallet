@@ -10,7 +10,7 @@
 }
 .wallet-wrap .item-pic {
   right: 17px;
-  opacity: 0.4;
+  opacity: 0.5;
 }
 .wallet-wrap h2 {
   margin: 40px 0 30px;
@@ -38,7 +38,6 @@
   display: flex;
   width: 48px;
   justify-content: center;
-  -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap .btns-right-wrap button.disabled {
   pointer-events: none;
@@ -54,7 +53,7 @@
   cursor: pointer;
 }
 .__react_component_tooltip {
-  padding: 10px 21px 7px;
+  padding: 12px 21px 10px;
 }
 .__react_component_tooltip.show {
   opacity: 1;
@@ -65,6 +64,9 @@
   line-height: 1.2;
   font-size: 16px;
   font-family: "Avenir", "Atrament", Arial, sans-serif;
+}
+.__react_component_tooltip .mb-10 {
+  margin-bottom: 10px !important;
 }
 .__react_component_tooltip .blue-text {
   color: #54bcd9;
@@ -80,7 +82,6 @@
   padding: 0;
   background: transparent;
   display: inline-block;
-  -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap .signal:hover {
   box-shadow: none !important;
@@ -97,8 +98,7 @@
 .wallet-inner-wrap .block {
   display: inline-block;
   margin-left: 15px;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-app-region: no-drag;
+  font-family: "Avenir", Helve
 }
 .wallet-inner-wrap .block:first-of-type {
   margin-left: 0;
@@ -155,7 +155,7 @@
   padding: 0 !important;
 }
 .wallet-inner-wrap .group {
-  width: calc(50% - 5px);
+  width: calc(50% - 7.5px);
   text-align: center;
 }
 .wallet-file-wrap .group input:last-of-type {
@@ -194,8 +194,7 @@
   padding: 4px 10px;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
-  -webkit-app-region: no-drag;
+  transition: all 0.2s ease-in
 }
 .wallet-inner-wrap .open-file-btn {
   width: auto;
@@ -213,12 +212,12 @@
 .wallet-inner-wrap .label-wrap {
   text-align: center;
   position: relative;
-  margin-bottom: 3px;
+  /* margin-bottom: 3px; */
   z-index: 3;
 }
 .wallet-inner-wrap .label-wrap .question-wrap {
   position: absolute;
-  top: -3px;
+  top: -7px;
   left: 0;
   width: 32px;
   height: 32px;
@@ -229,8 +228,7 @@
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
-  -webkit-transition: all ease 0.3s;
-  -webkit-app-region: no-drag;
+  -webkit-transition: all ease
 }
 .wallet-inner-wrap .label-wrap .question-wrap:hover {
   -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
@@ -253,6 +251,7 @@
   padding: 0px 12px 2px;
   position: absolute;
   z-index: 4;
+  top: -5px;
   right: 0;
   font-size: 15px;
   border: 2px solid #54bcd9;
@@ -264,8 +263,7 @@
   line-height: 1.2;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
-  -webkit-app-region: no-drag;
+  transition: all 0.2s ease-in
 }
 .wallet-inner-wrap input {
   width: 100%;
@@ -277,8 +275,7 @@
   border-bottom: 1px solid #8ffdfd;
   margin: 10px 0 15px;
   border-radius: 0px;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-app-region: no-drag;
+  font-family: "Avenir", Helve
 }
 .wallet-inner-wrap .btn {
   font-size: 24px !important;
@@ -292,12 +289,11 @@
   font-size: 16px;
   padding: 0 0 3px;
   border-bottom: 1px solid #8ffdfd;
-  margin: 12px 0 15px;
+  margin: 15px 0;
   resize: none;
   text-align: center;
   white-space: nowrap;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-app-region: no-drag;
+  font-family: "Avenir", Helve
 }
 .wallet-inner-wrap input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
@@ -334,8 +330,7 @@
   padding: 10px 0 0;
   margin: 0px 0 15px;
   border-bottom: 1px solid #8ffdfd;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-app-region: no-drag;
+  font-family: "Avenir", Helve
 }
 .wallet-inner-wrap .display-value span {
   margin-right: 0;
@@ -376,7 +371,6 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   border-bottom: 5px solid #55ebff !important;
   margin-top: 0 !important;
-  -webkit-app-region: no-drag;
 }
 .wallet-inner-wrap .btn.disabled {
   pointer-events: none;
@@ -398,5 +392,15 @@
   .wallet-inner-wrap {
     width: 80%;
     left: 10%;
+  }
+}
+
+@media (min-width: 1450px) {
+  .wallet-inner-wrap {
+    width: 64%;
+    left: 18%;
+  }
+  .wallet-wrap .item-pic {
+    opacity: 1;
   }
 }

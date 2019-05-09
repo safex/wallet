@@ -77,7 +77,7 @@
   margin-bottom: 10px;
   font-size: 18px;
   text-align: left;
-  padding-right: 15px;
+  padding-right: 25px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .mixinModal label {
@@ -85,7 +85,7 @@
 }
 .mixinModal form {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
 .mixinModal .cancel {
   background-color: rgba(221, 18, 99, 0.4);
@@ -128,9 +128,10 @@
   text-align: center;
 }
 .mixinModal select {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   width: 100%;
   background: transparent;
-  margin-bottom: 10px;
+  margin: 10px 0 15px;
   text-align-last: center;
   border: 1px solid #8ffdfd;
   font-size: 20px;

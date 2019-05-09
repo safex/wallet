@@ -1,5 +1,4 @@
 var safex = window.require("safex-addressjs");
-const remote = window.require("electron").remote;
 
 /**
  * Verify Safex Address
@@ -26,14 +25,6 @@ function structureSafexKeys(spend, view) {
   keys["checksum"] = checksum;
 
   return keys;
-}
-
-/**
- * Close App
- */
-function closeApp() {
-  let window = remote.getCurrentWindow();
-  window.close();
 }
 
 /**
@@ -179,7 +170,6 @@ function countWords(str) {
 export {
   verify_safex_address,
   structureSafexKeys,
-  closeApp,
   addClass,
   openModal,
   closeModal,

@@ -212,7 +212,7 @@ export default class CashWallet extends React.Component {
     }, 1000);
   };
 
-  setOpenMixinModal = (alert, disabled) => {
+  setOpenMixinModal = (disabled) => {
     this.setOpenModal("mixin_modal", alert, disabled, null, "modal-80");
   };
 
@@ -243,7 +243,7 @@ export default class CashWallet extends React.Component {
     if (this.state.page !== "wallet") {
       this.setState({ page: page, button_disabled: false });
     } else {
-      this.setOpenAlert("Logging out...", true);
+      this.setOpenAlert("Logging out...", true);      
       this.setState({ keys_modal: false });
       localStorage.clear();
       setTimeout(() => {
@@ -362,14 +362,14 @@ export default class CashWallet extends React.Component {
     this.fetchPrice();
   };
 
-  onCopy = (infoText) => {
+  onCopy = (infoText, timeout = 3000) => {
     this.setState({ 
       copied: true,
       info_text: infoText 
     });
     setTimeout(() => {
       this.setState({ copied: false });
-    }, 3000);
+    }, timeout);
   };
 
   refreshCallback = () => {
@@ -413,7 +413,8 @@ export default class CashWallet extends React.Component {
         setTimeout(() => {
           console.log("Rescan setting callbacks");
           this.setWalletData();
-          this.setOpenAlert("Wallet rescan completed.");
+          this.setCloseAlert();
+          this.onCopy("Rescan completed", 6000);
           this.setState({
             loading_modal: false,
             keys_modal: false,
