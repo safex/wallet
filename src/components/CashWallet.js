@@ -244,7 +244,10 @@ export default class CashWallet extends React.Component {
     } else {
       this.setOpenAlert("Logging out...", true);      
       this.setState({ keys_modal: false });
-      localStorage.clear();
+      localStorage.removeItem("filename");
+      localStorage.removeItem("password");
+      localStorage.removeItem("wallet");
+      localStorage.removeItem("wallet_path");
       setTimeout(() => {
         this.setState({ page });
         this.setCloseAlert();
