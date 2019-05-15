@@ -263,7 +263,7 @@ class Contacts extends Component {
                       </button>
                     </CopyToClipboard>
                     <ReactTooltip id="copy-tooptip">
-                      <p>Copy</p>
+                      <p>Copy Address</p>
                     </ReactTooltip>
                     <button
                       onClick={this.removeContact.bind(this, contact.rowID)}
@@ -417,6 +417,7 @@ export default class Modal extends React.Component {
       this.props.historyModal ||
       this.props.feeModal ||
       this.props.loadingModal ||
+      this.props.alert ||
       (this.props.sendModal && this.props.alert) || 
       (this.props.addressModal && this.props.alert) ||
       (this.props.loadingModal && this.props.alert)) {
@@ -1209,14 +1210,14 @@ export default class Modal extends React.Component {
               {this.props.cash_or_token === 0 ? (
                 <div className="available-wrap">
                   <span>
-                    Available Cash: &nbsp;SFX {this.props.availableCash} &nbsp;
+                    SFX {this.props.availableCash} &nbsp;
                     {this.props.sfxPrice ? "$" + parseFloat(this.props.availableCash * this.props.sfxPrice).toFixed(2) : "Loading"}
                   </span>
                 </div>
               ) : (
                 <div className="available-wrap">
                   <span>
-                    Available Tokens: &nbsp;SFT {this.props.availableTokens} &nbsp;
+                    SFT {this.props.availableTokens} &nbsp;
                     {this.props.sftPrice ? "$" + parseFloat(this.props.availableTokens * this.props.sftPrice).toFixed(2) : "Loading"}
                   </span>
                 </div>

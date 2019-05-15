@@ -52,24 +52,33 @@ $ npm run dev
 
 ## Build:
 
-Log in the Apple Developer website https://developer.apple.com/
-Install Developer Tools v10.1
-https://download.developer.apple.com/Developer_Tools/Command_Line_Tools_macOS_10.13_for_Xcode_10.1/Command_Line_Tools_macOS_10.13_for_Xcode_10.1.dmg
+#### Windows
+
+```
+npm run make-win-installer
+```
+
+#### Linux
+
+For linux builds, you will need to have `rpmbuild` available on system (`apt-get install rpm`).
+
+```
+npm run make-linux-installer
+```
+
+#### MacOS
+
+Log in the Apple Developer website https://developer.apple.com/.  
+Install Developer Tools v10.1  
+https://download.developer.apple.com/Developer_Tools/Command_Line_Tools_macOS_10.13_for_Xcode_10.1/Command_Line_Tools_macOS_10.13_for_Xcode_10.1.dmg   
 If you previousely exported open ssl flags, reboot your computer.
 
 Then run:
 
 ```
-npm run make-win-installer
 npm run make-mac-installer
-npm run make-linux-installer
 ```
 
-separately, depending which OS you are using.
-
-For linux builds, you will need to have `rpmbuild` available on system (`apt-get install rpm`).
-
-## License
 
 MIT License
 

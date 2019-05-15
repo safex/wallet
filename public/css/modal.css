@@ -11,7 +11,6 @@
   align-items: center;
   justify-content: center;
   background: rgba(15, 29, 54, .97);
-  /* background: rgba(0, 0, 0, .9); */
   z-index: 10003;
   opacity: 0;
   visibility: hidden;
@@ -20,12 +19,16 @@
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
 }
+.dark .backdrop {
+  background: rgba(0, 0, 0, .9);
+}
 .backdrop.active {
   visibility: visible;
   opacity: 1;
 }
 .modal {
   background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 1px solid #54bcd9;
   border-radius: 5px;
   color: #fff;
   text-transform: uppercase;
@@ -211,7 +214,7 @@
   display: inline-block;
   border: 0px none;
   border-radius: 5px;
-  padding: 5px 10px !important;
+  padding: 5px 10px 5px 0 !important;
   margin: 0;
   font-size: 14px;
   background: url(../images/input-bg.png) repeat-y top left;
@@ -230,10 +233,11 @@
   /* Chrome/Opera/Safari */
   opacity: 0.7;
   color: #fff;
-  font-size: 22px !important;
-  letter-spacing: 0.7px;
+  font-size: 18px !important;
+  letter-spacing: 0.3px;
   text-align: left;
-  font-family: "Atrament", Helvetica, Arial, sans-serif;
+  /* font-family: "Atrament", Helvetica, Arial, sans-serif; */
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   line-height: 1.2;
   word-break: break-all;
 }
@@ -242,30 +246,33 @@
   /* Firefox 19+ */
   opacity: 0.7;
   color: #fff;
-  font-size: 22px !important;
-  letter-spacing: 0.7px;
+  font-size: 18px !important;
+  letter-spacing: 0.3px;
   text-align: left;
-  font-family: "Atrament", Helvetica, Arial, sans-serif;
+  /* font-family: "Atrament", Helvetica, Arial, sans-serif; */
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .modal textarea:-moz-placeholder,
 .modal input:-moz-placeholder {
   /* Firefox 18- */
   opacity: 0.7;
   color: #fff;
-  font-size: 22px !important;
-  letter-spacing: 0.7px;
+  font-size: 18px !important;
+  letter-spacing: 0.3px;
   text-align: left;
-  font-family: "Atrament", Helvetica, Arial, sans-serif;
+  /* font-family: "Atrament", Helvetica, Arial, sans-serif; */
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .modal textarea:-ms-input-placeholder,
 .modal input:-ms-input-placeholder {
   /* IE 10+ */
   opacity: 0.7;
   color: #fff;
-  font-size: 22px !important;
-  letter-spacing: 0.7px;
+  font-size: 18px !important;
+  letter-spacing: 0.3px;
   text-align: left;
-  font-family: "Atrament", Helvetica, Arial, sans-serif;
+  /* font-family: "Atrament", Helvetica, Arial, sans-serif; */
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .modal input {
   display: inline-block;
@@ -341,6 +348,10 @@
   margin: 0 5px 0 0;
   padding: 5px 12px;
   font-size: 19px;
+  font-size: 14px;
+  padding: 7px 12px 6px;
+  letter-spacing: .3px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .modal .cancel-btn:hover {
   -webkit-box-shadow: 0 0 30px 0 rgba(200, 14, 75, 1) !important;
@@ -353,8 +364,10 @@
 .modal .confirm-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 0 0 0 5px;
-  font-size: 19px;
-  padding: 4px 12px 6px;
+  font-size: 14px;
+  padding: 7px 12px 6px;
+  letter-spacing: .3px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .modal .confirm-btn:active,
 .modal .confirm-btn:focus {
@@ -434,7 +447,7 @@
   letter-spacing: 0.5px;
 }
 .sendModal form {
-  margin-top: 30px;
+  margin: 30px 0 5px;
 }
 .sendModal label {
   bottom: -12px;
@@ -451,7 +464,7 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal input {
-  padding: 13px 60px 10px 10px;
+  padding: 13px 60px 10px 0;
   border-bottom: 1px solid #8ffdfd;
   font-size: 18px;
   border-radius: 0px;
@@ -463,10 +476,13 @@
 }
 .sendModal .btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  margin: 0px 5px 5px;
-  padding: 4px 18px 6px;
-  letter-spacing: 1.5px;
-  font-size: 19px !important;
+  margin: 0px 5px 2px;
+  padding: 7px 15px 4.5px;
+  letter-spacing: .3px;
+  line-height: 1.2;
+  font-size: 15px !important;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  width: 76px;
 }
 .sendModal .btn[disabled] {
   pointer-events: none;
@@ -515,7 +531,7 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .loadingModal input {
-  margin: 0 0 10px !important;
+  margin: 0 0 15px !important;
   font-size: 22px;
   padding: 1px 10px;
 }
@@ -566,13 +582,14 @@
 }
 .keysModal .copy-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  height: 28px;
-  padding: 0px 12px 2px;
+  padding: 5px 9px 4px;
   position: absolute;
   z-index: 2;
   top: 3px;
   right: 0;
-  font-size: 15px;
+  font-size: 12px;
+  letter-spacing: .3px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .keysModal .button-wrap p {
   text-align: left;
@@ -588,9 +605,11 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   text-align: center;
   border: 2px solid #54bcd9;
-  padding: 5px 14px 7px;
+  padding: 6px 10px 6px;
   display: flex;
-  font-size: 16px;
+  font-size: 13px;
+  letter-spacing: .3px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .keysModal .rescan img {
   max-height: 18px;
@@ -800,7 +819,7 @@
 .addressModal input,
 .addressModal textarea {
   font-size: 16px;
-  padding: 13px 60px 10px 10px;
+  padding: 13px 60px 10px 0;
   border-bottom: 1px solid #8ffdfd;
   border-radius: 0;
   text-align: left;
@@ -810,10 +829,12 @@
 }
 .addressModal .btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  margin: 5px;
-  padding: 4px 18px 5px;
-  letter-spacing: 1.5px;
-  font-size: 19px !important;
+  margin: 14px 0 0;
+  padding: 8px 15px 4px;
+  letter-spacing: .3px;
+  line-height: 1.2;
+  font-size: 15px !important;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .addressModal .btn:focus,
 .addressModal .btn:active {

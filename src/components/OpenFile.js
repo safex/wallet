@@ -81,10 +81,10 @@ export default class OpenFile extends Component {
           <ReactTooltip id="open-tooptip">
             <p>To open your <span className="blue-text">Safex Wallet</span>, click browse.</p>
             <p>This will open a <span className="blue-text">dialog window</span>.</p>
-            <p className="mb-10">Choose the <span className="blue-text">Wallet File</span> from your file system.</p>
+            <p>Choose the <span className="blue-text">Wallet File</span> from your file system.</p>
+            <p className="mb-10">Enter password for your Wallet File and click <span className="blue-text">open</span>.</p>
             <p>In the future, when you want to <span className="blue-text">load</span> wallet, make</p>
-            <p className="mb-10">sure you select the file <span className="blue-text">without</span> the .keys extension.</p>
-            <p>Enter password for your Wallet File and click <span className="blue-text">open</span>.</p>
+            <p>sure you select the file <span className="blue-text">without</span> the .keys extension.</p>
           </ReactTooltip>
           <div className="group-wrap">
             <div className="form-group">

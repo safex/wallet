@@ -113,7 +113,7 @@ export default class NewFromMnemonic extends Component {
           <div className="form-group">
             <input type="password" name="pass1" placeholder="password" />
             <input type="password" name="pass2" placeholder="repeat password" />
-            <textarea name="mnemonic" placeholder="mnemonic seed" rows="3" />
+            <textarea name="mnemonic" placeholder="mnemonic seed" rows="4" />
           </div>
         </div>
         <button

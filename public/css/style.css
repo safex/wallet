@@ -70,10 +70,13 @@ html {
   overflow: hidden;
 }
 body {
-  background: url("../images/bg.jpg");
-  background-size: cover;
+  /* background: #021d32; */
+  background: url("../images/bg.jpg") no-repeat scroll top left / cover;
   background-position: top center;
   font-family: "Atrament", Helvetica, Arial, sans-serif;
+}
+body.dark {
+  background: url("../images/sky-bg.jpg") no-repeat scroll top left / cover;
 }
 ::-webkit-scrollbar {
   display: none;

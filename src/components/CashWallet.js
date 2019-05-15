@@ -17,7 +17,6 @@ import {
 import Wallet from "./Wallet";
 
 const safex = window.require("safex-nodejs-libwallet");
-const remote = window.require("electron").remote;
 
 export default class CashWallet extends React.Component {
   constructor(props) {
@@ -457,11 +456,11 @@ export default class CashWallet extends React.Component {
     
     axios({
       method: "get",
-      url: "https://api.coinpaprika.com/v1/coins/sft-safex-token/ohlcv/latest/"
+      url: "https://api.coingecko.com/api/v3/coins/safex-token"
     })
       .then(res => {
         var sft_price = parseFloat(
-          res.data[0].high
+          res.data.market_data.current_price.usd
         ).toFixed(4);
         this.setState({ sft_price });
       })
@@ -470,7 +469,7 @@ export default class CashWallet extends React.Component {
       });
   };
 
-  renderPageWrapper = (title, version, page, page_type, icon) => {
+  renderPageWrapper = (title, page, page_type, icon) => {
     return (
       <div className={"item-wrap " + page_type}>
         <Header
@@ -482,7 +481,6 @@ export default class CashWallet extends React.Component {
           <img src={icon} className="item-pic" alt={icon} />
           <h2>
             {title}&nbsp;
-            <span>{version}</span>
           </h2>
           <div className="login-wrap">{page}</div>
         </div>
@@ -548,14 +546,11 @@ export default class CashWallet extends React.Component {
   render() {
     let page = null;
     let page_type = null;
-    let version = null;
     let title = null;
     let icon = null;
 
     switch (this.state.page) {
       case "wallet":
-        title = "Wallet";
-        version = remote.app.getVersion();
         icon = "images/create-new.png";
         page_type = "wallet-wrap";
         page = (
@@ -747,6 +742,6 @@ export default class CashWallet extends React.Component {
         );
     }
 
-    return this.renderPageWrapper(title, version, page, page_type, icon);
+    return this.renderPageWrapper(title, page, page_type, icon);
   }
 }
