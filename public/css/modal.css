@@ -148,7 +148,7 @@
 }
 .modal label .question-wrap {
   position: absolute;
-  top: 0;
+  top: -7px;
   right: 0;
   width: 32px;
   height: 32px;
@@ -164,8 +164,11 @@
   box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
   cursor: pointer;
 }
-.modal label #mixin-question-wrap { 
-  top: 25px;
+.modal #mixin-label {
+  margin: 0 0 15px;
+}
+.modal label #mixin-question-wrap {
+  top: -10px;
 }
 .modal label .question-wrap span {
   position: relative;
@@ -238,7 +241,6 @@
   font-size: 18px !important;
   letter-spacing: 0.3px;
   text-align: left;
-  /* font-family: "Atrament", Helvetica, Arial, sans-serif; */
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   line-height: 1.2;
   word-break: break-all;
@@ -250,7 +252,6 @@
   font-size: 18px !important;
   letter-spacing: 0.3px;
   text-align: left;
-  /* font-family: "Atrament", Helvetica, Arial, sans-serif; */
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .modal textarea:-moz-placeholder,
@@ -260,7 +261,6 @@
   font-size: 18px !important;
   letter-spacing: 0.3px;
   text-align: left;
-  /* font-family: "Atrament", Helvetica, Arial, sans-serif; */
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .modal textarea:-ms-input-placeholder,
@@ -270,7 +270,6 @@
   font-size: 18px !important;
   letter-spacing: 0.3px;
   text-align: left;
-  /* font-family: "Atrament", Helvetica, Arial, sans-serif; */
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .modal input {
@@ -451,10 +450,12 @@
 }
 .sendModal label {
   bottom: -12px;
-  right: 0;
+  /* right: 0; */
   text-align: left;
   color: rgba(255, 255, 255, .9);
-  margin: 0 0 5px;
+  margin: 0;
+  display: inline-block;
+  /* width: auto; */
 }
 .sendModal textarea {
   padding: 4px 10px 5px;
@@ -473,23 +474,24 @@
   border-radius: 0px;
   background: transparent;
   letter-spacing: -0.3px;
-  margin-bottom: 21px !important;
+  margin-bottom: 24px !important;
   line-height: 1;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal select {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-  width: 90%;
-  left: -5%;
+  width: 48%;
+  left: 35%;
   background: transparent;
-  margin: 10px 0;
   text-align-last: center;
   border: 0px none;
   border-radius: 0px !important;
   border-bottom: 1px solid #8ffdfd;
-  /* border-radius: 0px !important; */
+  display: inline-block;
   font-size: 18px;
+  position: absolute;
   height: 36px;
+  z-index: 2;
 }
 .sendModal select:active,
 .sendModal select:focus {
@@ -497,7 +499,7 @@
 }
 .sendModal .btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  margin: 0px auto 5px;
+  margin: -1px auto 5px;
   padding: 7px 15px 4.5px;
   letter-spacing: .3px;
   line-height: 1.2;

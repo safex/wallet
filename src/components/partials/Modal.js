@@ -642,24 +642,6 @@ export default class Modal extends React.Component {
       });
   };
 
-  changeDefaultMixin = e => {
-    e.preventDefault();
-    let wallet = this.props.walletMeta;
-    let mixin = parseFloat(e.target.mixin.value);
-    let args = JSON.parse(localStorage.getItem("args"));
-
-    try {
-      this.mixin = mixin;
-      wallet.setDefaultMixin(mixin);
-      args.mixin = mixin;
-      localStorage.setItem("args", JSON.stringify(args));
-      this.props.setOpenFeeModal();
-      console.log(args);
-    } catch (err) {
-      this.props.setOpenAlert(`${err}`, false, "modal-80");
-    }
-  };
-
   setRescanBalance = () => {
     this.setState({
       remove_transition: true
@@ -702,13 +684,13 @@ export default class Modal extends React.Component {
       this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
       return false;
     }
-    // if (
-    //   process.env.NODE_ENV === "development" &&
-    //   !safex.addressValid(addressInput, "testnet")
-    // ) {
-    //   this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
-    //   return false;
-    // }
+    if (
+      process.env.NODE_ENV === "development" &&
+      !safex.addressValid(addressInput, "testnet")
+    ) {
+      this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
+      return false;
+    }
     if (
       wallet.addressBook_AddRow(addressInput, paymentidInput, name) === false
     ) {
@@ -1273,7 +1255,7 @@ export default class Modal extends React.Component {
                   value={this.state.amount}
                   onChange={this.inputOnChange.bind(this, "amount")}
                 />
-                <label htmlFor="mixin">
+                <label id="mixin-label" htmlFor="mixin">
                   Transaction Mixin (0-8)
                   <div
                     data-tip
@@ -1289,7 +1271,6 @@ export default class Modal extends React.Component {
                   </ReactTooltip>
                 </label>
                 <select
-                  className="button-shine"
                   name="mixin"
                   defaultValue={this.mixin}
                 >
