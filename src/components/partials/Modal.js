@@ -412,7 +412,6 @@ export default class Modal extends React.Component {
       send_tx_disabled: true
     }));
     if (this.props.keysModal ||
-      this.props.mixinModal ||
       this.props.deleteModal || 
       this.props.historyModal ||
       this.props.feeModal ||
@@ -572,17 +571,11 @@ export default class Modal extends React.Component {
         console.log(args);
       })
       .catch(e => {
-        if (e.startsWith("not enough outputs for specified ring size")) {
-          this.props.setOpenMixinModal(false);
-          localStorage.setItem("args", JSON.stringify(args));
-          console.log(JSON.parse(localStorage.getItem("args")));
-        } else {
-          this.props.setOpenAlert(
-            "" + e,
-            false,
-            "modal-80"
-          );
-        }
+        this.props.setOpenAlert(
+          "" + e,
+          false,
+          "modal-80"
+        );
       });
   };
 
@@ -597,11 +590,7 @@ export default class Modal extends React.Component {
     }));
     tx.commit()
       .then(() => {
-        if (this.props.mixinModal) {
-          this.props.closeModal();
-        } else {
-          this.closeMyModal();
-        }
+        this.closeMyModal();
         if (!txId) {
           this.props.setOpenAlert(
             "Unable to create transaction id ",
