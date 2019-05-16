@@ -56,7 +56,7 @@ export default class Header extends Component {
           >
             <img src="images/bulb.png" alt="bulb" />
           </button>
-          <ReactTooltip id="light-tooptip">
+          <ReactTooltip place="left" id="light-tooptip">
             {this.state.dark_theme
               ?
                 <p>Light Theme</p>

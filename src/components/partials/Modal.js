@@ -1266,8 +1266,9 @@ export default class Modal extends React.Component {
                     <span>?</span>
                   </div>
                   <ReactTooltip id="mixin-tooptip">
-                    <p>Default network mixin value is <span className="blue-text">{this.mixin}</span>.</p>
-                    <p>Lowering your transaction mixin may harm your privacy.</p>
+                    <p>Default network mixin is <span className="blue-text">{this.mixin}</span>.</p>
+                    <p>Lowering your transaction </p>
+                    <p>mixin may harm your privacy.</p>
                   </ReactTooltip>
                 </label>
                 <select
