@@ -166,6 +166,7 @@
 }
 .modal #mixin-label {
   margin: 0 0 15px;
+  z-index: initial;
 }
 .modal label #mixin-question-wrap {
   top: -10px;
