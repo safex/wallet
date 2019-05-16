@@ -24,7 +24,7 @@ export default class Header extends Component {
     } else {
       document.body.classList.add('dark');
       this.setState({ dark_theme: true });
-      localStorage.setItem("dark_theme", JSON.stringify(true));
+      localStorage.setItem("dark_theme", true);
     }
   }
 

@@ -43,7 +43,6 @@ export default class CashWallet extends React.Component {
       loading_modal: false,
       send_modal: false,
       send_disabled: false,
-      mixin_modal: false,
       history_modal: false,
       address_modal: false,
       confirm_modal: false,
@@ -209,10 +208,6 @@ export default class CashWallet extends React.Component {
         button_disabled: false
       });
     }, 1000);
-  };
-
-  setOpenMixinModal = (disabled) => {
-    this.setOpenModal("mixin_modal", alert, disabled, null, "modal-80");
   };
 
   setOpenAddressModal = () => {
@@ -519,8 +514,6 @@ export default class CashWallet extends React.Component {
             this.state.wallet ? this.state.wallet.unlocked_tokens : ""
           }
           cash_or_token={this.cash_or_token}
-          mixinModal={this.state.mixin_modal}
-          setOpenMixinModal={this.setOpenMixinModal}
           setOpenKeysModal={this.setOpenKeysModal}
           addressModal={this.state.address_modal}
           setOpenConfirmModal={this.setOpenConfirmModal}
@@ -718,8 +711,6 @@ export default class CashWallet extends React.Component {
                 this.state.wallet ? this.state.wallet.unlocked_tokens : ""
               }
               cash_or_token={this.cash_or_token}
-              mixinModal={this.state.mixin_modal}
-              setOpenMixinModal={this.setOpenMixinModal}
               setOpenKeysModal={this.setOpenKeysModal}
               addressModal={this.state.address_modal}
               setOpenConfirmModal={this.setOpenConfirmModal}

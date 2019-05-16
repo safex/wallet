@@ -465,7 +465,6 @@ export default class Modal extends React.Component {
       this.props.setOpenAlert("Wrong password");
       return false;
     }
-
     this.props.setOpenKeysModal();
   };
 
@@ -483,7 +482,8 @@ export default class Modal extends React.Component {
       let amount = parseFloat(e.target.amount.value) * 10000000000;
       let paymentid = e.target.paymentid.value;
       let paymentidInput = paymentid.replace(/\s+/g, "");
-      let mixin = this.mixin;
+      let mixin = parseFloat(e.target.mixin.value);
+      
       if (sendingAddress === "") {
         this.props.setOpenAlert("Fill out all the fields", false, "modal-80");
         return false;
@@ -562,13 +562,14 @@ export default class Modal extends React.Component {
       .createTransaction(args)
       .then(tx => {
         let fee = roundAmount(tx.fee());
-        console.log(args);
         this.setState(() => ({ 
           fee: fee, 
           send_tx_disabled: false 
         }));
         this.testTx = tx;
-        this.props.setOpenFeeModal();
+        this.props.setOpenFeeModal(false);
+        localStorage.setItem("args", JSON.stringify(args));
+        console.log(args);
       })
       .catch(e => {
         if (e.startsWith("not enough outputs for specified ring size")) {
@@ -589,6 +590,7 @@ export default class Modal extends React.Component {
     e.preventDefault();
     let tx = this.testTx;
     let txId = tx.transactionsIds();
+
     this.setState(() => ({
       tx_being_sent: true,
       alert_close_disabled: true
@@ -635,6 +637,7 @@ export default class Modal extends React.Component {
           this.props.setWalletData();
           this.mixin = 6;
           console.log("reset mixin " + this.mixin);
+          localStorage.removeItem("args");
         }, 300);
       })
       .catch(e => {
@@ -655,19 +658,14 @@ export default class Modal extends React.Component {
     let wallet = this.props.walletMeta;
     let mixin = parseFloat(e.target.mixin.value);
     let args = JSON.parse(localStorage.getItem("args"));
+
     try {
       this.mixin = mixin;
       wallet.setDefaultMixin(mixin);
-      this.sendTransaction({
-        address: args.address,
-        amount: args.amount,
-        tx_type: args.tx_type,
-        paymentId: args.paymentId ? args.paymentId : "",
-        mixin: this.mixin
-      });
-      setTimeout(() => {
-        localStorage.removeItem(args);
-      }, 2000);
+      args.mixin = mixin;
+      localStorage.setItem("args", JSON.stringify(args));
+      this.props.setOpenFeeModal();
+      console.log(args);
     } catch (err) {
       this.props.setOpenAlert(`${err}`, false, "modal-80");
     }
@@ -715,13 +713,13 @@ export default class Modal extends React.Component {
       this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
       return false;
     }
-    if (
-      process.env.NODE_ENV === "development" &&
-      !safex.addressValid(addressInput, "testnet")
-    ) {
-      this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
-      return false;
-    }
+    // if (
+    //   process.env.NODE_ENV === "development" &&
+    //   !safex.addressValid(addressInput, "testnet")
+    // ) {
+    //   this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
+    //   return false;
+    // }
     if (
       wallet.addressBook_AddRow(addressInput, paymentidInput, name) === false
     ) {
@@ -1286,6 +1284,28 @@ export default class Modal extends React.Component {
                   value={this.state.amount}
                   onChange={this.inputOnChange.bind(this, "amount")}
                 />
+                <label htmlFor="mixin">
+                  Transaction Mixin (0-8)
+                  <div
+                    data-tip
+                    data-for="mixin-tooptip"
+                    className="button-shine question-wrap"
+                    id="mixin-question-wrap"
+                  >
+                    <span>?</span>
+                  </div>
+                  <ReactTooltip id="mixin-tooptip">
+                    <p>Default network mixin value is <span className="blue-text">{this.mixin}</span>.</p>
+                    <p>Lowering your transaction mixin may harm your privacy.</p>
+                  </ReactTooltip>
+                </label>
+                <select
+                  className="button-shine"
+                  name="mixin"
+                  defaultValue={this.mixin}
+                >
+                  {mixin}
+                </select>
                 <label htmlFor="paymentid">
                   <div
                     data-tip
@@ -1333,51 +1353,6 @@ export default class Modal extends React.Component {
         </div>
       );
     }
-    if (this.props.mixinModal) {
-      modal = (
-        <div className={"mixinModal" + addClass(this.props.alert, "active")}>
-          <div className="mainAlertPopupInner">
-            <p>
-              There was a problem with transaction creation, there are not
-              enough outputs in network history to create privacy ring
-              signature.
-            </p>
-            <p>
-              Please lower your transaction mixin to proceed with transaction
-              execution (default network mixin value is {this.mixin}).
-            </p>
-            <form onSubmit={this.changeDefaultMixin}>
-              <label htmlFor="mixin">Set Transaction Mixin (0-8)</label>
-              <select
-                className="button-shine"
-                name="mixin"
-                defaultValue={this.mixin}
-              >
-                {mixin}
-              </select>
-              <button
-                type="button"
-                className="cancel-btn button-shine"
-                onClick={this.props.closeModal}
-              >
-                Cancel
-              </button>
-              <button type="submit" className="confirm-btn button-shine">
-                Send
-              </button>
-            </form>
-            <h4>*Lowering your transaction mixin may harm your privacy</h4>
-            {this.props.alertCloseDisabled ? (
-              <span className="hidden" />
-            ) : (
-                <span className="close" onClick={this.props.closeModal}>
-                  X
-              </span>
-              )}
-          </div>
-        </div>
-      );
-    }
     if (this.props.confirmModal) {
       modal = (
         <div
@@ -1416,7 +1391,7 @@ export default class Modal extends React.Component {
               <button
                 type="button"
                 className="cancel-btn btn button-shine"
-                onClick={this.props.closeModal}
+                onClick={this.closeMyModal}
                 disabled={
                   this.state.tx_being_sent || this.props.sendDisabled
                     ? "disabled"
