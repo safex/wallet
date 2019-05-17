@@ -435,10 +435,10 @@ export default class Modal extends React.Component {
       this.props.setCloseMyModal();
     }
     this.mixin = 6;
+    console.log("reset mixin. Current mixin: " + this.mixin);
     localStorage.removeItem("tx");
     localStorage.removeItem("txId");
     localStorage.removeItem("paymentId");
-    console.log("reset mixin. Current mixin: " + this.mixin);
     setTimeout(() => {
       this.setState({
         show_contacts: true,

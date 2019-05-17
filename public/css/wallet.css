@@ -59,6 +59,14 @@
 .__react_component_tooltip {
   padding: 12px 21px 10px;
 }
+.__react_component_tooltip.type-dark {
+  background-color: rgba(15, 29, 54, 1);
+  border: 1px solid rgba(15, 29, 54, 1);
+}
+.dark .__react_component_tooltip.type-dark {
+  background-color: rgba(0, 0, 0, .9);
+  border: 1px solid #54bcd9;
+}
 .__react_component_tooltip.show {
   opacity: 1;
 }
@@ -68,6 +76,18 @@
   line-height: 1.2;
   font-size: 16px;
   font-family: "Avenir", "Atrament", Arial, sans-serif;
+}
+.dark .__react_component_tooltip.type-dark.place-top:after {
+  border-top-color: #54bcd9;
+}
+.dark .__react_component_tooltip.type-dark.place-right:after {
+  border-right-color: #54bcd9;
+}
+.dark .__react_component_tooltip.type-dark.place-bottom:after {
+  border-bottom-color: #54bcd9;
+}
+.dark .__react_component_tooltip.type-dark.place-left:after {
+  border-left-color: #54bcd9;
 }
 .__react_component_tooltip .mb-10 {
   margin-bottom: 10px !important;

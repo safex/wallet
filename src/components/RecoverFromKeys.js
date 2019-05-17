@@ -123,7 +123,11 @@ export default class RecoverFromKeys extends Component {
         </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">
-            <input type="text" name="address" placeholder="address" />
+            <textarea
+              name="address" 
+              placeholder="address"
+              rows="3"
+            />
             <input type="text" name="spendkey" placeholder="secret spendkey" />
             <input type="text" name="viewkey" placeholder="secret viewkey" />
             <input type="password" name="pass1" placeholder="password" />

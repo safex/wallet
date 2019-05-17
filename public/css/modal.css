@@ -10,7 +10,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 29, 54, .97);
+  /* background: rgba(15, 29, 54, .97); */
+  background: url(../images/bg.png) no-repeat scroll top left / cover;
   z-index: 10003;
   opacity: 0;
   visibility: hidden;
@@ -20,14 +21,16 @@
   -webkit-transition: all ease 0.3s;
 }
 .dark .backdrop {
-  background: rgba(0, 0, 0, .9);
+  background: url(../images/sky-bg.png) no-repeat scroll top left / cover;
 }
 .backdrop.active {
   visibility: visible;
   opacity: 1;
 }
 .modal {
-  background: url(../images/login-bg.png) no-repeat top left / cover;
+  /* background: url(../images/login-bg.png) no-repeat top left / cover; */
+  /* background: rgba(0, 0, 0, .65); */
+  background: rgba(15, 29, 54, .8);
   border: 1px solid #54bcd9;
   border-radius: 5px;
   color: #fff;
@@ -50,6 +53,9 @@
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
+}
+.dark .modal {
+  background: rgba(0, 0, 0, .6);
 }
 .modal-50 {
   width: 50%;
@@ -312,7 +318,7 @@
   color: #fff;
   opacity: 1;
   font-size: 19px;
-  z-index: 1;
+  z-index: 3;
   font-family: "Brandon Grotesque Bold", Helvetica, Arial, sans-serif;
   -o-transition: all ease 0.2s;
   -webkit-transition: all ease 0.2s;
@@ -494,6 +500,7 @@
   position: absolute;
   height: 36px;
   z-index: 2;
+  margin: 3px 0 0;
   -webkit-appearance: none;
   -webkit-border-radius: 0px;
 }
@@ -560,7 +567,10 @@
 .loadingModal input {
   margin: 0 0 15px !important;
   font-size: 22px;
-  padding: 1px 10px;
+  padding: 1px 0px;
+  background: none;
+  border-radius: 0;
+  border-bottom: 1px solid #54bcd9;
 }
 .loadingModal p {
   font-size: 20px;

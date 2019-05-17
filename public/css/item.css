@@ -20,6 +20,9 @@
 .create-new-wrap .item-pic {
   right: 22px;
 }
+.create-new-wrap .login-wrap .group-wrap input {
+  max-width: 500px;
+}
 .item-wrap h2 {
   color: rgba(255, 255, 255, .95);
   font-size: 44px;
@@ -61,6 +64,7 @@
   margin-bottom: 0;
   border-radius: 5px;
   padding: 40px 20px;
+  text-align: center;
 }
 .item-wrap .login-wrap .input-group {
   width: 100%;
@@ -84,6 +88,9 @@
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+.dark .item-wrap .login-wrap .question-wrap {
+  border: 1px solid #54bcd9;
 }
 .item-wrap .login-wrap .question-wrap:hover {
   -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
@@ -117,7 +124,7 @@
   text-align: center;
   border: 0px none;
   color: #fff;
-  font-size: 22px;
+  font-size: 18px;
   padding: 4px 0px;
   margin-bottom: 15px;
   border-bottom: 1px solid #8ffdfd;
@@ -129,10 +136,12 @@
   text-align: center;
   border: 0px none;
   color: #fff;
-  font-size: 22px;
+  font-size: 18px;
   padding: 4px 0px;
+  margin-bottom: 15px;
   border-bottom: 1px solid #8ffdfd;
   resize: none;
+  line-height: 1.2;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .item-wrap .login-wrap form input::-webkit-input-placeholder {
@@ -233,6 +242,7 @@
 }
 .open-file-wrap .login-wrap form input {
   margin: 0 0 10px;
+  max-width: 500px;
 }
 .open-file-wrap .login-wrap form input:last-of-type {
   margin-bottom: 0;
@@ -262,5 +272,11 @@
 @media (min-width: 1300px) {
   .item-pic {
     right: 6% !important;
+  }
+}
+@media (min-width: 1450px) {
+  .item-wrap .login-wrap form textarea,
+  .item-wrap .login-wrap form input {
+    max-width: 700px;
   }
 }
