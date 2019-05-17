@@ -1,6 +1,6 @@
 /* Wallet File Wrap */
 .wallet-wrap {
-  padding-top: 150px;
+  padding-top: 50px;
 }
 .wallet-inner-wrap {
   border-radius: 5px;
@@ -26,6 +26,7 @@
   z-index: 2;
   width: 100%;
   padding-top: 5px;
+  text-align: left;
 }
 .wallet-inner-wrap .btns-right-wrap {
   position: absolute;
@@ -55,6 +56,9 @@
 }
 .wallet-inner-wrap .btns-right-wrap button:hover {
   cursor: pointer;
+}
+.wallet-wrap .login-wrap {
+  padding: 100px 0px 0;
 }
 .__react_component_tooltip {
   padding: 12px 21px 10px;
@@ -94,6 +98,10 @@
 }
 .__react_component_tooltip .blue-text {
   color: #54bcd9;
+}
+.__react_component_tooltip .w-350 {
+  width: 350px;
+  word-break: break-all;
 }
 .__react_component_tooltip .green-text {
   color: rgba(14, 200, 193, 1);
@@ -413,6 +421,10 @@
 .wallet-inner-wrap #send-cash-btn:hover {
   -webkit-box-shadow: 0 0 15px 0 rgba(83, 233, 183, 1);
   box-shadow: 0 0 15px 0 rgba(83, 233, 183, 1);
+}
+
+.wallet-wrap .modal-50 {
+  width: 512px;
 }
 
 @media (min-width: 1200px) {

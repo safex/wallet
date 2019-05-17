@@ -486,7 +486,7 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal select {
-  background: url(../images/select-bg.png) no-repeat top 10px right 3px / contain;
+  background: rgba(15, 29, 54, .8) url(../images/select-bg.png) no-repeat top 10px right 3px / contain;
   background-size: 10px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   width: 48%;
@@ -501,8 +501,13 @@
   height: 36px;
   z-index: 2;
   margin: 3px 0 0;
+  color: #fff;
   -webkit-appearance: none;
   -webkit-border-radius: 0px;
+}
+.dark .sendModal select {
+  background: rgba(0, 0, 0, .6) url(../images/select-bg.png) no-repeat top 10px right 3px / contain;
+  background-size: 10px;
 }
 .sendModal select:active,
 .sendModal select:focus {

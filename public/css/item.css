@@ -17,18 +17,26 @@
   right: 25px;
   width: 210px;
 }
+.create-new-wrap .login-wrap form {
+  padding: 0px;
+  position: relative;
+  max-width: 512px;
+  left: initial;
+  display: inline-block;
+  float: none;
+}
 .create-new-wrap .item-pic {
   right: 22px;
 }
-.create-new-wrap .login-wrap .group-wrap input {
-  max-width: 500px;
+.create-new-wrap .modal {
+  max-width: calc(512px - 0px);
 }
 .item-wrap h2 {
   color: rgba(255, 255, 255, .95);
   font-size: 44px;
   text-align: center;
   text-transform: uppercase;
-  margin: 40px 0 30px;
+  margin: 40px 0 10px;
   pointer-events: none;
   letter-spacing: 0.7px;
   -webkit-touch-callout: none; /* iOS Safari */
@@ -47,8 +55,10 @@
   cursor: initial;
 }
 .item-wrap .login-wrap {
-  padding: 0;
+  padding: 20px 0;
   border-radius: 5px;
+  overflow: hidden;
+  text-align: center;
 }
 .item-wrap .login-wrap form {
   padding: 0px;
@@ -102,6 +112,45 @@
   top: -6px;
   font-size: 18px;
   color: #fff;
+}
+.item-wrap .login-wrap .group-wrap .label-wrap {
+  text-align: center;
+  position: relative;
+  /* margin-bottom: 3px; */
+  z-index: 3;
+}
+.item-wrap .login-wrap .group-wrap .label-wrap .question-wrap {
+  position: absolute;
+  top: -7px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #8ffdfd;
+  border-radius: 50%;
+  text-align: center;
+  z-index: 4;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.dark .item-wrap .login-wrap .group-wrap .label-wrap .question-wrap {
+  border: 1px solid #54bcd9;
+}
+.item-wrap .login-wrap .group-wrap .label-wrap .question-wrap:hover {
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  cursor: pointer;
+}
+.item-wrap .login-wrap .group-wrap .label-wrap .question-wrap span {
+  position: relative;
+  top: -7px;
+  left: -0px;
+  font-size: 19px;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
 }
 .item-wrap .login-wrap label {
   width: 100%;
@@ -201,7 +250,7 @@
   outline: none;
 }
 .item-wrap .copied-text {
-  background: url(../images/login-bg.png) no-repeat top left / cover;
+  background: rgba(15, 29, 54, 1);
   border: 2px solid #54bcd9;
   visibility: hidden;
   width: 220px;
@@ -211,7 +260,7 @@
   left: calc(50% - 110px);
   bottom: 20px;
   font-size: 14px;
-  padding: 8px 18px 6px;
+  padding: 8px 18px 7px;
   margin-bottom: 0;
   letter-spacing: 0.3px;
   color: #fff;
@@ -223,6 +272,9 @@
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
+}
+.dark .item-wrap .copied-text  {
+  background: rgba(0, 0, 0, 1);
 }
 .item-wrap .copied-text.active {
   visibility: visible;
@@ -240,6 +292,14 @@
 .dark .open-file-wrap .item-pic {
   opacity: .85;
 }
+.open-file-wrap .login-wrap form {
+  padding: 0px;
+  position: relative;
+  max-width: 512px;
+  left: initial;
+  display: inline-block;
+  float: none;
+}
 .open-file-wrap .login-wrap form input {
   margin: 0 0 10px;
   max-width: 500px;
@@ -254,6 +314,7 @@
 }
 .open-file-wrap .browse-btn {
   width: 100%;
+  max-width: 512px;
   font-size: 30px;
   color: #fff;
   text-transform: uppercase;
@@ -262,6 +323,35 @@
   letter-spacing: 1px;
   background: url(../images/login-bg.png) no-repeat top left / cover;
   border-bottom: 5px solid #55ebff !important;
+}
+.open-file-wrap .modal {
+  max-width: calc(512px - 0px);
+}
+
+.create-from-keys-wrap .login-wrap .form-group {
+  padding: 65px 20px 30px;
+}
+.create-from-keys-wrap .login-wrap .question-wrap,
+.mnemonic-wrap .login-wrap .question-wrap {
+  right: 30px;
+}
+.create-from-keys-wrap .login-wrap form textarea,
+.create-from-keys-wrap .login-wrap form input,
+.mnemonic-wrap .login-wrap form textarea {
+  padding: 4px 50px;
+}
+.create-from-keys-wrap .login-wrap .group-wrap .label-wrap,
+.mnemonic-wrap .login-wrap .group-wrap .label-wrap {
+  z-index: initial;
+}
+.create-from-keys-wrap .login-wrap form,
+.mnemonic-wrap .login-wrap form {
+  padding: 0px;
+  position: relative;
+  max-width: 765px;
+  left: initial;
+  display: inline-block;
+  float: none;
 }
 
 @media (min-width: 1024px) {
@@ -273,10 +363,8 @@
   .item-pic {
     right: 6% !important;
   }
-}
-@media (min-width: 1450px) {
-  .item-wrap .login-wrap form textarea,
-  .item-wrap .login-wrap form input {
-    max-width: 700px;
+  .create-from-keys-wrap .modal,
+  .mnemonic-wrap .modal {
+    max-width: calc(765px - 0px);
   }
 }

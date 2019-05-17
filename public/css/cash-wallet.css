@@ -5,6 +5,9 @@
   flex-direction: column;
   justify-content: center;
 }
+.intro-page-wrap .modal {
+  max-width: 500px;
+}
 .options-wrap {
   position: relative;
   top: 20px;
@@ -116,5 +119,13 @@
   .options-wrap,
   .intro-page-wrap {
     margin: 0 auto;
+  }
+  .intro-page-wrap .modal {
+    max-width: calc(50% - 20px);
+  }
+}
+@media (min-width: 1200px) {
+  .intro-page-wrap .modal {
+    max-width: 585px;
   }
 }

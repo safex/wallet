@@ -22,6 +22,7 @@ header .logo {
   color: #fff;
   font-size: 20px;
   border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
   border-top-right-radius: 0px
 }
 .go-back-btn:hover {
@@ -60,6 +61,9 @@ header .logo {
     /* margin-left: -581.5px; */
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%)
+  }
+  .go-back-btn {
+    border-bottom-left-radius: 5px;
   }
   #buttons-wrap {
     right: 0px;

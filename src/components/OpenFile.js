@@ -84,7 +84,8 @@ export default class OpenFile extends Component {
             <p>Choose the <span className="blue-text">Wallet File</span> from your file system.</p>
             <p className="mb-10">Enter password for your Wallet File and click <span className="blue-text">open</span>.</p>
             <p>In the future, when you want to <span className="blue-text">load</span> wallet, make</p>
-            <p>sure you select the file <span className="blue-text">without</span> the .keys extension.</p>
+            <p className="mb-10">sure you select the file <span className="blue-text">without</span> the .keys extension.</p>
+            <p>Remember to <span className="blue-text">back up your keys</span> for future wallet recovery.</p>
           </ReactTooltip>
           <div className="group-wrap">
             <div className="form-group">

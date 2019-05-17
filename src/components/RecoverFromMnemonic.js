@@ -90,17 +90,8 @@ export default class NewFromMnemonic extends Component {
           <span>?</span>
         </div>
         <ReactTooltip id="mnemonic-tooptip">
-          <p><span className="blue-text">Mnemonic seed</span> can be used to recover your </p>
-          <p>wallet in case your file gets lost or corrupted.</p>
-          <p className="mb-10">It contains <span className="blue-text">24 or 25</span> words and no numbers.</p>
-          <p className="mb-10">
-            Example:{" "}
-            <span className="blue-text">
-              fizzle gyrate arsenic click wives bacon apology richly <br />
-              long inkling avidly gimmick biweekly frying nephew union <br />
-              umpire sack tasked idiom budget lazy getting heels nephew
-            </span>
-          </p>
+          <p><span className="blue-text">Mnemonic Seed</span> can be used to recover your </p>
+          <p className="mb-10">wallet in case your file gets lost or corrupted.</p>
           <p>When asked for a file name, enter the file</p>
           <p>name <span className="blue-text">without</span> the extension and click <span className="blue-text">save</span>.</p>
           <p>This will create <span className="blue-text">2</span> files on your file system.</p>
@@ -113,7 +104,28 @@ export default class NewFromMnemonic extends Component {
           <div className="form-group">
             <input type="password" name="pass1" placeholder="password" />
             <input type="password" name="pass2" placeholder="repeat password" />
-            <textarea name="mnemonic" placeholder="mnemonic seed" rows="4" />
+
+            <div className="label-wrap">
+              <div
+                className="button-shine question-wrap"
+                data-tip
+                data-for="seed-tooptip"
+              >
+                <span>?</span>
+              </div>
+              <ReactTooltip id="seed-tooptip">
+                <p className="mb-10"><span className="blue-text">Mnemonic Seed Phrase</span> contains <span className="blue-text">24 or 25</span> words and no numbers.</p>
+                <p>
+                  Example:{" "}
+                  <span className="blue-text">
+                    fizzle gyrate arsenic click wives bacon apology richly <br />
+                    long inkling avidly gimmick biweekly frying nephew union <br />
+                    umpire sack tasked idiom budget lazy getting heels nephew
+                  </span>
+                </p>
+              </ReactTooltip>
+            </div>
+            <textarea name="mnemonic" placeholder="mnemonic seed" rows="5" />
           </div>
         </div>
         <button
