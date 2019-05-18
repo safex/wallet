@@ -365,6 +365,7 @@
 .modal .cancel-btn:active,
 .modal .cancel-btn:focus {
   outline: none;
+  color: #fff;
 }
 .modal .confirm-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
@@ -377,6 +378,7 @@
 .modal .confirm-btn:active,
 .modal .confirm-btn:focus {
   outline: none;
+  color: #fff;
 }
 .modal .save-btn {
   background: rgba(200, 14, 75, 0.5);
@@ -515,7 +517,7 @@
 }
 .sendModal .btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  margin: -3px auto 7px;
+  margin: -5px auto 9px;
   padding: 7px 15px 4.5px;
   letter-spacing: .3px;
   line-height: 1.2;
@@ -840,6 +842,9 @@
 }
 .addressModal #show-contacts img {
   max-height: 18px;
+}
+.addressModal label .question-wrap {
+  top: 0px;
 }
 .addressModal label {
   bottom: -21px;

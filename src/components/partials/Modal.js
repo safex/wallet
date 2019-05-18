@@ -377,9 +377,9 @@ export default class Modal extends React.Component {
       new_address: "",
       new_payment_id: "",
       name: "",
-      fee: 0
+      fee: 0,
+      mixin: 6,
     };
-    this.mixin = 6;
     this.testTx = null;
   }
 
@@ -434,8 +434,6 @@ export default class Modal extends React.Component {
     } else {
       this.props.setCloseMyModal();
     }
-    this.mixin = 6;
-    console.log("reset mixin. Current mixin: " + this.mixin);
     localStorage.removeItem("tx");
     localStorage.removeItem("txId");
     localStorage.removeItem("paymentId");
@@ -450,8 +448,10 @@ export default class Modal extends React.Component {
         new_payment_id: "",
         name: "",
         add_transition: false,
-        send_tx_disabled: false
+        send_tx_disabled: false,
+        mixin: 6
       });
+      console.log("reset mixin. Current mixin: " + this.state.mixin);
     }, 300);
   };
 
@@ -502,13 +502,13 @@ export default class Modal extends React.Component {
         this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
         return false;
       }
-      if (
-        process.env.NODE_ENV === "development" &&
-        !safex.addressValid(sendingAddress, "testnet")
-      ) {
-        this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
-        return false;
-      }
+      // if (
+      //   process.env.NODE_ENV === "development" &&
+      //   !safex.addressValid(sendingAddress, "testnet")
+      // ) {
+      //   this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
+      //   return false;
+      // }
       if (
         (this.props.cash_or_token === 0 &&
           parseFloat(e.target.amount.value) + parseFloat(0.1) >
@@ -624,8 +624,10 @@ export default class Modal extends React.Component {
         }));
         setTimeout(() => {
           this.props.setWalletData();
-          this.mixin = 6;
-          console.log("reset mixin " + this.mixin);
+          this.setState({
+            mixin: 6
+          });
+          console.log("reset mixin " + this.state.mixin);
           localStorage.removeItem("args");
         }, 300);
       })
@@ -749,16 +751,16 @@ export default class Modal extends React.Component {
 
   render() {
     let modal;
-    let mixin = [];
+    let mixinArray = [];
 
     for (var i = 0; i <= 8; i++) {
-      mixin.push(
+      mixinArray.push(
         <option key={i} value={i}>
           {i}
         </option>
       );
     }
-    mixin.reverse();
+    mixinArray.reverse();
 
     if (this.props.loadingModal) {
       modal = (
@@ -1235,17 +1237,14 @@ export default class Modal extends React.Component {
                     </div>
                   )}
                   <ReactTooltip id="cash-amount-tooptip">
-                    <p>
-                      <span className="blue-text">Safex Cash fee</span>{" "}
-                      will be added to sending amount.
-                    </p>
+                    <p><span className="blue-text">Safex Cash fee</span> will be</p>
+                    <p>added to sending amount.</p>
                   </ReactTooltip>
                   <ReactTooltip id="token-amount-tooptip">
-                    <p>Token transaction does not accept decimal values.</p>
-                    <p>
-                      Token transaction requires{" "}
-                      <span className="blue-text">Safex Cash fee.</span>
-                    </p>
+                    <p>Token transaction does not</p>
+                    <p>accept decimal values.</p>
+                    <p>Token transaction </p>
+                    <p>requires <span className="blue-text">Safex Cash fee</span>.</p>
                   </ReactTooltip>
                 </label>
                 <input
@@ -1266,16 +1265,21 @@ export default class Modal extends React.Component {
                     <span>?</span>
                   </div>
                   <ReactTooltip id="mixin-tooptip">
-                    <p>Default network mixin is <span className="blue-text">{this.mixin}</span>.</p>
-                    <p>Lowering your transaction </p>
-                    <p>mixin may harm your privacy.</p>
+                    <p><span className="blue-text">Transaction Mixin</span> determines how many </p>
+                    <p>outputs transaction is going to have.</p>
+                    <p>For large transactions we recommend</p>
+                    <p>lowering the transaction mixin.</p>
+                    <p>Lower mixin will result in smaller fees.</p>
+                    <p className="mb-10">Default network mixin is <span className="blue-text">6</span>.</p>
+                    <p className="blue-text">*Lowering mixin may harm your privacy.</p>
                   </ReactTooltip>
                 </label>
                 <select
                   name="mixin"
-                  defaultValue={this.mixin}
+                  value={this.state.mixin}
+                  onChange={this.inputOnChange.bind(this, "mixin")}
                 >
-                  {mixin}
+                  {mixinArray}
                 </select>
                 <label htmlFor="paymentid">
                   <div
@@ -1286,14 +1290,15 @@ export default class Modal extends React.Component {
                     <span>?</span>
                   </div>
                   <ReactTooltip id="paymentid-tooptip">
-                    <p><span className="blue-text">Payment ID</span> is additional reference number</p>
-                    <p>attached to the transaction.</p>
+                    <p><span className="blue-text">Payment ID</span> is additional reference</p>
+                    <p>number attached to the transaction.</p>
                     <p>It is given by exchanges and web</p>
                     <p>shops to differentiate and track</p>
                     <p className="mb-10">particular deposits and purchases.</p>
                     <p><span className="blue-text">Payment ID</span> format should be</p>
                     <p className="mb-10"><span className="blue-text">16 or 64 digit Hex</span> character string.</p>
-                    <p>It is <span className="blue-text">not required</span> for regular user transactions.</p>
+                    <p>It is <span className="blue-text">not required</span> for</p>
+                    <p>regular user transactions.</p>
                   </ReactTooltip>
                 </label>
                 <input

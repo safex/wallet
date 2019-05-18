@@ -26,7 +26,6 @@ export default class CashWallet extends React.Component {
       local_wallet: JSON.parse(localStorage.getItem("wallet")),
       page: null,
       network: true,
-      mixin: 6,
       sfx_price: 0,
       sft_price: 0,
       sendTo: "",

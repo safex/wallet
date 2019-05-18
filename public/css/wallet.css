@@ -65,7 +65,6 @@
 }
 .__react_component_tooltip.type-dark {
   background-color: rgba(15, 29, 54, 1);
-  border: 1px solid rgba(15, 29, 54, 1);
 }
 .dark .__react_component_tooltip.type-dark {
   background-color: rgba(0, 0, 0, .9);
