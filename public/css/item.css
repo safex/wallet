@@ -32,7 +32,7 @@
   max-width: calc(512px - 0px);
 }
 .item-wrap h2 {
-  color: rgba(255, 255, 255, .95);
+  color: rgba(255, 255, 255, 0.95);
   font-size: 44px;
   text-align: center;
   text-transform: uppercase;
@@ -165,7 +165,7 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .dark .item-wrap .login-wrap label {
-  color: rgba(255, 255, 255, .95);
+  color: rgba(255, 255, 255, 0.95);
 }
 .item-wrap .login-wrap form input {
   width: 100%;
@@ -273,7 +273,7 @@
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
 }
-.dark .item-wrap .copied-text  {
+.dark .item-wrap .copied-text {
   background: rgba(0, 0, 0, 1);
 }
 .item-wrap .copied-text.active {
@@ -290,7 +290,7 @@
   right: 29px;
 }
 .dark .open-file-wrap .item-pic {
-  opacity: .85;
+  opacity: 0.85;
 }
 .open-file-wrap .login-wrap form {
   padding: 0px;
@@ -323,6 +323,8 @@
   letter-spacing: 1px;
   background: url(../images/login-bg.png) no-repeat top left / cover;
   border-bottom: 5px solid #55ebff !important;
+  display: block;
+  margin: 0 auto 5px;
 }
 .open-file-wrap .modal {
   max-width: calc(512px - 0px);

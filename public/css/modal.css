@@ -30,7 +30,7 @@
 .modal {
   /* background: url(../images/login-bg.png) no-repeat top left / cover; */
   /* background: rgba(0, 0, 0, .65); */
-  background: rgba(15, 29, 54, .8);
+  background: rgba(15, 29, 54, 0.8);
   border: 1px solid #54bcd9;
   border-radius: 5px;
   color: #fff;
@@ -55,7 +55,7 @@
   -webkit-transition: all ease 0.3s;
 }
 .dark .modal {
-  background: rgba(0, 0, 0, .6);
+  background: rgba(0, 0, 0, 0.6);
 }
 .modal-50 {
   width: 50%;
@@ -244,7 +244,7 @@
 .modal textarea::-webkit-input-placeholder,
 .modal input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  color: rgba(255, 255, 255, .9);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 18px !important;
   letter-spacing: 0.3px;
   text-align: left;
@@ -255,7 +255,7 @@
 .modal textarea::-moz-placeholder,
 .modal input::-moz-placeholder {
   /* Firefox 19+ */
-  color: rgba(255, 255, 255, .9);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 18px !important;
   letter-spacing: 0.3px;
   text-align: left;
@@ -264,7 +264,7 @@
 .modal textarea:-moz-placeholder,
 .modal input:-moz-placeholder {
   /* Firefox 18- */
-  color: rgba(255, 255, 255, .9);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 18px !important;
   letter-spacing: 0.3px;
   text-align: left;
@@ -273,7 +273,7 @@
 .modal textarea:-ms-input-placeholder,
 .modal input:-ms-input-placeholder {
   /* IE 10+ */
-  color: rgba(255, 255, 255, .9);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 18px !important;
   letter-spacing: 0.3px;
   text-align: left;
@@ -355,7 +355,7 @@
   font-size: 19px;
   font-size: 14px;
   padding: 7px 12px 6px;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .modal .cancel-btn:hover {
@@ -372,7 +372,7 @@
   margin: 0 0 0 5px;
   font-size: 14px;
   padding: 7px 12px 6px;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .modal .confirm-btn:active,
@@ -454,17 +454,15 @@
   letter-spacing: 0.5px;
 }
 .sendModal form {
-  margin: 15px auto 0;
+  margin: 0 auto;
   width: 85%;
 }
 .sendModal label {
   bottom: -12px;
-  /* right: 0; */
   text-align: left;
-  color: rgba(255, 255, 255, .9);
+  color: rgba(255, 255, 255, 0.9);
   margin: 0;
   display: inline-block;
-  /* width: auto; */
 }
 .sendModal textarea {
   padding: 4px 10px 5px;
@@ -488,11 +486,12 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal select {
-  background: rgba(15, 29, 54, .8) url(../images/select-bg.png) no-repeat top 10px right 3px / contain;
+  background: rgba(15, 29, 54, 0.8) url(../images/select-bg.png) no-repeat top
+    10px right 3px / contain;
   background-size: 10px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-  width: 48%;
-  left: 35%;
+  width: 44%;
+  left: 39%;
   text-align-last: center;
   border: 0px none;
   border-radius: 0px !important;
@@ -508,7 +507,8 @@
   -webkit-border-radius: 0px;
 }
 .dark .sendModal select {
-  background: rgba(0, 0, 0, .6) url(../images/select-bg.png) no-repeat top 10px right 3px / contain;
+  background: rgba(0, 0, 0, 0.6) url(../images/select-bg.png) no-repeat top 10px
+    right 3px / contain;
   background-size: 10px;
 }
 .sendModal select:active,
@@ -519,11 +519,26 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: -5px auto 9px;
   padding: 7px 15px 4.5px;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   line-height: 1.2;
   font-size: 15px !important;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   width: 76px;
+}
+.sendModal #advanced-btn {
+  text-align: center;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 2px solid #54bcd9;
+  padding: 7px 13px 8px 12px;
+  margin-top: -40px;
+  margin-right: 0;
+  margin-bottom: 20px;
+  display: flex;
+  width: 48px;
+  justify-content: center;
+}
+.sendModal #advanced-btn img {
+  max-height: 18px;
 }
 .sendModal .btn[disabled] {
   pointer-events: none;
@@ -632,7 +647,7 @@
   top: 3px;
   right: 0;
   font-size: 12px;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .keysModal .button-wrap p {
@@ -652,7 +667,7 @@
   padding: 6px 10px 6px;
   display: flex;
   font-size: 13px;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .keysModal .rescan img {
@@ -820,7 +835,7 @@
 .keysModal .question-wrap span {
   position: relative;
   top: -6px;
-  left: -.5px;
+  left: -0.5px;
   font-size: 18px;
   color: #fff;
 }
@@ -879,7 +894,7 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   margin: 14px 0 0;
   padding: 8px 15px 4px;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   line-height: 1.2;
   font-size: 15px !important;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -913,6 +928,9 @@
 }
 .addressModal .show-contacts-wrap .contact-item .contact-left {
   width: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: inherit;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-left .name {
   overflow: hidden;
@@ -921,10 +939,10 @@
   min-height: 52px;
   font-size: 19px;
   text-align: left;
-  word-break: break-all;
+  word-break: break-word;
 }
 .addressModal .show-contacts-wrap .contact-item .contact-center {
-  width: calc(100% - 300px);
+  width: calc(100% - 280px);
   padding-right: 5px;
   display: flex;
   flex-direction: column;
@@ -993,5 +1011,5 @@
 }
 .feeModal .btn[disabled] {
   pointer-events: none;
-  opacity: .65;
+  opacity: 0.65;
 }

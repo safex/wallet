@@ -64,7 +64,7 @@ export default class Wallet extends React.Component {
           <ReactTooltip id="status-tooptip">
             <p>Status</p>
           </ReactTooltip>
-          <div 
+          <div
             className="blockheight block"
             data-tip
             data-for="blockheight-tooptip"
@@ -77,14 +77,10 @@ export default class Wallet extends React.Component {
             <p>Blockchain height</p>
           </ReactTooltip>
 
-          <div 
-            className="sfx block"
-            data-tip
-            data-for="sfx-tooptip"
-          >
+          <div className="sfx block" data-tip data-for="sfx-tooptip">
             <img src="images/sfx.png" alt="safex-cash" />
             <span>
-              {this.props.sfxPrice ? "$" + this.props.sfxPrice: "Loading..."}
+              {this.props.sfxPrice ? "$" + this.props.sfxPrice : "Loading..."}
             </span>
           </div>
 
@@ -92,11 +88,7 @@ export default class Wallet extends React.Component {
             <p>Safex Cash (SFX)</p>
           </ReactTooltip>
 
-          <div 
-            className="sft block"
-            data-tip
-            data-for="sft-tooptip"
-          >
+          <div className="sft block" data-tip data-for="sft-tooptip">
             <img src="images/sft.png" alt="safex-token" />
             <span>
               {this.props.sftPrice ? "$" + this.props.sftPrice : "Loading..."}
@@ -166,14 +158,28 @@ export default class Wallet extends React.Component {
             <span>?</span>
           </div>
           <ReactTooltip id="pub-address-tooptip">
-            <p>This is <span className="blue-text">Public Address</span> of your wallet.</p>
-            <p>Public Address starts with Safex and contains between <span className="blue-text">95 and 105</span> characters.</p>
-            <p>This is address where you can receive <span className="blue-text">Safex Cash (SFX)</span> or <span className="blue-text">Safex Tokens (SFT)</span>.</p>
-            <p>It is generated using <span className="blue-text">Public Spend Key</span> and <span className="blue-text">Public View Key</span>.</p>
+            <p>
+              This is <span className="blue-text">Public Address</span> of your
+              wallet.
+            </p>
+            <p>
+              Public Address starts with Safex and contains between{" "}
+              <span className="blue-text">95 and 105</span> characters.
+            </p>
+            <p>
+              This is address where you can receive{" "}
+              <span className="blue-text">Safex Cash (SFX)</span> or{" "}
+              <span className="blue-text">Safex Tokens (SFT)</span>.
+            </p>
+            <p>
+              It is generated using{" "}
+              <span className="blue-text">Public Spend Key</span> and{" "}
+              <span className="blue-text">Public View Key</span>.
+            </p>
           </ReactTooltip>
           <CopyToClipboard
             text={this.props.wallet.wallet_address}
-            onCopy={this.props.onCopy.bind(this, 'Copied to clipboard', 3000)}
+            onCopy={this.props.onCopy.bind(this, "Copied to clipboard", 3000)}
             className="button-shine copy-btn"
           >
             <button>Copy</button>
@@ -200,9 +206,19 @@ export default class Wallet extends React.Component {
                 <span>?</span>
               </div>
               <ReactTooltip id="pending-tooptip">
-                <p>Due to the way <span className="blue-text">Safex blockchain</span>  works, part or all of your remaining balance</p>
-                <p>after a transaction may go into pending status for a short period of time.</p>
-                <p>This is normal and status will become available after <span className="blue-text">10</span> blocks.</p>
+                <p>
+                  Due to the way{" "}
+                  <span className="blue-text">Safex blockchain</span> works,
+                  part or all of your remaining balance
+                </p>
+                <p>
+                  after a transaction may go into pending status for a short
+                  period of time.
+                </p>
+                <p>
+                  This is normal and status will become available after{" "}
+                  <span className="blue-text">10</span> blocks.
+                </p>
               </ReactTooltip>
             </div>
             <p className="display-value green-field">
@@ -213,7 +229,12 @@ export default class Wallet extends React.Component {
             <p className="display-value green-field">
               <span>SFX {this.props.wallet.unlocked_balance}</span>
               <span className="value">
-                {this.props.sftPrice ? "$" + parseFloat(this.props.wallet.unlocked_balance * this.props.sfxPrice).toFixed(2) : "Loading..."}
+                {this.props.sftPrice
+                  ? "$" +
+                    parseFloat(
+                      this.props.wallet.unlocked_balance * this.props.sfxPrice
+                    ).toFixed(2)
+                  : "Loading..."}
               </span>
             </p>
             <button
@@ -239,7 +260,12 @@ export default class Wallet extends React.Component {
             <p className="display-value blue-field">
               <span>SFT {this.props.wallet.unlocked_tokens}</span>
               <span className="value">
-                {this.props.sftPrice ? "$" + parseFloat(this.props.wallet.unlocked_tokens * this.props.sftPrice).toFixed(2) : "Loading..."}
+                {this.props.sftPrice
+                  ? "$" +
+                    parseFloat(
+                      this.props.wallet.unlocked_tokens * this.props.sftPrice
+                    ).toFixed(2)
+                  : "Loading..."}
               </span>
             </p>
 
