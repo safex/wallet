@@ -15,6 +15,7 @@
   z-index: 10003;
   opacity: 0;
   visibility: hidden;
+  overflow: initial;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
@@ -463,6 +464,7 @@
   color: rgba(255, 255, 255, 0.9);
   margin: 0;
   display: inline-block;
+  z-index: 4;
 }
 .sendModal textarea {
   padding: 4px 10px 5px;
@@ -502,6 +504,7 @@
   height: 36px;
   z-index: 2;
   margin: 3px 0 0;
+  padding: 0 10px;
   color: #fff;
   -webkit-appearance: none;
   -webkit-border-radius: 0px;
