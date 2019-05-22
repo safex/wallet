@@ -562,6 +562,7 @@ export default class CashWallet extends React.Component {
   };
 
   toggleSidebar = () => {
+    this.setWalletHistory();
     this.setState({
       sidebar: !this.state.sidebar
     });

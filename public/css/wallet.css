@@ -58,7 +58,7 @@
   padding: 0;
 }
 .__react_component_tooltip {
-  padding: 12px 21px 10px;
+  padding: 10px 21px 8px;
 }
 .__react_component_tooltip.type-dark {
   background-color: rgba(15, 29, 54, 1);
