@@ -520,15 +520,15 @@ export default class Sidebar extends Component {
   exportWallet = () => {
     var file_obj = "";
 
-    file_obj += "Mnemonic Seed Phrase: " + this.props.wallet.mnemonic + "\n";
+    file_obj += "Public Address: " + this.props.wallet.wallet_address + "\n";
     file_obj +=
       "Secret (Private) View Key: " + this.props.wallet.view_key + "\n";
     file_obj += "Public View Key: " + this.props.wallet.pub_view + "\n";
     file_obj +=
       "Secret (Private) Spend Key: " + this.props.wallet.spend_key + "\n";
     file_obj += "Public Spend Key: " + this.props.wallet.pub_spend + "\n";
-    file_obj += "Public Address: " + this.props.wallet.wallet_address + "\n";
-
+    file_obj += "Mnemonic Seed Phrase: " + this.props.wallet.mnemonic + "\n";
+    
     var date = Date.now();
     fileDownload(file_obj, date + "unsafe-sfxsft.txt");
   };

@@ -235,7 +235,10 @@ export default class CashWallet extends React.Component {
 
   goToPage = page => {
     if (this.state.page !== "wallet") {
-      this.setState({ page: page, button_disabled: false });
+      this.setState({ 
+        page: page, 
+        button_disabled: false
+      });
     } else {
       this.setOpenAlert("Logging out...", true);
       this.setState({ keys_modal: false });
@@ -244,7 +247,8 @@ export default class CashWallet extends React.Component {
       localStorage.removeItem("wallet");
       localStorage.removeItem("wallet_path");
       setTimeout(() => {
-        this.setState({ page });
+        this.setState({
+          page});
         this.setCloseAlert();
       }, 1000);
     }
@@ -372,6 +376,10 @@ export default class CashWallet extends React.Component {
       address_book: wallet.addressBook_GetAll()
     });
     console.log('set wallet history checkpoint')
+    setTimeout(() => {
+      console.log(this.state.history)
+      console.log(this.state.address_book)
+    }, 300);
   };
 
   onCopy = (infoText, timeout = 3000) => {
@@ -536,7 +544,6 @@ export default class CashWallet extends React.Component {
           onCopy={this.onCopy}
           removeTransition={this.state.remove_transition}
           modalWidth={this.state.modal_width}
-          addressBook={this.state.address_book}
           deleteModal={this.state.delete_modal}
           setOpenDeleteModal={this.setOpenDeleteModal}
           feeModal={this.state.fee_modal}
@@ -552,7 +559,7 @@ export default class CashWallet extends React.Component {
           toggleSidebar={this.toggleSidebar}
           onCopy={this.onCopy}
           setOpenAlert={this.setOpenAlert}
-          addressBook={this.state.wallet ? this.state.address_book : ""}
+          addressBook={this.state.address_book}
           setWalletData={this.setWalletData}
           setWalletHistory={this.setWalletHistory}
           setOpenSendModal={this.setOpenSendModal}
@@ -565,7 +572,6 @@ export default class CashWallet extends React.Component {
   };
 
   toggleSidebar = () => {
-    this.setWalletHistory();
     this.setState({
       sidebar: !this.state.sidebar
     });
@@ -756,7 +762,6 @@ export default class CashWallet extends React.Component {
               onCopy={this.onCopy}
               removeTransition={this.state.remove_transition}
               modalWidth={this.state.modal_width}
-              addressBook={this.state.address_book}
               deleteModal={this.state.delete_modal}
               setOpenDeleteModal={this.setOpenDeleteModal}
               feeModal={this.state.fee_modal}

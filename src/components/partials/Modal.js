@@ -58,6 +58,7 @@ export default class Modal extends React.Component {
       this.props.deleteModal ||
       this.props.loadingModal ||
       this.props.deleteModal ||
+      this.props.feeModal ||
       this.props.alert ||
       (this.props.sendModal && this.props.alert) ||
       (this.props.addressModal && this.props.alert) ||
@@ -145,13 +146,13 @@ export default class Modal extends React.Component {
         this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
         return false;
       }
-      if (
-        process.env.NODE_ENV === "development" &&
-        !safex.addressValid(sendingAddress, "testnet")
-      ) {
-        this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
-        return false;
-      }
+      // if (
+      //   process.env.NODE_ENV === "development" &&
+      //   !safex.addressValid(sendingAddress, "testnet")
+      // ) {
+      //   this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
+      //   return false;
+      // }
       if (
         (this.props.cash_or_token === 0 &&
           parseFloat(e.target.amount.value) + parseFloat(0.1) >
@@ -598,6 +599,58 @@ export default class Modal extends React.Component {
           )}
           <div className="mainAlertPopupInner">
             <p>{this.props.alertText}</p>
+          </div>
+        </div>
+      );
+    }
+    if (this.props.feeModal) {
+      modal = (
+        <div className={"feeModal" + addClass(this.props.feeModal, "active")}>
+          {this.props.alertCloseDisabled ? (
+            <span className="hidden" />
+          ) : (
+              <span className="close" onClick={this.props.closeModal}>
+                X
+            </span>
+            )}
+          <div className="mainAlertPopupInner">
+            <p>
+              Your approximate transaction fee is: {this.state.fee} SFX ($
+              {parseFloat(this.state.fee * this.props.sfxPrice).toFixed(4)})
+            </p>
+            <p>Are you sure you want to proceed with this transaction?</p>
+
+            <form onSubmit={this.commitTx}>
+              <button
+                type="button"
+                className="cancel-btn btn button-shine"
+                onClick={this.closeMyModal}
+                disabled={
+                  this.state.tx_being_sent || this.props.sendDisabled
+                    ? "disabled"
+                    : ""
+                }
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="confirm-btn btn button-shine"
+                disabled={
+                  this.state.tx_being_sent || this.props.sendDisabled
+                    ? "disabled"
+                    : ""
+                }
+              >
+                Send
+              </button>
+            </form>
+            <h6>
+              Due to the way Safex blockchain works, part or all of your
+              remaining balance after a transaction may go into pending status
+              for a short period of time. This is normal and status will become
+              available after 10 blocks.
+            </h6>
           </div>
         </div>
       );
