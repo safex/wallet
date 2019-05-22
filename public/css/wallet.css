@@ -4,7 +4,7 @@
 }
 .wallet-inner-wrap {
   border-radius: 5px;
-  padding: 80px 0px 0;
+  padding: 100px 0px 0;
   width: 94%;
   left: 3%;
 }
@@ -16,9 +16,6 @@
   bottom: 5px;
   opacity: 0.5;
 }
-.wallet-wrap h2 {
-  display: none
-}
 .wallet-inner-wrap .btn-wrap {
   position: absolute;
   top: 0;
@@ -26,11 +23,11 @@
   z-index: 2;
   width: 100%;
   padding-top: 5px;
-  text-align: left;
+  text-align: right;
 }
 .wallet-inner-wrap .btns-right-wrap {
   position: absolute;
-  right: 0;
+  left: 0;
   top: 0;
 }
 .wallet-inner-wrap .btns-right-wrap button {
@@ -58,7 +55,7 @@
   cursor: pointer;
 }
 .wallet-wrap .login-wrap {
-  padding: 100px 0px 0;
+  padding: 0;
 }
 .__react_component_tooltip {
   padding: 12px 21px 10px;
@@ -67,7 +64,7 @@
   background-color: rgba(15, 29, 54, 1);
 }
 .dark .__react_component_tooltip.type-dark {
-  background-color: rgba(0, 0, 0, .9);
+  background-color: rgba(0, 0, 0, 0.9);
   border: 1px solid #54bcd9;
 }
 .__react_component_tooltip.show {
@@ -129,7 +126,7 @@
 .wallet-inner-wrap .block {
   display: inline-block;
   margin-left: 15px;
-  font-family: "Avenir", Helve
+  font-family: "Avenir", Helve;
 }
 .wallet-inner-wrap .block:first-of-type {
   margin-left: 0;
@@ -147,7 +144,7 @@
   top: 3px;
 }
 .dark .wallet-inner-wrap .block span {
-  color: rgba(255, 255, 255, .95);
+  color: rgba(255, 255, 255, 0.95);
 }
 .wallet-inner-wrap .signal p {
   display: inline-block;
@@ -197,7 +194,7 @@
 }
 .wallet-inner-wrap .group label,
 .wallet-inner-wrap .group input {
-  color: rgba(255, 255, 255, .95);
+  color: rgba(255, 255, 255, 0.95);
 }
 .wallet-inner-wrap .group input:last-of-type {
   margin-bottom: 5px;
@@ -228,7 +225,7 @@
   padding: 4px 10px;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in
+  transition: all 0.2s ease-in;
 }
 .wallet-inner-wrap .open-file-btn {
   width: auto;
@@ -262,7 +259,7 @@
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
-  -webkit-transition: all ease
+  -webkit-transition: all ease;
 }
 .wallet-inner-wrap .label-wrap .question-wrap:hover {
   -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
@@ -293,11 +290,11 @@
   border-radius: 7px;
   color: #fff;
   font-weight: 600;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in
+  transition: all 0.2s ease-in;
 }
 .wallet-inner-wrap input {
   width: 100%;
@@ -309,7 +306,7 @@
   border-bottom: 1px solid #8ffdfd;
   margin: 10px 0 15px;
   border-radius: 0px;
-  font-family: "Avenir", Helve
+  font-family: "Avenir", Helve;
 }
 .wallet-inner-wrap .btn {
   font-size: 24px !important;
@@ -327,7 +324,7 @@
   resize: none;
   text-align: center;
   white-space: nowrap;
-  font-family: "Avenir", Helve
+  font-family: "Avenir", Helve;
 }
 .wallet-inner-wrap input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
@@ -364,7 +361,7 @@
   padding: 10px 0 0;
   margin: 0px 0 15px;
   border-bottom: 1px solid #8ffdfd;
-  font-family: "Avenir", Helve
+  font-family: "Avenir", Helve;
 }
 .wallet-inner-wrap .display-value span {
   margin-right: 0;
@@ -375,8 +372,8 @@
 }
 .wallet-inner-wrap .display-value span:last-of-type {
   margin-right: 0;
-  background: rgba(255, 255, 255, .25);
-  color: rgba(255, 255, 255, .8);
+  background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.8);
   font-family: "Avenir Light", sans-serif;
   text-align: left;
 }
@@ -440,17 +437,17 @@
   }
 }
 
-@media (min-width: 1450px) { 
+@media (min-width: 1450px) {
   .wallet-wrap .item-pic {
     right: 2% !important;
   }
 }
 
-@media (min-width: 1650px) { 
+@media (min-width: 1650px) {
   .wallet-wrap .item-pic {
     opacity: 1;
   }
   .dark .wallet-wrap .item-pic {
-    opacity: .85;
+    opacity: 0.85;
   }
 }

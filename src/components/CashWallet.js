@@ -6,6 +6,7 @@ import RecoverFromKeys from "./RecoverFromKeys";
 import RecoverFromMnemonic from "./RecoverFromMnemonic";
 import Modal from "./partials/Modal";
 import Header from "./partials/Header";
+import Sidebar from "./partials/Sidebar";
 import {
   openModal,
   closeModal,
@@ -49,11 +50,12 @@ export default class CashWallet extends React.Component {
       fee_modal: false,
       value: "",
       copied: false,
-      info_text: '',
+      info_text: "",
       remove_transition: false,
       modal_width: "",
       history: [],
-      address_book: []
+      address_book: [],
+      sidebar: false
     };
 
     this.wallet_meta = null;
@@ -235,7 +237,7 @@ export default class CashWallet extends React.Component {
     if (this.state.page !== "wallet") {
       this.setState({ page: page, button_disabled: false });
     } else {
-      this.setOpenAlert("Logging out...", true);      
+      this.setOpenAlert("Logging out...", true);
       this.setState({ keys_modal: false });
       localStorage.removeItem("filename");
       localStorage.removeItem("password");
@@ -313,6 +315,7 @@ export default class CashWallet extends React.Component {
     let wallet = this.wallet_meta;
     wallet.setSeedLanguage("English");
     this.setWalletData();
+    this.setWalletHistory();
     this.setState({
       page: "wallet",
       loading_modal: false
@@ -350,17 +353,29 @@ export default class CashWallet extends React.Component {
           network: this.env.NETWORK,
           daemonAddress: this.env.ADDRESS
         }
-      },
-      history: history,
-      address_book: wallet.addressBook_GetAll()
+      }
     });
     this.fetchPrice();
   };
 
+  setWalletHistory = () => {
+    let wallet = this.wallet_meta;
+    let history = wallet.history();
+
+    history.sort(function(a, b) {
+      return parseFloat(b.timestamp) - parseFloat(a.timestamp);
+    });
+
+    this.setState({
+      history: history,
+      address_book: wallet.addressBook_GetAll()
+    });
+  };
+
   onCopy = (infoText, timeout = 3000) => {
-    this.setState({ 
+    this.setState({
       copied: true,
-      info_text: infoText 
+      info_text: infoText
     });
     setTimeout(() => {
       this.setState({ copied: false });
@@ -427,11 +442,7 @@ export default class CashWallet extends React.Component {
         }, 1000);
       }, 1000);
     } else {
-      this.setOpenAlert(
-        "No connection to daemon",
-        false,
-        "modal-80"
-      );
+      this.setOpenAlert("No connection to daemon", false, "modal-80");
     }
   };
 
@@ -449,7 +460,7 @@ export default class CashWallet extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
-    
+
     axios({
       method: "get",
       url: "https://api.coingecko.com/api/v3/coins/safex-token"
@@ -460,7 +471,7 @@ export default class CashWallet extends React.Component {
         ).toFixed(4);
         this.setState({ sft_price });
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
   };
@@ -475,9 +486,7 @@ export default class CashWallet extends React.Component {
         />
         <div className="item-inner">
           <img src={icon} className="item-pic" alt={icon} />
-          <h2>
-            {title}&nbsp;
-          </h2>
+          <h2>{title}&nbsp;</h2>
           <div className="login-wrap">{page}</div>
         </div>
         <p className={this.state.copied ? "copied-text active" : "copied-text"}>
@@ -495,7 +504,6 @@ export default class CashWallet extends React.Component {
           createWallet={this.createWallet}
           closeModal={this.setCloseModal}
           keysModal={this.state.keys_modal}
-          history={this.state.history}
           historyModal={this.state.history_modal}
           sendModal={this.state.send_modal}
           setOpenSendModal={this.setOpenSendModal}
@@ -530,11 +538,32 @@ export default class CashWallet extends React.Component {
           setOpenDeleteModal={this.setOpenDeleteModal}
           feeModal={this.state.fee_modal}
           setOpenFeeModal={this.setOpenFeeModal}
-          sfxPrice={this.state.sfx_price ? this.state.sfx_price : ''}
-          sftPrice={this.state.sft_price ? this.state.sft_price : ''}
+          sfxPrice={this.state.sfx_price ? this.state.sfx_price : ""}
+          sftPrice={this.state.sft_price ? this.state.sft_price : ""}
+        />
+
+        <Sidebar
+          wallet={this.state.wallet ? this.state.wallet : ""}
+          walletMeta={this.wallet_meta ? this.wallet_meta : ""}
+          sidebar={this.state.sidebar}
+          toggleSidebar={this.toggleSidebar}
+          onCopy={this.onCopy}
+          setOpenAlert={this.setOpenAlert}
+          addressBook={this.state.wallet ? this.state.address_book : ""}
+          setWalletData={this.setWalletData}
+          setWalletHistory={this.setWalletHistory}
+          setOpenSendModal={this.setOpenSendModal}
+          setOpenDeleteModal={this.setOpenDeleteModal}
+          history={this.state.history}
         />
       </div>
     );
+  };
+
+  toggleSidebar = () => {
+    this.setState({
+      sidebar: !this.state.sidebar
+    });
   };
 
   render() {
@@ -562,10 +591,10 @@ export default class CashWallet extends React.Component {
             setOpenAddressModal={this.setOpenAddressModal}
             setCloseModal={this.setCloseModal}
             closeAlert={this.setCloseAlert}
-            onCopy={this.onCopy}
             refreshCallback={this.refreshCallback}
             sfxPrice={this.state.sfx_price}
             sftPrice={this.state.sft_price}
+            toggleSidebar={this.toggleSidebar}
           />
         );
         break;
@@ -727,8 +756,23 @@ export default class CashWallet extends React.Component {
               setOpenDeleteModal={this.setOpenDeleteModal}
               feeModal={this.state.fee_modal}
               setOpenFeeModal={this.setOpenFeeModal}
-              sfxPrice={this.state.sfx_price ? this.state.sfx_price : ''}
-              sftPrice={this.state.sft_price ? this.state.sft_price : ''}
+              sfxPrice={this.state.sfx_price ? this.state.sfx_price : ""}
+              sftPrice={this.state.sft_price ? this.state.sft_price : ""}
+            />
+
+            <Sidebar
+              wallet={this.state.wallet ? this.state.wallet : ""}
+              walletMeta={this.wallet_meta ? this.wallet_meta : ""}
+              sidebar={this.state.sidebar}
+              toggleSidebar={this.toggleSidebar}
+              onCopy={this.onCopy}
+              addressBook={this.state.address_book}
+              setOpenAlert={this.setOpenAlert}
+              setWalletData={this.setWalletData}
+              setWalletHistory={this.setWalletHistory}
+              setOpenSendModal={this.setOpenSendModal}
+              setOpenDeleteModal={this.setOpenDeleteModal}
+              history={this.state.history}
             />
           </div>
         );

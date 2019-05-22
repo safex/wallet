@@ -1,0 +1,275 @@
+.address-wrap {
+  margin-bottom: 50px;
+  color: #fff;
+}
+.address-wrap h5 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+.address-wrap #show-contacts {
+  text-align: center;
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 2px solid #54bcd9;
+  padding: 6.5px 14px 9px 14px;
+  display: flex;
+  width: 48px;
+  position: absolute;
+  left: 50px;
+  top: 30px;
+  justify-content: center;
+}
+.address-wrap #show-contacts img {
+  max-height: 18px;
+}
+.address-wrap form {
+  text-align: center;
+}
+.address-wrap label .question-wrap {
+  top: -8px;
+}
+.address-wrap label .question-wrap span {
+  color: #fff;
+  position: relative;
+  top: -7px;
+  left: 0;
+  font-size: 19px;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
+}
+.address-wrap label {
+  bottom: -21px;
+  right: 0;
+}
+.address-wrap #genPayIdWrap {
+  position: relative;
+  margin: 0 0 10px;
+}
+.address-wrap #genPayIdWrap #genPayId {
+  position: absolute;
+  left: 0;
+  top: -30px;
+  margin: 0;
+}
+.address-wrap input,
+.address-wrap textarea {
+  font-size: 16px !important;
+  padding: 13px 60px 5px 0 !important;
+  border-bottom: 1px solid #8ffdfd;
+  border-radius: 0;
+  text-align: left !important;
+  background: transparent;
+  margin-bottom: 30px !important;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.address-wrap .btn {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 2px solid #54bcd9;
+  text-transform: uppercase;
+  margin: 14px 0 0;
+  padding: 8px 15px 4px;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  font-size: 15px !important;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.address-wrap .btn:focus,
+.address-wrap .btn:active {
+  outline: none;
+  color: #fff;
+}
+.address-wrap .show-contacts-wrap {
+  margin-top: 35px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.address-wrap .show-contacts-wrap .contact-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #8ffdfd;
+}
+.address-wrap .show-contacts-wrap .contact-item p {
+  text-align: left;
+  font-size: 16px;
+  text-indent: 0;
+}
+.address-wrap .show-contacts-wrap .contact-item .address {
+  word-break: break-all;
+  text-align: left;
+  margin-bottom: 15px;
+}
+.address-wrap .show-contacts-wrap .contact-item .payment-id {
+  font-size: 15px;
+  padding: 0 7px 5px 0;
+  margin: 0;
+  text-align: right;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-left {
+  position: relative;
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: inherit;
+  text-indent: 30px;
+  min-height: 70px;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-left button {
+  position: absolute;
+  background: transparent;
+  border: 0px;
+  top: -2px;
+  left: 0;
+  z-index: 2;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-left button img {
+  width: 18px;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-left #name {
+  overflow: hidden;
+  min-height: 52px;
+  font-size: 19px;
+  text-align: left;
+  line-height: 1.5;
+  margin: 0 !important;
+  word-break: break-word;
+  text-indent: 35px;
+  border: 0px;
+  color: #fff;
+  width: 100%;
+  position: absolute;
+  left: 0;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-center {
+  width: calc(100% - 280px);
+  padding-right: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-center .payment-id {
+  font-size: 14px;
+  text-align: left;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-right {
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-right button {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 2px solid #54bcd9;
+  padding: 2px 8px 6px;
+  visibility: visible;
+  opacity: 1;
+  height: 32px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  width: calc(50% - 5px);
+  max-width: 52px;
+  display: inline-block;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-right button:hover {
+  cursor: pointer;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-right button img {
+  max-height: 18px;
+}
+.address-wrap .show-contacts-wrap .contact-item .contact-right label {
+  width: 100%;
+  text-transform: capitalize;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 10px 0 0;
+  position: relative;
+  z-index: 2;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.address-wrap
+  .show-contacts-wrap
+  .contact-item
+  .contact-right
+  label
+  .question-wrap {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #8ffdfd;
+  border-radius: 50%;
+  transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+}
+.address-wrap
+  .show-contacts-wrap
+  .contact-item
+  .contact-right
+  label
+  .question-wrap:hover {
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
+  cursor: pointer;
+}
+
+/* Pagination */
+.pagination,
+.pagination {
+  position: absolute;
+  bottom: 95px;
+  width: 100%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.pagination strong,
+.pagination strong {
+  margin: 0 10px;
+  position: relative;
+  top: 5px;
+  min-width: 110px;
+  font-size: 15px;
+  display: inline-block;
+  text-transform: capitalize;
+  text-align: center;
+  color: #fff;
+}
+.pagination button,
+.pagination button {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  border: 2px solid #54bcd9;
+  padding: 3.5px 12px 5px;
+  visibility: visible;
+  opacity: 1;
+  height: 30px;
+  color: #fff;
+  text-transform: uppercase;
+}
+.pagination button.first-page,
+.pagination button.first-page {
+  margin-right: 8px;
+  padding: 2.5px 12px;
+}
+.pagination button.first-page span,
+.pagination button.last-page span,
+.pagination button.first-page span,
+.pagination button.last-page span {
+  font-weight: 400;
+  font-size: 23px;
+  letter-spacing: 1px;
+  font-family: "Atrament", Helvetica, Arial, sans-serif;
+  position: relative;
+  top: -7px;
+}
+.pagination button.last-page,
+.pagination button.last-page {
+  margin-left: 8px;
+  padding: 2.5px 12px;
+}

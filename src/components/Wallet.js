@@ -1,7 +1,6 @@
 import React from "react";
 import { addClass } from "../utils/utils.js";
 import ReactTooltip from "react-tooltip";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default class Wallet extends React.Component {
   constructor(props) {
@@ -35,6 +34,41 @@ export default class Wallet extends React.Component {
     return (
       <div className="col-xs-12 wallet-inner-wrap">
         <div className="btn-wrap">
+          <div className="sfx block" data-tip data-for="sfx-tooptip">
+            <img src="images/sfx.png" alt="safex-cash" />
+            <span>
+              {this.props.sfxPrice ? "$" + this.props.sfxPrice : "Loading..."}
+            </span>
+          </div>
+
+          <ReactTooltip id="sfx-tooptip">
+            <p>Safex Cash (SFX)</p>
+          </ReactTooltip>
+
+          <div className="sft block" data-tip data-for="sft-tooptip">
+            <img src="images/sft.png" alt="safex-token" />
+            <span>
+              {this.props.sftPrice ? "$" + this.props.sftPrice : "Loading..."}
+            </span>
+          </div>
+
+          <ReactTooltip id="sft-tooptip">
+            <p>Safex Token (SFT)</p>
+          </ReactTooltip>
+
+          <div
+            className="blockheight block"
+            data-tip
+            data-for="blockheight-tooptip"
+          >
+            <img src="images/blocks-blue.png" alt="blocks" />
+            <span>{this.props.wallet.blockchain_height}</span>
+          </div>
+
+          <ReactTooltip id="blockheight-tooptip">
+            <p>Blockchain height</p>
+          </ReactTooltip>
+
           <div
             className={
               "signal block" +
@@ -64,135 +98,25 @@ export default class Wallet extends React.Component {
           <ReactTooltip id="status-tooptip">
             <p>Status</p>
           </ReactTooltip>
-          <div
-            className="blockheight block"
-            data-tip
-            data-for="blockheight-tooptip"
-          >
-            <img src="images/blocks-blue.png" alt="blocks" />
-            <span>{this.props.wallet.blockchain_height}</span>
-          </div>
-
-          <ReactTooltip id="blockheight-tooptip">
-            <p>Blockchain height</p>
-          </ReactTooltip>
-
-          <div className="sfx block" data-tip data-for="sfx-tooptip">
-            <img src="images/sfx.png" alt="safex-cash" />
-            <span>
-              {this.props.sfxPrice ? "$" + this.props.sfxPrice : "Loading..."}
-            </span>
-          </div>
-
-          <ReactTooltip id="sfx-tooptip">
-            <p>Safex Cash (SFX)</p>
-          </ReactTooltip>
-
-          <div className="sft block" data-tip data-for="sft-tooptip">
-            <img src="images/sft.png" alt="safex-token" />
-            <span>
-              {this.props.sftPrice ? "$" + this.props.sftPrice : "Loading..."}
-            </span>
-          </div>
-
-          <ReactTooltip id="sft-tooptip">
-            <p>Safex Token (SFT)</p>
-          </ReactTooltip>
 
           <div className="btns-right-wrap">
-            <button
-              className={
-                this.props.buttonDisabled
-                  ? "button-shine address-btn disabled"
-                  : "button-shine address-btn"
-              }
-              onClick={this.props.setOpenAddressModal}
-              data-tip
-              data-for="address-tooptip"
-            >
-              <img src="images/address-book.png" alt="address-book" />
-            </button>
-            <ReactTooltip id="address-tooptip">
-              <p>Address Book</p>
-            </ReactTooltip>
             <button
               className={
                 this.props.buttonDisabled
                   ? "button-shine tx-history disabled"
                   : "button-shine tx-history"
               }
-              onClick={this.props.setOpenHistoryModal}
+              onClick={this.props.toggleSidebar}
               data-tip
               data-for="history-tooptip"
             >
               <img src="images/history.png" alt="transaction-history" />
             </button>
             <ReactTooltip id="history-tooptip">
-              <p>Transaction History</p>
-            </ReactTooltip>
-            <button
-              className={
-                this.props.buttonDisabled
-                  ? "button-shine address-info disabled"
-                  : "button-shine address-info"
-              }
-              onClick={this.props.setOpenLoadingModal}
-              data-tip
-              data-for="keys-tooptip"
-            >
-              <img src="images/key.png" alt="rescan" />
-            </button>
-            <ReactTooltip id="keys-tooptip">
-              <p>Seed and Keys</p>
+              <p>Settings</p>
             </ReactTooltip>
           </div>
         </div>
-
-        <div className="label-wrap">
-          <label>Wallet Address</label>
-          <div
-            className="button-shine question-wrap"
-            data-tip
-            data-for="pub-address-tooptip"
-          >
-            <span>?</span>
-          </div>
-          <ReactTooltip id="pub-address-tooptip">
-            <p>
-              This is <span className="blue-text">Public Address</span> of your
-              wallet.
-            </p>
-            <p>
-              Public Address starts with Safex and contains between{" "}
-              <span className="blue-text">95 and 105</span> characters.
-            </p>
-            <p>
-              This is address where you can receive{" "}
-              <span className="blue-text">Safex Cash (SFX)</span> or{" "}
-              <span className="blue-text">Safex Tokens (SFT)</span>.
-            </p>
-            <p>
-              It is generated using{" "}
-              <span className="blue-text">Public Spend Key</span> and{" "}
-              <span className="blue-text">Public View Key</span>.
-            </p>
-          </ReactTooltip>
-          <CopyToClipboard
-            text={this.props.wallet.wallet_address}
-            onCopy={this.props.onCopy.bind(this, "Copied to clipboard", 3000)}
-            className="button-shine copy-btn"
-          >
-            <button>Copy</button>
-          </CopyToClipboard>
-        </div>
-
-        <textarea
-          name="address"
-          defaultValue={this.props.wallet.wallet_address}
-          placeholder="address"
-          rows="1"
-          readOnly
-        />
 
         <div className="group-wrap">
           <div className="group">

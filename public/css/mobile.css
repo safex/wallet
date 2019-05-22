@@ -96,11 +96,15 @@
   }
   .wallet-inner-wrap .btn-wrap {
     position: absolute;
-    top: -3px;
+    top: -40px;
   }
   .wallet-inner-wrap .btns-right-wrap {
     right: 0;
-    top: 33px;
+    top: -50px;
+  }
+  .wallet-inner-wrap .display-value span {
+    width: 100%;
+    text-align: center !important;
   }
 
   /* Open File */
@@ -118,5 +122,9 @@
   .sendModal .available-wrap {
     left: 10px;
     top: 10px;
+  }
+  .sendModal select {
+    width: 100%;
+    position: initial;
   }
 }

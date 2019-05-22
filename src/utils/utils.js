@@ -69,8 +69,7 @@ function closeModal(target) {
     (target.state.keys_modal && target.state.alert) ||
     (target.state.send_modal && target.state.alert) ||
     (target.state.send_modal && target.state.fee_modal) ||
-    (target.state.address_modal && target.state.alert) ||
-    target.state.delete_modal
+    (target.state.address_modal && target.state.alert)
   ) {
     target.setState({
       alert: false,
