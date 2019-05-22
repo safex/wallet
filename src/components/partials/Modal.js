@@ -269,6 +269,7 @@ export default class Modal extends React.Component {
         }));
         setTimeout(() => {
           this.props.setWalletData();
+          this.props.setWalletHistory();
           this.setState({
             mixin: 6
           });
@@ -302,6 +303,7 @@ export default class Modal extends React.Component {
     let wallet = this.props.walletMeta;
     wallet.addressBook_DeleteRow(rowID);
     this.props.setWalletData();
+    this.props.setWalletHistory();
     wallet.store();
     localStorage.removeItem("rowID");
     this.props.setOpenAlert("Contact removed", false, "modal-80");

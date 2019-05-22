@@ -498,6 +498,7 @@ export default class CashWallet extends React.Component {
           wallet={this.state.wallet}
           walletMeta={this.wallet_meta ? this.wallet_meta : ""}
           setWalletData={this.setWalletData}
+          setWalletHistory={this.setWalletHistory}
           env={this.env}
           progress={this.state.progress}
           loadingModal={this.state.loading_modal}
@@ -716,6 +717,7 @@ export default class CashWallet extends React.Component {
               wallet={this.state.wallet}
               walletMeta={this.wallet_meta ? this.wallet_meta : ""}
               setWalletData={this.setWalletData}
+              setWalletHistory={this.setWalletHistory}
               progress={this.state.progress}
               loadingModal={this.state.loading_modal}
               createWallet={this.createWallet}

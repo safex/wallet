@@ -93,6 +93,9 @@
   margin-bottom: 25px;
   border-bottom: 1px solid #8ffdfd;
 }
+.address-wrap .show-contacts-wrap .contact-item .name {
+  font-size: 17px;
+}
 .address-wrap .show-contacts-wrap .contact-item p {
   text-align: left;
   font-size: 16px;

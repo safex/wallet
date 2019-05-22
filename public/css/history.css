@@ -28,6 +28,7 @@
 #history-wrap .history-item .amount {
   display: inline-block;
   margin-bottom: 8px;
+  font-size: 17px;
 }
 #history-wrap .history-item .arrow-img {
   max-height: 18px;
@@ -89,4 +90,7 @@
 }
 #history-wrap .pagination {
   bottom: 130px;
+}
+#history-wrap .__react_component_tooltip .blue-text {
+  top: 0px !important;
 }

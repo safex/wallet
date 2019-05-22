@@ -43,7 +43,7 @@
   padding: 5px 9px 4px;
   position: absolute;
   z-index: 2;
-  top: 3px;
+  top: -2px !important;
   right: 0;
   font-size: 12px;
   letter-spacing: 0.3px;
@@ -80,5 +80,5 @@
   display: inline;
 }
 .seed-keys-wrap .question-wrap {
-  top: -10px !important;
+  top: -7px !important;
 }
