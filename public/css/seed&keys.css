@@ -9,17 +9,17 @@
   margin: 5px 0 10px;
   font-size: 20px;
 }
-.seed-keys-wrap input,
-.seed-keys-wrap textarea {
+.seed-keys-wrap .seed-p {
   font-size: 16px;
-  padding: 7px 5px 3px !important;
+  padding: 7px 5px 3px;
   border-bottom: 1px solid #8ffdfd;
   border-radius: 0;
   text-align: center;
   line-height: 1.2;
   background: transparent;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-  margin: 0 0 5px !important;
+  color: #fff;
+  margin: 0 0 5px;
 }
 .seed-keys-wrap .pass-input {
   border-radius: 5px;
@@ -36,7 +36,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .seed-keys-wrap .copy-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
@@ -55,6 +55,7 @@
   padding-top: 2px;
   padding-right: 15px;
   padding-bottom: 0px;
+  margin-bottom: 0;
   line-height: 1.2;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   color: #fff;

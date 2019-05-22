@@ -356,6 +356,7 @@ export default class CashWallet extends React.Component {
       }
     });
     this.fetchPrice();
+    console.log('set wallet data checkpoint')
   };
 
   setWalletHistory = () => {
@@ -370,6 +371,7 @@ export default class CashWallet extends React.Component {
       history: history,
       address_book: wallet.addressBook_GetAll()
     });
+    console.log('set wallet history checkpoint')
   };
 
   onCopy = (infoText, timeout = 3000) => {
@@ -423,6 +425,7 @@ export default class CashWallet extends React.Component {
         setTimeout(() => {
           console.log("Rescan setting callbacks");
           this.setWalletData();
+          this.setWalletHistory();
           this.setCloseAlert();
           this.onCopy("Rescan completed", 6000);
           this.setState({
@@ -531,7 +534,6 @@ export default class CashWallet extends React.Component {
           alertText={this.state.alert_text}
           alertCloseDisabled={this.state.alert_close_disabled}
           onCopy={this.onCopy}
-          rescanBalance={this.rescanBalance}
           removeTransition={this.state.remove_transition}
           modalWidth={this.state.modal_width}
           addressBook={this.state.address_book}
@@ -556,6 +558,7 @@ export default class CashWallet extends React.Component {
           setOpenSendModal={this.setOpenSendModal}
           setOpenDeleteModal={this.setOpenDeleteModal}
           history={this.state.history}
+          rescanBalance={this.rescanBalance}
         />
       </div>
     );
@@ -751,7 +754,6 @@ export default class CashWallet extends React.Component {
               alertText={this.state.alert_text}
               alertCloseDisabled={this.state.alert_close_disabled}
               onCopy={this.onCopy}
-              rescanBalance={this.rescanBalance}
               removeTransition={this.state.remove_transition}
               modalWidth={this.state.modal_width}
               addressBook={this.state.address_book}
@@ -776,6 +778,7 @@ export default class CashWallet extends React.Component {
               setOpenSendModal={this.setOpenSendModal}
               setOpenDeleteModal={this.setOpenDeleteModal}
               history={this.state.history}
+              rescanBalance={this.rescanBalance}
             />
           </div>
         );

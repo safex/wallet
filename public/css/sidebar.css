@@ -31,7 +31,7 @@
   background: url(../images/login-bg.png) no-repeat top left / cover;
   border: 2px solid #54bcd9;
   padding: 7px 13px 8px 12px;
-  margin-top: 80px;
+  margin-top: 92px;
   margin-left: 31px;
   display: flex;
   width: 48px;
@@ -164,6 +164,19 @@
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
+}
+.sidebar #content .general-p {
+  font-size: 16px;
+  padding: 7px 5px 3px;
+  border-bottom: 1px solid #8ffdfd;
+  border-radius: 0;
+  text-align: center;
+  line-height: 1.2;
+  background: transparent;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  color: #fff;
+  margin: 0 0 5px;
+  word-break: break-all;
 }
 .sidebar #content textarea {
   width: 100%;

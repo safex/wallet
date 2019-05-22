@@ -5,6 +5,10 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   color: #fff;
 }
+#history-wrap h5 {
+  font-size: 17px;
+  text-align: center;
+}
 #history-wrap .history-item {
   margin-bottom: 35px;
   border-bottom: 1px solid #8ffdfd;

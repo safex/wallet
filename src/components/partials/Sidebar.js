@@ -643,14 +643,8 @@ export default class Sidebar extends Component {
               >
                 <button>Copy</button>
               </CopyToClipboard>
-              <textarea
-                name="address"
-                defaultValue={this.props.wallet.wallet_address}
-                placeholder="address"
-                rows="2"
-                readOnly
-              />
             </div>
+            <p className="general-p">{this.props.wallet.wallet_address}</p>
           </div>
 
           <div
@@ -788,13 +782,7 @@ export default class Sidebar extends Component {
             <h2>Seed And Keys</h2>
 
             <label htmlFor="filepath">Wallet File Path</label>
-            <input
-              type="text"
-              name="filepath"
-              defaultValue={this.props.wallet.filepath}
-              placeholder="filepath"
-              readOnly
-            />
+            <p className="seed-p">{this.props.wallet.filepath}</p>
 
             <div className="label-wrap">
               <label className={this.props.wallet.mnemonic ? "" : "hidden"}>
@@ -839,14 +827,7 @@ export default class Sidebar extends Component {
                 <button>Copy</button>
               </CopyToClipboard>
             </div>
-            <textarea
-              name="mnemonic"
-              defaultValue={this.props.wallet.mnemonic}
-              placeholder="mnemonic seed for your wallet"
-              className={this.props.wallet.mnemonic ? "" : "hidden"}
-              rows="3"
-              readOnly
-            />
+            <p className="seed-p">{this.props.wallet.mnemonic}</p>
 
             <div className="label-wrap">
               <label htmlFor="view_key">Secret (Private) View Key</label>
@@ -879,13 +860,7 @@ export default class Sidebar extends Component {
                 <button>Copy</button>
               </CopyToClipboard>
             </div>
-            <input
-              type="text"
-              name="view_key"
-              defaultValue={this.props.wallet.view_key}
-              placeholder="secret (private) view key"
-              readOnly
-            />
+            <p className="seed-p">{this.props.wallet.view_key}</p>
 
             <div className="label-wrap">
               <label htmlFor="pub_view">Public View Key</label>
@@ -915,13 +890,7 @@ export default class Sidebar extends Component {
                 <button>Copy</button>
               </CopyToClipboard>
             </div>
-            <input
-              type="text"
-              name="pub_view"
-              defaultValue={this.props.wallet.pub_view}
-              placeholder="public view key"
-              readOnly
-            />
+            <p className="seed-p">{this.props.wallet.pub_view}</p>
 
             <div className="label-wrap">
               <label htmlFor="spend_key">Secret (Private) Spend Key</label>
@@ -950,13 +919,7 @@ export default class Sidebar extends Component {
                 <button>Copy</button>
               </CopyToClipboard>
             </div>
-            <input
-              type="text"
-              name="spend_key"
-              defaultValue={this.props.wallet.spend_key}
-              placeholder="secret (private) spend key"
-              readOnly
-            />
+            <p className="seed-p">{this.props.wallet.spend_key}</p>
 
             <div className="label-wrap">
               <label htmlFor="spend_key">Public Spend Key</label>
@@ -986,13 +949,7 @@ export default class Sidebar extends Component {
                 <button>Copy</button>
               </CopyToClipboard>
             </div>
-            <input
-              type="text"
-              name="pub_spend"
-              defaultValue={this.props.wallet.pub_spend}
-              placeholder="public spend key"
-              readOnly
-            />
+            <p className="seed-p">{this.props.wallet.pub_spend}</p>
 
             <div className="button-wrap">
               <p>
