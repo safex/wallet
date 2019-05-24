@@ -146,13 +146,13 @@ export default class Modal extends React.Component {
         this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
         return false;
       }
-      // if (
-      //   process.env.NODE_ENV === "development" &&
-      //   !safex.addressValid(sendingAddress, "testnet")
-      // ) {
-      //   this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
-      //   return false;
-      // }
+      if (
+        process.env.NODE_ENV === "development" &&
+        !safex.addressValid(sendingAddress, "testnet")
+      ) {
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
+        return false;
+      }
       if (
         (this.props.cash_or_token === 0 &&
           parseFloat(e.target.amount.value) + parseFloat(0.1) >
@@ -410,6 +410,7 @@ export default class Modal extends React.Component {
                   data-tip
                   data-for="advanced-options"
                   type="button"
+                  disabled={this.state.send_tx_disabled ? "disabled" : ""}
                 >
                   <img src="images/gears.png" className="gears" alt="gears" />
                 </button>
@@ -609,10 +610,10 @@ export default class Modal extends React.Component {
           {this.props.alertCloseDisabled ? (
             <span className="hidden" />
           ) : (
-              <span className="close" onClick={this.props.closeModal}>
-                X
+            <span className="close" onClick={this.props.closeModal}>
+              X
             </span>
-            )}
+          )}
           <div className="mainAlertPopupInner">
             <p>
               Your approximate transaction fee is: {this.state.fee} SFX ($

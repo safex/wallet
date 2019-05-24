@@ -11,7 +11,8 @@
   align-items: center;
   justify-content: center;
   /* background: rgba(15, 29, 54, .97); */
-  background: url(../images/bg.png) no-repeat scroll top left / cover;
+  background: url(../images/bg.png) no-repeat scroll top left;
+  background-size: 100% 100%;
   z-index: 10003;
   opacity: 0;
   visibility: hidden;
@@ -159,7 +160,7 @@
   right: 0;
   width: 32px;
   height: 32px;
-  border: 1px solid #8ffdfd;
+  border: 1px solid #54bcd9;
   border-radius: 50%;
   transition: all ease 0.3s;
   -o-transition: all ease 0.3s;
@@ -470,7 +471,7 @@
   padding: 4px 10px 5px;
   border-radius: 0px;
   text-align: left;
-  border-bottom: 1px solid #8ffdfd;
+  border-bottom: 1px solid #54bcd9;
   font-size: 18px;
   letter-spacing: -0.3px;
   margin-bottom: 0px !important;
@@ -478,12 +479,11 @@
 }
 .sendModal input {
   padding: 10px 60px 5px 0;
-  border-bottom: 1px solid #8ffdfd;
+  border-bottom: 1px solid #54bcd9;
   font-size: 18px;
   border-radius: 0px;
   background: transparent;
-  letter-spacing: -0.3px;
-  margin-bottom: 27px !important;
+  margin-bottom: 30px !important;
   line-height: 1;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
@@ -497,7 +497,7 @@
   text-align-last: center;
   border: 0px none;
   border-radius: 0px !important;
-  border-bottom: 1px solid #8ffdfd;
+  border-bottom: 1px solid #54bcd9;
   display: inline-block;
   font-size: 18px;
   position: absolute;
@@ -520,7 +520,7 @@
 }
 .sendModal .btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
-  margin: -5px auto 9px;
+  margin: 0px auto 13px;
   padding: 7px 15px 4.5px;
   letter-spacing: 0.3px;
   line-height: 1.2;

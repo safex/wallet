@@ -72,7 +72,7 @@ html {
 body {
   /* background: #021d32; */
   background: url("../images/bg.jpg") no-repeat scroll top left / cover;
-  background-position: top center;
+  background-size: 100% 100%;
   font-family: "Atrament", Helvetica, Arial, sans-serif;
 }
 body.dark {

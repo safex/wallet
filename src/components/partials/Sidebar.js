@@ -13,9 +13,7 @@ class Transactions extends Component {
   constructor(props) {
     super(props);
     this.state = { tx_page: 0 };
-    this.totalTxPages = Math.ceil(
-      this.props.history.length / props.itemsPerPage
-    );
+    this.totalTxPages = 0;
   }
 
   firstTxPage = () => {
@@ -49,6 +47,7 @@ class Transactions extends Component {
   render() {
     const { tx_page } = this.state;
     const { itemsPerPage, history } = this.props;
+    this.totalTxPages = Math.ceil(history.length / itemsPerPage);
     let options = {
       weekday: "long",
       year: "numeric",
@@ -131,14 +130,14 @@ class Transactions extends Component {
 
                   <div className="tx-id-wrap">
                     <span>Transaction ID:</span>
-                    <button
+                    <p
                       data-tip
                       data-for="link-tooptip"
                       className="tx-id"
                       onClick={this.externalLink.bind(this, txInfo.id)}
                     >
                       {txInfo.id}
-                    </button>
+                    </p>
                     <ReactTooltip id="link-tooptip">
                       <p>
                         Show this transaction on{" "}
@@ -201,9 +200,7 @@ class Contacts extends Component {
   constructor(props) {
     super(props);
     this.state = { contact_page: 0, editing: false };
-    this.totalContactPages = Math.ceil(
-      this.props.contacts.length / props.itemsPerContactPage
-    );
+    this.totalContactPages = 0;
   }
 
   firstContactPage = () => {
@@ -251,6 +248,7 @@ class Contacts extends Component {
   render() {
     const { contact_page } = this.state;
     const { itemsPerContactPage, contacts } = this.props;
+    this.totalContactPages = Math.ceil(contacts.length / itemsPerContactPage);
 
     return (
       <div>
@@ -528,7 +526,7 @@ export default class Sidebar extends Component {
       "Secret (Private) Spend Key: " + this.props.wallet.spend_key + "\n";
     file_obj += "Public Spend Key: " + this.props.wallet.pub_spend + "\n";
     file_obj += "Mnemonic Seed Phrase: " + this.props.wallet.mnemonic + "\n";
-    
+
     var date = Date.now();
     fileDownload(file_obj, date + "unsafe-sfxsft.txt");
   };
@@ -768,10 +766,38 @@ export default class Sidebar extends Component {
               this.state.history ? "history-wrap" : "history-wrap hidden"
             }
           >
+            {this.props.history.length ? (
+              <div>
+                <div
+                  data-tip
+                  data-for="tx-id-tooptip"
+                  className="button-shine question-wrap"
+                >
+                  <span>?</span>
+                </div>
+                <ReactTooltip id="tx-id-tooptip">
+                  <p>
+                    Each tranasction has a unique{" "}
+                    <span className="blue-text">Transaction ID</span>.
+                  </p>
+                  <p className="mb-10">
+                    Transaction ID format is{" "}
+                    <span className="blue-text">64 digit Hex</span> character
+                    string.
+                  </p>
+                  <p>It can be used to track each individual</p>
+                  <p>
+                    transaction on{" "}
+                    <span className="blue-text">Safex Blockchain Explorer</span>
+                    .
+                  </p>
+                </ReactTooltip>
+              </div>
+            ) : (
+              <div className="hidden" />
+            )}
             <h2>Transaction History</h2>
-            <div id="history-wrap">
-              <Transactions history={this.props.history} itemsPerPage={3} />
-            </div>
+            <Transactions history={this.props.history} itemsPerPage={3} />
           </div>
 
           <div

@@ -55,17 +55,18 @@
   cursor: pointer;
 }
 .wallet-wrap .login-wrap {
-  padding: 0;
+  padding: 100px 0 0;
+  margin: -100px 0 0;
 }
 .__react_component_tooltip {
   padding: 10px 21px 8px;
 }
 .__react_component_tooltip.type-dark {
   background-color: rgba(15, 29, 54, 1);
+  border: 1px solid #54bcd9;
 }
 .dark .__react_component_tooltip.type-dark {
   background-color: rgba(0, 0, 0, 0.9);
-  border: 1px solid #54bcd9;
 }
 .__react_component_tooltip.show {
   opacity: 1;
@@ -75,18 +76,20 @@
   text-align: center;
   line-height: 1.2;
   font-size: 16px;
+  text-transform: initial;
+  font-weight: 400;
   font-family: "Avenir", "Atrament", Arial, sans-serif;
 }
-.dark .__react_component_tooltip.type-dark.place-top:after {
+.__react_component_tooltip.type-dark.place-top:after {
   border-top-color: #54bcd9;
 }
-.dark .__react_component_tooltip.type-dark.place-right:after {
+.__react_component_tooltip.type-dark.place-right:after {
   border-right-color: #54bcd9;
 }
-.dark .__react_component_tooltip.type-dark.place-bottom:after {
+.__react_component_tooltip.type-dark.place-bottom:after {
   border-bottom-color: #54bcd9;
 }
-.dark .__react_component_tooltip.type-dark.place-left:after {
+.__react_component_tooltip.type-dark.place-left:after {
   border-left-color: #54bcd9;
 }
 .__react_component_tooltip .mb-10 {
@@ -94,6 +97,7 @@
 }
 .__react_component_tooltip .blue-text {
   color: #54bcd9;
+  font-size: 17px !important;
 }
 .__react_component_tooltip .w-350 {
   width: 350px;
@@ -360,7 +364,7 @@
   font-size: 18px;
   padding: 10px 0 0;
   margin: 0px 0 15px;
-  border-bottom: 1px solid #8ffdfd;
+  border-bottom: 1px solid #54bcd9;
   font-family: "Avenir", Helve;
 }
 .wallet-inner-wrap .display-value span {

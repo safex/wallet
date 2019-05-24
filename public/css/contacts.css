@@ -28,7 +28,9 @@
   text-align: center;
 }
 .address-wrap label .question-wrap {
-  top: -8px;
+  top: -8px !important;
+  left: initial !important;
+  right: 0 !important;
 }
 .address-wrap label .question-wrap span {
   color: #fff;
@@ -90,11 +92,12 @@
 .address-wrap .show-contacts-wrap .contact-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 25px;
-  border-bottom: 1px solid #8ffdfd;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #54bcd9;
 }
 .address-wrap .show-contacts-wrap .contact-item .name {
   font-size: 17px;
+  word-break: break-word;
 }
 .address-wrap .show-contacts-wrap .contact-item p {
   text-align: left;
@@ -104,7 +107,7 @@
 .address-wrap .show-contacts-wrap .contact-item .address {
   word-break: break-all;
   text-align: left;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 .address-wrap .show-contacts-wrap .contact-item .payment-id {
   font-size: 15px;
@@ -225,7 +228,7 @@
 .pagination,
 .pagination {
   position: absolute;
-  bottom: 95px;
+  top: 460px;
   width: 100%;
   left: 0;
   display: flex;
@@ -243,6 +246,7 @@
   text-transform: capitalize;
   text-align: center;
   color: #fff;
+  letter-spacing: 0;
 }
 .pagination button,
 .pagination button {
