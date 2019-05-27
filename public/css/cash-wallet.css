@@ -61,7 +61,7 @@
 }
 .dark .options-wrap .options-inner:hover .item:hover img,
 .dark .options-wrap .options-inner:hover .item:hover h3 {
-  opacity: .85 !important;
+  opacity: 0.85 !important;
 }
 .options-wrap .item:hover {
   cursor: pointer;
@@ -79,7 +79,7 @@
   transition: all ease 0.3s;
 }
 .dark .options-wrap .item img {
-  opacity: .85;
+  opacity: 0.85;
 }
 .options-wrap .item h3 {
   color: #fff;
@@ -121,7 +121,7 @@
     margin: 0 auto;
   }
   .intro-page-wrap .modal {
-    max-width: calc(50% - 20px);
+    max-width: calc(50% - 15px);
   }
 }
 @media (min-width: 1200px) {

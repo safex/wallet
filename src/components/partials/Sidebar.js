@@ -18,7 +18,9 @@ export default class Sidebar extends Component {
       history: false,
       seed_keys: false,
       name: "",
-      new_payment_id: ""
+      new_payment_id: "",
+      refresh_timer: 0,
+      refresh_interval: ""
     };
   }
 
@@ -158,6 +160,25 @@ export default class Sidebar extends Component {
         add_transition: false
       });
     }, 600);
+  };
+
+  refreshTxHistory = () => {
+    if (this.state.refresh_timer === 0) {
+      this.props.setWalletHistory();
+      let interval = setInterval(this.refreshTxTimer, 1000);
+      this.setState({
+        refresh_timer: 23,
+        refresh_interval: interval
+      });
+    }
+  };
+
+  refreshTxTimer = () => {
+    if (this.state.refresh_timer > 0) {
+      this.setState({ refresh_timer: this.state.refresh_timer - 1 });
+    } else {
+      clearInterval(this.state.refresh_interval);
+    }
   };
 
   render() {
@@ -402,6 +423,32 @@ export default class Sidebar extends Component {
                     transaction on{" "}
                     <span className="blue-text">Safex Blockchain Explorer</span>
                     .
+                  </p>
+                </ReactTooltip>
+                <button
+                  onClick={this.refreshTxHistory}
+                  className="button-shine refresh_history"
+                >
+                  <span data-tip data-for="refresh-tooptip" />
+                  <span
+                    className={
+                      this.state.refresh_timer === 0
+                        ? "backdrop"
+                        : "backdrop active"
+                    }
+                    data-tip
+                    data-for="refresh-tooptip"
+                  >
+                    {this.state.refresh_timer === 0
+                      ? ""
+                      : this.state.refresh_timer + " s"}
+                  </span>
+                  <img src="images/refresh.png" alt="refresh" />
+                </button>
+                <ReactTooltip id="refresh-tooptip">
+                  <p>
+                    <span className="blue-text">Refresh</span> Transaction
+                    History
                   </p>
                 </ReactTooltip>
               </div>

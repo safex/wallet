@@ -218,7 +218,15 @@ export default class Modal extends React.Component {
         this.setState({
           send_tx_disabled: false
         });
-        this.props.setOpenAlert("" + e, false, "modal-80");
+        if (e.startsWith("not enough money to transfer, available only")) {
+          this.props.setOpenAlert(
+            "There is not enough SFX or outputs available to fulfil this transaction + fee. Please consider reducing the size of the transaction.",
+            false,
+            "modal-80"
+          );
+        } else {
+          this.props.setOpenAlert("" + e, false, "modal-80");
+        }
         console.log("" + e);
       });
   };
