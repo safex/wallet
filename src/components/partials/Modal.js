@@ -267,7 +267,7 @@ export default class Modal extends React.Component {
           tx_being_sent: false
         }));
         setTimeout(() => {
-          this.props.setWalletData();
+          this.props.setWalletBalance();
           this.props.setWalletHistory();
           this.setState({
             mixin: 6
@@ -301,7 +301,6 @@ export default class Modal extends React.Component {
     let rowID = parseFloat(localStorage.getItem("rowID"));
     let wallet = this.props.walletMeta;
     wallet.addressBook_DeleteRow(rowID);
-    this.props.setWalletData();
     this.props.setWalletHistory();
     wallet.store();
     localStorage.removeItem("rowID");

@@ -324,6 +324,25 @@ export default class CashWallet extends React.Component {
     console.log("set wallet data checkpoint");
   };
 
+  setWalletBalance = () => {
+    let wallet = this.wallet_meta;
+
+    this.setState({
+      ...this.state.wallet,
+      wallet_connected: wallet.connected() === "connected",
+      blockchain_height: wallet.blockchainHeight(),
+      pending_balance: roundAmount(
+        Math.abs(wallet.balance() - wallet.unlockedBalance())
+      ),
+      unlocked_balance: roundAmount(wallet.unlockedBalance()),
+      pending_tokens: roundAmount(
+        Math.abs(wallet.tokenBalance() - wallet.unlockedTokenBalance())
+      ),
+      unlocked_tokens: roundAmount(wallet.unlockedTokenBalance())
+    });
+    console.log("set wallet balance checkpoint");
+  };
+
   setWalletHistory = () => {
     let wallet = this.wallet_meta;
     let history = wallet.history();
@@ -337,10 +356,6 @@ export default class CashWallet extends React.Component {
       address_book: wallet.addressBook_GetAll()
     });
     console.log("set wallet history checkpoint");
-    setTimeout(() => {
-      console.log(this.state.history);
-      console.log(this.state.address_book);
-    }, 300);
   };
 
   onCopy = (infoText, timeout = 3000) => {
@@ -363,7 +378,7 @@ export default class CashWallet extends React.Component {
       console.log("syncedHeight up to date...");
       if (wallet.synchronized()) {
         console.log("refreshCallback wallet synchronized, setting state...");
-        this.setWalletData();
+        this.setWalletBalance();
       }
     }
 
@@ -469,6 +484,7 @@ export default class CashWallet extends React.Component {
           wallet={this.state.wallet}
           walletMeta={this.wallet_meta ? this.wallet_meta : ""}
           setWalletData={this.setWalletData}
+          setWalletBalance={this.setWalletBalance}
           setWalletHistory={this.setWalletHistory}
           env={this.env}
           progress={this.state.progress}
@@ -683,6 +699,7 @@ export default class CashWallet extends React.Component {
               wallet={this.state.wallet}
               walletMeta={this.wallet_meta ? this.wallet_meta : ""}
               setWalletData={this.setWalletData}
+              setWalletBalance={this.setWalletBalance}
               setWalletHistory={this.setWalletHistory}
               progress={this.state.progress}
               loadingModal={this.state.loading_modal}

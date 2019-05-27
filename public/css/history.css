@@ -35,6 +35,7 @@
   display: inline-block;
   margin-bottom: 8px;
   font-size: 17px;
+  min-height: 24px;
 }
 .history-wrap .history-item .arrow-img {
   max-height: 18px;
