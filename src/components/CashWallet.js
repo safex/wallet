@@ -378,7 +378,7 @@ export default class CashWallet extends React.Component {
       console.log("syncedHeight up to date...");
       if (wallet.synchronized()) {
         console.log("refreshCallback wallet synchronized, setting state...");
-        this.setWalletBalance();
+        this.setWalletData();
       }
     }
 
