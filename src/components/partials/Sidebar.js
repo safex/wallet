@@ -443,7 +443,11 @@ export default class Sidebar extends Component {
                       ? ""
                       : this.state.refresh_timer + " s"}
                   </span>
-                  <img src="images/refresh.png" alt="refresh" />
+                  <img
+                    src="images/refresh.png"
+                    className={this.state.refresh_timer === 0 ? "" : "hidden"}
+                    alt="refresh"
+                  />
                 </button>
                 <ReactTooltip id="refresh-tooptip">
                   <p>

@@ -34,27 +34,23 @@ export default class Wallet extends React.Component {
     return (
       <div className="col-xs-12 wallet-inner-wrap">
         <div className="btn-wrap">
-          <div className="sfx block" data-tip data-for="sfx-tooptip">
+          <div className="sfx block">
             <img src="images/sfx.png" alt="safex-cash" />
             <span>
-              {this.props.sfxPrice ? "$" + this.props.sfxPrice : "Loading..."}
+              {this.props.sfxPrice
+                ? "SFX $" + this.props.sfxPrice
+                : "Loading..."}
             </span>
           </div>
 
-          <ReactTooltip id="sfx-tooptip">
-            <p>Safex Cash (SFX)</p>
-          </ReactTooltip>
-
-          <div className="sft block" data-tip data-for="sft-tooptip">
+          <div className="sft block">
             <img src="images/sft.png" alt="safex-token" />
             <span>
-              {this.props.sftPrice ? "$" + this.props.sftPrice : "Loading..."}
+              {this.props.sftPrice
+                ? "SFT $" + this.props.sftPrice
+                : "Loading..."}
             </span>
           </div>
-
-          <ReactTooltip id="sft-tooptip">
-            <p>Safex Token (SFT)</p>
-          </ReactTooltip>
 
           <div
             className="blockheight block"

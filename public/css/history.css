@@ -15,12 +15,13 @@
   text-align: center;
   background: url(../images/login-bg.png) no-repeat top left / cover;
   border: 2px solid #54bcd9;
-  padding: 6.5px 8.5px 9px 10px;
+  padding: 7.5px 8.5px 10px 10px;
   display: flex;
   width: 48px;
+  height: 39.5px;
   position: absolute;
   right: 50px;
-  top: 26px;
+  top: 24px;
   justify-content: center;
 }
 .history-wrap .refresh_history.disabled {
