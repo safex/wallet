@@ -7,6 +7,7 @@ import * as crypto from "crypto";
 
 const safex = window.require("safex-nodejs-libwallet");
 const fileDownload = require("react-file-download");
+const remote = window.require("electron").remote;
 
 export default class Sidebar extends Component {
   constructor(props) {
@@ -277,6 +278,12 @@ export default class Sidebar extends Component {
               </CopyToClipboard>
             </div>
             <p className="general-p">{this.props.wallet.wallet_address}</p>
+
+            <label>Wallet Path</label>
+            <p className="general-p">{this.props.wallet.filepath}</p>
+
+            <label>Wallet GUI version</label>
+            <p className="general-p">{remote.app.getVersion()}</p>
           </div>
 
           <div
@@ -469,9 +476,6 @@ export default class Sidebar extends Component {
             }
           >
             <h2>Seed And Keys</h2>
-
-            <label htmlFor="filepath">Wallet File Path</label>
-            <p className="seed-p">{this.props.wallet.filepath}</p>
 
             <div className="label-wrap">
               <label className={this.props.wallet.mnemonic ? "" : "hidden"}>

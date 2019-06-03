@@ -197,7 +197,7 @@
   background: transparent;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   color: #fff;
-  margin: 0 0 5px;
+  margin: 0 0 10px;
   word-break: break-all;
 }
 .sidebar #content textarea {
@@ -280,9 +280,9 @@
 .sidebar label {
   width: 100%;
   text-transform: capitalize;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 400;
-  margin: 10px 0 0;
+  margin: 5px 0 0;
   position: relative;
   z-index: 2;
   color: #fff;

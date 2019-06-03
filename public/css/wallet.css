@@ -79,6 +79,13 @@
   text-transform: initial;
   font-weight: 400;
   font-family: "Avenir", "Atrament", Arial, sans-serif;
+  pointer-events: none;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 .__react_component_tooltip.type-dark.place-top:after {
   border-top-color: #54bcd9;
