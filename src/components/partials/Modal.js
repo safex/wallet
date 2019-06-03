@@ -275,7 +275,7 @@ export default class Modal extends React.Component {
           tx_being_sent: false
         }));
         setTimeout(() => {
-          this.props.setWalletBalance();
+          this.props.setWalletData();
           this.props.setWalletHistory();
           this.setState({
             mixin: 6
@@ -293,15 +293,9 @@ export default class Modal extends React.Component {
   };
 
   showAdvancedOptions = () => {
-    if (this.state.advanced_options) {
-      this.setState({
-        advanced_options: false
-      });
-    } else {
-      this.setState({
-        advanced_options: true
-      });
-    }
+    this.setState({
+      advanced_options: !this.state.advanced_options
+    });
   };
 
   removeContact = e => {
