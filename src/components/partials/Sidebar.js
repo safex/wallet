@@ -449,7 +449,7 @@ export default class Sidebar extends Component {
                     alt="refresh"
                   />
                 </button>
-                <ReactTooltip id="refresh-tooptip">
+                <ReactTooltip place="right" id="refresh-tooptip">
                   <p>
                     <span className="blue-text">Refresh</span> Transaction
                     History

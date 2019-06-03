@@ -1,6 +1,7 @@
 .address-wrap {
-  margin-bottom: 50px;
   color: #fff;
+  margin: 0 auto 50px;
+  max-width: 800px;
 }
 .address-wrap h5 {
   margin-top: 0;
@@ -13,12 +14,12 @@
   text-align: center;
   background: url(../images/login-bg.png) no-repeat top left / cover;
   border: 2px solid #54bcd9;
-  padding: 6.5px 14px 9px 14px;
+  padding: 7.5px 14px 10px 14px;
   display: flex;
   width: 48px;
   position: absolute;
   left: 50px;
-  top: 30px;
+  top: 24px;
   justify-content: center;
 }
 .address-wrap #show-contacts img {
@@ -228,7 +229,7 @@
 .pagination,
 .pagination {
   position: absolute;
-  top: 460px;
+  top: 490px;
   width: 100%;
   left: 0;
   display: flex;
@@ -239,7 +240,7 @@
 .pagination strong {
   margin: 0 10px;
   position: relative;
-  top: 5px;
+  padding: 5px 0;
   min-width: 150px;
   font-size: 15px;
   display: inline-block;

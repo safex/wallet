@@ -1,6 +1,7 @@
 .seed-keys-wrap {
   text-align: center;
-  margin-bottom: 80px;
+  margin: 0 auto 80px;
+  max-width: 800px;
 }
 .seed-keys-wrap label {
   text-transform: initial !important;
@@ -11,7 +12,7 @@
 }
 .seed-keys-wrap .seed-p {
   font-size: 16px;
-  padding: 7px 5px 3px;
+  padding: 7px 0px 3px;
   border-bottom: 1px solid #54bcd9;
   border-radius: 0;
   text-align: center;

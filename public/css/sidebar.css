@@ -13,7 +13,7 @@
 }
 .sidebar h2 {
   color: #fff;
-  margin: 40px 0 50px;
+  margin: 40px 0 84px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   font-size: 22px;
   text-transform: initial;
@@ -85,11 +85,15 @@
   padding: 0 50px;
   overflow: auto;
 }
+.sidebar #content .general {
+  max-width: 800px;
+  margin: 0 auto;
+}
 .sidebar #content .label-wrap {
   text-align: center;
   position: relative;
   z-index: 3;
-  margin: 15px 0 10px;
+  margin: 20px 0 8px;
 }
 .sidebar #content .label-wrap label {
   width: initial !important;
@@ -140,6 +144,11 @@
   box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6);
   cursor: pointer;
 }
+.sidebar #content .label-wrap .question-wrap:active,
+.sidebar #content .question-wrap:active {
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6) !important;
+  box-shadow: 0 0 20px 0 rgba(0, 199, 236, 0.6) !important;
+}
 .sidebar #content .label-wrap .question-wrap span {
   color: #fff;
   position: relative;
@@ -150,6 +159,13 @@
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
+  pointer-events: none;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 .sidebar #content .label-wrap .copy-btn {
   background: url(../images/login-bg.png) no-repeat top left / cover;
