@@ -250,12 +250,14 @@
 }
 .item-wrap .login-wrap .btn {
   width: 100%;
-  font-size: 30px;
   color: #fff;
   text-transform: uppercase;
   border-radius: 5px;
   margin-top: 5px;
-  letter-spacing: 1px;
+  letter-spacing: 0;
+  font-size: 18px !important;
+  padding: 10px 12px 5px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .item-wrap .login-wrap .btn.disabled {
   pointer-events: none;
@@ -330,16 +332,18 @@
 .open-file-wrap .browse-btn {
   width: 100%;
   max-width: 512px;
-  font-size: 30px;
   color: #fff;
   text-transform: uppercase;
   border: 0px;
   margin: 0 0 5px;
-  letter-spacing: 1px;
   background: url(../images/login-bg.png) no-repeat top left / cover;
   border-bottom: 5px solid #55ebff !important;
   display: block;
   margin: 0 auto 5px;
+  letter-spacing: 0;
+  font-size: 20px;
+  padding: 10px 12px 5px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .open-file-wrap .modal {
   max-width: calc(512px - 0px);
