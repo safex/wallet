@@ -1,6 +1,6 @@
-# SAFEX CASH WALLET
+# SAFEX CASH SAPPHIRE WALLET
 
-Official repository for consolidated lightweight Safex Cash Wallet.
+Official repository for consolidated lightweight Safex Cash Sapphire Wallet.
 
 ## Releases
 

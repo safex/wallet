@@ -57,10 +57,10 @@ function createWindow() {
   if (os.platform() !== "win32") {
     const template = [
       {
-        label: "Safex Cash Wallet",
+        label: "Safex Cash Sapphire Wallet",
         submenu: [
           {
-            label: "About Safex Cash Wallet",
+            label: "About Safex Cash Sapphire Wallet",
             selector: "orderFrontStandardAboutPanel:"
           },
           { type: "separator" },
@@ -106,7 +106,7 @@ function createWindow() {
 require("electron-context-menu")({
   prepend: (params, browserWindow) => [
     {
-      label: "Safex Cash Wallet"
+      label: "Safex Cash Sapphire Wallet"
     }
   ],
   shouldShowMenu: (event, params) => params.mediaType !== "image",
