@@ -22,7 +22,7 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    backgroundColor: "#243782",
+    backgroundColor: "#021d32",
     width: 1024,
     height: 650,
     minWidth: 1024,
@@ -30,8 +30,7 @@ function createWindow() {
     webPreferences: {
       webSecurity: false
     },
-    useContentSize: true,
-    frame: false
+    useContentSize: true
   });
 
   // and load the index.html of the app.

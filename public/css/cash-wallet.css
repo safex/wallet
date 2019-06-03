@@ -4,7 +4,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  -webkit-app-region: drag;
+}
+.intro-page-wrap .modal {
+  max-width: 500px;
 }
 .options-wrap {
   position: relative;
@@ -22,7 +24,6 @@
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
-  -webkit-app-region: no-drag;
 }
 .options-wrap .options-inner .item {
   background: url(../images/option-item-bg.png) repeat-x top left;
@@ -52,11 +53,15 @@
 }
 .options-wrap .options-inner:hover .item img,
 .options-wrap .options-inner:hover .item h3 {
-  opacity: 0.55 !important;
+  opacity: 0.5 !important;
 }
 .options-wrap .options-inner:hover .item:hover img,
 .options-wrap .options-inner:hover .item:hover h3 {
   opacity: 1 !important;
+}
+.dark .options-wrap .options-inner:hover .item:hover img,
+.dark .options-wrap .options-inner:hover .item:hover h3 {
+  opacity: 0.85 !important;
 }
 .options-wrap .item:hover {
   cursor: pointer;
@@ -67,10 +72,14 @@
 }
 .options-wrap .item img {
   width: 100%;
+  opacity: 1;
   -o-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   -webkit-transition: all ease 0.3s;
   transition: all ease 0.3s;
+}
+.dark .options-wrap .item img {
+  opacity: 0.85;
 }
 .options-wrap .item h3 {
   color: #fff;
@@ -110,5 +119,13 @@
   .options-wrap,
   .intro-page-wrap {
     margin: 0 auto;
+  }
+  .intro-page-wrap .modal {
+    max-width: calc(50% - 15px);
+  }
+}
+@media (min-width: 1200px) {
+  .intro-page-wrap .modal {
+    max-width: 585px;
   }
 }

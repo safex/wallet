@@ -62,37 +62,19 @@ export default class CreateNew extends Component {
           <span>?</span>
         </div>
         <ReactTooltip id="create-new-tooptip">
-          <p>
-            If you don't already have{" "}
-            <span className="blue-text">Safex Wallet</span>,{" "}
-          </p>
-          <p>you can generate a new one here.</p>
-          <p>Enter the password for your new wallet and click create.</p>
-          <p>
-            You will then be asked to set a{" "}
-            <span className="blue-text">name</span> for the
-          </p>
-          <p>
-            wallet file - enter one and click{" "}
-            <span className="blue-text">save.</span>
-          </p>
-          <p>
-            This will create <span className="blue-text">2</span> files on your
-            file system.
-          </p>
-          <p>
+          <p>If you don't already have <span className="blue-text">Safex Wallet</span>,</p>
+          <p className="mb-10">you can always generate a new one here.</p>
+          <p>Enter the password for your new wallet and click <span className="blue-text">create</span>.</p>
+          <p>You will then be asked to set a{" "}<span className="blue-text">name</span> for the wallet file.</p>
+          <p className="mb-10">Enter file name <span className="blue-text">without</span> the extension and click <span className="blue-text">save</span>.</p>
+          <p>This will create <span className="blue-text">2</span> files on your file system.</p>
+          <p className="mb-10">
             <span className="blue-text">ExampleWallet</span> and{" "}
-            <span className="blue-text">ExampleWallet.keys</span>
+            <span className="blue-text">ExampleWallet.keys</span>.
           </p>
-          <p>
-            In the future, when you want to{" "}
-            <span className="blue-text">load</span> wallet,{" "}
-          </p>
-          <p>make sure you select the file without the .keys extension.</p>
-          <p>
-            Make sure you <span className="blue-text">back up</span> these files
-            for future wallet recovery.
-          </p>
+          <p>In the future, when you want to <span className="blue-text">load</span> wallet, make</p>
+          <p className="mb-10">sure you select the file <span className="blue-text">without</span> the .keys extension.</p>
+          <p>Remember to <span className="blue-text">back up your keys</span> for future wallet recovery.</p>
         </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">

@@ -79,38 +79,25 @@ export default class OpenFile extends Component {
             <span>?</span>
           </div>
           <ReactTooltip id="open-tooptip">
-            <p>
-              To open your <span className="blue-text">Safex Wallet</span>,
-              click browse.
-            </p>
-            <p>
-              This will open a <span className="blue-text">dialog window.</span>
-            </p>
-            <p>
-              Choose the <span className="blue-text">Wallet File</span> from
-              your file system.
-            </p>
-            <p>
-              In the future, when you want to{" "}
-              <span className="blue-text">load</span> wallet,{" "}
-            </p>
-            <p>make sure you select the file without the .keys extension.</p>
-            <p>
-              Enter password for your{" "}
-              <span className="blue-text">Wallet File</span> and click open.
-            </p>
+            <p>To open your <span className="blue-text">Safex Wallet</span>, click browse.</p>
+            <p>This will open a <span className="blue-text">dialog window</span>.</p>
+            <p>Choose the <span className="blue-text">Wallet File</span> from your file system.</p>
+            <p className="mb-10">Enter password for your Wallet File and click <span className="blue-text">open</span>.</p>
+            <p>In the future, when you want to <span className="blue-text">load</span> wallet, make</p>
+            <p className="mb-10">sure you select the file <span className="blue-text">without</span> the .keys extension.</p>
+            <p>Remember to <span className="blue-text">back up your keys</span> for future wallet recovery.</p>
           </ReactTooltip>
           <div className="group-wrap">
             <div className="form-group">
               <label htmlFor="filepath">Selected file:</label>
-              <input
-                name="filepath"
+              <textarea name="filepath"
                 value={this.state.wallet_path ? this.state.wallet_path : "N/A"}
                 onChange={this.setWalletPath}
                 placeholder="wallet file path"
                 id="filepath"
-                readOnly
-              />
+                rows="2"
+                readOnly>
+              </textarea>
               <input type="password" name="pass" placeholder="password" />
             </div>
           </div>

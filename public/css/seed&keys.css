@@ -1,0 +1,86 @@
+.seed-keys-wrap {
+  text-align: center;
+  margin: 0 auto 80px;
+  max-width: 800px;
+}
+.seed-keys-wrap label {
+  text-transform: initial !important;
+  display: inline-block;
+  line-height: 1 !important;
+  margin: 5px 0 10px;
+  font-size: 20px;
+}
+.seed-keys-wrap .seed-p {
+  font-size: 16px;
+  padding: 7px 0px 3px;
+  border-bottom: 1px solid #54bcd9;
+  border-radius: 0;
+  text-align: center;
+  line-height: 1.2;
+  background: transparent;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  color: #fff;
+  margin: 0 0 5px;
+}
+.seed-keys-wrap .pass-input {
+  border-radius: 5px;
+  text-align: left !important;
+  padding: 5px 10px !important;
+  background: tra;
+}
+.seed-keys-wrap .login-input {
+  margin: 10px 0 12px !important;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 0px;
+}
+.seed-keys-wrap .button-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+.seed-keys-wrap .copy-btn {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  padding: 5px 9px 4px;
+  position: absolute;
+  z-index: 2;
+  top: -2px !important;
+  right: 0;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.seed-keys-wrap .button-wrap p {
+  text-align: left;
+  font-size: 16px;
+  padding-top: 2px;
+  padding-right: 15px;
+  padding-bottom: 0px;
+  margin-bottom: 0;
+  line-height: 1.2;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  color: #fff;
+  width: calc(100% - 75px);
+}
+.seed-keys-wrap .rescan {
+  background: url(../images/login-bg.png) no-repeat top left / cover;
+  text-align: center;
+  border: 2px solid #54bcd9;
+  padding: 7px 10px 5px;
+  display: flex;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+.seed-keys-wrap .rescan img {
+  max-height: 18px;
+}
+.seed-keys-wrap .address-inner-wrap .label-wrap label {
+  text-indent: 52px;
+  display: inline;
+}
+.seed-keys-wrap .question-wrap {
+  top: -7px !important;
+}

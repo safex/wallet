@@ -1,5 +1,4 @@
 var safex = window.require("safex-addressjs");
-const remote = window.require("electron").remote;
 
 /**
  * Verify Safex Address
@@ -26,14 +25,6 @@ function structureSafexKeys(spend, view) {
   keys["checksum"] = checksum;
 
   return keys;
-}
-
-/**
- * Close App
- */
-function closeApp() {
-  let window = remote.getCurrentWindow();
-  window.close();
 }
 
 /**
@@ -75,17 +66,12 @@ function openModal(
 function closeModal(target) {
   if (
     (target.state.loading_modal && target.state.alert) ||
-    (target.state.keys_modal && target.state.alert) ||
     (target.state.send_modal && target.state.alert) ||
-    (target.state.send_modal && target.state.fee_modal) ||
-    (target.state.address_modal && target.state.alert) ||
-    target.state.mixin_modal ||
-    target.state.delete_modal
+    (target.state.send_modal && target.state.fee_modal)
   ) {
     target.setState({
       alert: false,
       confirm_modal: false,
-      mixin_modal: false,
       delete_modal: false,
       fee_modal: false
     });
@@ -98,11 +84,7 @@ function closeModal(target) {
       target.setState({
         loading_modal: false,
         alert: false,
-        keys_modal: false,
         send_modal: false,
-        mixin_modal: false,
-        history_modal: false,
-        address_modal: false,
         confirm_modal: false,
         delete_modal: false,
         fee_modal: false,
@@ -179,7 +161,6 @@ function countWords(str) {
 export {
   verify_safex_address,
   structureSafexKeys,
-  closeApp,
   addClass,
   openModal,
   closeModal,

@@ -40,12 +40,11 @@ $ npm run dev
 
 #### MacOS
 
-Install Developer Tools v10.1
-https://download.developer.apple.com/Developer_Tools/Command_Line_Tools_macOS_10.13_for_Xcode_10.1/Command_Line_Tools_macOS_10.13_for_Xcode_10.1.dmg
-
 ```
 $ brew tap jmuncaster/homebrew-header-only
 $ brew install cmake boost zmq czmq zeromq jmuncaster/header-only/cppzmq openssl pkg-config
+$ export LDFLAGS="-L/usr/local/opt/openssl/lib"
+$ export CPPFLAGS="-I/usr/local/opt/openssl/include"
 $ npm install
 $ ./node_modules/.bin/electron-rebuild
 $ npm run dev
@@ -53,19 +52,32 @@ $ npm run dev
 
 ## Build:
 
-Run
+#### Windows
 
 ```
-npm run make-win-installer
-npm run make-mac-installer
-npm run make-linux-installer
+$ npm run make-win-installer
 ```
 
-separately, depending which OS you are using.
+#### Linux
 
 For linux builds, you will need to have `rpmbuild` available on system (`apt-get install rpm`).
 
-## License
+```
+$ npm run make-linux-installer
+```
+
+#### MacOS
+
+Log in the Apple Developer website https://developer.apple.com/.  
+Install Developer Tools v10.1  
+https://download.developer.apple.com/Developer_Tools/Command_Line_Tools_macOS_10.13_for_Xcode_10.1/Command_Line_Tools_macOS_10.13_for_Xcode_10.1.dmg  
+If you previousely exported open ssl flags, reboot your computer.
+
+Then run:
+
+```
+$ npm run make-mac-installer
+```
 
 MIT License
 

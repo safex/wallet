@@ -1,40 +1,32 @@
 import React, { Component } from "react";
-import { closeApp } from "../../utils/utils.js";
 import ReactTooltip from "react-tooltip";
-
-const remote = window.require("electron").remote;
 
 export default class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      window: ''
+      dark_theme: false
     };
-
-    this.window = remote.getCurrentWindow();
   }
 
-  minimizeApp = () => {
-    this.window.minimize();
-  };
-
-  maximizeApp = () => {
-    if (this.window.isMaximized()) {
-      this.setState({
-        window: 'unmaximized'
-      })
-      this.window.unmaximize();
-    } else {
-      this.setState({
-        window: 'maximized'
-      })
-      this.window.maximize();
+  componentDidMount() {
+    if (localStorage.getItem("dark_theme")) {
+      document.body.classList.add('dark');
+      this.setState({ dark_theme: true });
     }
-  };
+  }
 
-  setCloseApp = () => {
-    closeApp(this);
-  };
+  changeTheme = () => {
+    if (this.state.dark_theme) {
+      document.body.classList.remove('dark');
+      this.setState({ dark_theme: false });
+      localStorage.removeItem("dark_theme");
+    } else {
+      document.body.classList.add('dark');
+      this.setState({ dark_theme: true });
+      localStorage.setItem("dark_theme", true);
+    }
+  }
 
   render() {
     return (
@@ -55,51 +47,26 @@ export default class Header extends Component {
           {this.props.page === "wallet" ? "Log out" : "Back"}
         </button>
 
-        <img src="images/logo.png" className="logo" alt="Logo" />
-        <div className="buttons-wrap">
+        <div id="buttons-wrap"> 
           <button
-            onClick={this.minimizeApp}
+            className="button-shine address-info"
+            onClick={this.changeTheme}
             data-tip
-            data-for="minimize-tooptip"
-            className="minimize-app-btn button-shine"
-            disabled={this.props.alertCloseDisabled ? "disabled" : ""}
+            data-for="light-tooptip"
           >
-            _
+            <img src="images/bulb.png" alt="bulb" />
           </button>
-          <ReactTooltip place="bottom" id="minimize-tooptip">
-            <p>Minimize</p>
-          </ReactTooltip>
-          <button
-            onClick={this.maximizeApp}
-            data-tip
-            data-for="maximize-tooptip"
-            className="maximize-app-btn button-shine"
-            disabled={this.props.alertCloseDisabled ? "disabled" : ""}
-          >
-            <span />
-          </button>
-          <ReactTooltip place="bottom" id="maximize-tooptip">
-            {
-              this.state.window === 'maximized'
+          <ReactTooltip place="left" id="light-tooptip">
+            {this.state.dark_theme
               ?
-                <p>Restore</p>
-              :
-                <p>Maximize</p>
+                <p>Light Theme</p>
+              :  
+                <p>Dark Theme</p>
             }
           </ReactTooltip>
-          <button
-            onClick={this.setCloseApp}
-            data-tip
-            data-for="exit-tooptip"
-            className="close-app-btn button-shine"
-            disabled={this.props.alertCloseDisabled ? "disabled" : ""}
-          >
-            X
-          </button>
-          <ReactTooltip place="bottom" id="exit-tooptip">
-            <p>Exit</p>
-          </ReactTooltip>
         </div>
+
+        <img src="images/logo.png" className="logo" alt="Logo" />
       </header>
     );
   }

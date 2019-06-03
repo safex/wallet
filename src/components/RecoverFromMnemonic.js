@@ -89,39 +89,43 @@ export default class NewFromMnemonic extends Component {
         >
           <span>?</span>
         </div>
-        <ReactTooltip place="left" id="mnemonic-tooptip">
-          <p>You can recover your Wallet with Mnemonic Seed.</p>
-          <p>
-            Mnemonic Seed should contain <span className="blue-text">24</span> or <span className="blue-text">25</span> words and no numbers. Example:
-          </p>
-          <p className="blue-text">
-            fizzle gyrate arsenic click wives bacon apology richly long <br />
-            inkling avidly gimmick biweekly frying nephew union umpire <br />
-            sack tasked idiom budget lazy getting heels nephew
-          </p>
-          <p>
-            This will create <span className="blue-text">2</span> files on your
-            file system.
-          </p>
-          <p>
-            <span className="blue-text">ExampleWallet</span> and{" "}
-            <span className="blue-text">ExampleWallet.keys</span>
-          </p>
-          <p>
-            In the future, when you want to{" "}
-            <span className="blue-text">load</span> wallet,{" "}
-          </p>
-          <p>make sure you select the file without the .keys extension.</p>
-          <p>
-            Make sure you <span className="blue-text">back up</span> these files
-            for future wallet recovery.
-          </p>
+        <ReactTooltip id="mnemonic-tooptip">
+          <p><span className="blue-text">Mnemonic Seed</span> can be used to recover your </p>
+          <p className="mb-10">wallet in case your file gets lost or corrupted.</p>
+          <p>When asked for a file name, enter the file</p>
+          <p>name <span className="blue-text">without</span> the extension and click <span className="blue-text">save</span>.</p>
+          <p>This will create <span className="blue-text">2</span> files on your file system.</p>
+          <p className="mb-10"><span className="blue-text">ExampleWallet</span> and <span className="blue-text">ExampleWallet.keys</span>.</p>
+          <p>In the future, when you want to <span className="blue-text">load</span> wallet, make</p>
+          <p className="mb-10">sure you select the file <span className="blue-text">without</span> the .keys extension.</p>
+          <p>Remember to <span className="blue-text">back up your keys</span> for future wallet recovery.</p>
         </ReactTooltip>
         <div className="group-wrap">
           <div className="form-group">
             <input type="password" name="pass1" placeholder="password" />
             <input type="password" name="pass2" placeholder="repeat password" />
-            <textarea name="mnemonic" placeholder="mnemonic seed" rows="3" />
+
+            <div className="label-wrap">
+              <div
+                className="button-shine question-wrap"
+                data-tip
+                data-for="seed-tooptip"
+              >
+                <span>?</span>
+              </div>
+              <ReactTooltip id="seed-tooptip">
+                <p className="mb-10"><span className="blue-text">Mnemonic Seed Phrase</span> contains <span className="blue-text">24 or 25</span> words and no numbers.</p>
+                <p>
+                  Example:{" "}
+                  <span className="blue-text">
+                    fizzle gyrate arsenic click wives bacon apology richly <br />
+                    long inkling avidly gimmick biweekly frying nephew union <br />
+                    umpire sack tasked idiom budget lazy getting heels nephew
+                  </span>
+                </p>
+              </ReactTooltip>
+            </div>
+            <textarea name="mnemonic" placeholder="mnemonic seed" rows="5" />
           </div>
         </div>
         <button
