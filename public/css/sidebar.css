@@ -85,9 +85,12 @@
   padding: 0 50px;
   overflow: auto;
 }
-.sidebar #content .general {
+.sidebar #content {
   max-width: 800px;
   margin: 0 auto;
+}
+.sidebar #content .general .question-wrap {
+  top: -7px;
 }
 .sidebar #content .label-wrap {
   text-align: center;
@@ -102,7 +105,7 @@
   color: rgba(255, 255, 255, 1);
   margin-bottom: 0;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1;
   position: relative;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
