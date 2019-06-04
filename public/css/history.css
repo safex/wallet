@@ -22,8 +22,8 @@
   width: 48px;
   height: 39.5px;
   position: absolute;
-  left: 50px;
-  top: 24px;
+  left: 0px;
+  top: 25px;
   justify-content: center;
 }
 .history-wrap .refresh_history.disabled {
@@ -120,7 +120,7 @@
 .history-wrap .question-wrap {
   position: absolute;
   top: 141px !important;
-  left: 50px !important;
+  left: 0px !important;
   width: 32px;
   height: 32px;
   border: 1px solid #8ffdfd;

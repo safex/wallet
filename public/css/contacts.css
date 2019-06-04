@@ -18,8 +18,8 @@
   display: flex;
   width: 48px;
   position: absolute;
-  left: 50px;
-  top: 24px;
+  left: 0px;
+  top: -15px;
   justify-content: center;
 }
 .address-wrap #show-contacts img {

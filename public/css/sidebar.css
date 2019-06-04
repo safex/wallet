@@ -85,9 +85,10 @@
   padding: 0 50px;
   overflow: auto;
 }
-.sidebar #content {
+.sidebar #content .content-inner {
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
 }
 .sidebar #content .general .question-wrap {
   top: -7px;
