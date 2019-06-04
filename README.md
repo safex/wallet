@@ -1,6 +1,6 @@
-# SAFEX CASH SAPPHIRE WALLET
+# SAFEX CASH HORIZON WALLET
 
-Official repository for consolidated lightweight Safex Cash Sapphire Wallet.
+Official repository for consolidated lightweight Safex Cash Horizon Wallet.
 
 ## Releases
 

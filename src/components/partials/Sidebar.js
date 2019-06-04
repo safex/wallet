@@ -283,7 +283,9 @@ export default class Sidebar extends Component {
             <p className="general-p">{this.props.wallet.filepath}</p>
 
             <label>Wallet GUI version</label>
-            <p className="general-p">{remote.app.getVersion()}</p>
+            <p className="general-p">
+              Horizon Wallet {remote.app.getVersion()}
+            </p>
           </div>
 
           <div
