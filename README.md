@@ -1,6 +1,6 @@
-# SAFEX CASH HORIZON WALLET
+# SAFEX CASH AMBIT WALLET
 
-Official repository for consolidated lightweight Safex Cash Horizon Wallet.
+Official repository for consolidated lightweight Safex Cash Ambit Wallet.
 
 ## Releases
 

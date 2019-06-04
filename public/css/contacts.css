@@ -161,6 +161,7 @@
 .address-wrap .show-contacts-wrap .contact-item .contact-center .payment-id {
   font-size: 14px;
   text-align: left;
+  min-height: 25px;
 }
 .address-wrap .show-contacts-wrap .contact-item .contact-right {
   width: 110px;
@@ -229,7 +230,7 @@
 .pagination,
 .pagination {
   position: absolute;
-  top: 490px;
+  top: 460px;
   width: 100%;
   left: 0;
   display: flex;

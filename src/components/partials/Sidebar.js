@@ -76,45 +76,73 @@ export default class Sidebar extends Component {
     let paymentidInput = paymentid.replace(/\s+/g, "");
     let name = e.target.name.value;
 
-    if (addressInput === "" || paymentidInput === "" || name === "") {
-      this.props.setOpenAlert("Fill out all the fields", false, "modal-80");
-      return false;
+    if (addressInput.startsWith("Safexi") || addressInput.startsWith("SFXi")) {
+      if (addressInput === "" || name === "") {
+        this.props.setOpenAlert("Fill out all the fields", false, "modal-80");
+        return false;
+      }
+      if (
+        wallet.addressBook_AddRow(addressInput, paymentidInput, name) === false
+      ) {
+        console.log(wallet);
+        this.props.setOpenAlert(
+          "" + wallet.addressBook_ErrorString(),
+          false,
+          "modal-80"
+        );
+        return false;
+      }
+      wallet.store();
+      this.props.setOpenAlert("New contact added", false, "modal-80");
+      setTimeout(() => {
+        this.setState({
+          new_address: "",
+          new_payment_id: "",
+          name: ""
+        });
+        this.props.setWalletHistory();
+      }, 100);
+    } else {
+      if (addressInput === "" || paymentidInput === "" || name === "") {
+        this.props.setOpenAlert("Fill out all the fields", false, "modal-80");
+        return false;
+      }
+      if (
+        process.env.NODE_ENV !== "development" &&
+        !safex.addressValid(addressInput, "mainnet")
+      ) {
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
+        return false;
+      }
+      if (
+        process.env.NODE_ENV === "development" &&
+        !safex.addressValid(addressInput, "testnet")
+      ) {
+        this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
+        return false;
+      }
+      if (
+        wallet.addressBook_AddRow(addressInput, paymentidInput, name) === false
+      ) {
+        console.log(wallet);
+        this.props.setOpenAlert(
+          "" + wallet.addressBook_ErrorString(),
+          false,
+          "modal-80"
+        );
+        return false;
+      }
+      wallet.store();
+      this.props.setOpenAlert("New contact added", false, "modal-80");
+      setTimeout(() => {
+        this.setState({
+          new_address: "",
+          new_payment_id: "",
+          name: ""
+        });
+        this.props.setWalletHistory();
+      }, 100);
     }
-    if (
-      process.env.NODE_ENV !== "development" &&
-      !safex.addressValid(addressInput, "mainnet")
-    ) {
-      this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
-      return false;
-    }
-    if (
-      process.env.NODE_ENV === "development" &&
-      !safex.addressValid(addressInput, "testnet")
-    ) {
-      this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
-      return false;
-    }
-    if (
-      wallet.addressBook_AddRow(addressInput, paymentidInput, name) === false
-    ) {
-      console.log(wallet);
-      this.props.setOpenAlert(
-        "" + wallet.addressBook_ErrorString(),
-        false,
-        "modal-80"
-      );
-      return false;
-    }
-    wallet.store();
-    this.props.setOpenAlert("New contact added", false, "modal-80");
-    setTimeout(() => {
-      this.setState({
-        new_address: "",
-        new_payment_id: "",
-        name: ""
-      });
-      this.props.setWalletHistory();
-    }, 100);
   };
 
   genPaymentId = () => {
@@ -285,7 +313,7 @@ export default class Sidebar extends Component {
 
               <label>Wallet GUI version</label>
               <p className="general-p">
-                Horizon Wallet {remote.app.getVersion()}
+                Ambit Wallet {remote.app.getVersion()}
               </p>
             </div>
 
@@ -359,8 +387,12 @@ export default class Sidebar extends Component {
                       string.
                     </p>
                     <p>
+                      Payment ID is <span className="blue-text">not required</span>{" "}
+                      for integrated addresses. 
+                    </p>
+                    <p>
                       Payment ID is <span className="blue-text">required</span>{" "}
-                      for each contact.
+                      for standard addresses.
                     </p>
                   </ReactTooltip>
                 </label>
