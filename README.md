@@ -1,4 +1,4 @@
-# SAFEX CASH Voyager WALLET
+# SAFEX CASH VOYAGER WALLET
 
 Official repository for consolidated lightweight Safex Cash Voyager Wallet.
 
