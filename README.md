@@ -1,6 +1,6 @@
-# SAFEX CASH VOYAGER WALLET
+# SAFEX CASH AMBIT WALLET
 
-Official repository for consolidated lightweight Safex Cash Voyager Wallet.
+Official repository for consolidated lightweight Safex Cash Ambit Wallet.
 
 ## Releases
 
