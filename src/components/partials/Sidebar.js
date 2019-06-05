@@ -325,7 +325,7 @@ export default class Sidebar extends Component {
 
               <label>Wallet GUI version</label>
               <p className="general-p">
-                Ambit Wallet {remote.app.getVersion()}
+                Voyager Wallet {remote.app.getVersion()}
               </p>
             </div>
 
