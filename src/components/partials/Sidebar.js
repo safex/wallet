@@ -29,6 +29,7 @@ export default class Sidebar extends Component {
     this.setState({
       general: true,
       address_book: false,
+      show_contacts: true,
       history: false,
       seed_keys: false
     });
@@ -47,6 +48,7 @@ export default class Sidebar extends Component {
     this.setState({
       general: false,
       address_book: false,
+      show_contacts: true,
       history: true,
       seed_keys: false
     });
@@ -56,6 +58,7 @@ export default class Sidebar extends Component {
     this.setState({
       general: false,
       address_book: false,
+      show_contacts: true,
       history: false,
       seed_keys: true
     });
@@ -210,6 +213,15 @@ export default class Sidebar extends Component {
     }
   };
 
+  setToggleSidebar = () => {
+    this.props.toggleSidebar();
+    setTimeout(() => {
+      this.setState({
+        show_contacts: true
+      });
+    }, 400);
+  };
+
   render() {
     return (
       <div className={this.props.sidebar ? "sidebar active" : "sidebar"}>
@@ -218,7 +230,7 @@ export default class Sidebar extends Component {
 
           <button
             className="button-shine tx-history"
-            onClick={this.props.toggleSidebar}
+            onClick={this.setToggleSidebar}
             data-tip="true"
             data-for="settings-tooptip"
           >
@@ -387,8 +399,9 @@ export default class Sidebar extends Component {
                       string.
                     </p>
                     <p>
-                      Payment ID is <span className="blue-text">not required</span>{" "}
-                      for integrated addresses. 
+                      Payment ID is{" "}
+                      <span className="blue-text">not required</span> for
+                      integrated addresses.
                     </p>
                     <p>
                       Payment ID is <span className="blue-text">required</span>{" "}
