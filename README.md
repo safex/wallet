@@ -1,6 +1,6 @@
-# SAFEX CASH WALLET
+# SAFEX CASH AMBIT WALLET
 
-Official repository for consolidated lightweight Safex Cash Wallet.
+Official repository for consolidated lightweight Safex Cash Ambit Wallet.
 
 ## Releases
 

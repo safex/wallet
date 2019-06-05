@@ -85,9 +85,13 @@
   padding: 0 50px;
   overflow: auto;
 }
-.sidebar #content .general {
+.sidebar #content .content-inner {
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
+}
+.sidebar #content .general .question-wrap {
+  top: -7px;
 }
 .sidebar #content .label-wrap {
   text-align: center;
@@ -102,7 +106,7 @@
   color: rgba(255, 255, 255, 1);
   margin-bottom: 0;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1;
   position: relative;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
@@ -189,7 +193,7 @@
 }
 .sidebar #content .general-p {
   font-size: 16px;
-  padding: 7px 5px 3px;
+  padding: 7px 0px 3px;
   border-bottom: 1px solid #54bcd9;
   border-radius: 0;
   text-align: center;
@@ -197,7 +201,7 @@
   background: transparent;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   color: #fff;
-  margin: 0 0 5px;
+  margin: 0 0 10px;
   word-break: break-all;
 }
 .sidebar #content textarea {
@@ -280,9 +284,9 @@
 .sidebar label {
   width: 100%;
   text-transform: capitalize;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 400;
-  margin: 10px 0 0;
+  margin: 5px 0 0;
   position: relative;
   z-index: 2;
   color: #fff;

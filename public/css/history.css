@@ -1,11 +1,7 @@
 .history-wrap {
-  overflow: auto;
-  height: 500px;
   letter-spacing: -0.3px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   color: #fff;
-  margin: 0 auto;
-  max-width: 800px;
 }
 .history-wrap h5 {
   margin-bottom: 5px;
@@ -22,8 +18,8 @@
   width: 48px;
   height: 39.5px;
   position: absolute;
-  left: 50px;
-  top: 24px;
+  left: 0px;
+  top: -15px;
   justify-content: center;
 }
 .history-wrap .refresh_history.disabled {
@@ -119,8 +115,8 @@
 }
 .history-wrap .question-wrap {
   position: absolute;
-  top: 142px !important;
-  left: 50px !important;
+  top: 101px !important;
+  left: 0px !important;
   width: 32px;
   height: 32px;
   border: 1px solid #8ffdfd;
