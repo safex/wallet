@@ -585,6 +585,18 @@
   -moz-appearance: none;
   appearance: none;
 }
+.sendModal #dollarAmount {
+  position: absolute;
+  top: -7px;
+  right: 54px;
+  width: 150px;
+  background: rgba(255, 255, 255, .3);
+  line-height: 1;
+  padding: 10px;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 .loadingModal {
   padding: 10px 0;

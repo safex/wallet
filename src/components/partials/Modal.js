@@ -432,37 +432,39 @@ export default class Modal extends React.Component {
                   disabled={this.props.destination ? "disabled" : ""}
                 />
                 <label htmlFor="amount">
-                  {this.props.cash_or_token === 0 ? (
-                    <div
-                      data-tip
-                      data-for="cash-amount-tooptip"
-                      className="button-shine question-wrap"
-                    >
-                      <span>?</span>
-                    </div>
-                  ) : (
-                    <div
-                      data-tip
-                      data-for="token-amount-tooptip"
-                      className="button-shine question-wrap"
-                    >
-                      <span>?</span>
-                    </div>
-                  )}
-                  <ReactTooltip id="cash-amount-tooptip">
-                    <p>
-                      <span className="blue-text">Safex Cash fee</span> will be
-                    </p>
-                    <p>added to sending amount.</p>
-                  </ReactTooltip>
-                  <ReactTooltip id="token-amount-tooptip">
-                    <p>Token transaction does not</p>
-                    <p className="mb-10">accept decimal values.</p>
-                    <p>Token transaction </p>
-                    <p>
-                      requires <span className="blue-text">Safex Cash fee</span>
-                      .
-                    </p>
+                  <div
+                    data-tip
+                    data-for="amount-tooptip"
+                    className="button-shine question-wrap"
+                  >
+                    <span>?</span>
+                  </div>
+                  <span id="dollarAmount">
+                    {
+                      this.props.cash_or_token === 0
+                        ?
+                          "$ " + parseFloat(this.state.amount * this.props.sfxPrice).toFixed(2)
+                        :
+                          "$ " + parseFloat(this.state.amount * this.props.sftPrice).toFixed(2)
+                    }
+                  </span>
+                  <ReactTooltip place="left" id="amount-tooptip">
+                    {
+                      this.props.cash_or_token === 0
+                      ?
+                        <p>
+                          <span className="blue-text">Safex Cash fee</span> will be added to sending amount.
+                        </p>
+                      :
+                        <div>
+                          <p className="mb-10">
+                            Token transaction does not accept decimal values.
+                          </p>
+                          <p>
+                            Token transaction requires <span className="blue-text">Safex Cash fee</span>.
+                          </p>
+                        </div>
+                    }
                   </ReactTooltip>
                 </label>
                 <input
@@ -493,25 +495,19 @@ export default class Modal extends React.Component {
                     >
                       <span>?</span>
                     </div>
-                    <ReactTooltip id="mixin-tooptip">
+                    <ReactTooltip place="left" id="mixin-tooptip">
                       <p>
                         <span className="blue-text">Transaction Mixin</span>{" "}
-                        determines how many{" "}
+                        determines how many outputs transaction is going to have.
                       </p>
-                      <p>outputs transaction is going to have.</p>
-                      <p>Lower mixin will result in smaller fees.</p>
-                      <p>For large transactions we recommend</p>
-                      <p>lowering the transaction mixin.</p>
+                      <p>
+                        Lower mixin will result in smaller fees. For large transactions we recommend
+                      </p>
                       <p className="mb-10">
-                        Default network mixin is{" "}
-                        <span className="blue-text">6</span>.
+                        lowering the transaction mixin. Default network mixin is <span className="blue-text">6</span>.
                       </p>
                       <p className="blue-text">
-                        *Consistent use of low ring sizes
-                      </p>
-                      <p className="blue-text">
-                        {" "}
-                        may affect your traceability.
+                        *Consistent use of low ring sizes may affect your traceability.
                       </p>
                     </ReactTooltip>
                   </label>
@@ -530,33 +526,21 @@ export default class Modal extends React.Component {
                     >
                       <span>?</span>
                     </div>
-                    <ReactTooltip id="paymentid-tooptip">
+                    <ReactTooltip place="left" id="paymentid-tooptip">
                       <p>
                         <span className="blue-text">Payment ID</span> is
-                        additional reference
-                      </p>
-                      <p>number attached to the transaction.</p>
-                      <p>It is given by exchanges and web</p>
-                      <p>shops to differentiate and track</p>
-                      <p className="mb-10">
-                        particular deposits and purchases.
+                        additional reference number attached to the transaction.
                       </p>
                       <p>
-                        <span className="blue-text">Payment ID</span> format
-                        should be
+                        It is given by exchanges and web shops to differentiate and track
                       </p>
+                      <p className="mb-10">particular deposits and purchases.</p>
                       <p className="mb-10">
-                        <span className="blue-text">16 or 64 digit Hex</span>{" "}
-                        character string.
+                        Payment ID format should be <span className="blue-text">16 or 64 digit Hex</span> character string.
                       </p>
-                      <p>When sending to contact from</p>
-                      <p>Address Book, contact Payment ID</p>
-                      <p className="mb-10">will be included in transaction.</p>
                       <p>
-                        It is <span className="blue-text">not required</span>{" "}
-                        for
+                        Payment ID is <span className="blue-text">not required</span> for regular user transactions.
                       </p>
-                      <p>regular user transactions.</p>
                     </ReactTooltip>
                   </label>
                   <input
