@@ -448,7 +448,7 @@ export default class Modal extends React.Component {
                           "$ " + parseFloat(this.state.amount * this.props.sftPrice).toFixed(2)
                     }
                   </span>
-                  <ReactTooltip place="left" id="amount-tooptip">
+                  <ReactTooltip id="amount-tooptip">
                     {
                       this.props.cash_or_token === 0
                       ?
@@ -495,7 +495,7 @@ export default class Modal extends React.Component {
                     >
                       <span>?</span>
                     </div>
-                    <ReactTooltip place="left" id="mixin-tooptip">
+                    <ReactTooltip id="mixin-tooptip">
                       <p>
                         <span className="blue-text">Transaction Mixin</span>{" "}
                         determines how many outputs transaction is going to have.
@@ -526,7 +526,7 @@ export default class Modal extends React.Component {
                     >
                       <span>?</span>
                     </div>
-                    <ReactTooltip place="left" id="paymentid-tooptip">
+                    <ReactTooltip id="paymentid-tooptip">
                       <p>
                         <span className="blue-text">Payment ID</span> is
                         additional reference number attached to the transaction.
