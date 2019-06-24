@@ -53,6 +53,9 @@
   font-style: normal;
 }
 
+.mb-10 {
+  margin-bottom: 10px !important;
+}
 textarea,
 input:focus,
 button {

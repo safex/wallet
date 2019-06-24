@@ -99,9 +99,6 @@
 .__react_component_tooltip.type-dark.place-left:after {
   border-left-color: #54bcd9;
 }
-.__react_component_tooltip .mb-10 {
-  margin-bottom: 10px !important;
-}
 .__react_component_tooltip .blue-text {
   color: #54bcd9;
   font-size: 17px !important;

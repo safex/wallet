@@ -2,8 +2,6 @@ import React from "react";
 import { addClass, roundAmount } from "../../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 
-const safex = window.require("safex-nodejs-libwallet");
-
 export default class Modal extends React.Component {
   constructor(props) {
     super(props);
@@ -139,20 +137,20 @@ export default class Modal extends React.Component {
         this.props.setOpenAlert("Enter valid amount", false, "modal-80");
         return false;
       }
-      if (
-        process.env.NODE_ENV !== "development" &&
-        !safex.addressValid(sendingAddress, "mainnet")
-      ) {
-        this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
-        return false;
-      }
-      if (
-        process.env.NODE_ENV === "development" &&
-        !safex.addressValid(sendingAddress, "testnet")
-      ) {
-        this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
-        return false;
-      }
+      // if (
+      //   process.env.NODE_ENV !== "development" &&
+      //   !safex.addressValid(sendingAddress, "mainnet")
+      // ) {
+      //   this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
+      //   return false;
+      // }
+      // if (
+      //   process.env.NODE_ENV === "development" &&
+      //   !safex.addressValid(sendingAddress, "testnet")
+      // ) {
+      //   this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
+      //   return false;
+      // }
       if (
         (this.props.cash_or_token === 0 &&
           parseFloat(e.target.amount.value) + parseFloat(0.1) >
@@ -470,6 +468,7 @@ export default class Modal extends React.Component {
                 <input
                   type="number"
                   name="amount"
+                  id="amount"
                   placeholder={
                     this.props.cash_or_token === 0
                       ? "* Enter Amount (SFX)"
@@ -480,9 +479,8 @@ export default class Modal extends React.Component {
                 />
 
                 <div
-                  id="advanced-options"
                   className={
-                    this.state.advanced_options ? "advanced-options" : "hidden"
+                    this.state.advanced_options ? "advanced-options active" : "advanced-options"
                   }
                 >
                   <label id="mixin-label" htmlFor="mixin">
@@ -515,6 +513,7 @@ export default class Modal extends React.Component {
                     name="mixin"
                     value={this.state.mixin}
                     onChange={this.inputOnChange.bind(this, "mixin")}
+                    disabled={this.state.advanced_options ? "" : "disabled"}
                   >
                     {mixinArray}
                   </select>
@@ -552,7 +551,7 @@ export default class Modal extends React.Component {
                     }
                     placeholder="Enter Payment ID (Optional)"
                     onChange={this.inputOnChange.bind(this, "payment_id")}
-                    disabled={this.props.paymentID ? "disabled" : ""}
+                    disabled={this.props.paymentID || this.state.advanced_options === false ? "disabled" : ""}
                   />
                 </div>
 
@@ -600,10 +599,73 @@ export default class Modal extends React.Component {
             </span>
           )}
           <div className="mainAlertPopupInner">
-            <p>
-              Your approximate transaction fee is: {this.state.fee} SFX ($
-              {parseFloat(this.state.fee * this.props.sfxPrice).toFixed(4)})
-            </p>
+            {
+              this.props.cash_or_token === 0
+                ?
+                <div>
+                  <p>
+                    <span className="left-span">Sending amount:</span>
+                    <span>
+                      {parseFloat(this.state.amount).toFixed(2)} SFX ($
+                      {parseFloat(this.state.amount * this.props.sfxPrice).toFixed(3)}
+                      )
+                    </span>
+                  </p>
+                  <p>
+                    <span className="left-span">Approximate transaction fee:</span>
+                    <span>
+                      {this.state.fee} SFX ($
+                       {parseFloat(this.state.fee * this.props.sfxPrice).toFixed(3)})
+                    </span>
+                  </p>
+                  <p className="mb-10">
+                    <span className="left-span">Total amount:</span>
+                    <span>
+                      {parseFloat(
+                        parseFloat(this.state.amount) + parseFloat(this.state.fee)
+                      ).toFixed(2)}{" "}
+                      SFX ($
+                      {parseFloat(
+                        (parseFloat(this.state.amount) + parseFloat(this.state.fee)) *
+                        this.props.sfxPrice
+                      ).toFixed(3)}
+                      )
+                    </span>
+                  </p>
+                </div>
+                :
+                <div>
+                  <p>
+                    <span className="left-span">Sending amount:</span>
+                    <span>
+                      {parseFloat(this.state.amount).toFixed(2)} SFT ($
+                      {parseFloat(this.state.amount * this.props.sftPrice).toFixed(3)}
+                      )
+                    </span>
+                  </p>
+                  <p>
+                    <span className="left-span">Approximate transaction fee:</span>
+                    <span>
+                      {this.state.fee} SFX ($
+                       {parseFloat(this.state.fee * this.props.sfxPrice).toFixed(3)})
+                    </span>
+                  </p>
+                  <p className="mb-10">
+                    <span className="left-span">Total amount:</span>
+                    <span>
+                      {parseFloat(this.state.amount) +
+                        " SFT + " + this.state.fee +
+                        " SFX " +
+                        " ($" +
+                        parseFloat(
+                          ((parseFloat(this.state.amount) + parseFloat(this.state.fee)) *
+                            this.props.sftPrice) + + parseFloat(this.state.fee * this.props.sfxPrice)
+                        ).toFixed(3) + ")"}
+                    </span>
+                  </p>
+                </div>
+            }
+
             <p>Are you sure you want to proceed with this transaction?</p>
 
             <form onSubmit={this.commitTx}>

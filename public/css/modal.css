@@ -499,8 +499,7 @@
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 .sendModal select {
-  background: rgba(15, 29, 54, 0.8) url(../images/select-bg.png) no-repeat top
-    10px right 3px / contain;
+  background: url(../images/select-bg.png) no-repeat top 10px right 3px / contain;
   background-size: 10px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   width: 44%;
@@ -521,8 +520,7 @@
   -webkit-border-radius: 0px;
 }
 .dark .sendModal select {
-  background: rgba(0, 0, 0, 0.6) url(../images/select-bg.png) no-repeat top 10px
-    right 3px / contain;
+  background: url(../images/select-bg.png) no-repeat top 10px right 3px / contain;
   background-size: 10px;
 }
 .sendModal select:active,
@@ -553,6 +551,14 @@
 }
 .sendModal #advanced-btn img {
   max-height: 18px;
+}
+.sendModal .advanced-options.active {
+  opacity: 1;
+  pointer-events: initial;
+}
+.sendModal .advanced-options {
+  opacity: .3;
+  pointer-events: none;
 }
 .sendModal .btn[disabled] {
   pointer-events: none;
@@ -589,13 +595,16 @@
   position: absolute;
   top: -7px;
   right: 54px;
-  width: 150px;
-  background: rgba(255, 255, 255, .3);
+  width: 200px;
+  border-left: 1px solid #54bcd9;
   line-height: 1;
   padding: 10px;
   text-align: left;
   overflow: hidden;
   white-space: nowrap;
+}
+.sendModal #amount {
+  padding: 10px 265px 5px 0;
 }
 
 .loadingModal {
@@ -671,6 +680,24 @@
 }
 .feeModal form {
   margin: 20px 0 25px;
+}
+.feeModal p {
+  font-size: 16px;
+  text-transform: initial;
+  margin-bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+.feeModal p span {
+  display: inline-block;
+  width: 330px;
+  text-align: left;
+}
+.feeModal p .left-span {
+  width: 300px !important;
+  text-align: right;
+  margin-right: 10px;
+  margin-left: 45px;
 }
 .feeModal h6 {
   text-transform: initial;
