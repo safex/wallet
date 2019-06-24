@@ -2,6 +2,8 @@ import React from "react";
 import { addClass, roundAmount } from "../../utils/utils.js";
 import ReactTooltip from "react-tooltip";
 
+const safex = window.require("safex-nodejs-libwallet");
+
 export default class Modal extends React.Component {
   constructor(props) {
     super(props);
