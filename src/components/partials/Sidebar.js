@@ -118,8 +118,7 @@ export default class Sidebar extends Component {
         return false;
       }
       if (
-        process.env.NODE_ENV === "development" &&
-        !safex.addressValid(addressInput, "testnet")
+        process.env.NODE_ENV === "development" && !safex.addressValid(addressInput, "testnet") && !safex.addressValid(addressInput, "stagenet")
       ) {
         this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
         return false;

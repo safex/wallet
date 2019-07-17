@@ -147,8 +147,7 @@ export default class Modal extends React.Component {
         return false;
       }
       if (
-        process.env.NODE_ENV === "development" &&
-        !safex.addressValid(sendingAddress, "testnet")
+        process.env.NODE_ENV === "development" && !safex.addressValid(sendingAddress, "testnet") && !safex.addressValid(sendingAddress, "stagenet")
       ) {
         this.props.setOpenAlert("Enter valid Safex address", false, "modal-80");
         return false;
