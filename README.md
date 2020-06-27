@@ -6,7 +6,7 @@ Official repository for consolidated lightweight Safex Cash Orbiter Wallet.
 
 You can download [CASH Wallet](https://github.com/safex/wallet/releases) on the github release page.
 
-Available for Mac, Windows (64, 32) and Linux.
+Available for Mac, Windows (64-bit only) and Linux.
 
 ## Development
 
